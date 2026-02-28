@@ -44,7 +44,7 @@ tasks:
     aliases: [ acgd ]
     desc: Download OpenAPI definition
     cmds:
-      - curl -o "./src/common/api/openapi.yaml" "http://localhost:5000/openapi.yaml"
+      - curl -o "./src/common/api/real.openapi.yaml" "http://localhost:5000/openapi.yaml"
 
   api:gen:
     aliases: [ acg ]

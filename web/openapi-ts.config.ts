@@ -1,11 +1,17 @@
 import { defineConfig } from '@hey-api/openapi-ts'
 
+type ApiType = "mock" | "real"
+
+// const apiType: ApiType = "real"
+const apiType: ApiType = "mock"
+
+const input = `./src/common/api/${apiType}.openapi.yaml`
+const path = `./src/common/api/generated/client/${apiType}`
+
 export default defineConfig({
-  // input: './src/common/api/openapi.yaml',
-  input: './src/common/api/dev.openapi.yaml',
+  input,
   output: {
-    // path: './src/common/api/generated/client',
-    path: './src/common/api/generated/client-dev',
+    path,
     postProcess: ['oxfmt', 'oxlint', 'eslint'],
   },
   plugins: [

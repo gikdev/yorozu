@@ -4,7 +4,7 @@ import TodoHeader from '#/features/todos/organisms/TodoHeader.vue'
 import TodosList from '#/features/todos/organisms/TodosList.vue'
 import { useMutation, useQuery } from '@pinia/colada'
 import * as v from 'valibot'
-import { createTodoMutation, listTodosQuery } from '#/common/api/generated/client-dev'
+import { createTodoMutation, listTodosQuery } from '#/common/api/client'
 
 const schema = v.pipe(
   v.string(),

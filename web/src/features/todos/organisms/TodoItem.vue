@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TodoResponse } from '#/common/api/generated/client-dev'
+import type { TodoResponse } from '#/common/api/client'
 import { PhCheckSquare, PhSquare } from '@phosphor-icons/vue'
 
 const props = defineProps<{

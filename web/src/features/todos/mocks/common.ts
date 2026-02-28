@@ -1,4 +1,4 @@
-import type { TodoResponse } from '#/common/api/generated/client-dev'
+import type { TodoResponse } from '#/common/api/client'
 
 export class TodosRepo {
   private static _todos: TodoResponse[] = [
