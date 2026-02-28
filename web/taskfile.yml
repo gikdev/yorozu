@@ -15,7 +15,7 @@ tasks:
     aliases: [ dev, d ]
     desc: Start Vite dev server
     cmds:
-      - npm run vite
+      - npm run vite -- --host
 
   app:preview:
     desc: Preview production build

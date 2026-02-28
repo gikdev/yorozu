@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TodoResponse } from '#/common/api/client'
-import { PhCheckCircle, PhCircle } from '@phosphor-icons/vue'
+import { PhCheckCircle, PhCircle, PhDotsThree } from '@phosphor-icons/vue'
 
 const props = defineProps<{
   task: TodoResponse
@@ -9,14 +9,15 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   toggleStatus: [id: string, currentIsDone: boolean]
+  openMenu: [id: string]
 }>()
 </script>
 
 <template>
   <div class="flex items-center gap-3 p-3" :class="task.isDone && 'opacity-50'">
     <button
-      @click="emit('toggleStatus', task.id, task.isDone)"
       :disabled="isLoading"
+      @click="emit('toggleStatus', task.id, task.isDone)"
       class="cursor-pointer disabled:cursor-not-allowed"
     >
       <PhCheckCircle v-if="task.isDone" size="32" weight="fill" />
@@ -35,5 +36,13 @@ const emit = defineEmits<{
         <span v-if="task.energy" class="text-purple-500">{{ task.energy }}</span>
       </p>
     </div>
+
+    <button
+      :disabled="isLoading"
+      @click="emit('openMenu', task.id)"
+      class="cursor-pointer disabled:cursor-not-allowed"
+    >
+      <PhDotsThree size="32" />
+    </button>
   </div>
 </template>
