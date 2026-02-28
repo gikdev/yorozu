@@ -5,7 +5,7 @@ export class TodosRepo {
     {
       id: '8ecaceb2-0795-4601-8b78-f8eac38ddb36',
       title: 'Finish homepage UI',
-      rawTitle: 'Finish homepage UI',
+      rawTitle: '* Finish homepage UI @work +webapp #frontend ~30 $$$',
       context: 'work',
       project: 'webapp',
       time: 30,
@@ -19,7 +19,7 @@ export class TodosRepo {
     {
       id: '873f36cb-2763-4b80-90f6-877103ecb950',
       title: 'Write API documentation',
-      rawTitle: 'Write API documentation',
+      rawTitle: '! Write API documentation @study +backend #docs ~20 $$',
       context: 'study',
       project: 'backend',
       time: 20,
