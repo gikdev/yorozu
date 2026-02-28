@@ -7,11 +7,11 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  toggleTodoStatus: [id: string]
+  toggleTodoStatus: [id: string, currentIsDone: boolean]
 }>()
 
-const reEmitToggle = (id: string) => {
-  emit('toggleTodoStatus', id)
+const reEmitToggle = (id: string, currentIsDone: boolean) => {
+  emit('toggleTodoStatus', id, currentIsDone)
 }
 </script>
 

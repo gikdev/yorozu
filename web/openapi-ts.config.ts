@@ -17,6 +17,7 @@ export default defineConfig({
   plugins: [
     { name: '@hey-api/client-axios', baseUrl: '/', includeInEntry: true },
     { name: '@hey-api/typescript', enums: 'javascript', includeInEntry: true },
+    { name: 'valibot', includeInEntry: true },
     {
       name: '@hey-api/sdk',
       operations: { strategy: 'byTags' },

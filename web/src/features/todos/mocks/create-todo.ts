@@ -33,6 +33,7 @@ export const createTodo = http.post('/api/todos', async ({ request }) => {
     isImportant: false,
     isUrgent: false,
     isDone: false,
+    isArchived: false,
   }
 
   TodosRepo.addTodo(newTodo)

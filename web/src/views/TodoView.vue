@@ -4,7 +4,7 @@ import TodoHeader from '#/features/todos/organisms/TodoHeader.vue'
 import TodosList from '#/features/todos/organisms/TodosList.vue'
 import { useMutation, useQuery } from '@pinia/colada'
 import * as v from 'valibot'
-import { createTodoMutation, listTodosQuery, toggleTodoStatusMutation } from '#/common/api/client'
+import { createTodoMutation, listTodosQuery, changeTodoMutation } from '#/common/api/client'
 
 const schema = v.pipe(
   v.string(),
@@ -25,8 +25,8 @@ const createTodoM = useMutation({
   onSuccess: () => listTodosQ.refetch(),
 })
 
-const toggleTodoStatusM = useMutation({
-  ...toggleTodoStatusMutation(),
+const changeTodoM = useMutation({
+  ...changeTodoMutation(),
   onSuccess: () => listTodosQ.refetch(),
 })
 
@@ -34,11 +34,14 @@ const createTodo = (rawTitle: string) => {
   createTodoM.mutate({ body: { rawTitle } })
 }
 
-const toggleTodoStatus = (id: string) => {
-  // TODO: CONTINUE: THIS AIN'T WORKING!
-  toggleTodoStatusM.mutate({
+const toggleTodoStatus = (id: string, currentIsDone: boolean) => {
+  changeTodoM.mutate({
     path: { id },
-    body: { isDone: null },
+    body: {
+      isDone: {
+        value: !currentIsDone,
+      },
+    },
   })
 }
 </script>
@@ -48,10 +51,17 @@ const toggleTodoStatus = (id: string) => {
     <TodoHeader />
 
     <main class="px-4 flex-1 overflow-y-auto">
-      <CreateTodoForm :is-loading="createTodoM.isLoading.value" :validator="validateTodoTitle" @submit="createTodo" />
+      <CreateTodoForm
+        :is-loading="createTodoM.isLoading.value"
+        :validator="validateTodoTitle"
+        @submit="createTodo"
+      />
 
-      <TodosList v-if="listTodosQ.status.value === 'success'" @toggleTodoStatus="toggleTodoStatus"
-        :items="listTodosQ.data.value?.items ?? []" />
+      <TodosList
+        v-if="listTodosQ.status.value === 'success'"
+        @toggleTodoStatus="toggleTodoStatus"
+        :items="listTodosQ.data.value?.items ?? []"
+      />
       <p v-else-if="listTodosQ.status.value === 'pending'" class="p-4">Loading...</p>
       <p v-else class="p-4 text-red-400">Failed to load todos</p>
     </main>

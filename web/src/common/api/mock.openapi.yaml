@@ -34,11 +34,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TodosResponse'
-  '/api/todos/{id}/status':
+  '/api/todos/{id}':
     patch:
       tags: [Todos]
-      summary: Toggle todo status
-      operationId: ToggleTodoStatus
+      summary: Change todo
+      description: Toggle status, (un)archive, and change the title of the todo...
+      operationId: ChangeTodo
       parameters:
         - name: id
           in: path
@@ -50,7 +51,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ToggleTodoRequest'
+              $ref: '#/components/schemas/ChangeTodoRequest'
       responses:
         '200':
           description: OK
@@ -88,6 +89,7 @@ components:
         - isImportant
         - isUrgent
         - isDone
+        - isArchived
       properties:
         id:
           type: string
@@ -112,12 +114,37 @@ components:
           type: boolean
         isDone:
           type: boolean
-    ToggleTodoRequest:
+        isArchived:
+          type: boolean
+    ChangeTodoRequest:
       type: object
       properties:
+        isArchived:
+          oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                value:
+                  type: boolean
+              required:
+                - value
         isDone:
-          type:
-            - 'null'
-            - boolean
+          oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                value:
+                  type: boolean
+              required:
+                - value
+        rawTitle:
+          oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                value:
+                  type: string
+              required:
+                - value
 tags:
   - name: Todos
