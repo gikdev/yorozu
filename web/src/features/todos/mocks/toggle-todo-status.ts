@@ -2,11 +2,10 @@ import { http, HttpResponse } from 'msw'
 import { TodosRepo } from './common'
 import * as v from 'valibot'
 
-export const toggleTodoStatus = http.patch('/api/todos/{id}/status', async ({ request }) => {
-  const url = new URL(request.url)
-  const id = url.searchParams.get('id')
+export const toggleTodoStatus = http.patch('/api/todos/:id/status', async ({ request, params }) => {
+  const id = params.id
 
-  if (!id) {
+  if (typeof id !== "string") {
     return HttpResponse.json({ error: 'Not found!' }, { status: 404 })
   }
 
@@ -30,7 +29,7 @@ export const toggleTodoStatus = http.patch('/api/todos/{id}/status', async ({ re
   const updatedTodo = TodosRepo.toggleTodoStatus(id, body.isDone)
 
   if (!updatedTodo) {
-    return HttpResponse.json({ error: 'Something went wrong.' }, { status: 500 })
+    return HttpResponse.json({ error: 'Not found!' }, { status: 404 })
   }
 
   return HttpResponse.json(updatedTodo)

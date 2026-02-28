@@ -14,13 +14,14 @@ const emit = defineEmits<{
 
 <template>
   <div class="flex items-center gap-3 p-3">
-    <button @click="emit('toggleStatus', task.id)" :disabled="isLoading" class="cursor-pointer disabled:cursor-not-allowed">
-      <PhCheckSquare v-if="task.isDone" size="32" weight="fill" />
+    <button @click="emit('toggleStatus', task.id)" :disabled="isLoading"
+      class="cursor-pointer disabled:cursor-not-allowed">
+      <PhCheckSquare v-if="task.isDone" size="32" weight="fill" class="opacity-50" />
       <PhSquare v-else size="32" />
     </button>
 
     <div class="flex-1 min-w-0">
-      <p class="flex-1 flex gap-2 flex-wrap" :class="task.isDone && 'line-through opacity-50'">
+      <p class="flex-1 flex gap-2 flex-wrap" :class="task.isDone && 'opacity-50'">
         <span v-if="task.isImportant" class="">⭐</span>
         <span v-if="task.isUrgent">❗</span>
         <span class="text-base">{{ task.title }}</span>

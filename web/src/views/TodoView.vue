@@ -36,7 +36,10 @@ const createTodo = (rawTitle: string) => {
 
 const toggleTodoStatus = (id: string) => {
   // TODO: CONTINUE: THIS AIN'T WORKING!
-  toggleTodoStatusM.mutate({ path: { id } })
+  toggleTodoStatusM.mutate({
+    path: { id },
+    body: { isDone: null },
+  })
 }
 </script>
 
@@ -45,17 +48,10 @@ const toggleTodoStatus = (id: string) => {
     <TodoHeader />
 
     <main class="px-4 flex-1 overflow-y-auto">
-      <CreateTodoForm
-        :is-loading="createTodoM.isLoading.value"
-        :validator="validateTodoTitle"
-        @submit="createTodo"
-      />
+      <CreateTodoForm :is-loading="createTodoM.isLoading.value" :validator="validateTodoTitle" @submit="createTodo" />
 
-      <TodosList
-        v-if="listTodosQ.status.value === 'success'"
-        @toggle="toggleTodoStatus"
-        :items="listTodosQ.data.value?.items ?? []"
-      />
+      <TodosList v-if="listTodosQ.status.value === 'success'" @toggleTodoStatus="toggleTodoStatus"
+        :items="listTodosQ.data.value?.items ?? []" />
       <p v-else-if="listTodosQ.status.value === 'pending'" class="p-4">Loading...</p>
       <p v-else class="p-4 text-red-400">Failed to load todos</p>
     </main>
