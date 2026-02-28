@@ -1,24 +1,11 @@
 import { http, HttpResponse } from 'msw'
-import { todosRepo, type TodosResponse } from './common'
+import { TodosRepo } from './common'
+import type { TodosResponse } from '#/common/api/generated/client-dev'
 
-export const getAllTodos = http.get('/api/todos', ({ request }) => {
-  const url = new URL(request.url)
-  const sort = url.searchParams.get('sort')
-
-  const items = [...todosRepo.getTodos().items]
-
-  if (sort === 'context') {
-    items.sort((a, b) => (a.context ?? '').localeCompare(b.context ?? ''))
+export const getAllTodos = http.get('/api/todos', () => {
+  const response: TodosResponse = {
+    items: TodosRepo.getTodos(),
   }
 
-  if (sort === 'tag') {
-    items.sort((a, b) => (a.tag ?? '').localeCompare(b.tag ?? ''))
-  }
-
-  return HttpResponse.json({ items })
+  return HttpResponse.json(response)
 })
-
-export const getAllTodosFetch = async () => {
-  const res = await fetch('/api/todos')
-  return (await res.json()) as TodosResponse
-}

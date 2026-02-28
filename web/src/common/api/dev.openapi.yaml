@@ -1,0 +1,92 @@
+openapi: '3.1.1'
+info:
+  title: Own.Api | v1
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/
+paths:
+  /api/todos:
+    post:
+      tags: [Todos]
+      summary: Create todo
+      operationId: CreateTodo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+    get:
+      tags: [Todos]
+      summary: List todos
+      operationId: ListTodos
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodosResponse'
+components:
+  schemas:
+    CreateTodoRequest:
+      type: object
+      required: [rawTitle]
+      properties:
+        rawTitle:
+          type: string
+    TodosResponse:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoResponse'
+    TodoResponse:
+      type: object
+      required:
+        - id
+        - title
+        - rawTitle
+        - context
+        - project
+        - time
+        - tag
+        - energy
+        - isImportant
+        - isUrgent
+        - isDone
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        rawTitle:
+          type: string
+        context:
+          type: [string, 'null']
+        project:
+          type: [string, 'null']
+        time:
+          type: [number, 'null']
+        tag:
+          type: [string, 'null']
+        energy:
+          type: [string, 'null']
+        isImportant:
+          type: boolean
+        isUrgent:
+          type: boolean
+        isDone:
+          type: boolean
+tags:
+  - name: Todos

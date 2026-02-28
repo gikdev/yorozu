@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw'
-import { todosRepo, type TodoResponse } from './common'
+import { TodosRepo } from './common'
 import * as v from 'valibot'
+import type { TodoResponse } from '#/common/api/generated/client-dev'
 
 export const createTodo = http.post('/api/todos', async ({ request }) => {
   const schema = v.object({
@@ -34,19 +35,7 @@ export const createTodo = http.post('/api/todos', async ({ request }) => {
     isDone: false,
   }
 
-  todosRepo.addTodo(newTodo)
+  TodosRepo.addTodo(newTodo)
 
   return HttpResponse.json(newTodo)
 })
-
-export const createTodoFetch = async (rawTitle: string) => {
-  const res = await fetch('/api/todos', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ rawTitle }),
-  })
-
-  return (await res.json()) as TodoResponse
-}

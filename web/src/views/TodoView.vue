@@ -4,12 +4,7 @@ import TodoHeader from '#/features/todos/organisms/TodoHeader.vue'
 import TodosList from '#/features/todos/organisms/TodosList.vue'
 import { useMutation, useQuery } from '@pinia/colada'
 import * as v from 'valibot'
-import { createTodoFetch } from '#/features/todos/mocks/create-todo'
-import { ref } from 'vue'
-import type { TodosResponse } from '#/features/todos/mocks/common'
-import TodoSortBar from '#/features/todos/organisms/TodoSortBar.vue'
-
-const sort = ref<string | null>(null)
+import { createTodoMutation, listTodosQuery } from '#/common/api/generated/client-dev'
 
 const schema = v.pipe(
   v.string(),
@@ -23,27 +18,15 @@ function validateTodoTitle(value: string): string | null {
   return result.success ? null : (result.issues[0]?.message ?? 'Invalid input')
 }
 
-const todosQuery = useQuery({
-  key: ['todos', sort.value],
-  async query() {
-    const res = await fetch(`/api/todos?sort=${sort.value}`)
-    return (await res.json()) as TodosResponse
-  },
-})
-const mutation = useMutation({
-  mutation: createTodoFetch,
-  onSuccess: () => {
-    todosQuery.refetch()
-  },
+const listTodosQ = useQuery(listTodosQuery())
+
+const createTodoM = useMutation({
+  ...createTodoMutation(),
+  onSuccess: () => listTodosQ.refetch(),
 })
 
-function createTodo(title: string) {
-  mutation.mutate(title)
-}
-
-function changeSort(value: string) {
-  sort.value = sort.value === value ? null : value
-  todosQuery.refetch()
+const createTodo = (rawTitle: string) => {
+  createTodoM.mutate({ body: { rawTitle } })
 }
 </script>
 
@@ -53,22 +36,16 @@ function changeSort(value: string) {
 
     <main class="px-4 flex-1 overflow-y-auto">
       <CreateTodoForm
-        :is-loading="mutation.isLoading.value"
+        :is-loading="createTodoM.isLoading.value"
         :validator="validateTodoTitle"
         @submit="createTodo"
       />
 
-      <TodoSortBar
-        :sort="sort"
-        @sort="changeSort"
-        :sort-options="['context', 'time', 'tag', 'energy']"
-      />
-
       <TodosList
-        v-if="todosQuery.status.value === 'success'"
-        :items="todosQuery.data.value?.items ?? []"
+        v-if="listTodosQ.status.value === 'success'"
+        :items="listTodosQ.data.value?.items ?? []"
       />
-      <p v-else-if="todosQuery.status.value === 'pending'" class="p-4">Loading...</p>
+      <p v-else-if="listTodosQ.status.value === 'pending'" class="p-4">Loading...</p>
       <p v-else class="p-4 text-red-400">Failed to load todos</p>
     </main>
   </div>

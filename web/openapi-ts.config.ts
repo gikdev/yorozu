@@ -1,9 +1,11 @@
 import { defineConfig } from '@hey-api/openapi-ts'
 
 export default defineConfig({
-  input: './src/common/api/openapi.yaml',
+  // input: './src/common/api/openapi.yaml',
+  input: './src/common/api/dev.openapi.yaml',
   output: {
-    path: './src/common/api/generated/client',
+    // path: './src/common/api/generated/client',
+    path: './src/common/api/generated/client-dev',
     postProcess: ['oxfmt', 'oxlint', 'eslint'],
   },
   plugins: [

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TodoResponse } from '../mocks/get-all-todos'
+import type { TodoResponse } from '#/common/api/generated/client-dev'
 import TodoItem from '../organisms/TodoItem.vue'
 
 defineProps<{
