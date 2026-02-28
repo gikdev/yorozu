@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { btn } from '#/common/atoms/btn'
+import { input } from '#/common/atoms/input';
 import BottomSheet from '#/common/molecules/BottomSheet.vue'
 import { ref } from 'vue'
 
@@ -17,7 +18,7 @@ const emit = defineEmits<{
 
 <template>
   <BottomSheet @close-sheet="emit('closeSheet')">
-    <textarea type="text" v-model="todoTitle" />
+    <textarea type="text" v-model="todoTitle" :class="input()" />
     <button :class="btn()" @click="emit('submit', todoTitle)">Submit</button>
   </BottomSheet>
 </template>
