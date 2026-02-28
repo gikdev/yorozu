@@ -1,6 +1,29 @@
-- Make a very simple UI for managing tasks:
-  - List tasks properly
-  - Let delete a task
-  - Let update a task (single input)
-  - x Let to "check/uncheck"
-  - x Let create a task (single input)
+# Vue Project Tasks: Todo App Refactoring
+
+- Finish todos:
+  - Components & Props
+    - [ ] Add a "three dots" (kebab menu) icon button to the `TodoItem.vue` template.
+    - [ ] Define the `emits` option in `TodoItem.vue` (e.g., `emits: ['openMenu']`).
+    - [ ] Ensure `TodoItem.vue` accepts a `task` prop (object) to display data.
+  - Parent-Child Communication (Emits)
+    - [ ] In `TodoItem.vue`, add a `@click` handler to the three dots button.
+    - [ ] Inside that handler, emit the event: `this.$emit('openMenu', task.id)`.
+    - [ ] In `TodoList.vue`, listen for the event on the TodoItem: `@open-menu="handleOpenMenu"`.
+    - [ ] In `TodoList.vue`, re-emit the event up to the Main Screen (or handle it there if list is inside main).
+  - State Management (Main Screen)
+    - [ ] In the Parent component (MainScreen), create a reactive state: `const selectedTaskId = ref(null)`.
+    - [ ] Create a function `openTaskMenu(id)` that sets `selectedTaskId.value = id`.
+    - [ ] Bind this function to the `TodoList` component (e.g., `@open-menu="openTaskMenu"`).
+  - Bottom Sheet Integration
+    - [ ] Place the `BottomSheet` component in the Parent template (sibling to TodoList).
+    - [ ] Pass the `selectedTaskId` to the BottomSheet via a prop: `:task-id="selectedTaskId"`.
+    - [ ] Add a `v-if` or `v-show` directive to the BottomSheet so it only appears when `selectedTaskId` is not null.
+  - Actions & Logic
+    - [ ] Rename Action:
+        - [ ] Emit an event from BottomSheet (e.g., `@rename`) or call a provided function.
+        - [ ] Update the task title in your data store (Pinia/Vuex/Reactive array).
+        - [ ] Reset `selectedTaskId.value` to null to close the sheet.
+    - [ ] Archive Action:
+        - [ ] Emit an event from BottomSheet (e.g., `@archive`).
+        - [ ] Toggle the `isArchived` property of the task.
+        - [ ] Reset `selectedTaskId.value` to null to close the sheet.
