@@ -4,7 +4,7 @@ import TodoHeader from '#/features/todos/organisms/TodoHeader.vue'
 import TodosList from '#/features/todos/organisms/TodosList.vue'
 import { useMutation, useQuery } from '@pinia/colada'
 import * as v from 'valibot'
-import { createTodoMutation, listTodosQuery } from '#/common/api/client'
+import { createTodoMutation, listTodosQuery, toggleTodoStatusMutation } from '#/common/api/client'
 
 const schema = v.pipe(
   v.string(),
@@ -25,8 +25,18 @@ const createTodoM = useMutation({
   onSuccess: () => listTodosQ.refetch(),
 })
 
+const toggleTodoStatusM = useMutation({
+  ...toggleTodoStatusMutation(),
+  onSuccess: () => listTodosQ.refetch(),
+})
+
 const createTodo = (rawTitle: string) => {
   createTodoM.mutate({ body: { rawTitle } })
+}
+
+const toggleTodoStatus = (id: string) => {
+  // TODO: CONTINUE: THIS AIN'T WORKING!
+  toggleTodoStatusM.mutate({ path: { id } })
 }
 </script>
 
@@ -43,6 +53,7 @@ const createTodo = (rawTitle: string) => {
 
       <TodosList
         v-if="listTodosQ.status.value === 'success'"
+        @toggle="toggleTodoStatus"
         :items="listTodosQ.data.value?.items ?? []"
       />
       <p v-else-if="listTodosQ.status.value === 'pending'" class="p-4">Loading...</p>

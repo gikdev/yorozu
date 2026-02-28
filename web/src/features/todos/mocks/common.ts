@@ -47,6 +47,16 @@ export class TodosRepo {
     return structuredClone(this._todos)
   }
 
+  static toggleTodoStatus(id: string, newIsDone: boolean | undefined | null): TodoResponse | null {
+    const todo = this._todos.find((todo) => todo.id === id)
+
+    if (!todo) return null
+
+    todo.isDone = newIsDone ?? !todo.isDone
+
+    return structuredClone(todo)
+  }
+
   static addTodo(todo: TodoResponse): void {
     this._todos.unshift(todo)
   }

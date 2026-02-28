@@ -8,13 +8,13 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  toggle: [id: string]
+  toggleStatus: [id: string]
 }>()
 </script>
 
 <template>
   <div class="flex items-center gap-3 p-3">
-    <button @click="emit('toggle', task.id)" :disabled="isLoading">
+    <button @click="emit('toggleStatus', task.id)" :disabled="isLoading" class="cursor-pointer disabled:cursor-not-allowed">
       <PhCheckSquare v-if="task.isDone" size="32" weight="fill" />
       <PhSquare v-else size="32" />
     </button>

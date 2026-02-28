@@ -34,6 +34,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TodosResponse'
+  '/api/todos/{id}/status':
+    patch:
+      tags: [Todos]
+      summary: Toggle todo status
+      operationId: ToggleTodoStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToggleTodoRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
 components:
   schemas:
     CreateTodoRequest:
@@ -88,5 +112,12 @@ components:
           type: boolean
         isDone:
           type: boolean
+    ToggleTodoRequest:
+      type: object
+      properties:
+        isDone:
+          type:
+            - 'null'
+            - boolean
 tags:
   - name: Todos

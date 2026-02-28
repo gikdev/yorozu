@@ -5,10 +5,24 @@ import TodoItem from '../organisms/TodoItem.vue'
 defineProps<{
   items: TodoResponse[]
 }>()
+
+const emit = defineEmits<{
+  toggleTodoStatus: [id: string]
+}>()
+
+const reEmitToggle = (id: string) => {
+  emit('toggleTodoStatus', id)
+}
 </script>
 
 <template>
   <div class="flex flex-col overflow-y-auto gap-2">
-    <TodoItem v-for="item in items" :is-loading="false" :key="item.id" :task="item" />
+    <TodoItem
+      @toggleStatus="reEmitToggle"
+      v-for="item in items"
+      :is-loading="false"
+      :key="item.id"
+      :task="item"
+    />
   </div>
 </template>
