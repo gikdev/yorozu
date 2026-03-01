@@ -19,10 +19,10 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseExceptionHandler();
-RouteGroupBuilder apiGroup = app.MapGroup("/api");
-app.MapEndpoints(apiGroup);
+app.MapEndpoints(app.MapGroup("/api"));
 app.MapOpenApi();
 app.MapOpenApi("/openapi.yaml");
 app.MapScalarApiReference();
-
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 app.Run();
