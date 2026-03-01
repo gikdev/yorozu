@@ -2,8 +2,8 @@ import { defineConfig } from '@hey-api/openapi-ts'
 
 type ApiType = "mock" | "real"
 
-// const apiType: ApiType = "real"
-const apiType: ApiType = "mock"
+const apiType: ApiType = "real"
+// const apiType: ApiType = "mock"
 
 const input = `./src/common/api/${apiType}.openapi.yaml`
 const path = `./src/common/api/generated/client/${apiType}`

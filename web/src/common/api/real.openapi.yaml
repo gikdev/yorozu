@@ -5,6 +5,32 @@ info:
 servers:
   - url: http://localhost:5000/
 paths:
+  '/api/todos/{id}':
+    patch:
+      tags:
+        - Todos
+      summary: Change todo
+      operationId: ChangeTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeTodoRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
   /api/todos:
     post:
       tags:
@@ -29,6 +55,12 @@ paths:
         - Todos
       summary: List todos
       operationId: ListTodos
+      parameters:
+        - name: include_archived
+          in: query
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: OK
@@ -36,76 +68,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TodoListResponse'
-  '/api/todos/{id}':
-    delete:
-      tags:
-        - Todos
-      summary: Delete todo
-      operationId: DeleteTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-    put:
-      tags:
-        - Todos
-      summary: Update todo
-      operationId: UpdateTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTodoRequest'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoResponse'
-  '/api/todos/{id}/status':
-    patch:
-      tags:
-        - Todos
-      summary: Toggle todo
-      operationId: ToggleTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - type: 'null'
-                - $ref: '#/components/schemas/ToggleTodoRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoResponse'
 components:
   schemas:
+    ChangeTodoRequest:
+      type: object
+      properties:
+        rawTitle:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ValueStringObject'
+        isDone:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ValueBooleanObject'
+        isArchived:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ValueBooleanObject'
     CreateTodoRequest:
       required:
         - rawTitle
@@ -116,34 +95,15 @@ components:
     TodoListResponse:
       required:
         - items
-        - summary
+        - includesArchived
       type: object
       properties:
         items:
           type: array
           items:
             $ref: '#/components/schemas/TodoResponse'
-        summary:
-          $ref: '#/components/schemas/TodoListSummary'
-    TodoListSummary:
-      required:
-        - tags
-        - contexts
-        - projects
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-        contexts:
-          type: array
-          items:
-            type: string
-        projects:
-          type: array
-          items:
-            type: string
+        includesArchived:
+          type: boolean
     TodoResponse:
       required:
         - id
@@ -157,6 +117,7 @@ components:
         - isImportant
         - isUrgent
         - isDone
+        - isArchived
       type: object
       properties:
         id:
@@ -175,9 +136,12 @@ components:
             - 'null'
             - string
         time:
+          pattern: '^-?(?:0|[1-9]\d*)$'
           type:
             - 'null'
+            - integer
             - string
+          format: int32
         tag:
           type:
             - 'null'
@@ -192,19 +156,21 @@ components:
           type: boolean
         isDone:
           type: boolean
-    ToggleTodoRequest:
-      type: object
-      properties:
-        isDone:
-          type:
-            - 'null'
-            - boolean
-    UpdateTodoRequest:
+        isArchived:
+          type: boolean
+    ValueBooleanObject:
       required:
-        - rawTitle
+        - value
       type: object
       properties:
-        rawTitle:
+        value:
+          type: boolean
+    ValueStringObject:
+      required:
+        - value
+      type: object
+      properties:
+        value:
           type: string
 tags:
   - name: Todos

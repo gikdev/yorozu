@@ -15,7 +15,8 @@ internal static class Mappings {
             RawTitle = todo.ToRawString(),
             Tag = todo.Tag,
             Time = todo.Time,
-            Title = todo.Title
+            Title = todo.Title,
+            IsArchived = todo.IsArchived,
         };
     }
 }

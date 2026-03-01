@@ -18,13 +18,16 @@ internal sealed class TodoRepository(
         return Task.CompletedTask;
     }
 
-    public async Task<List<Todo>> ListAsync(CancellationToken cancellationToken = default) {
-        List<Todo> todos = await db.Todos.ToListAsync(cancellationToken: cancellationToken);
+    public async Task<List<Todo>> ListAsync(bool includeArchived = false, CancellationToken cancellationToken = default) {
+        List<Todo> todos = await db.Todos
+            .Where(t => includeArchived || !t.IsArchived)
+            .ToListAsync(cancellationToken: cancellationToken);
+
         return todos;
     }
 
     public async Task<Todo?> GetOneByIdAsync(Guid id, CancellationToken cancellationToken = default) {
-        Todo? todo = await db.Todos.FirstOrDefaultAsync(t => t.Id == id);
+        Todo? todo = await db.Todos.FirstOrDefaultAsync(t => t.Id == id, cancellationToken: cancellationToken);
         return todo;
     }
 

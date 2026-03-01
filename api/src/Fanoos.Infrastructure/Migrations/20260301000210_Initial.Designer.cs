@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fanoos.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbCtx))]
-    [Migration("20260220234106_Initial")]
+    [Migration("20260301000210_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -41,6 +41,10 @@ namespace Fanoos.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("energy");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_archived");
+
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean")
                         .HasColumnName("is_done");
@@ -61,8 +65,8 @@ namespace Fanoos.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("tag");
 
-                    b.Property<string>("Time")
-                        .HasColumnType("text")
+                    b.Property<int?>("Time")
+                        .HasColumnType("integer")
                         .HasColumnName("time");
 
                     b.Property<string>("Title")

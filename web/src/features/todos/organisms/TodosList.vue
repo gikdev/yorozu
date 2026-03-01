@@ -21,7 +21,7 @@ const handleOpenMenu = (id: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col overflow-y-auto gap-2">
+  <div class="flex flex-col overflow-y-auto gap-2" v-if="items.length > 0">
     <TodoItem
       @open-menu="handleOpenMenu"
       @toggle-status="reEmitToggle"
@@ -31,4 +31,6 @@ const handleOpenMenu = (id: string) => {
       :task="item"
     />
   </div>
+
+  <p v-else class="text-center">No todos available. Please add something!</p>
 </template>

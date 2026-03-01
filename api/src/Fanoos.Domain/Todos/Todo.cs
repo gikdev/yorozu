@@ -8,18 +8,21 @@ public class Todo : IAggregateRoot {
     private Todo() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
+    public Guid Id { get; private init; }
     public string Title { get; private set; }
     public string? Context { get; private set; }
     public string? Project { get; private set; }
-    public string? Time { get; private set; }
+    public int? Time { get; private set; }
     public string? Tag { get; private set; }
     public string? Energy { get; private set; }
     public bool IsImportant { get; private set; }
     public bool IsUrgent { get; private set; }
     public bool IsDone { get; private set; }
-    public Guid Id { get; private init; }
+    public bool IsArchived { get; private set; }
 
     public static Todo FromRaw(string raw) {
+        var time = ExtractSingle(raw, @"~(\S+)");
+
         Todo todo = new() {
             Context = ExtractSingle(raw, @"@(\S+)"),
             Energy = ExtractSingle(raw, @"\$(\S+)"),
@@ -29,7 +32,7 @@ public class Todo : IAggregateRoot {
             IsUrgent = GetIsUrgent(raw),
             Project = ExtractSingle(raw, @"\+(\S+)"),
             Tag = ExtractSingle(raw, @"#(\S+)"),
-            Time = ExtractSingle(raw, @"~(\S+)"),
+            Time = time == null ? null : int.Parse(time),
             Title = GetCleanTitle(raw)
         };
 
@@ -43,12 +46,17 @@ public class Todo : IAggregateRoot {
         IsUrgent = GetIsUrgent(newTitle);
         Project = ExtractSingle(newTitle, @"\+(\S+)");
         Tag = ExtractSingle(newTitle, @"#(\S+)");
-        Time = ExtractSingle(newTitle, @"~(\S+)");
+        var time = ExtractSingle(newTitle, @"~(\S+)");
+        Time = time == null ? null : int.Parse(time);
         Title = GetCleanTitle(newTitle);
     }
 
     public void UpdateDone(bool? isDone) {
         IsDone = isDone ?? !IsDone;
+    }
+
+    public void UpdateArchive(bool? shouldBeArchived) {
+        IsArchived = shouldBeArchived ?? !IsArchived;
     }
 
     public string ToRawString() {
@@ -61,10 +69,10 @@ public class Todo : IAggregateRoot {
         parts.Add(Title);
 
         if (!string.IsNullOrWhiteSpace(Context)) parts.Add($"@{Context}");
-        if (!string.IsNullOrWhiteSpace(Time)) parts.Add($"~{Time}");
         if (!string.IsNullOrWhiteSpace(Tag)) parts.Add($"#{Tag}");
         if (!string.IsNullOrWhiteSpace(Energy)) parts.Add($"${Energy}");
         if (!string.IsNullOrWhiteSpace(Project)) parts.Add($"+{Project}");
+        if (Time != null) parts.Add($"~{Time}");
 
         return string.Join(" ", parts);
     }
@@ -78,11 +86,11 @@ public class Todo : IAggregateRoot {
     }
 
     private static bool GetIsUrgent(string raw) {
-        return raw.StartsWith("!*") || raw.StartsWith("!");
+        return raw.StartsWith("!*", StringComparison.InvariantCulture) || raw.StartsWith('!');
     }
 
     private static bool GetIsImportant(string raw) {
-        return raw.StartsWith("*") || raw.StartsWith("!*");
+        return raw.StartsWith('*') || raw.StartsWith("!*", StringComparison.InvariantCulture);
     }
 
     private static string? ExtractSingle(string raw, string pattern) {
