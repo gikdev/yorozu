@@ -19,6 +19,7 @@ internal sealed class ChangeTodo : IEndpoint {
             .MapPatch("todos/{id:guid}", Handle)
             .WithName(nameof(ChangeTodo))
             .WithSummary("Change todo")
+            .WithDescription("Toggle status, (un)archive, and change the title of the todo.")
             .WithTags(ApiTags.Todos)
             .Accepts<ChangeTodoRequest>("application/json")
             .Produces<TodoResponse>();

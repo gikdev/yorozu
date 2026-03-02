@@ -10,6 +10,7 @@ paths:
       tags:
         - Todos
       summary: Change todo
+      description: 'Toggle status, (un)archive, and change the title of the todo.'
       operationId: ChangeTodo
       parameters:
         - name: id
