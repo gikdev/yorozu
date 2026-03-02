@@ -1,9 +1,11 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+    <File Path="compose.yml" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
     <File Path="Fanoos.slnx" />
+    <File Path="Nuget.config" />
     <File Path="TaskFile.yml" />
   </Folder>
 

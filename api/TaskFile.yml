@@ -6,6 +6,7 @@ vars:
   PROJECT_PATH: "./src/Fanoos.Infrastructure"
   SOLUTION_FILE_PATH: "./Fanoos.slnx"
   STARTUP_PATH: "./src/Fanoos.Api"
+  NUGET_CONFIG_FILE: "./Nuget.config"
 
 tasks:
   default:
@@ -25,7 +26,7 @@ tasks:
     aliases: [ r ]
     desc: Restore the whole solution.
     cmds:
-      - dotnet restore {{.SOLUTION_FILE_PATH}}
+      - dotnet restore {{.SOLUTION_FILE_PATH}} --configfile {{.NUGET_CONFIG_FILE}}
     requires:
       vars: [ SOLUTION_FILE_PATH ]
 
@@ -41,7 +42,7 @@ tasks:
     aliases: [ b ]
     desc: Build the project
     cmds:
-      - dotnet build {{.SOLUTION_FILE_PATH}}
+      - dotnet build {{.SOLUTION_FILE_PATH}} --no-restore
     requires:
       vars: [ SOLUTION_FILE_PATH ]
 
@@ -56,7 +57,7 @@ tasks:
     aliases: [ mg ]
     desc: Generate EF migrations.
     cmds:
-      - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}}
+      - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} --no-restore
     requires:
       vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH ]
 
@@ -64,7 +65,7 @@ tasks:
     aliases: [ ma ]
     desc: Run EF migrations.
     cmds:
-      - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}}
+      - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} --no-restore
     requires:
       vars: [ PROJECT_PATH, STARTUP_PATH ]
 

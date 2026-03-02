@@ -2,6 +2,7 @@ import { defineConfig } from '@hey-api/openapi-ts'
 
 type ApiType = "mock" | "real"
 
+// SEARCH:API_TYPE
 const apiType: ApiType = "real"
 // const apiType: ApiType = "mock"
 
