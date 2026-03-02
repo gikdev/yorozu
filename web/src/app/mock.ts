@@ -2,8 +2,9 @@ import { setupWorker } from 'msw/browser'
 import * as todos from '#/features/todos/mocks'
 import type { HttpHandler } from 'msw'
 
-// const IS_MOCK_MODE = true
-const IS_MOCK_MODE = false
+// SEARCH:API_TYPE
+const IS_MOCK_MODE = true
+// const IS_MOCK_MODE = false
 
 const handlers: HttpHandler[] = [...Object.values(todos)]
 

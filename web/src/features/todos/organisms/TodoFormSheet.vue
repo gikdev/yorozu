@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { btn } from '#/common/atoms/btn'
-import { input } from '#/common/atoms/input';
+import { input } from '#/common/atoms/input'
 import BottomSheet from '#/common/molecules/BottomSheet.vue'
 import { ref } from 'vue'
 

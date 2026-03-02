@@ -11,8 +11,22 @@ import { btn } from '#/common/atoms/btn'
 import TodoFormSheet from '#/features/todos/organisms/TodoFormSheet.vue'
 
 //#region List Todos
-const listTodosQ = useQuery(listTodosQuery())
+const includeArchived = ref(false)
+const listTodosQOptions = computed(() => {
+  return listTodosQuery({
+    query: {
+      include_archived: includeArchived.value,
+    },
+  })
+})
+// TODO: CONTINUE: here...
+const listTodosQ = useQuery(
+  listTodosQOptions,
+)
 const refetchTodos = () => listTodosQ.refetch()
+function handleIncludeArchivedToggle() {
+  includeArchived.value = !includeArchived.value
+}
 //#endregion
 
 //#region Create Todo
@@ -148,21 +162,14 @@ function editTodoTitle(newRawTitle: string) {
 
 <template>
   <div class="max-w-120 mx-auto bg-slate-900 h-dvh text-white flex flex-col">
-    <TodoHeader />
+    <TodoHeader :include-archived="includeArchived" @toggle-include-archived="handleIncludeArchivedToggle" />
 
     <main class="px-4 flex-1 overflow-y-auto">
-      <CreateTodoForm
-        :is-loading="createTodoM.isLoading.value"
-        :validator="validateTodoTitle"
-        @submit="createTodo"
-      />
+      <CreateTodoForm :is-loading="createTodoM.isLoading.value" :validator="validateTodoTitle" @submit="createTodo" />
 
       <template v-if="listTodosQ.status.value === 'success'">
-        <TodosList
-          @open-todo-menu="openOptionsSheet"
-          @toggle-todo-status="toggleTodoStatus"
-          :items="listTodosQ.data.value?.items ?? []"
-        />
+        <TodosList @open-todo-menu="openOptionsSheet" @toggle-todo-status="toggleTodoStatus"
+          :items="listTodosQ.data.value?.items ?? []" />
       </template>
       <template v-else-if="listTodosQ.status.value === 'pending'">
         <p class="p-4">Loading...</p>
@@ -173,18 +180,10 @@ function editTodoTitle(newRawTitle: string) {
       </template>
     </main>
 
-    <TodoBottomSheet
-      v-if="isOptionsSheetOpen"
-      @close-sheet="closeOptionsSheet"
-      @archive="archiveTodo"
-      @edit="openEditingSheet"
-    />
+    <TodoBottomSheet v-if="isOptionsSheetOpen" @close-sheet="closeOptionsSheet" @archive="archiveTodo"
+      @edit="openEditingSheet" />
 
-    <TodoFormSheet
-      v-if="isEditingSheetOpen"
-      :initial-title="editingSheetTodo!.rawTitle"
-      @close-sheet="closeEditingSheet"
-      @submit="editTodoTitle"
-    />
+    <TodoFormSheet v-if="isEditingSheetOpen" :initial-title="editingSheetTodo!.rawTitle"
+      @close-sheet="closeEditingSheet" @submit="editTodoTitle" />
   </div>
 </template>

@@ -35,7 +35,7 @@ internal sealed class ListTodos : IEndpoint {
 
     private sealed record TodoListResponse {
         public required List<TodoResponse> Items { get; init; }
-        public required bool IncludesArchived {get;init;}
+        public required bool IncludesArchived { get; init; }
     }
 
     private static TodoListResponse MapToListResponse(List<Todo> todos, bool includesArchived) {

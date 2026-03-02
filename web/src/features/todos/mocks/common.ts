@@ -28,7 +28,7 @@ export class TodosRepo {
       isImportant: false,
       isUrgent: true,
       isDone: false,
-      isArchived: false,
+      isArchived: true,
     },
     {
       id: 'b34d05fe-e5b7-4959-b784-02e340176d41',
