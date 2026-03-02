@@ -12,25 +12,24 @@ import TodoFormSheet from '#/features/todos/organisms/TodoFormSheet.vue'
 
 //#region List Todos
 const includeArchived = ref(false)
-const listTodosQOptions = computed(() => {
-  return listTodosQuery({
-    query: {
-      include_archived: includeArchived.value,
-    },
-  })
-})
-// TODO: CONTINUE: here...
-const listTodosQ = useQuery(
-  listTodosQOptions,
-)
-const refetchTodos = () => listTodosQ.refetch()
+
 function handleIncludeArchivedToggle() {
   includeArchived.value = !includeArchived.value
 }
+
+const qListTodos = useQuery(() =>
+  listTodosQuery({
+    query: {
+      include_archived: includeArchived.value,
+    },
+  }),
+)
+
+const refetchTodos = () => qListTodos.refetch()
 //#endregion
 
 //#region Create Todo
-const createTodoM = useMutation({
+const mCreateTodo = useMutation({
   ...createTodoMutation(),
   onSuccess: refetchTodos,
 })
@@ -50,7 +49,7 @@ function validateTodoTitle(value: string): string | null {
 }
 
 function createTodo(rawTitle: string) {
-  createTodoM.mutate({ body: { rawTitle } })
+  mCreateTodo.mutate({ body: { rawTitle } })
 }
 //#endregion
 
@@ -58,7 +57,7 @@ function createTodo(rawTitle: string) {
 const optionsSheetTodoId = ref<string | null>(null)
 const isOptionsSheetOpen = computed(() => optionsSheetTodoId.value != null)
 const optionsSheetTodo = computed(() => {
-  const todo = listTodosQ.data.value?.items.find((t) => t.id === editingSheetTodoId.value)
+  const todo = qListTodos.data.value?.items.find((t) => t.id === editingSheetTodoId.value)
 
   return todo
 })
@@ -74,7 +73,7 @@ function closeOptionsSheet() {
 //#endregion
 
 //#region Archive Todo
-const archiveTodoM = useMutation({
+const mArchiveTodo = useMutation({
   ...changeTodoMutation(),
   onSuccess: () => {
     refetchTodos()
@@ -88,7 +87,7 @@ function archiveTodo() {
 
   if (!confirm('Sure?')) return
 
-  archiveTodoM.mutate({
+  mArchiveTodo.mutate({
     path: { id },
     body: {
       isArchived: {
@@ -100,13 +99,13 @@ function archiveTodo() {
 //#endregion
 
 //#region Toggle Todo
-const toggleTodoM = useMutation({
+const mToggleTodo = useMutation({
   ...changeTodoMutation(),
   onSuccess: refetchTodos,
 })
 
 function toggleTodoStatus(id: string, currentIsDone: boolean) {
-  toggleTodoM.mutate({
+  mToggleTodo.mutate({
     path: { id },
     body: {
       isDone: {
@@ -121,7 +120,7 @@ function toggleTodoStatus(id: string, currentIsDone: boolean) {
 const editingSheetTodoId = ref<string | null>(null)
 const isEditingSheetOpen = computed(() => editingSheetTodoId.value != null)
 const editingSheetTodo = computed(() => {
-  const todo = listTodosQ.data.value?.items.find((t) => t.id === editingSheetTodoId.value)
+  const todo = qListTodos.data.value?.items.find((t) => t.id === editingSheetTodoId.value)
 
   return todo
 })
@@ -162,16 +161,26 @@ function editTodoTitle(newRawTitle: string) {
 
 <template>
   <div class="max-w-120 mx-auto bg-slate-900 h-dvh text-white flex flex-col">
-    <TodoHeader :include-archived="includeArchived" @toggle-include-archived="handleIncludeArchivedToggle" />
+    <TodoHeader
+      :include-archived="includeArchived"
+      @toggle-include-archived="handleIncludeArchivedToggle"
+    />
 
     <main class="px-4 flex-1 overflow-y-auto">
-      <CreateTodoForm :is-loading="createTodoM.isLoading.value" :validator="validateTodoTitle" @submit="createTodo" />
+      <CreateTodoForm
+        :is-loading="mCreateTodo.isLoading.value"
+        :validator="validateTodoTitle"
+        @submit="createTodo"
+      />
 
-      <template v-if="listTodosQ.status.value === 'success'">
-        <TodosList @open-todo-menu="openOptionsSheet" @toggle-todo-status="toggleTodoStatus"
-          :items="listTodosQ.data.value?.items ?? []" />
+      <template v-if="qListTodos.status.value === 'success'">
+        <TodosList
+          @open-todo-menu="openOptionsSheet"
+          @toggle-todo-status="toggleTodoStatus"
+          :items="qListTodos.data.value?.items ?? []"
+        />
       </template>
-      <template v-else-if="listTodosQ.status.value === 'pending'">
+      <template v-else-if="qListTodos.status.value === 'pending'">
         <p class="p-4">Loading...</p>
       </template>
       <template v-else>
@@ -180,10 +189,18 @@ function editTodoTitle(newRawTitle: string) {
       </template>
     </main>
 
-    <TodoBottomSheet v-if="isOptionsSheetOpen" @close-sheet="closeOptionsSheet" @archive="archiveTodo"
-      @edit="openEditingSheet" />
+    <TodoBottomSheet
+      v-if="isOptionsSheetOpen"
+      @close-sheet="closeOptionsSheet"
+      @archive="archiveTodo"
+      @edit="openEditingSheet"
+    />
 
-    <TodoFormSheet v-if="isEditingSheetOpen" :initial-title="editingSheetTodo!.rawTitle"
-      @close-sheet="closeEditingSheet" @submit="editTodoTitle" />
+    <TodoFormSheet
+      v-if="isEditingSheetOpen"
+      :initial-title="editingSheetTodo!.rawTitle"
+      @close-sheet="closeEditingSheet"
+      @submit="editTodoTitle"
+    />
   </div>
 </template>
