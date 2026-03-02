@@ -6,7 +6,7 @@ vars:
   PROJECT_PATH: "./src/Fanoos.Infrastructure"
   SOLUTION_FILE_PATH: "./Fanoos.slnx"
   STARTUP_PATH: "./src/Fanoos.Api"
-  NUGET_CONFIG_FILE: "./Nuget.config"
+  NUGET_CONFIG_FILE: "./NuGet.config"
 
 tasks:
   default:
