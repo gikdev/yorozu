@@ -19,9 +19,11 @@ internal sealed class TodoRepository(
     }
 
     public async Task<List<Todo>> ListAsync(bool includeArchived = false, CancellationToken cancellationToken = default) {
-        List<Todo> todos = await db.Todos
+        IQueryable<Todo> query = db.Todos
             .Where(t => includeArchived || !t.IsArchived)
-            .ToListAsync(cancellationToken: cancellationToken);
+            .TodoDefaultSort();
+
+        List<Todo> todos = await query.ToListAsync(cancellationToken: cancellationToken);
 
         return todos;
     }
