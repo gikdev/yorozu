@@ -3,6 +3,10 @@ import { btn } from '#/common/atoms/btn'
 import BottomSheet from '#/common/molecules/BottomSheet.vue'
 import { PhArchive, PhPencilLine } from '@phosphor-icons/vue'
 
+const props = defineProps<{
+  isArchived: boolean
+}>()
+
 const emit = defineEmits<{
   closeSheet: []
   edit: []
@@ -23,7 +27,8 @@ const archiveTodo = () => emit('archive')
 
     <button :class="btn()" @click="archiveTodo">
       <PhArchive :size="24" />
-      <span>Archive</span>
+      <span v-if="isArchived">Unarchive</span>
+      <span v-else>Archive</span>
     </button>
   </BottomSheet>
 </template>

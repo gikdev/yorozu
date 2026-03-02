@@ -99,7 +99,7 @@ components:
         - Low
         - Medium
         - High
-        - 
+        -
     TodoListResponse:
       required:
         - items

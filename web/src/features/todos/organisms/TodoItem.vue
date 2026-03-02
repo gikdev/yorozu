@@ -28,8 +28,11 @@ function formatEnergyLevel(energyLevel: EnergyLevel) {
 
 <template>
   <div class="flex items-center gap-3 p-3" :class="task.isDone && 'opacity-50'">
-    <button :disabled="isLoading" @click="emit('toggleStatus', task.id, task.isDone)"
-      class="cursor-pointer disabled:cursor-not-allowed">
+    <button
+      :disabled="isLoading"
+      @click="emit('toggleStatus', task.id, task.isDone)"
+      class="cursor-pointer disabled:cursor-not-allowed"
+    >
       <PhCheckCircle v-if="task.isDone" size="32" weight="fill" />
       <PhCircle v-else size="32" />
     </button>
@@ -47,7 +50,11 @@ function formatEnergyLevel(energyLevel: EnergyLevel) {
       </p>
     </div>
 
-    <button :disabled="isLoading" @click="emit('openMenu', task.id)" class="cursor-pointer disabled:cursor-not-allowed">
+    <button
+      :disabled="isLoading"
+      @click="emit('openMenu', task.id)"
+      class="cursor-pointer disabled:cursor-not-allowed"
+    >
       <PhDotsThree size="32" />
     </button>
   </div>

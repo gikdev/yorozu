@@ -57,7 +57,7 @@ function createTodo(rawTitle: string) {
 const optionsSheetTodoId = ref<string | null>(null)
 const isOptionsSheetOpen = computed(() => optionsSheetTodoId.value != null)
 const optionsSheetTodo = computed(() => {
-  const todo = qListTodos.data.value?.items.find((t) => t.id === editingSheetTodoId.value)
+  const todo = qListTodos.data.value?.items.find((t) => t.id === optionsSheetTodoId.value)
 
   return todo
 })
@@ -85,13 +85,16 @@ function archiveTodo() {
   const id = optionsSheetTodoId.value
   if (!id) return
 
+  const todo = optionsSheetTodo.value
+  if (!todo) return
+
   if (!confirm('Sure?')) return
 
   mArchiveTodo.mutate({
     path: { id },
     body: {
       isArchived: {
-        value: true,
+        value: !todo.isArchived,
       },
     },
   })
@@ -190,7 +193,8 @@ function editTodoTitle(newRawTitle: string) {
     </main>
 
     <TodoBottomSheet
-      v-if="isOptionsSheetOpen"
+      v-if="isOptionsSheetOpen && optionsSheetTodo"
+      :is-archived="optionsSheetTodo.isArchived"
       @close-sheet="closeOptionsSheet"
       @archive="archiveTodo"
       @edit="openEditingSheet"
