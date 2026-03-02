@@ -57,7 +57,7 @@ tasks:
     aliases: [ mg ]
     desc: Generate EF migrations.
     cmds:
-      - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} --no-restore
+      - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} {{.CLI_ARGS}}
     requires:
       vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH ]
 
@@ -65,7 +65,7 @@ tasks:
     aliases: [ ma ]
     desc: Run EF migrations.
     cmds:
-      - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} --no-restore
+      - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} {{.CLI_ARGS}}
     requires:
       vars: [ PROJECT_PATH, STARTUP_PATH ]
 

@@ -1,4 +1,4 @@
-import type { TodoResponse } from '#/common/api/client'
+import { EnergyLevel, type TodoResponse } from '#/common/api/client'
 
 export class TodosRepo {
   private static _todos: TodoResponse[] = [
@@ -10,7 +10,7 @@ export class TodosRepo {
       project: 'webapp',
       time: 30,
       tag: 'frontend',
-      energy: '$$$',
+      energy: EnergyLevel.HIGH,
       isImportant: true,
       isUrgent: false,
       isDone: false,
@@ -24,7 +24,7 @@ export class TodosRepo {
       project: 'backend',
       time: 20,
       tag: 'docs',
-      energy: '$$',
+      energy: EnergyLevel.MEDIUM,
       isImportant: false,
       isUrgent: true,
       isDone: false,

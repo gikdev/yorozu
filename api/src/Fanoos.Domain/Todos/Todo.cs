@@ -14,7 +14,7 @@ public class Todo : IAggregateRoot {
     public string? Project { get; private set; }
     public int? Time { get; private set; }
     public string? Tag { get; private set; }
-    public string? Energy { get; private set; }
+    public EnergyLevel? Energy { get; private set; }
     public bool IsImportant { get; private set; }
     public bool IsUrgent { get; private set; }
     public bool IsDone { get; private set; }
@@ -25,7 +25,7 @@ public class Todo : IAggregateRoot {
 
         Todo todo = new() {
             Context = ExtractSingle(raw, @"@(\S+)"),
-            Energy = ExtractSingle(raw, @"\$(\S+)"),
+            Energy = ExtractEnergy(raw),
             Id = Guid.NewGuid(),
             IsDone = false,
             IsImportant = GetIsImportant(raw),
@@ -41,7 +41,7 @@ public class Todo : IAggregateRoot {
 
     public void UpdateTitle(string newTitle) {
         Context = ExtractSingle(newTitle, @"@(\S+)");
-        Energy = ExtractSingle(newTitle, @"\$(\S+)");
+        Energy = ExtractEnergy(newTitle);
         IsImportant = GetIsImportant(newTitle);
         IsUrgent = GetIsUrgent(newTitle);
         Project = ExtractSingle(newTitle, @"\+(\S+)");
@@ -55,7 +55,7 @@ public class Todo : IAggregateRoot {
         IsDone = isDone ?? !IsDone;
     }
 
-    public void UpdateArchive(bool? shouldBeArchived) {
+    public void UpdateArchived(bool? shouldBeArchived) {
         IsArchived = shouldBeArchived ?? !IsArchived;
     }
 
@@ -70,7 +70,7 @@ public class Todo : IAggregateRoot {
 
         if (!string.IsNullOrWhiteSpace(Context)) parts.Add($"@{Context}");
         if (!string.IsNullOrWhiteSpace(Tag)) parts.Add($"#{Tag}");
-        if (!string.IsNullOrWhiteSpace(Energy)) parts.Add($"${Energy}");
+        if (Energy != null) parts.Add(new string('$', (int)Energy));
         if (!string.IsNullOrWhiteSpace(Project)) parts.Add($"+{Project}");
         if (Time != null) parts.Add($"~{Time}");
 
@@ -83,6 +83,23 @@ public class Todo : IAggregateRoot {
 
     private static string GetCleanTitle(string raw) {
         return Regex.Replace(RemoveLeadingMarkers(raw), @"[@~#\$+]\S+", "").Trim();
+    }
+
+    private static EnergyLevel? ExtractEnergy(string raw) {
+        var match = Regex.Match(raw, @"(\$+)");
+
+        if (!match.Success) return null;
+
+        int count = match.Groups[1].Value.Length;
+
+        EnergyLevel? energy = count switch {
+            1 => EnergyLevel.Low,
+            2 => EnergyLevel.Medium,
+            3 => EnergyLevel.High,
+            _ => null
+        };
+
+        return energy;
     }
 
     private static bool GetIsUrgent(string raw) {

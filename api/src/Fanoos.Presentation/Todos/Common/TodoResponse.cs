@@ -1,3 +1,5 @@
+using Fanoos.Domain.Todos;
+
 namespace Fanoos.Presentation.Todos.Common;
 
 internal sealed record TodoResponse {
@@ -8,7 +10,7 @@ internal sealed record TodoResponse {
     public required string? Project { get; init; }
     public required int? Time { get; init; }
     public required string? Tag { get; init; }
-    public required string? Energy { get; init; }
+    public required EnergyLevel? Energy { get; init; }
     public required bool IsImportant { get; init; }
     public required bool IsUrgent { get; init; }
     public required bool IsDone { get; init; }

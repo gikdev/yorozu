@@ -93,6 +93,13 @@ components:
       properties:
         rawTitle:
           type: string
+    EnergyLevel:
+      enum:
+        - None
+        - Low
+        - Medium
+        - High
+        - 
     TodoListResponse:
       required:
         - items
@@ -146,9 +153,9 @@ components:
             - 'null'
             - string
         energy:
-          type:
-            - 'null'
-            - string
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
         isImportant:
           type: boolean
         isUrgent:

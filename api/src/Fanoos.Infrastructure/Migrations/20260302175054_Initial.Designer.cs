@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fanoos.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbCtx))]
-    [Migration("20260301000210_Initial")]
+    [Migration("20260302175054_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -37,8 +37,8 @@ namespace Fanoos.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("context");
 
-                    b.Property<string>("Energy")
-                        .HasColumnType("text")
+                    b.Property<int?>("Energy")
+                        .HasColumnType("integer")
                         .HasColumnName("energy");
 
                     b.Property<bool>("IsArchived")

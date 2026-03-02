@@ -19,7 +19,7 @@ internal sealed class ChangeTodoCommandHandler(
         }
 
         if (request.IsArchived != null) {
-            todo.UpdateArchive(request.IsArchived);
+            todo.UpdateArchived(request.IsArchived);
         }
 
         if (request.IsDone != null) {

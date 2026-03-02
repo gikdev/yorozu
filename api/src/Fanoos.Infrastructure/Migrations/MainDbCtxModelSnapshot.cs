@@ -34,8 +34,8 @@ namespace Fanoos.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("context");
 
-                    b.Property<string>("Energy")
-                        .HasColumnType("text")
+                    b.Property<int?>("Energy")
+                        .HasColumnType("integer")
                         .HasColumnName("energy");
 
                     b.Property<bool>("IsArchived")

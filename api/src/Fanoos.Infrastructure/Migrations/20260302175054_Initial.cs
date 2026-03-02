@@ -25,7 +25,7 @@ namespace Fanoos.Infrastructure.Migrations
                     project = table.Column<string>(type: "text", nullable: true),
                     time = table.Column<int>(type: "integer", nullable: true),
                     tag = table.Column<string>(type: "text", nullable: true),
-                    energy = table.Column<string>(type: "text", nullable: true),
+                    energy = table.Column<int>(type: "integer", nullable: true),
                     is_important = table.Column<bool>(type: "boolean", nullable: false),
                     is_urgent = table.Column<bool>(type: "boolean", nullable: false),
                     is_done = table.Column<bool>(type: "boolean", nullable: false),

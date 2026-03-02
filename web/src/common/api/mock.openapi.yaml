@@ -1,6 +1,6 @@
 openapi: '3.1.1'
 info:
-  title: Mock.Api | v1
+  title: Fanoos.Api | v1 (Mock)
   version: 1.0.0
 servers:
   - url: http://localhost:5000/
@@ -93,6 +93,13 @@ components:
       properties:
         rawTitle:
           type: string
+    EnergyLevel:
+      enum:
+        - None
+        - Low
+        - Medium
+        - High
+        -
     TodoListResponse:
       required:
         - items
@@ -146,9 +153,9 @@ components:
             - 'null'
             - string
         energy:
-          type:
-            - 'null'
-            - string
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
         isImportant:
           type: boolean
         isUrgent:
