@@ -29,6 +29,7 @@ tasks:
       - npm run vue-tsc -- --build
 
   app:build:full:
+    aliases: [ publish ]
     desc: Type-check then build project
     cmds:
       - task: app:type-check

@@ -1,5 +1,8 @@
 # Custom
 .containers/
+publish/
+output/
+output*.zip
 
 # Environment
 .env*
