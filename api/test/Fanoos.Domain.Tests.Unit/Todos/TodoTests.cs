@@ -1,5 +1,6 @@
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 
+using FluentAssertions;
 using ErrorOr;
 using Fanoos.Domain.Todos;
 
@@ -15,8 +16,8 @@ public class TodoTests {
         ErrorOr<Todo> todo = Todo.FromRaw(emptyRawInput);
 
         // Then
-        Assert.True(todo.IsError);
-        Assert.Equal(todo.FirstError, TodoErrors.RawInputIsEmpty);
+        todo.IsError.Should().BeTrue();
+        todo.FirstError.Should().Be(TodoErrors.RawInputIsEmpty);
     }
 
     [Fact]
@@ -29,8 +30,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Title, rawTitle);
+        todoResult.IsError.Should().BeFalse();
+        todo.Title.Should().Be(rawTitle);
     }
 
     [Fact]
@@ -44,8 +45,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Context, sampleContext);
+        todoResult.IsError.Should().BeFalse();
+        todo.Context.Should().Be(sampleContext);
     }
 
     [Fact]
@@ -59,8 +60,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Project, sampleProject);
+        todoResult.IsError.Should().BeFalse();
+        todo.Project.Should().Be(sampleProject);
     }
 
     [Fact]
@@ -74,8 +75,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Time, sampleTime);
+        todoResult.IsError.Should().BeFalse();
+        todo.Time.Should().Be(sampleTime);
     }
 
     [Fact]
@@ -89,8 +90,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Tag, sampleTag);
+        todoResult.IsError.Should().BeFalse();
+        todo.Tag.Should().Be(sampleTag);
     }
 
     [Fact]
@@ -105,8 +106,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.Equal(todo.Energy, finalSampleEnergy);
+        todoResult.IsError.Should().BeFalse();
+        todo.Energy.Should().Be(finalSampleEnergy);
     }
 
     [Theory]
@@ -129,8 +130,8 @@ public class TodoTests {
         Todo todo = todoResult.Value;
 
         // Then
-        Assert.False(todoResult.IsError);
-        Assert.DoesNotContain("$", todo.Title, StringComparison.InvariantCultureIgnoreCase);
+        todoResult.IsError.Should().BeFalse();
+        todo.Title.Should().NotContain("$");
     }
 
     [Fact]
@@ -142,7 +143,7 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.True(todo.IsImportant);
+        todo.IsImportant.Should().BeTrue();
     }
 
     [Fact]
@@ -154,7 +155,7 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.True(todo.IsUrgent);
+        todo.IsUrgent.Should().BeTrue();
     }
 
     [Fact]
@@ -166,8 +167,8 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.True(todo.IsImportant);
-        Assert.True(todo.IsUrgent);
+        todo.IsImportant.Should().BeTrue();
+        todo.IsUrgent.Should().BeTrue();
     }
 
     [Fact]
@@ -179,8 +180,8 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.False(todo.IsImportant);
-        Assert.Equal(todo.Title, raw);
+        todo.IsImportant.Should().BeFalse();
+        todo.Title.Should().Be(raw);
     }
 
     [Theory]
@@ -192,13 +193,13 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.True(todo.IsImportant);
-        Assert.True(todo.IsUrgent);
-        Assert.Equal("ctx", todo.Context);
-        Assert.Equal("proj", todo.Project);
-        Assert.Equal("tag", todo.Tag);
-        Assert.Equal(10, todo.Time);
-        Assert.Equal(EnergyLevel.High, todo.Energy);
+        todo.IsImportant.Should().BeTrue();
+        todo.IsUrgent.Should().BeTrue();
+        todo.Context.Should().Be("ctx");
+        todo.Project.Should().Be("proj");
+        todo.Tag.Should().Be("tag");
+        todo.Time.Should().Be(10);
+        todo.Energy.Should().Be(EnergyLevel.High);
     }
 
     [Fact]
@@ -210,8 +211,8 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.Equal("Call Mike about the @ symbol", todo.Title);
-        Assert.Null(todo.Context);
+        todo.Title.Should().Be("Call Mike about the @ symbol");
+        todo.Context.Should().BeNull();
     }
 
     [Fact]
@@ -223,7 +224,7 @@ public class TodoTests {
         var todo = Todo.FromRaw(raw).Value;
 
         // Assert
-        Assert.Equal("Task to review the * feature", todo.Title);
+        todo.Title.Should().Be("Task to review the * feature");
     }
 
     [Fact]
@@ -235,7 +236,7 @@ public class TodoTests {
         string raw = todo.ToRawString();
 
         // Assert
-        Assert.Equal("Clean slate task", raw);
+        raw.Should().Be("Clean slate task");
     }
 
     [Fact]
@@ -248,13 +249,13 @@ public class TodoTests {
         todo.UpdateTitle(newRaw);
 
         // Assert
-        Assert.True(todo.IsImportant);
-        Assert.False(todo.IsUrgent);
-        Assert.Equal("New Title", todo.Title.Trim());
-        Assert.Equal("newctx", todo.Context);
-        Assert.Equal("newproj", todo.Project);
-        Assert.Equal("newtag", todo.Tag);
-        Assert.Equal(40, todo.Time);
-        Assert.Equal(EnergyLevel.High, todo.Energy);
+        todo.IsImportant.Should().BeTrue();
+        todo.IsUrgent.Should().BeFalse();
+        todo.Title.Trim().Should().Be("New Title");
+        todo.Context.Should().Be("newctx");
+        todo.Project.Should().Be("newproj");
+        todo.Tag.Should().Be("newtag");
+        todo.Time.Should().Be(40);
+        todo.Energy.Should().Be(EnergyLevel.High);
     }
 }
