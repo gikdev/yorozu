@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using ErrorOr;
 using Fanoos.Common.Domain;
 
 namespace Fanoos.Domain.Todos;
@@ -20,35 +20,126 @@ public class Todo : IAggregateRoot {
     public bool IsDone { get; private set; }
     public bool IsArchived { get; private set; }
 
-    public static Todo FromRaw(string raw) {
-        var time = ExtractSingle(raw, @"~(\S+)");
+    public static ErrorOr<Todo> FromRaw(string raw) {
+        if (string.IsNullOrWhiteSpace(raw))
+            return TodoErrors.RawInputIsEmpty;
+
+        var input = raw.Trim();
+
+        List<string> tokens = TodoParser.SplitToList(input);
 
         Todo todo = new() {
-            Context = ExtractSingle(raw, @"@(\S+)"),
-            Energy = ExtractEnergy(raw),
             Id = Guid.NewGuid(),
+
             IsDone = false,
-            IsImportant = GetIsImportant(raw),
-            IsUrgent = GetIsUrgent(raw),
-            Project = ExtractSingle(raw, @"\+(\S+)"),
-            Tag = ExtractSingle(raw, @"#(\S+)"),
-            Time = time == null ? null : int.Parse(time),
-            Title = GetCleanTitle(raw)
+            IsArchived = false,
+            IsImportant = false,
+            IsUrgent = false,
+
+            Context = null,
+            Energy = null,
+            Project = null,
+            Tag = null,
+            Time = null,
+
+            Title = "",
         };
+
+        // Iterate backwards to allow removal!
+        for (int i = tokens.Count - 1; i >= 0; i--) {
+            var token = tokens[i];
+
+            if (TodoParser.DecodeContextAnnotation(token) is { } context) {
+                todo.Context = context;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeEnergyAnnotation(token) is { } energy) {
+                todo.Energy = energy;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeProjectAnnotation(token) is { } project) {
+                todo.Project = project;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeTagAnnotation(token) is { } tag) {
+                todo.Tag = tag;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeTimeAnnotation(token) is { } time) {
+                todo.Time = time;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeEisenhowerMatrixAnnotation(token) is { } matrix) {
+                todo.IsImportant = matrix.IsImportant;
+                todo.IsUrgent = matrix.IsUrgent;
+                tokens.RemoveAt(i);
+                continue;
+            }
+        }
+
+        todo.Title = TodoParser.JoinTokenList(tokens);
 
         return todo;
     }
 
-    public void UpdateTitle(string newTitle) {
-        Context = ExtractSingle(newTitle, @"@(\S+)");
-        Energy = ExtractEnergy(newTitle);
-        IsImportant = GetIsImportant(newTitle);
-        IsUrgent = GetIsUrgent(newTitle);
-        Project = ExtractSingle(newTitle, @"\+(\S+)");
-        Tag = ExtractSingle(newTitle, @"#(\S+)");
-        var time = ExtractSingle(newTitle, @"~(\S+)");
-        Time = time == null ? null : int.Parse(time);
-        Title = GetCleanTitle(newTitle);
+    public void UpdateTitle(string newRawTitle) {
+        var input = newRawTitle.Trim();
+
+        List<string> tokens = TodoParser.SplitToList(input);
+
+        // Iterate backwards to allow removal!
+        for (int i = tokens.Count - 1; i >= 0; i--) {
+            var token = tokens[i];
+
+            if (TodoParser.DecodeContextAnnotation(token) is { } context) {
+                Context = context;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeEnergyAnnotation(token) is { } energy) {
+                Energy = energy;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeProjectAnnotation(token) is { } project) {
+                Project = project;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeTagAnnotation(token) is { } tag) {
+                Tag = tag;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeTimeAnnotation(token) is { } time) {
+                Time = time;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (TodoParser.DecodeEisenhowerMatrixAnnotation(token) is { } matrix) {
+                IsImportant = matrix.IsImportant;
+                IsUrgent = matrix.IsUrgent;
+                tokens.RemoveAt(i);
+                continue;
+            }
+        }
+
+        Title = TodoParser.JoinTokenList(tokens);
     }
 
     public void UpdateDone(bool? isDone) {
@@ -60,58 +151,44 @@ public class Todo : IAggregateRoot {
     }
 
     public string ToRawString() {
-        List<string> parts = [];
+        List<string> tokens = [];
 
-        if (IsUrgent && IsImportant) parts.Add("!*");
-        else if (IsImportant) parts.Add("*");
-        else if (IsUrgent) parts.Add("!");
+        if (IsUrgent || IsImportant)
+            TodoParser.EncodeEisenhowerMatrixAnnotation(new EisenhowerMatrix {
+                IsImportant = IsImportant,
+                IsUrgent = IsUrgent,
+            });
 
-        parts.Add(Title);
+        tokens.Add(Title);
 
-        if (!string.IsNullOrWhiteSpace(Context)) parts.Add($"@{Context}");
-        if (!string.IsNullOrWhiteSpace(Tag)) parts.Add($"#{Tag}");
-        if (Energy != null) parts.Add(new string('$', (int)Energy));
-        if (!string.IsNullOrWhiteSpace(Project)) parts.Add($"+{Project}");
-        if (Time != null) parts.Add($"~{Time}");
 
-        return string.Join(" ", parts);
-    }
+        if (!string.IsNullOrWhiteSpace(Context)) {
+            string token = TodoParser.EncodeContextAnnotation(Context);
+            tokens.Add(token);
+        }
 
-    private static string RemoveLeadingMarkers(string raw) {
-        return Regex.Replace(raw, @"^(!?\*)\s*", "");
-    }
+        if (!string.IsNullOrWhiteSpace(Tag)) {
+            string token = TodoParser.EncodeTagAnnotation(Tag);
+            tokens.Add(token);
+        }
 
-    private static string GetCleanTitle(string raw) {
-        return Regex.Replace(RemoveLeadingMarkers(raw), @"[@~#\$+]\S+", "").Trim();
-    }
+        if (!string.IsNullOrWhiteSpace(Project)) {
+            string token = TodoParser.EncodeProjectAnnotation(Project);
+            tokens.Add(token);
+        }
 
-    private static EnergyLevel? ExtractEnergy(string raw) {
-        var match = Regex.Match(raw, @"(\$+)");
+        if (Time.HasValue) {
+            string token = TodoParser.EncodeTimeAnnotation(Time.Value);
+            tokens.Add(token);
+        }
 
-        if (!match.Success) return null;
+        if (Energy != null) {
+            string? token = TodoParser.EncodeEnergyAnnotation(Energy);
+            if (token != null) {
+                tokens.Add(token);
+            }
+        }
 
-        int count = match.Groups[1].Value.Length;
-
-        EnergyLevel? energy = count switch {
-            1 => EnergyLevel.Low,
-            2 => EnergyLevel.Medium,
-            3 => EnergyLevel.High,
-            _ => null
-        };
-
-        return energy;
-    }
-
-    private static bool GetIsUrgent(string raw) {
-        return raw.StartsWith("!*", StringComparison.InvariantCulture) || raw.StartsWith('!');
-    }
-
-    private static bool GetIsImportant(string raw) {
-        return raw.StartsWith('*') || raw.StartsWith("!*", StringComparison.InvariantCulture);
-    }
-
-    private static string? ExtractSingle(string raw, string pattern) {
-        var match = Regex.Match(raw, pattern);
-        return match.Success ? match.Groups[1].Value : null;
+        return TodoParser.JoinTokenList(tokens);
     }
 }

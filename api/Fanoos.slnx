@@ -15,4 +15,5 @@
   <Project Path="src/Fanoos.Domain/Fanoos.Domain.csproj" />
   <Project Path="src/Fanoos.Infrastructure/Fanoos.Infrastructure.csproj" />
   <Project Path="src/Fanoos.Presentation/Fanoos.Presentation.csproj" />
+  <Project Path="test/Fanoos.Domain.Tests.Unit/Fanoos.Domain.Tests.Unit.csproj" />
 </Solution>

@@ -10,11 +10,15 @@ internal sealed class CreateTodoCommandHandler(
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateTodoCommand, ErrorOr<Todo>> {
     public async Task<ErrorOr<Todo>> Handle(CreateTodoCommand request, CancellationToken cancellationToken) {
-        var todo = Todo.FromRaw(request.RawTitle);
+        ErrorOr<Todo> todoResult = Todo.FromRaw(request.RawTitle);
+
+        if (todoResult.IsError) return todoResult.Errors;
+
+        Todo todo = todoResult.Value;
 
         await todoRepository.AddAsync(todo, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return todo;
+        return todoResult;
     }
 }
