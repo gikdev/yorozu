@@ -110,7 +110,7 @@ public sealed partial class TodoTests {
 
             // Then
             todoResult.IsError.Should().BeFalse();
-            todo.Energy.Should().Be(finalSampleEnergy);
+            todo.EnergyLevel.Should().Be(finalSampleEnergy);
         }
 
         [Theory]
@@ -202,7 +202,7 @@ public sealed partial class TodoTests {
             todo.Project.Should().Be("proj");
             todo.Tag.Should().Be("tag");
             todo.Time.Should().Be(10);
-            todo.Energy.Should().Be(EnergyLevel.High);
+            todo.EnergyLevel.Should().Be(EnergyLevel.High);
         }
 
         [Fact]

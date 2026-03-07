@@ -7,7 +7,7 @@ internal static class Mappings {
         return new TodoResponse {
             Id = todo.Id,
             Context = todo.Context,
-            Energy = todo.Energy,
+            EnergyLevel = todo.EnergyLevel,
             IsDone = todo.IsDone,
             IsImportant = todo.IsImportant,
             IsUrgent = todo.IsUrgent,

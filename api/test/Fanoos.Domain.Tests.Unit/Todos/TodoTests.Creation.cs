@@ -23,7 +23,7 @@ public sealed partial class TodoTests {
                 isUrgent: null,
                 isImportant: null,
                 bucket: null,
-                energy: null,
+                energyLevel: null,
                 tag: null,
                 time: null,
                 project: null,
@@ -198,10 +198,10 @@ public sealed partial class TodoTests {
             EnergyLevel expectedEnergy = providedEnergy;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(energy: providedEnergy);
+            var todo = TodoTestsUtils.CreateTodo(energyLevel: providedEnergy);
 
             // Assert
-            todo.Energy.Should().Be(expectedEnergy);
+            todo.EnergyLevel.Should().Be(expectedEnergy);
         }
     }
 }

@@ -50,7 +50,7 @@ internal static class TodoParser {
         return time;
     }
 
-    private static EnergyLevel? DecodeEnergyAnnotation(string token)
+    private static EnergyLevel? DecodeEnergyLevelAnnotation(string token)
         => token switch {
             ".$" => EnergyLevel.Low,
             ".$$" => EnergyLevel.Medium,
@@ -91,7 +91,7 @@ internal static class TodoParser {
         List<string> tokens = SplitToList(input);
 
         string? finalContext = null;
-        EnergyLevel finalEnergy = EnergyLevel.None;
+        EnergyLevel finalEnergyLevel = EnergyLevel.None;
         TodoBucket finalBucket = TodoBucket.Uncategorized;
         string? finalProject = null;
         string? finalTag = null;
@@ -116,8 +116,8 @@ internal static class TodoParser {
                 continue;
             }
 
-            if (DecodeEnergyAnnotation(token) is { } energy) {
-                finalEnergy = energy;
+            if (DecodeEnergyLevelAnnotation(token) is { } energyLevel) {
+                finalEnergyLevel = energyLevel;
                 tokens.RemoveAt(i);
                 continue;
             }
@@ -157,7 +157,7 @@ internal static class TodoParser {
             isUrgent: finalIsUrgent,
             isImportant: finalIsImportant,
             bucket: finalBucket,
-            energy: finalEnergy,
+            energyLevel: finalEnergyLevel,
             tag: finalTag,
             time: finalTime,
             project: finalProject,

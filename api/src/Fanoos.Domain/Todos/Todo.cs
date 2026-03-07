@@ -14,7 +14,7 @@ public class Todo : IAggregateRoot {
     public string? Project { get; private set; }
     public int? Time { get; private set; }
     public string? Tag { get; private set; }
-    public EnergyLevel Energy { get; private set; }
+    public EnergyLevel EnergyLevel { get; private set; }
     public TodoBucket Bucket { get; private set; }
     public bool IsImportant { get; private set; }
     public bool IsUrgent { get; private set; }
@@ -27,7 +27,7 @@ public class Todo : IAggregateRoot {
         string? project,
         int? time,
         string? tag,
-        EnergyLevel? energy,
+        EnergyLevel? energyLevel,
         TodoBucket? bucket,
         bool? isImportant,
         bool? isUrgent,
@@ -41,7 +41,7 @@ public class Todo : IAggregateRoot {
         Todo todo = new() {
             Bucket = bucket ?? TodoBucket.Uncategorized,
             Context = context,
-            Energy = energy ?? EnergyLevel.None,
+            EnergyLevel = energyLevel ?? EnergyLevel.None,
             Id = id ?? Guid.NewGuid(),
             IsArchived = isArchived ?? false,
             IsDone = isDone ?? false,
@@ -64,7 +64,7 @@ public class Todo : IAggregateRoot {
     public void SetTag(string? tag) => Tag = tag;
     public void SetProject(string? project) => Project = project;
     public void SetContext(string? context) => Context = context;
-    public void SetEnergyLevel(EnergyLevel energyLevel) => Energy = energyLevel;
+    public void SetEnergyLevel(EnergyLevel energyLevel) => EnergyLevel = energyLevel;
 
     public void MarkDone() => IsDone = true;
     public void MarkUndone() => IsDone = false;

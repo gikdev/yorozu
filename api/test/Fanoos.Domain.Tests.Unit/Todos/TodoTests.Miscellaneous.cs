@@ -108,13 +108,13 @@ public sealed partial class TodoTests {
         [InlineData(EnergyLevel.Medium, EnergyLevel.High, EnergyLevel.High)]
         public void SetEnergyLevel_ChangesEnergyLevel(EnergyLevel startingEnergyLevel, EnergyLevel newEnergyLevel, EnergyLevel expectedEnergyLeve) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(energy: startingEnergyLevel);
+            var todo = TodoTestsUtils.CreateTodo(energyLevel: startingEnergyLevel);
 
             // Act
             todo.SetEnergyLevel(newEnergyLevel);
 
             // Assert
-            todo.Energy.Should().Be(expectedEnergyLeve);
+            todo.EnergyLevel.Should().Be(expectedEnergyLeve);
         }
     }
 }
