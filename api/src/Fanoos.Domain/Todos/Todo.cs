@@ -14,7 +14,8 @@ public class Todo : IAggregateRoot {
     public string? Project { get; private set; }
     public int? Time { get; private set; }
     public string? Tag { get; private set; }
-    public EnergyLevel? Energy { get; private set; }
+    public EnergyLevel Energy { get; private set; }
+    public TodoBucket Bucket { get; private set; }
     public bool IsImportant { get; private set; }
     public bool IsUrgent { get; private set; }
     public bool IsDone { get; private set; }
@@ -37,7 +38,8 @@ public class Todo : IAggregateRoot {
             IsUrgent = false,
 
             Context = null,
-            Energy = null,
+            Energy = EnergyLevel.None,
+            Bucket = TodoBucket.Uncategorized,
             Project = null,
             Tag = null,
             Time = null,
@@ -88,6 +90,41 @@ public class Todo : IAggregateRoot {
         }
 
         todo.Title = TodoParser.JoinTokenList(tokens);
+
+        return todo;
+    }
+
+    public static ErrorOr<Todo> Create(
+        string title,
+        string? context,
+        string? project,
+        int? time,
+        string? tag,
+        EnergyLevel? energy,
+        TodoBucket? bucket,
+        bool? isImportant,
+        bool? isUrgent,
+        bool? isDone,
+        bool? isArchived,
+        Guid? id = null
+    ) {
+        if (string.IsNullOrWhiteSpace(title))
+            return TodoErrors.TitleIsEmpty;
+
+        Todo todo = new() {
+            Bucket = bucket ?? TodoBucket.Uncategorized,
+            Context = context,
+            Energy = energy ?? EnergyLevel.None,
+            Id = id ?? Guid.NewGuid(),
+            IsArchived = isArchived ?? false,
+            IsDone = isDone ?? false,
+            IsImportant = isImportant ?? false,
+            IsUrgent = isUrgent ?? false,
+            Project = project,
+            Tag = tag,
+            Time = time,
+            Title = title,
+        };
 
         return todo;
     }
