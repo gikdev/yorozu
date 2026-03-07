@@ -1,9 +1,10 @@
+using ErrorOr;
 using Fanoos.Domain.Todos;
 
 namespace Fanoos.Domain.Tests.Unit.Todos;
 
 internal static class TodoTestsUtils {
-    internal static Todo CreateTodo(
+    internal static ErrorOr<Todo> CreateTodo(
         string title = "Sth",
         string? context = null,
         string? tag = null,
@@ -32,8 +33,6 @@ internal static class TodoTestsUtils {
             title: title
         );
 
-        if (result.IsError) throw new InvalidOperationException("CreateTodo result was an error!");
-
-        return result.Value;
+        return result;
     }
 }

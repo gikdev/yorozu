@@ -11,25 +11,25 @@ public sealed partial class TodoTests {
         [Fact]
         public void Archive_ArchivesTodo() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isArchived: false);
+            var todoResult = TodoTestsUtils.CreateTodo(isArchived: false);
 
             // Act
-            todo.Archive();
+            todoResult.Value.Archive();
 
             // Assert
-            todo.IsArchived.Should().BeTrue();
+            todoResult.Value.IsArchived.Should().BeTrue();
         }
 
         [Fact]
         public void Unarchive_UnarchivesTodo() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isArchived: true);
+            var todoResult = TodoTestsUtils.CreateTodo(isArchived: true);
 
             // Act
-            todo.Unarchive();
+            todoResult.Value.Unarchive();
 
             // Assert
-            todo.IsArchived.Should().BeFalse();
+            todoResult.Value.IsArchived.Should().BeFalse();
         }
 
         [Theory]
@@ -37,13 +37,13 @@ public sealed partial class TodoTests {
         [InlineData(false, true)]
         public void ToggleArchive_FlipsArchiveState(bool initial, bool expected) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isArchived: initial);
+            var todoResult = TodoTestsUtils.CreateTodo(isArchived: initial);
 
             // Act
-            todo.ToggleArchive();
+            todoResult.Value.ToggleArchive();
 
             // Assert
-            todo.IsArchived.Should().Be(expected);
+            todoResult.Value.IsArchived.Should().Be(expected);
         }
     }
 }

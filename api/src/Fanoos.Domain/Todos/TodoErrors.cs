@@ -12,4 +12,10 @@ public static class TodoErrors {
         description: "Todo's title is empty!",
         code: "Todo.TitleIsEmpty"
     );
+
+    public static readonly Error UrgentTodoCannotBeInSomedayBucket = Error.Validation(
+        description: "A todo cannot be both urgent and in the Someday/Maybe bucket.",
+        code: "Todo.UrgentInSomedayBucket"
+    );
+
 }

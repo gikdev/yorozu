@@ -11,49 +11,49 @@ public sealed partial class TodoTests {
         [Fact]
         public void MarkDone_MarksTodoAsDone() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isDone: false);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: false);
 
             // Act
-            todo.MarkDone();
+            todoResult.Value.MarkDone();
 
             // Assert
-            todo.IsDone.Should().BeTrue();
+            todoResult.Value.IsDone.Should().BeTrue();
         }
 
         [Fact]
         public void MarkDone_KeepsItDone_WhenAlreadyDone() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isDone: true);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: true);
 
             // Act
-            todo.MarkDone();
+            todoResult.Value.MarkDone();
 
             // Assert
-            todo.IsDone.Should().BeTrue();
+            todoResult.Value.IsDone.Should().BeTrue();
         }
 
         [Fact]
         public void MarkUndone_MarksTodoAsUndone() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isDone: true);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: true);
 
             // Act
-            todo.MarkUndone();
+            todoResult.Value.MarkUndone();
 
             // Assert
-            todo.IsDone.Should().BeFalse();
+            todoResult.Value.IsDone.Should().BeFalse();
         }
 
         [Fact]
         public void MarkUndone_KeepsItUndone_WhenAlreadyNotDone() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isDone: false);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: false);
 
             // Act
-            todo.MarkUndone();
+            todoResult.Value.MarkUndone();
 
             // Assert
-            todo.IsDone.Should().BeFalse();
+            todoResult.Value.IsDone.Should().BeFalse();
         }
 
         [Theory]
@@ -61,13 +61,13 @@ public sealed partial class TodoTests {
         [InlineData(false, true)]
         public void ToggleDone_FlipsCompletionState(bool initial, bool expected) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isDone: initial);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: initial);
 
             // Act
-            todo.ToggleDone();
+            todoResult.Value.ToggleDone();
 
             // Assert
-            todo.IsDone.Should().Be(expected);
+            todoResult.Value.IsDone.Should().Be(expected);
         }
     }
 }

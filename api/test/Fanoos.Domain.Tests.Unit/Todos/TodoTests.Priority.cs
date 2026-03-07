@@ -12,28 +12,55 @@ public sealed partial class TodoTests {
         [Fact]
         public void SetPriority_UpdatesImportanceAndUrgency() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isImportant: false, isUrgent: false);
+            var todoResult = TodoTestsUtils.CreateTodo(isImportant: false, isUrgent: false);
 
             // Act
-            todo.SetPriority(isUrgent: true, isImportant: true);
+            todoResult.Value.SetPriority(isUrgent: true, isImportant: true);
 
             // Assert
-            todo.IsImportant.Should().Be(true);
-            todo.IsUrgent.Should().Be(true);
+            todoResult.Value.IsImportant.Should().Be(true);
+            todoResult.Value.IsUrgent.Should().Be(true);
+        }
+
+        [Fact]
+        public void SetPriority_ShouldErrorOnIsUrgent_WhenTodoIsInSomedayBucket() {
+            // Arrange
+            var todoResult = TodoTestsUtils.CreateTodo(bucket: TodoBucket.SomedayMaybe);
+
+            // Act
+            var priorityResult = todoResult.Value.SetPriority(isUrgent: true, isImportant: true);
+
+            // Assert
+            priorityResult.IsError.Should().BeTrue();
+            priorityResult.FirstError.Should().Be(TodoErrors.UrgentTodoCannotBeInSomedayBucket);
         }
 
         [Fact]
         public void ApplyEisenhowerMatrix_AppliesCorrectValues() {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(isImportant: false, isUrgent: false);
+            var todoResult = TodoTestsUtils.CreateTodo(isImportant: false, isUrgent: false);
             var matrix = new EisenhowerMatrix { IsImportant = true, IsUrgent = true };
 
             // Act
-            todo.ApplyEisenhowerMatrix(matrix);
+            todoResult.Value.ApplyEisenhowerMatrix(matrix);
 
             // Assert
-            todo.IsImportant.Should().Be(matrix.IsImportant);
-            todo.IsUrgent.Should().Be(matrix.IsUrgent);
+            todoResult.Value.IsImportant.Should().Be(matrix.IsImportant);
+            todoResult.Value.IsUrgent.Should().Be(matrix.IsUrgent);
+        }
+
+        [Fact]
+        public void ApplyEisenhowerMatrix_ShouldErrorOnIsUrgent_WhenTodoIsInSomedayBucket() {
+            // Arrange
+            var todoResult = TodoTestsUtils.CreateTodo(bucket: TodoBucket.SomedayMaybe);
+            var matrix = new EisenhowerMatrix { IsImportant = true, IsUrgent = true };
+
+            // Act
+            var matrixResult = todoResult.Value.ApplyEisenhowerMatrix(matrix);
+
+            // Assert
+            matrixResult.IsError.Should().BeTrue();
+            matrixResult.FirstError.Should().Be(TodoErrors.UrgentTodoCannotBeInSomedayBucket);
         }
     }
 }

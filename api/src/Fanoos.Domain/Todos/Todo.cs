@@ -38,15 +38,21 @@ public class Todo : IAggregateRoot {
         if (string.IsNullOrWhiteSpace(title))
             return TodoErrors.TitleIsEmpty;
 
+        var finalBucket = bucket ?? TodoBucket.Uncategorized;
+        var finalIsUrgent = isUrgent ?? false;
+
+        var result = EnsureUrgentSomedayInvariant(finalBucket, finalIsUrgent);
+        if (result.IsError) return result.Errors;
+
         Todo todo = new() {
-            Bucket = bucket ?? TodoBucket.Uncategorized,
+            Bucket = finalBucket,
             Context = context,
             EnergyLevel = energyLevel ?? EnergyLevel.None,
             Id = id ?? Guid.NewGuid(),
             IsArchived = isArchived ?? false,
             IsDone = isDone ?? false,
             IsImportant = isImportant ?? false,
-            IsUrgent = isUrgent ?? false,
+            IsUrgent = finalIsUrgent,
             Project = project,
             Tag = tag,
             Time = time,
@@ -74,16 +80,37 @@ public class Todo : IAggregateRoot {
     public void Unarchive() => IsArchived = false;
     public void ToggleArchive() => IsArchived = !IsArchived;
 
-    public void MoveToBucket(TodoBucket bucket) => Bucket = bucket;
+    public ErrorOr<Success> MoveToBucket(TodoBucket bucket) {
+        var result = EnsureUrgentSomedayInvariant(bucket, IsUrgent);
+        if (result.IsError) return result.Errors;
 
-    public void ApplyEisenhowerMatrix(EisenhowerMatrix matrix)
+        Bucket = bucket;
+
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> ApplyEisenhowerMatrix(EisenhowerMatrix matrix)
         => SetPriority(
             isUrgent: matrix.IsUrgent,
             isImportant: matrix.IsImportant
         );
 
-    public void SetPriority(bool isImportant, bool isUrgent) {
+    public ErrorOr<Success> SetPriority(bool isImportant, bool isUrgent) {
+        var result = EnsureUrgentSomedayInvariant(Bucket, isUrgent);
+        if (result.IsError) return result.Errors;
+
         IsImportant = isImportant;
         IsUrgent = isUrgent;
+
+        return Result.Success;
+    }
+
+    private static ErrorOr<Success> EnsureUrgentSomedayInvariant(TodoBucket bucket, bool isUrgent) {
+        bool isInSomedayBucket = bucket == TodoBucket.SomedayMaybe;
+
+        if (isUrgent && isInSomedayBucket)
+            return TodoErrors.UrgentTodoCannotBeInSomedayBucket;
+
+        return Result.Success;
     }
 }

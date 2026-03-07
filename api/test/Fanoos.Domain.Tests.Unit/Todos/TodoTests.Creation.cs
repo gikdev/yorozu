@@ -43,10 +43,10 @@ public sealed partial class TodoTests {
             const string expectedTitle = providedTitle;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(title: providedTitle);
+            var todoResult = TodoTestsUtils.CreateTodo(title: providedTitle);
 
             // Assert
-            todo.Title.Should().Be(expectedTitle);
+            todoResult.Value.Title.Should().Be(expectedTitle);
         }
 
         [Fact]
@@ -55,10 +55,10 @@ public sealed partial class TodoTests {
             Guid? providedId = null;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(id: providedId);
+            var todoResult = TodoTestsUtils.CreateTodo(id: providedId);
 
             // Assert
-            todo.Id.Should().NotBe(Guid.Empty);
+            todoResult.Value.Id.Should().NotBe(Guid.Empty);
         }
 
         [Fact]
@@ -68,10 +68,10 @@ public sealed partial class TodoTests {
             Guid expectedId = providedId;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(id: providedId);
+            var todoResult = TodoTestsUtils.CreateTodo(id: providedId);
 
             // Assert
-            todo.Id.Should().Be(expectedId);
+            todoResult.Value.Id.Should().Be(expectedId);
         }
 
         [Fact]
@@ -81,10 +81,10 @@ public sealed partial class TodoTests {
             TodoBucket defaultBucket = TodoBucket.Uncategorized;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(bucket: selectedBucket);
+            var todoResult = TodoTestsUtils.CreateTodo(bucket: selectedBucket);
 
             // Assert
-            todo.Bucket.Should().Be(defaultBucket);
+            todoResult.Value.Bucket.Should().Be(defaultBucket);
         }
 
         [Fact]
@@ -94,10 +94,10 @@ public sealed partial class TodoTests {
             bool expectedIsArchived = false;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(isArchived: providedIsArchived);
+            var todoResult = TodoTestsUtils.CreateTodo(isArchived: providedIsArchived);
 
             // Assert
-            todo.IsArchived.Should().Be(expectedIsArchived);
+            todoResult.Value.IsArchived.Should().Be(expectedIsArchived);
         }
 
         [Fact]
@@ -107,10 +107,10 @@ public sealed partial class TodoTests {
             bool expectedIsDone = false;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(isDone: providedIsDone);
+            var todoResult = TodoTestsUtils.CreateTodo(isDone: providedIsDone);
 
             // Assert
-            todo.IsDone.Should().Be(expectedIsDone);
+            todoResult.Value.IsDone.Should().Be(expectedIsDone);
         }
 
         [Fact]
@@ -120,10 +120,10 @@ public sealed partial class TodoTests {
             bool expectedIsImportant = false;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(isImportant: providedIsImportant);
+            var todoResult = TodoTestsUtils.CreateTodo(isImportant: providedIsImportant);
 
             // Assert
-            todo.IsImportant.Should().Be(expectedIsImportant);
+            todoResult.Value.IsImportant.Should().Be(expectedIsImportant);
         }
 
         [Fact]
@@ -133,10 +133,10 @@ public sealed partial class TodoTests {
             bool expectedIsUrgent = false;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(isUrgent: providedIsUrgent);
+            var todoResult = TodoTestsUtils.CreateTodo(isUrgent: providedIsUrgent);
 
             // Assert
-            todo.IsUrgent.Should().Be(expectedIsUrgent);
+            todoResult.Value.IsUrgent.Should().Be(expectedIsUrgent);
         }
 
         [Fact]
@@ -146,10 +146,10 @@ public sealed partial class TodoTests {
             string? expectedContext = providedContext;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(context: providedContext);
+            var todoResult = TodoTestsUtils.CreateTodo(context: providedContext);
 
             // Assert
-            todo.Context.Should().Be(expectedContext);
+            todoResult.Value.Context.Should().Be(expectedContext);
         }
 
         [Fact]
@@ -159,10 +159,10 @@ public sealed partial class TodoTests {
             string? expectedProject = providedProject;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(project: providedProject);
+            var todoResult = TodoTestsUtils.CreateTodo(project: providedProject);
 
             // Assert
-            todo.Project.Should().Be(expectedProject);
+            todoResult.Value.Project.Should().Be(expectedProject);
         }
 
         [Fact]
@@ -172,10 +172,10 @@ public sealed partial class TodoTests {
             string? expectedTag = providedTag;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(tag: providedTag);
+            var todoResult = TodoTestsUtils.CreateTodo(tag: providedTag);
 
             // Assert
-            todo.Tag.Should().Be(expectedTag);
+            todoResult.Value.Tag.Should().Be(expectedTag);
         }
 
         [Fact]
@@ -185,10 +185,10 @@ public sealed partial class TodoTests {
             int? expectedTime = providedTime;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(time: providedTime);
+            var todoResult = TodoTestsUtils.CreateTodo(time: providedTime);
 
             // Assert
-            todo.Time.Should().Be(expectedTime);
+            todoResult.Value.Time.Should().Be(expectedTime);
         }
 
         [Fact]
@@ -198,10 +198,21 @@ public sealed partial class TodoTests {
             EnergyLevel expectedEnergy = providedEnergy;
 
             // Act
-            var todo = TodoTestsUtils.CreateTodo(energyLevel: providedEnergy);
+            var todoResult = TodoTestsUtils.CreateTodo(energyLevel: providedEnergy);
 
             // Assert
-            todo.EnergyLevel.Should().Be(expectedEnergy);
+            todoResult.Value.EnergyLevel.Should().Be(expectedEnergy);
+        }
+
+        [Fact]
+        public void Create_ShouldFail_WhenTodoIsUrgentAndInSomedayBucket() {
+            // Arrange
+            // Act
+            var todoResult = TodoTestsUtils.CreateTodo(isUrgent: true, bucket: TodoBucket.SomedayMaybe);
+
+            // Assert
+            todoResult.IsError.Should().BeTrue();
+            todoResult.FirstError.Should().Be(TodoErrors.UrgentTodoCannotBeInSomedayBucket);
         }
     }
 }

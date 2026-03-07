@@ -14,13 +14,28 @@ public sealed partial class TodoTests {
             // Arrange
             var startingBucket = TodoBucket.NextActions;
             var newBucket = TodoBucket.Waiting;
-            var todo = TodoTestsUtils.CreateTodo(bucket: startingBucket);
+            var todoResult = TodoTestsUtils.CreateTodo(bucket: startingBucket);
 
             // Act
-            todo.MoveToBucket(newBucket);
+            todoResult.Value.MoveToBucket(newBucket);
 
             // Assert
-            todo.Bucket.Should().Be(newBucket);
+            todoResult.Value.Bucket.Should().Be(newBucket);
+        }
+
+        [Fact]
+        public void MoveToBucket_ShouldFail_WhenTodoIsUrgent_AndWantsToGoInSomedayBucket() {
+            // Arrange
+            var startingBucket = TodoBucket.Uncategorized;
+            var newBucket = TodoBucket.SomedayMaybe;
+            var todoResult = TodoTestsUtils.CreateTodo(bucket: startingBucket, isUrgent: true);
+
+            // Act
+            var moveResult = todoResult.Value.MoveToBucket(newBucket);
+
+            // Assert
+            moveResult.IsError.Should().BeTrue();
+            moveResult.FirstError.Should().Be(TodoErrors.UrgentTodoCannotBeInSomedayBucket);
         }
 
         [Fact]
@@ -28,13 +43,13 @@ public sealed partial class TodoTests {
             // Arrange
             var startingTitle = "Starting title";
             var newTitle = "New Title";
-            var todo = TodoTestsUtils.CreateTodo(title: startingTitle);
+            var todoResult = TodoTestsUtils.CreateTodo(title: startingTitle);
 
             // Act
-            todo.SetTitle(newTitle);
+            todoResult.Value.SetTitle(newTitle);
 
             // Assert
-            todo.Title.Should().Be(newTitle);
+            todoResult.Value.Title.Should().Be(newTitle);
         }
 
         [Theory]
@@ -44,13 +59,13 @@ public sealed partial class TodoTests {
         [InlineData(1, 2, 2)]
         public void SetTime_ChangesTime(int? startingTime, int? newTime, int? expectedTime) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(time: startingTime);
+            var todoResult = TodoTestsUtils.CreateTodo(time: startingTime);
 
             // Act
-            todo.SetTime(newTime);
+            todoResult.Value.SetTime(newTime);
 
             // Assert
-            todo.Time.Should().Be(expectedTime);
+            todoResult.Value.Time.Should().Be(expectedTime);
         }
 
         [Theory]
@@ -60,13 +75,13 @@ public sealed partial class TodoTests {
         [InlineData("Errand", "Shopping", "Shopping")]
         public void SetTag_ChangesTag(string? startingTag, string? newTag, string? expectedTag) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(tag: startingTag);
+            var todoResult = TodoTestsUtils.CreateTodo(tag: startingTag);
 
             // Act
-            todo.SetTag(newTag);
+            todoResult.Value.SetTag(newTag);
 
             // Assert
-            todo.Tag.Should().Be(expectedTag);
+            todoResult.Value.Tag.Should().Be(expectedTag);
         }
 
         [Theory]
@@ -76,13 +91,13 @@ public sealed partial class TodoTests {
         [InlineData("Garden", "Yard", "Yard")]
         public void SetProject_ChangesProject(string? startingProject, string? newProject, string? expectedProject) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(project: startingProject);
+            var todoResult = TodoTestsUtils.CreateTodo(project: startingProject);
 
             // Act
-            todo.SetProject(newProject);
+            todoResult.Value.SetProject(newProject);
 
             // Assert
-            todo.Project.Should().Be(expectedProject);
+            todoResult.Value.Project.Should().Be(expectedProject);
         }
 
         [Theory]
@@ -92,13 +107,13 @@ public sealed partial class TodoTests {
         [InlineData("Online", "Offline", "Offline")]
         public void SetContext_ChangesContext(string? startingContext, string? newContext, string? expectedContext) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(context: startingContext);
+            var todoResult = TodoTestsUtils.CreateTodo(context: startingContext);
 
             // Act
-            todo.SetContext(newContext);
+            todoResult.Value.SetContext(newContext);
 
             // Assert
-            todo.Context.Should().Be(expectedContext);
+            todoResult.Value.Context.Should().Be(expectedContext);
         }
 
         [Theory]
@@ -108,13 +123,13 @@ public sealed partial class TodoTests {
         [InlineData(EnergyLevel.Medium, EnergyLevel.High, EnergyLevel.High)]
         public void SetEnergyLevel_ChangesEnergyLevel(EnergyLevel startingEnergyLevel, EnergyLevel newEnergyLevel, EnergyLevel expectedEnergyLeve) {
             // Arrange
-            var todo = TodoTestsUtils.CreateTodo(energyLevel: startingEnergyLevel);
+            var todoResult = TodoTestsUtils.CreateTodo(energyLevel: startingEnergyLevel);
 
             // Act
-            todo.SetEnergyLevel(newEnergyLevel);
+            todoResult.Value.SetEnergyLevel(newEnergyLevel);
 
             // Assert
-            todo.EnergyLevel.Should().Be(expectedEnergyLeve);
+            todoResult.Value.EnergyLevel.Should().Be(expectedEnergyLeve);
         }
     }
 }
