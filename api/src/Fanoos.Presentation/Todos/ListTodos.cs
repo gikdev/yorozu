@@ -22,26 +22,34 @@ internal sealed class ListTodos : IEndpoint {
 
     private static async Task<IResult> Handle(
         [FromServices] ISender mediator,
-        [FromQuery(Name = "include_archived")] bool includeArchived = false
+        [FromQuery(Name = "archived_status")] ArchivedStatus archivedStatus = ArchivedStatus.Active,
+        [FromQuery(Name = "bucket")] TodoBucket? bucket = null,
+        [FromQuery(Name = "sort_by")] SortBy? sortBy = null,
+        [FromQuery(Name = "sort_order")] SortOrder? sortOrder = null,
+        [FromQuery(Name = "q")] string? includeQuery = null,
+        [FromQuery(Name = "exclude_query")] string? excludeQuery = null
     ) {
         List<Todo> todos = await mediator.Send(
-            new ListTodosQuery {
-                IncludeArchived = includeArchived
-            }
+            ListTodosQuery.Create(
+                excludeQuery: excludeQuery,
+                includeQuery: includeQuery,
+                sortOrder: sortOrder,
+                sortBy: sortBy,
+                bucket: bucket,
+                archivedStatus: archivedStatus
+            )
         );
 
-        return Results.Ok(MapToListResponse(todos, includeArchived));
+        return Results.Ok(MapToListResponse(todos));
     }
 
     private sealed record TodoListResponse {
         public required List<TodoResponse> Items { get; init; }
-        public required bool IncludesArchived { get; init; }
     }
 
-    private static TodoListResponse MapToListResponse(List<Todo> todos, bool includesArchived) {
+    private static TodoListResponse MapToListResponse(List<Todo> todos) {
         return new TodoListResponse {
             Items = todos.ConvertAll(t => t.MapToResponse()),
-            IncludesArchived = includesArchived,
         };
     }
 }
