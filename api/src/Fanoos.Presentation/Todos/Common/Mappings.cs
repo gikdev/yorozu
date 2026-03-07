@@ -12,9 +12,7 @@ internal static class Mappings {
             IsImportant = todo.IsImportant,
             IsUrgent = todo.IsUrgent,
             Project = todo.Project,
-            // TODO: FIX THIS!
-            //RawTitle = todo.ToRawFormat(),
-            RawTitle = "N/A",
+            Bucket = todo.Bucket,
             Tag = todo.Tag,
             Time = todo.Time,
             Title = todo.Title,

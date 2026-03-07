@@ -42,24 +42,32 @@ internal sealed class ChangeTodo : IEndpoint {
     private static ChangeTodoCommand MapToCommand(ChangeTodoRequest request, Guid id) {
         return new ChangeTodoCommand {
             Id = id,
-            RawTitle = request.RawTitle?.Value,
-            IsArchived = request.IsArchived?.Value,
-            IsDone = request.IsDone?.Value,
+            Title = request.Title,
+            Context = request.Context,
+            Project = request.Project,
+            Time = request.Time,
+            Tag = request.Tag,
+            EnergyLevel = request.EnergyLevel,
+            Bucket = request.Bucket,
+            IsImportant = request.IsImportant,
+            IsUrgent = request.IsUrgent,
+            IsDone = request.IsDone,
+            IsArchived = request.IsArchived,
         };
     }
 
-    internal sealed record ChangeTodoRequest {
-        public ValueStringObject? RawTitle { get; init; }
-        public ValueBooleanObject? IsDone { get; init; }
-        public ValueBooleanObject? IsArchived { get; init; }
-    }
-
-    internal sealed record ValueStringObject {
-        public required string Value { get; init; }
-    }
-
-    internal sealed record ValueBooleanObject {
-        public required bool Value { get; init; }
+    private sealed record ChangeTodoRequest {
+        public string? Title { get; init; }
+        public ObjectValueOfNullableString? Context { get; init; }
+        public ObjectValueOfNullableString? Project { get; init; }
+        public ObjectValueOfNullableInt? Time { get; init; }
+        public ObjectValueOfNullableString? Tag { get; init; }
+        public EnergyLevel? EnergyLevel { get; init; }
+        public TodoBucket? Bucket { get; init; }
+        public bool? IsImportant { get; init; }
+        public bool? IsUrgent { get; init; }
+        public bool? IsDone { get; init; }
+        public bool? IsArchived { get; init; }
     }
 
     private sealed class ChangeTodoRequestValidator : AbstractValidator<ChangeTodoRequest>;
