@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Fanoos.Application.Todos.ListTodos;
 
-public record ListTodosQuery : IRequest<List<Todo>> {
+public sealed record ListTodosQuery : IRequest<List<Todo>> {
     public required ArchivedStatus ArchivedStatus { get; init; }
     public required TodoBucket? Bucket { get; init; }
     public required SortBy SortBy { get; init; }

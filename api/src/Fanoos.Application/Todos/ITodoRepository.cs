@@ -9,4 +9,6 @@ public interface ITodoRepository {
     Task RemoveAsync(Todo todo, CancellationToken cancellationToken = default);
     Task<List<Todo>> ListAsync(ListTodosQuery query, CancellationToken cancellationToken = default);
     Task<Todo?> GetOneByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<List<Todo>> GetBackup(CancellationToken cancellationToken = default);
+    Task RestoreBackup(List<Todo> todos, CancellationToken cancellationToken = default);
 }

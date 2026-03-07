@@ -99,4 +99,16 @@ internal sealed class TodoRepository(
 
         return Task.CompletedTask;
     }
+
+    public async Task<List<Todo>> GetBackup(CancellationToken cancellationToken = default) {
+        List<Todo> todos = await db.Todos.ToListAsync(cancellationToken: cancellationToken);
+
+        return todos;
+    }
+
+    public Task RestoreBackup(List<Todo> todos, CancellationToken cancellationToken = default) {
+        db.AddRange(todos, cancellationToken);
+
+        return Task.CompletedTask;
+    }
 }
