@@ -166,5 +166,12 @@ public sealed partial class HabitTests {
             // Assert
             habitResult.Value.IsArchived.Should().Be(defaultIsArchived);
         }
+
+        [Fact]
+        public void Create_ShouldCreateHabitWithEmptyCompletions() {
+            HabitTestUtils.CreateHabit().Value
+                .Completions.Count
+                .Should().Be(0);
+        }
     }
 }

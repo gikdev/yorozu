@@ -7,4 +7,9 @@ public static class HabitErrors {
         description: "Habit's name is empty!",
         code: "Habit.NameIsEmpty"
     );
+
+    public readonly static Error DuplicatedCompletion = Error.Validation(
+        description: "This habit completion is duplicated!",
+        code: "Habit.DuplicateCompletion"
+    );
 }
