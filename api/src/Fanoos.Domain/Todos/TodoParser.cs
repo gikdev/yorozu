@@ -1,4 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
+#pragma warning disable S3626 // Jump statements should not be redundant
+
+using ErrorOr;
 
 namespace Fanoos.Domain.Todos;
 
@@ -8,13 +10,11 @@ internal static class TodoParser {
     private const char TagAnnotationSign = '#';
     private const char TimeAnnotationSign = '~';
 
-    internal static List<string> SplitToList(string raw) {
-        return raw.Split(' ').ToList();
-    }
+    private static List<string> SplitToList(string raw)
+        => raw.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
 
-    internal static string JoinTokenList(List<string> tokens) {
-        return string.Join(' ', tokens);
-    }
+    private static string JoinTokens(List<string> tokens)
+        => string.Join(' ', tokens);
 
     private static string? DecodeAnnotation(string token, char sign) {
         bool startsWithTheSign = token.StartsWith(sign);
@@ -29,29 +29,16 @@ internal static class TodoParser {
         return annotation;
     }
 
-    private static string EncodeAnnotation(string annotation, char sign) {
-        return sign.ToString() + annotation;
-    }
-
-    internal static string? DecodeContextAnnotation(string token)
+    private static string? DecodeContextAnnotation(string token)
         => DecodeAnnotation(token, ContextAnnotationSign);
 
-    internal static string EncodeContextAnnotation(string annotation)
-        => EncodeAnnotation(annotation, ContextAnnotationSign);
-
-    internal static string? DecodeProjectAnnotation(string token)
+    private static string? DecodeProjectAnnotation(string token)
         => DecodeAnnotation(token, ProjectAnnotationSign);
 
-    internal static string EncodeProjectAnnotation(string annotation)
-        => EncodeAnnotation(annotation, ProjectAnnotationSign);
-
-    internal static string? DecodeTagAnnotation(string token)
+    private static string? DecodeTagAnnotation(string token)
         => DecodeAnnotation(token, TagAnnotationSign);
 
-    internal static string EncodeTagAnnotation(string annotation)
-        => EncodeAnnotation(annotation, TagAnnotationSign);
-
-    internal static int? DecodeTimeAnnotation(string token) {
+    private static int? DecodeTimeAnnotation(string token) {
         var annotation = DecodeAnnotation(token, TimeAnnotationSign);
 
         if (annotation == null) return null;
@@ -63,10 +50,7 @@ internal static class TodoParser {
         return time;
     }
 
-    internal static string EncodeTimeAnnotation(int time)
-        => EncodeAnnotation(time.ToString(), TimeAnnotationSign);
-
-    internal static EnergyLevel? DecodeEnergyAnnotation(string token)
+    private static EnergyLevel? DecodeEnergyAnnotation(string token)
         => token switch {
             ".$" => EnergyLevel.Low,
             ".$$" => EnergyLevel.Medium,
@@ -74,15 +58,10 @@ internal static class TodoParser {
             _ => null,
         };
 
-    internal static string? EncodeEnergyAnnotation(EnergyLevel? energyLevel)
-        => energyLevel switch {
-            EnergyLevel.Low => ".$",
-            EnergyLevel.Medium => ".$$",
-            EnergyLevel.High => ".$$$",
-            _ => null,
-        };
+    private static bool? DecodeCompletionAnnotation(string token)
+        => token == ".x" ? true : null;
 
-    internal static EisenhowerMatrix? DecodeEisenhowerMatrixAnnotation(string token)
+    private static EisenhowerMatrix? DecodeEisenhowerMatrixAnnotation(string token)
         => token switch {
             ".*" => new EisenhowerMatrix {
                 IsImportant = true,
@@ -103,11 +82,87 @@ internal static class TodoParser {
             _ => null,
         };
 
-    internal static string? EncodeEisenhowerMatrixAnnotation(EisenhowerMatrix matrix)
-        => matrix switch {
-            { IsImportant: true, IsUrgent: true } => ".!*",
-            { IsImportant: true } => ".*",
-            { IsUrgent: true } => ".!",
-            _ => null,
-        };
+    internal static ErrorOr<Todo> FromRaw(string raw) {
+        if (string.IsNullOrWhiteSpace(raw))
+            return TodoErrors.RawInputIsEmpty;
+
+        var input = raw.Trim();
+
+        List<string> tokens = SplitToList(input);
+
+        string? finalContext = null;
+        EnergyLevel finalEnergy = EnergyLevel.None;
+        TodoBucket finalBucket = TodoBucket.Uncategorized;
+        string? finalProject = null;
+        string? finalTag = null;
+        int? finalTime = null;
+        bool? finalIsImportant = null;
+        bool? finalIsUrgent = null;
+        bool? finalIsDone = null;
+
+        // Iterate backwards to allow removal!
+        for (int i = tokens.Count - 1; i >= 0; i--) {
+            var token = tokens[i];
+
+            if (DecodeCompletionAnnotation(token) is { } isDone) {
+                finalIsDone = isDone;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeContextAnnotation(token) is { } context) {
+                finalContext = context;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeEnergyAnnotation(token) is { } energy) {
+                finalEnergy = energy;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeProjectAnnotation(token) is { } project) {
+                finalProject = project;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeTagAnnotation(token) is { } tag) {
+                finalTag = tag;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeTimeAnnotation(token) is { } time) {
+                finalTime = time;
+                tokens.RemoveAt(i);
+                continue;
+            }
+
+            if (DecodeEisenhowerMatrixAnnotation(token) is { } matrix) {
+                finalIsImportant = matrix.IsImportant;
+                finalIsUrgent = matrix.IsUrgent;
+                tokens.RemoveAt(i);
+                continue;
+            }
+        }
+
+        string finalTitle = JoinTokens(tokens);
+
+        return Todo.Create(
+            id: null,
+            isArchived: null,
+            isDone: finalIsDone,
+            isUrgent: finalIsUrgent,
+            isImportant: finalIsImportant,
+            bucket: finalBucket,
+            energy: finalEnergy,
+            tag: finalTag,
+            time: finalTime,
+            project: finalProject,
+            context: finalContext,
+            title: finalTitle
+        );
+    }
 }

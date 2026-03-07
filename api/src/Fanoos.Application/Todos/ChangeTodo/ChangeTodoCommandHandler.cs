@@ -14,17 +14,18 @@ internal sealed class ChangeTodoCommandHandler(
 
         if (todo is null) return Error.NotFound(description: "Task was not found");
 
-        if (request.RawTitle != null) {
-            todo.UpdateTitle(request.RawTitle);
-        }
+        // TODO: FIX THESE!
+        //if (request.RawTitle != null) {
+        //    todo.UpdateFromRaw(request.RawTitle);
+        //}
 
-        if (request.IsArchived != null) {
-            todo.UpdateArchived(request.IsArchived);
-        }
+        //if (request.IsArchived != null) {
+        //    todo.UpdateArchived(request.IsArchived);
+        //}
 
-        if (request.IsDone != null) {
-            todo.UpdateDone(request.IsDone);
-        }
+        //if (request.IsDone != null) {
+        //    todo.UpdateDone(request.IsDone);
+        //}
 
         await todoRepository.UpdateAsync(todo, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

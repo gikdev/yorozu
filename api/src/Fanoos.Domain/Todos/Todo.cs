@@ -21,79 +21,6 @@ public class Todo : IAggregateRoot {
     public bool IsDone { get; private set; }
     public bool IsArchived { get; private set; }
 
-    public static ErrorOr<Todo> FromRaw(string raw) {
-        if (string.IsNullOrWhiteSpace(raw))
-            return TodoErrors.RawInputIsEmpty;
-
-        var input = raw.Trim();
-
-        List<string> tokens = TodoParser.SplitToList(input);
-
-        Todo todo = new() {
-            Id = Guid.NewGuid(),
-
-            IsDone = false,
-            IsArchived = false,
-            IsImportant = false,
-            IsUrgent = false,
-
-            Context = null,
-            Energy = EnergyLevel.None,
-            Bucket = TodoBucket.Uncategorized,
-            Project = null,
-            Tag = null,
-            Time = null,
-
-            Title = "",
-        };
-
-        // Iterate backwards to allow removal!
-        for (int i = tokens.Count - 1; i >= 0; i--) {
-            var token = tokens[i];
-
-            if (TodoParser.DecodeContextAnnotation(token) is { } context) {
-                todo.Context = context;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeEnergyAnnotation(token) is { } energy) {
-                todo.Energy = energy;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeProjectAnnotation(token) is { } project) {
-                todo.Project = project;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeTagAnnotation(token) is { } tag) {
-                todo.Tag = tag;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeTimeAnnotation(token) is { } time) {
-                todo.Time = time;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeEisenhowerMatrixAnnotation(token) is { } matrix) {
-                todo.IsImportant = matrix.IsImportant;
-                todo.IsUrgent = matrix.IsUrgent;
-                tokens.RemoveAt(i);
-                continue;
-            }
-        }
-
-        todo.Title = TodoParser.JoinTokenList(tokens);
-
-        return todo;
-    }
-
     public static ErrorOr<Todo> Create(
         string title,
         string? context,
@@ -129,103 +56,34 @@ public class Todo : IAggregateRoot {
         return todo;
     }
 
-    public void UpdateTitle(string newRawTitle) {
-        var input = newRawTitle.Trim();
+    public static ErrorOr<Todo> FromRaw(string raw)
+        => TodoParser.FromRaw(raw);
 
-        List<string> tokens = TodoParser.SplitToList(input);
+    public void SetTitle(string title) => Title = title;
+    public void SetTime(int? time) => Time = time;
+    public void SetTag(string? tag) => Tag = tag;
+    public void SetProject(string? project) => Project = project;
+    public void SetContext(string? context) => Context = context;
+    public void SetEnergyLevel(EnergyLevel energyLevel) => Energy = energyLevel;
 
-        // Iterate backwards to allow removal!
-        for (int i = tokens.Count - 1; i >= 0; i--) {
-            var token = tokens[i];
+    public void MarkDone() => IsDone = true;
+    public void MarkUndone() => IsDone = false;
+    public void ToggleDone() => IsDone = !IsDone;
 
-            if (TodoParser.DecodeContextAnnotation(token) is { } context) {
-                Context = context;
-                tokens.RemoveAt(i);
-                continue;
-            }
+    public void Archive() => IsArchived = true;
+    public void Unarchive() => IsArchived = false;
+    public void ToggleArchive() => IsArchived = !IsArchived;
 
-            if (TodoParser.DecodeEnergyAnnotation(token) is { } energy) {
-                Energy = energy;
-                tokens.RemoveAt(i);
-                continue;
-            }
+    public void MoveToBucket(TodoBucket bucket) => Bucket = bucket;
 
-            if (TodoParser.DecodeProjectAnnotation(token) is { } project) {
-                Project = project;
-                tokens.RemoveAt(i);
-                continue;
-            }
+    public void ApplyEisenhowerMatrix(EisenhowerMatrix matrix)
+        => SetPriority(
+            isUrgent: matrix.IsUrgent,
+            isImportant: matrix.IsImportant
+        );
 
-            if (TodoParser.DecodeTagAnnotation(token) is { } tag) {
-                Tag = tag;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeTimeAnnotation(token) is { } time) {
-                Time = time;
-                tokens.RemoveAt(i);
-                continue;
-            }
-
-            if (TodoParser.DecodeEisenhowerMatrixAnnotation(token) is { } matrix) {
-                IsImportant = matrix.IsImportant;
-                IsUrgent = matrix.IsUrgent;
-                tokens.RemoveAt(i);
-                continue;
-            }
-        }
-
-        Title = TodoParser.JoinTokenList(tokens);
-    }
-
-    public void UpdateDone(bool? isDone) {
-        IsDone = isDone ?? !IsDone;
-    }
-
-    public void UpdateArchived(bool? shouldBeArchived) {
-        IsArchived = shouldBeArchived ?? !IsArchived;
-    }
-
-    public string ToRawString() {
-        List<string> tokens = [];
-
-        if (IsUrgent || IsImportant)
-            TodoParser.EncodeEisenhowerMatrixAnnotation(new EisenhowerMatrix {
-                IsImportant = IsImportant,
-                IsUrgent = IsUrgent,
-            });
-
-        tokens.Add(Title);
-
-
-        if (!string.IsNullOrWhiteSpace(Context)) {
-            string token = TodoParser.EncodeContextAnnotation(Context);
-            tokens.Add(token);
-        }
-
-        if (!string.IsNullOrWhiteSpace(Tag)) {
-            string token = TodoParser.EncodeTagAnnotation(Tag);
-            tokens.Add(token);
-        }
-
-        if (!string.IsNullOrWhiteSpace(Project)) {
-            string token = TodoParser.EncodeProjectAnnotation(Project);
-            tokens.Add(token);
-        }
-
-        if (Time.HasValue) {
-            string token = TodoParser.EncodeTimeAnnotation(Time.Value);
-            tokens.Add(token);
-        }
-
-        if (Energy != null) {
-            string? token = TodoParser.EncodeEnergyAnnotation(Energy);
-            if (token != null) {
-                tokens.Add(token);
-            }
-        }
-
-        return TodoParser.JoinTokenList(tokens);
+    public void SetPriority(bool isImportant, bool isUrgent) {
+        IsImportant = isImportant;
+        IsUrgent = isUrgent;
     }
 }
