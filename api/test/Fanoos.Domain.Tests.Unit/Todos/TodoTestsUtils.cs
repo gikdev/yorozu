@@ -1,6 +1,3 @@
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable CA1034 // Nested types should not be visible
-
 using Fanoos.Domain.Todos;
 
 namespace Fanoos.Domain.Tests.Unit.Todos;
