@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhArchiveBox, PhCheckCircle } from '@phosphor-icons/vue'
+import { PhArchiveBox } from '@phosphor-icons/vue'
 
 const props = defineProps<{
   includeArchived: boolean
@@ -18,12 +18,10 @@ const emit = defineEmits<{
     </RouterLink>
 
     <button
-      class="flex gap-1 items-center cursor-pointer ms-auto"
+      :class="['flex gap-1 items-center cursor-pointer ms-auto', includeArchived && 'text-sky-500']"
       @click="emit('toggleIncludeArchived')"
     >
-      <PhCheckCircle v-if="includeArchived" weight="fill" :size="24" />
-      <PhArchiveBox v-else :size="24" />
-      <span>Show Archived</span>
+      <PhArchiveBox :weight="includeArchived ? 'fill' : 'regular'" :size="24" />
     </button>
   </header>
 </template>
