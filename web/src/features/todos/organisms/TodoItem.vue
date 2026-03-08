@@ -46,7 +46,9 @@ function formatEnergyLevel(energyLevel: EnergyLevel) {
         <span v-if="task.project" class="text-emerald-500"> +{{ task.project }} </span>
         <span v-if="task.tag" class="text-sky-500"> #{{ task.tag }} </span>
         <span v-if="task.time" class="text-lime-500"> ~{{ task.time }} </span>
-        <span v-if="task.energy" class="text-purple-500">{{ formatEnergyLevel(task.energy) }}</span>
+        <span v-if="task.energyLevel" class="text-purple-500">{{
+          formatEnergyLevel(task.energyLevel)
+        }}</span>
       </p>
     </div>
 

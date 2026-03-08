@@ -4,7 +4,12 @@ import TodoHeader from '#/features/todos/organisms/TodoHeader.vue'
 import TodosList from '#/features/todos/organisms/TodosList.vue'
 import { useMutation, useQuery } from '@pinia/colada'
 import * as v from 'valibot'
-import { createTodoMutation, listTodosQuery, changeTodoMutation } from '#/common/api/client'
+import {
+  createTodoMutation,
+  listTodosQuery,
+  changeTodoMutation,
+  ArchivedStatus,
+} from '#/common/api/client'
 import { computed, ref } from 'vue'
 import TodoBottomSheet from '#/features/todos/organisms/TodoBottomSheet.vue'
 import { btn } from '#/common/atoms/btn'
@@ -21,7 +26,7 @@ function handleIncludeArchivedToggle() {
 const qListTodos = useQuery(() =>
   listTodosQuery({
     query: {
-      include_archived: includeArchived.value,
+      archived_status: includeArchived.value ? ArchivedStatus.ARCHIVED : ArchivedStatus.ACTIVE,
     },
   }),
 )
@@ -50,7 +55,14 @@ function validateTodoTitle(value: string): string | null {
 }
 
 function createTodo(rawTitle: string) {
-  mCreateTodo.mutate({ body: { rawTitle } })
+  mCreateTodo.mutate({
+    body: {
+      rawTodoPayload: {
+        rawInput: rawTitle,
+      },
+      normalTodoPayload: null,
+    },
+  })
 }
 //#endregion
 
@@ -94,9 +106,7 @@ function archiveTodo() {
   mArchiveTodo.mutate({
     path: { id },
     body: {
-      isArchived: {
-        value: !todo.isArchived,
-      },
+      isArchived: !todo.isArchived,
     },
   })
 }
@@ -112,9 +122,7 @@ function toggleTodoStatus(id: string, currentIsDone: boolean) {
   mToggleTodo.mutate({
     path: { id },
     body: {
-      isDone: {
-        value: !currentIsDone,
-      },
+      isDone: !currentIsDone,
     },
   })
 }
@@ -154,9 +162,7 @@ function editTodoTitle(newRawTitle: string) {
   editTodoTitleM.mutate({
     path: { id },
     body: {
-      rawTitle: {
-        value: newRawTitle,
-      },
+      title: newRawTitle,
     },
   })
 }
@@ -204,7 +210,7 @@ function editTodoTitle(newRawTitle: string) {
 
     <TodoFormSheet
       v-if="isEditingSheetOpen"
-      :initial-title="editingSheetTodo!.rawTitle"
+      :initial-title="editingSheetTodo!.title"
       @close-sheet="closeEditingSheet"
       @submit="editTodoTitle"
     />

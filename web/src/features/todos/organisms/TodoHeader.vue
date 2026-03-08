@@ -23,7 +23,7 @@ const emit = defineEmits<{
     >
       <PhCheckCircle v-if="includeArchived" weight="fill" :size="24" />
       <PhArchiveBox v-else :size="24" />
-      <span>Include Archived</span>
+      <span>Show Archived</span>
     </button>
   </header>
 </template>

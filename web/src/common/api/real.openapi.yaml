@@ -203,7 +203,7 @@ components:
         - Low
         - Medium
         - High
-        - 
+        -
     NormalTodoPayload:
       required:
         - title
@@ -281,19 +281,19 @@ components:
         - Context
         - Project
         - Tag
-        - 
+        -
     SortOrder:
       enum:
         - Asc
         - Desc
-        - 
+        -
     TodoBucket:
       enum:
         - Uncategorized
         - NextActions
         - Waiting
         - SomedayMaybe
-        - 
+        -
     TodoListResponse:
       required:
         - items
