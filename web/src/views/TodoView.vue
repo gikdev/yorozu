@@ -14,7 +14,6 @@ import { computed, ref } from 'vue'
 import TodoBottomSheet from '#/features/todos/organisms/TodoBottomSheet.vue'
 import { btn } from '#/common/atoms/btn'
 import TodoFormSheet from '#/features/todos/organisms/TodoFormSheet.vue'
-import { version } from '#/app/data/version.json'
 
 //#region List Todos
 const includeArchived = ref(false)
@@ -172,7 +171,6 @@ function editTodoTitle(newRawTitle: string) {
 <template>
   <div class="max-w-120 mx-auto bg-slate-900 h-dvh text-white flex flex-col">
     <TodoHeader
-      :app-version="version"
       :include-archived="includeArchived"
       @toggle-include-archived="handleIncludeArchivedToggle"
     />
