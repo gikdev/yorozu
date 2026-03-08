@@ -57,11 +57,30 @@ paths:
       summary: List todos
       operationId: ListTodos
       parameters:
-        - name: include_archived
+        - name: archived_status
           in: query
           schema:
-            type: boolean
-            default: false
+            $ref: '#/components/schemas/ArchivedStatus'
+        - name: bucket
+          in: query
+          schema:
+            $ref: '#/components/schemas/TodoBucket'
+        - name: sort_by
+          in: query
+          schema:
+            $ref: '#/components/schemas/SortBy'
+        - name: sort_order
+          in: query
+          schema:
+            $ref: '#/components/schemas/SortOrder'
+        - name: q
+          in: query
+          schema:
+            type: string
+        - name: exclude_query
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -69,71 +88,128 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TodoListResponse'
+  /api/backups:
+    get:
+      tags:
+        - Backups
+      summary: Get backup
+      operationId: GetBackup
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupDto'
+    post:
+      tags:
+        - Backups
+      summary: Restore backup
+      operationId: RestoreBackup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackupDto'
+        required: true
+      responses:
+        '204':
+          description: No Content
 components:
   schemas:
+    ArchivedStatus:
+      enum:
+        - All
+        - Archived
+        - Active
+      default: Active
+    BackupDto:
+      required:
+        - version
+        - todos
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        todos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoPersistenceDto'
     ChangeTodoRequest:
       type: object
       properties:
-        rawTitle:
+        title:
+          type:
+            - 'null'
+            - string
+        context:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/ValueStringObject'
+            - $ref: '#/components/schemas/ObjectValueOfNullableString'
+        project:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ObjectValueOfNullableString'
+        time:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ObjectValueOfNullableInt'
+        tag:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/ObjectValueOfNullableString'
+        energyLevel:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
+        bucket:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoBucket'
+        isImportant:
+          type:
+            - 'null'
+            - boolean
+        isUrgent:
+          type:
+            - 'null'
+            - boolean
         isDone:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/ValueBooleanObject'
+          type:
+            - 'null'
+            - boolean
         isArchived:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/ValueBooleanObject'
+          type:
+            - 'null'
+            - boolean
     CreateTodoRequest:
       required:
-        - rawTitle
+        - rawTodoPayload
+        - normalTodoPayload
       type: object
       properties:
-        rawTitle:
-          type: string
+        rawTodoPayload:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/RawTodoPayload'
+        normalTodoPayload:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/NormalTodoPayload'
     EnergyLevel:
       enum:
         - None
         - Low
         - Medium
         - High
-        -
-    TodoListResponse:
+        - 
+    NormalTodoPayload:
       required:
-        - items
-        - includesArchived
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TodoResponse'
-        includesArchived:
-          type: boolean
-    TodoResponse:
-      required:
-        - id
         - title
-        - rawTitle
-        - context
-        - project
-        - time
-        - tag
-        - energy
-        - isImportant
-        - isUrgent
-        - isDone
-        - isArchived
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
         title:
-          type: string
-        rawTitle:
           type: string
         context:
           type:
@@ -152,7 +228,172 @@ components:
           type:
             - 'null'
             - string
-        energy:
+        energyLevel:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
+        bucket:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoBucket'
+        isImportant:
+          type:
+            - 'null'
+            - boolean
+        isUrgent:
+          type:
+            - 'null'
+            - boolean
+        isDone:
+          type:
+            - 'null'
+            - boolean
+    ObjectValueOfNullableInt:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          type:
+            - 'null'
+            - integer
+          format: int32
+    ObjectValueOfNullableString:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          type:
+            - 'null'
+            - string
+    RawTodoPayload:
+      required:
+        - rawInput
+      type: object
+      properties:
+        rawInput:
+          type: string
+    SortBy:
+      enum:
+        - None
+        - Time
+        - Context
+        - Project
+        - Tag
+        - 
+    SortOrder:
+      enum:
+        - Asc
+        - Desc
+        - 
+    TodoBucket:
+      enum:
+        - Uncategorized
+        - NextActions
+        - Waiting
+        - SomedayMaybe
+        - 
+    TodoListResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TodoResponse'
+    TodoPersistenceDto:
+      required:
+        - id
+        - title
+        - context
+        - project
+        - time
+        - tag
+        - energyLevel
+        - bucket
+        - isImportant
+        - isUrgent
+        - isDone
+        - isArchived
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        context:
+          type:
+            - 'null'
+            - string
+        project:
+          type:
+            - 'null'
+            - string
+        time:
+          type:
+            - 'null'
+            - integer
+          format: int32
+        tag:
+          type:
+            - 'null'
+            - string
+        energyLevel:
+          type: string
+        bucket:
+          type: string
+        isImportant:
+          type: boolean
+        isUrgent:
+          type: boolean
+        isDone:
+          type: boolean
+        isArchived:
+          type: boolean
+    TodoResponse:
+      required:
+        - id
+        - title
+        - context
+        - project
+        - time
+        - tag
+        - bucket
+        - energyLevel
+        - isImportant
+        - isUrgent
+        - isDone
+        - isArchived
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        context:
+          type:
+            - 'null'
+            - string
+        project:
+          type:
+            - 'null'
+            - string
+        time:
+          type:
+            - 'null'
+            - integer
+          format: int32
+        tag:
+          type:
+            - 'null'
+            - string
+        bucket:
+          $ref: '#/components/schemas/TodoBucket'
+        energyLevel:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/EnergyLevel'
@@ -164,19 +405,6 @@ components:
           type: boolean
         isArchived:
           type: boolean
-    ValueBooleanObject:
-      required:
-        - value
-      type: object
-      properties:
-        value:
-          type: boolean
-    ValueStringObject:
-      required:
-        - value
-      type: object
-      properties:
-        value:
-          type: string
 tags:
   - name: Todos
+  - name: Backups
