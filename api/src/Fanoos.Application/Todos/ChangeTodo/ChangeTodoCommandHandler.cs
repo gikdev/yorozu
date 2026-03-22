@@ -47,7 +47,7 @@ internal sealed class ChangeTodoCommandHandler(
             bool isImportant = request.IsImportant ?? todo.IsImportant;
             bool isUrgent = request.IsUrgent ?? todo.IsUrgent;
 
-            var result = todo.SetPriority(isImportant, isUrgent);
+            var result = todo.SetUrgency(isImportant, isUrgent);
             if (result.IsError) return result.Errors;
         }
 

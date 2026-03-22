@@ -2,9 +2,12 @@ using System.Text.Json.Serialization;
 
 namespace Fanoos.Domain.Todos;
 
+/// <summary>
+/// Represents the energy level required for a task to be done.
+/// </summary>
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum EnergyLevel {
-    None = 0,
+    Unknown = 0,
     Low = 1,
     Medium = 2,
     High = 3,

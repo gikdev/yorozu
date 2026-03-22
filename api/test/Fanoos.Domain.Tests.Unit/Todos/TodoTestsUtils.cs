@@ -1,36 +1,43 @@
 using ErrorOr;
+using Fanoos.Common.Domain;
 using Fanoos.Domain.Todos;
 
 namespace Fanoos.Domain.Tests.Unit.Todos;
 
 internal static class TodoTestsUtils {
     internal static ErrorOr<Todo> CreateTodo(
-        string title = "Sth",
-        string? context = null,
-        string? tag = null,
-        string? project = null,
-        int? time = null,
-        EnergyLevel? energyLevel = null,
-        bool? isDone = null,
-        bool? isImportant = null,
+        NotEmptyString? title = null,
+        NotEmptyString? why = null,
+        NotEmptyString? description = null,
+        byte? pomodoroEstimate = null,
         bool? isUrgent = null,
-        bool? isArchived = null,
+        bool? isDone = null,
+        FutureDateTimeOffset? dueDate = null,
+        NotEmptyString[]? contexts = null,
+        TodoPriority? priority = null,
+        TodoEffortType? effortType = null,
+        EnergyLevel? energyLevel = null,
         TodoBucket? bucket = null,
+        WaitingForInfo? waitingForInfo = null,
         Guid? id = null
     ) {
+        var fallbackTitle = NotEmptyString.Create("Sth").Value;
+
         var result = Todo.Create(
             id: id,
-            isArchived: isArchived,
-            isDone: isDone,
+            title: title ?? fallbackTitle,
+            why: why,
+            description: description,
+            pomodoroEstimate: pomodoroEstimate,
             isUrgent: isUrgent,
-            isImportant: isImportant,
-            bucket: bucket,
+            isDone: isDone,
+            dueDate: dueDate,
+            contexts: contexts,
+            priority: priority,
+            effortType: effortType,
             energyLevel: energyLevel,
-            tag: tag,
-            time: time,
-            project: project,
-            context: context,
-            title: title
+            bucket: bucket,
+            waitingForInfo: waitingForInfo
         );
 
         return result;

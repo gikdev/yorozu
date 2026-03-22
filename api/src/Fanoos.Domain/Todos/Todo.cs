@@ -1,84 +1,94 @@
+#pragma warning disable CA1819 // Properties should not return arrays
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable S3453 // Classes should not have only "private" constructors
+#pragma warning disable S1135 // Track uses of "TODO" tags
+
 using ErrorOr;
 using Fanoos.Common.Domain;
+using System.Collections.ObjectModel;
 
 namespace Fanoos.Domain.Todos;
 
-public class Todo : IAggregateRoot {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+public sealed class Todo : IAggregateRoot {
+    private NotEmptyString[] _contexts = [];
+    
     private Todo() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     public Guid Id { get; private init; }
-    public string Title { get; private set; }
-    public string? Context { get; private set; }
-    public string? Project { get; private set; }
-    public int? Time { get; private set; }
-    public string? Tag { get; private set; }
-    public EnergyLevel EnergyLevel { get; private set; }
-    public TodoBucket Bucket { get; private set; }
-    public bool IsImportant { get; private set; }
-    public bool IsUrgent { get; private set; }
+    public NotEmptyString Title { get; set; }
+
+    /// <summary>
+    /// Represents the user's motivation, desired outcome, or the "why" behind this task.
+    /// </summary>
+    public NotEmptyString? Why { get; set; }
+
+    public NotEmptyString? Description { get; set; }
     public bool IsDone { get; private set; }
-    public bool IsArchived { get; private set; }
+
+    /// <summary>
+    /// Estimated effort in pomodoros. 
+    /// 0 = very small task (no dedicated block).
+    /// >0 = number of sessions.
+    /// </summary>
+    public byte? PomodoroEstimate { get; set; }
+
+    /// <summary>
+    /// Indicates urgency (Eisenhower Matrix).
+    /// </summary>
+    public bool IsUrgent { get; private set; }
+
+    public FutureDateTimeOffset? DueDate { get; set; }
+
+    /// <summary>
+    /// Contexts (e.g., @home, @pen) based on Todo.TXT format.
+    /// </summary>
+    public ReadOnlyCollection<NotEmptyString> Contexts => _contexts.AsReadOnly();
+
+    public TodoPriority Priority { get; set; }
+    public TodoEffortType EffortType { get; set; }
+    public EnergyLevel EnergyLevel { get; set; }
+    public TodoBucket Bucket { get; private set; }
+    public WaitingForInfo? WaitingForInfo { get; set; }
 
     public static ErrorOr<Todo> Create(
-        string title,
-        string? context,
-        string? project,
-        int? time,
-        string? tag,
-        EnergyLevel? energyLevel,
-        TodoBucket? bucket,
-        bool? isImportant,
+        NotEmptyString title,
+        NotEmptyString? why,
+        NotEmptyString? description,
+        byte? pomodoroEstimate,
         bool? isUrgent,
         bool? isDone,
-        bool? isArchived,
+        FutureDateTimeOffset? dueDate,
+        NotEmptyString[]? contexts,
+        TodoPriority? priority,
+        TodoEffortType? effortType,
+        EnergyLevel? energyLevel,
+        TodoBucket? bucket,
+        WaitingForInfo? waitingForInfo,
         Guid? id = null
     ) {
-        if (string.IsNullOrWhiteSpace(title))
-            return TodoErrors.TitleIsEmpty;
-
-        var finalBucket = bucket ?? TodoBucket.Uncategorized;
-        var finalIsUrgent = isUrgent ?? false;
-
-        var result = EnsureUrgentSomedayInvariant(finalBucket, finalIsUrgent);
-        if (result.IsError) return result.Errors;
-
-        Todo todo = new() {
-            Bucket = finalBucket,
-            Context = context,
-            EnergyLevel = energyLevel ?? EnergyLevel.None,
+        var todo = new Todo {
             Id = id ?? Guid.NewGuid(),
-            IsArchived = isArchived ?? false,
+            Title = title, 
+            Bucket = bucket ?? TodoBucket.Uncategorized,
+            Description = description,
+            DueDate = dueDate,
+            EffortType = effortType ?? TodoEffortType.Unknown,
+            EnergyLevel = energyLevel ?? EnergyLevel.Unknown,
             IsDone = isDone ?? false,
-            IsImportant = isImportant ?? false,
-            IsUrgent = finalIsUrgent,
-            Project = project,
-            Tag = tag,
-            Time = time,
-            Title = title,
+            IsUrgent = isUrgent ?? false,
+            PomodoroEstimate = pomodoroEstimate,
+            Priority = priority ?? TodoPriority.Unknown,
+            WaitingForInfo = waitingForInfo,
+            Why = why,
+            _contexts = contexts ?? [],
         };
 
         return todo;
     }
 
-    public static ErrorOr<Todo> FromRaw(string raw)
-        => TodoParser.FromRaw(raw);
-
-    public void SetTitle(string title) => Title = title;
-    public void SetTime(int? time) => Time = time;
-    public void SetTag(string? tag) => Tag = tag;
-    public void SetProject(string? project) => Project = project;
-    public void SetContext(string? context) => Context = context;
-    public void SetEnergyLevel(EnergyLevel energyLevel) => EnergyLevel = energyLevel;
-
     public void MarkDone() => IsDone = true;
     public void MarkUndone() => IsDone = false;
     public void ToggleDone() => IsDone = !IsDone;
-
-    public void Archive() => IsArchived = true;
-    public void Unarchive() => IsArchived = false;
-    public void ToggleArchive() => IsArchived = !IsArchived;
 
     public ErrorOr<Success> MoveToBucket(TodoBucket bucket) {
         var result = EnsureUrgentSomedayInvariant(bucket, IsUrgent);
@@ -89,17 +99,10 @@ public class Todo : IAggregateRoot {
         return Result.Success;
     }
 
-    public ErrorOr<Success> ApplyEisenhowerMatrix(EisenhowerMatrix matrix)
-        => SetPriority(
-            isUrgent: matrix.IsUrgent,
-            isImportant: matrix.IsImportant
-        );
-
-    public ErrorOr<Success> SetPriority(bool isImportant, bool isUrgent) {
+    public ErrorOr<Success> SetUrgency(bool isUrgent) {
         var result = EnsureUrgentSomedayInvariant(Bucket, isUrgent);
         if (result.IsError) return result.Errors;
 
-        IsImportant = isImportant;
         IsUrgent = isUrgent;
 
         return Result.Success;
