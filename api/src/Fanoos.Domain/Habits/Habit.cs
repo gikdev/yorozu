@@ -1,5 +1,3 @@
-#pragma warning disable S112 // General or reserved exceptions should never be thrown
-#pragma warning disable CA2201 // Do not raise reserved exception types
 #pragma warning disable CA1034 // Nested types should not be visible
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 

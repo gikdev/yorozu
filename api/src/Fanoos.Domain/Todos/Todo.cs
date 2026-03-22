@@ -1,7 +1,4 @@
-#pragma warning disable CA1819 // Properties should not return arrays
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-#pragma warning disable S3453 // Classes should not have only "private" constructors
-#pragma warning disable S1135 // Track uses of "TODO" tags
 
 using ErrorOr;
 using Fanoos.Common.Domain;
@@ -40,7 +37,7 @@ public sealed class Todo : IAggregateRoot {
     public FutureDateTimeOffset? DueDate { get; set; }
 
     /// <summary>
-    /// Contexts (e.g., @home, @pen) based on Todo.TXT format.
+    /// Contexts (e.g., @home, @pen) based on TodoTXT format.
     /// </summary>
     public ReadOnlyCollection<NotEmptyString> Contexts => _contexts.AsReadOnly();
 
