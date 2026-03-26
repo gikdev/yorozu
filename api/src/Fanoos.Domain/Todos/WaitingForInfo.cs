@@ -1,3 +1,5 @@
+using Fanoos.Common.Domain;
+
 namespace Fanoos.Domain.Todos;
 
 /// <summary>
@@ -8,10 +10,10 @@ public sealed record WaitingForInfo {
     /// <summary>
     /// Describes what is being awaited (e.g., "Reply from John", "Invoice received").
     /// </summary>
-    public required string Description { get; init; }
+    public required NotEmptyString Description { get; init; }
 
     /// <summary>
     /// The timestamp when the status of this waiting item should be reviewed or followed up on.
     /// </summary>
-    public required DateTimeOffset ReviewAt { get; init; }
+    public required FutureDateTimeOffset ReviewAt { get; init; }
 }

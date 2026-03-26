@@ -21,62 +21,8 @@ internal sealed class TodoRepository(
         return Task.CompletedTask;
     }
 
-    public async Task<List<Todo>> ListAsync(ListTodosQuery query, CancellationToken cancellationToken = default) {
-        IQueryable<Todo> queryable = db.Todos;
-
-        // 2. Filter by Bucket
-        if (query.Bucket.HasValue) {
-            queryable = queryable.Where(t => t.Bucket == query.Bucket.Value);
-        }
-
-        // 3. Search: Include Query
-        if (!string.IsNullOrWhiteSpace(query.IncludeQuery)) {
-            queryable = queryable.Where(t => (
-                t.Title.Contains(query.IncludeQuery)
-                ||
-                (t.Project != null && t.Project.Contains(query.IncludeQuery))
-                ||
-                (t.Context != null && t.Context.Contains(query.IncludeQuery))
-                ||
-                (t.Tag != null && t.Tag.Contains(query.IncludeQuery))
-            ));
-        }
-
-        // 4. Search: Exclude Query
-        if (!string.IsNullOrWhiteSpace(query.ExcludeQuery)) {
-            queryable = queryable.Where(t => (
-                !t.Title.Contains(query.ExcludeQuery)
-                &&
-                (t.Project == null || !t.Project.Contains(query.ExcludeQuery))
-                &&
-                (t.Context == null || !t.Context.Contains(query.ExcludeQuery))
-                &&
-                (t.Tag == null || !t.Tag.Contains(query.ExcludeQuery))
-            ));
-        }
-
-        // 5. Sorting
-        queryable = query.SortOrder switch {
-            SortOrder.Asc => query.SortBy switch {
-                SortBy.Title => queryable.OrderBy(t => t.Title),
-                SortBy.Context => queryable.OrderBy(t => t.Context),
-                SortBy.DueDate => queryable.OrderBy(t => t.DueDate),
-                SortBy.Tag => queryable.OrderBy(t => t.Tag),
-                _ => queryable,
-            },
-
-            SortOrder.Desc => query.SortBy switch {
-                SortBy.Time => queryable.OrderByDescending(t => t.Time),
-                SortBy.Context => queryable.OrderByDescending(t => t.Context),
-                SortBy.Project => queryable.OrderByDescending(t => t.Project),
-                SortBy.Tag => queryable.OrderByDescending(t => t.Tag),
-                _ => queryable,
-            },
-
-            _ => queryable,
-        };
-
-        List<Todo> todos = await queryable.ToListAsync(cancellationToken: cancellationToken);
+    public async Task<List<Todo>> ListAsync(CancellationToken cancellationToken = default) {
+        List<Todo> todos = await db.Todos.ToListAsync(cancellationToken: cancellationToken);
 
         return todos;
     }
@@ -93,11 +39,13 @@ internal sealed class TodoRepository(
         return Task.CompletedTask;
     }
 
+#pragma warning disable S4144 // Methods should not have identical implementations
     public async Task<List<Todo>> GetBackup(CancellationToken cancellationToken = default) {
         List<Todo> todos = await db.Todos.ToListAsync(cancellationToken: cancellationToken);
 
         return todos;
     }
+#pragma warning restore S4144 // Methods should not have identical implementations
 
     public Task RestoreBackup(List<Todo> todos, CancellationToken cancellationToken = default) {
         db.AddRange(todos, cancellationToken);

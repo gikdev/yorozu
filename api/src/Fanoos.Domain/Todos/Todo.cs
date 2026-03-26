@@ -1,14 +1,15 @@
+#pragma warning disable CA1002 // Do not expose generic lists
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
+using System.Collections.ObjectModel;
 using ErrorOr;
 using Fanoos.Common.Domain;
-using System.Collections.ObjectModel;
 
 namespace Fanoos.Domain.Todos;
 
 public sealed class Todo : IAggregateRoot {
-    private NotEmptyString[] _contexts = [];
-    
+    private List<NotEmptyString> _contexts = [];
+
     private Todo() { }
 
     public Guid Id { get; private init; }
@@ -23,11 +24,11 @@ public sealed class Todo : IAggregateRoot {
     public bool IsDone { get; private set; }
 
     /// <summary>
-    /// Estimated effort in pomodoros. 
+    /// Estimated effort in pomodoros.
     /// 0 = very small task (no dedicated block).
     /// >0 = number of sessions.
     /// </summary>
-    public byte? PomodoroEstimate { get; set; }
+    public byte? EstimatedPomodoros { get; set; }
 
     /// <summary>
     /// Indicates urgency (Eisenhower Matrix).
@@ -39,7 +40,7 @@ public sealed class Todo : IAggregateRoot {
     /// <summary>
     /// Contexts (e.g., @home, @pen) based on TodoTXT format.
     /// </summary>
-    public ReadOnlyCollection<NotEmptyString> Contexts => _contexts.AsReadOnly();
+    public IReadOnlyList<NotEmptyString> Contexts => _contexts.AsReadOnly();
 
     public TodoPriority Priority { get; set; }
     public TodoEffortType EffortType { get; set; }
@@ -51,11 +52,11 @@ public sealed class Todo : IAggregateRoot {
         NotEmptyString title,
         NotEmptyString? why,
         NotEmptyString? description,
-        byte? pomodoroEstimate,
+        byte? estimatedPomodoros,
         bool? isUrgent,
         bool? isDone,
         FutureDateTimeOffset? dueDate,
-        NotEmptyString[]? contexts,
+        List<NotEmptyString>? contexts,
         TodoPriority? priority,
         TodoEffortType? effortType,
         EnergyLevel? energyLevel,
@@ -65,7 +66,7 @@ public sealed class Todo : IAggregateRoot {
     ) {
         var todo = new Todo {
             Id = id ?? Guid.NewGuid(),
-            Title = title, 
+            Title = title,
             Bucket = bucket ?? TodoBucket.Uncategorized,
             Description = description,
             DueDate = dueDate,
@@ -73,7 +74,7 @@ public sealed class Todo : IAggregateRoot {
             EnergyLevel = energyLevel ?? EnergyLevel.Unknown,
             IsDone = isDone ?? false,
             IsUrgent = isUrgent ?? false,
-            PomodoroEstimate = pomodoroEstimate,
+            EstimatedPomodoros = estimatedPomodoros,
             Priority = priority ?? TodoPriority.Unknown,
             WaitingForInfo = waitingForInfo,
             Why = why,
@@ -86,6 +87,10 @@ public sealed class Todo : IAggregateRoot {
     public void MarkDone() => IsDone = true;
     public void MarkUndone() => IsDone = false;
     public void ToggleDone() => IsDone = !IsDone;
+
+    public void SetContexts(List<NotEmptyString> contexts) {
+        _contexts = contexts;
+    }
 
     public ErrorOr<Success> MoveToBucket(TodoBucket bucket) {
         var result = EnsureUrgentSomedayInvariant(bucket, IsUrgent);

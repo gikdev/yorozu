@@ -1,3 +1,5 @@
+#pragma warning disable CA1002 // Do not expose generic lists
+
 using ErrorOr;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;

@@ -1,6 +1,7 @@
 using Fanoos.Application.Backups.Common;
 using Fanoos.Application.Todos;
 using Fanoos.Common.Data;
+using Fanoos.Common.Domain;
 using Fanoos.Domain.Todos;
 using MediatR;
 
@@ -10,8 +11,8 @@ internal sealed class RestoreBackupCommandHandler(
     ITodoRepository todoRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<RestoreBackupCommand, bool> {
-    public async Task<bool> Handle(RestoreBackupCommand request, CancellationToken cancellationToken) {
-        List<Todo> todos = request.Todos.ConvertAll(MapToDomain);
+    public async Task<bool> Handle(RestoreBackupCommand dto, CancellationToken cancellationToken) {
+        List<Todo> todos = dto.Todos.ConvertAll(MapToDomain);
 
         await todoRepository.RestoreBackup(todos, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -21,18 +22,23 @@ internal sealed class RestoreBackupCommandHandler(
 
     private static Todo MapToDomain(TodoPersistenceDto dto) {
         return Todo.Create(
-            id: dto.Id,
-            isArchived: dto.IsArchived,
+            waitingForInfo: dto.WaitingForInfo == null ? null : new WaitingForInfo {
+                Description = NotEmptyString.Create(dto.WaitingForInfo.Description).Value,
+                ReviewAt = FutureDateTimeOffset._Restore(dto.WaitingForInfo.ReviewAt)
+            },
+            bucket: (TodoBucket)dto.Bucket,
+            energyLevel: (EnergyLevel)dto.EnergyLevel,
+            effortType: (TodoEffortType)dto.EffortType,
+            priority: (TodoPriority)dto.Priority,
+            contexts: dto.Contexts.Select(x => NotEmptyString.Create(x).Value).ToList(),
+            dueDate: dto.DueDate.HasValue ? FutureDateTimeOffset._Restore(dto.DueDate.Value) : null,
             isDone: dto.IsDone,
             isUrgent: dto.IsUrgent,
-            isImportant: dto.IsImportant,
-            bucket: (dynamic)dto.Bucket,
-            energyLevel: (dynamic)dto.EnergyLevel,
-            tag: dto.Tag,
-            time: dto.Time,
-            project: dto.Project,
-            context: dto.Context,
-            title: dto.Title
+            estimatedPomodoros: dto.EstimatedPomodoros,
+            description: dto.Description == null ? null : NotEmptyString.Create(dto.Description).Value,
+            why: dto.Why == null ? null : NotEmptyString.Create(dto.Why).Value,
+            title: NotEmptyString.Create(dto.Title).Value,
+            id: dto.Id
         ).Value;
     }
 }

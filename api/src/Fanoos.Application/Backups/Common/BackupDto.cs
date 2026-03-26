@@ -1,3 +1,5 @@
+#pragma warning disable CA1002 // Do not expose generic lists
+
 namespace Fanoos.Application.Backups.Common;
 
 public record BackupDto {

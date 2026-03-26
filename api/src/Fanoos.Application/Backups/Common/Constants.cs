@@ -1,5 +1,5 @@
-namespace Fanoos.Application.Backups.Common; 
+namespace Fanoos.Application.Backups.Common;
 
 internal static class Constants {
-    public const int CurrentVersion = 1;
+    public const int CurrentVersion = 2;
 }

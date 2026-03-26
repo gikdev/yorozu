@@ -22,23 +22,31 @@ internal sealed class ListTodos : IEndpoint {
 
     private static async Task<IResult> Handle(
         [FromServices] ISender mediator,
-        [FromQuery(Name = "archived_status")] DoneStatus archivedStatus = DoneStatus.Todo,
-        [FromQuery(Name = "bucket")] TodoBucket? bucket = null,
-        [FromQuery(Name = "sort_by")] SortBy? sortBy = null,
-        [FromQuery(Name = "sort_order")] SortOrder? sortOrder = null,
+        [FromQuery(Name = "bucket")] TodoBucketFilter bucketFilter = TodoBucketFilter.All,
+        [FromQuery(Name = "sort_by")] TodoSortBy sortBy = TodoSortBy.None,
+        [FromQuery(Name = "sort_order")] TodoSortOrder sortOrder = TodoSortOrder.Asc,
         [FromQuery(Name = "q")] string? includeQuery = null,
-        [FromQuery(Name = "exclude_query")] string? excludeQuery = null
+        [FromQuery(Name = "exclude_query")] string? excludeQuery = null,
+        [FromQuery(Name = "available_energy_level")] EnergyLevel? availableEnergyLevel = null,
+        [FromQuery(Name = "available_pomodoros")] byte? availablePomodoros = null
     ) {
-        List<Todo> todos = await mediator.Send(
-            ListTodosQuery.Create(
-                excludeQuery: excludeQuery,
-                includeQuery: includeQuery,
-                sortOrder: sortOrder,
-                sortBy: sortBy,
-                bucket: bucket,
-                doneStatus: archivedStatus
-            )
-        );
+        var dto = new OrganizeTodosDto {
+            AvailableEnergyLevel = availableEnergyLevel,
+            AvailablePomodoros = availablePomodoros,
+            Bucket = bucketFilter switch {
+                TodoBucketFilter.Uncategorized => TodoBucket.Uncategorized,
+                TodoBucketFilter.NextActions => TodoBucket.NextActions,
+                TodoBucketFilter.SomedayMaybe => TodoBucket.SomedayMaybe,
+                TodoBucketFilter.Waiting => TodoBucket.Waiting,
+                _ => null,
+            },
+            ExcludeQuery = excludeQuery,
+            IncludeQuery = includeQuery,
+            SortBy = sortBy,
+            SortOrder = sortOrder,
+        };
+        var query = new ListTodosQuery(dto);
+        List<Todo> todos = await mediator.Send(query);
 
         return Results.Ok(MapToListResponse(todos));
     }

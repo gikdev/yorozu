@@ -6,17 +6,22 @@ internal static class Mappings {
     internal static TodoResponse MapToResponse(this Todo todo) {
         return new TodoResponse {
             Id = todo.Id,
-            Context = todo.Context,
+            Contexts = todo.Contexts.ToList().ConvertAll(x => x.Value),
             EnergyLevel = todo.EnergyLevel,
             IsDone = todo.IsDone,
-            IsImportant = todo.IsImportant,
             IsUrgent = todo.IsUrgent,
-            Project = todo.Project,
             Bucket = todo.Bucket,
-            Tag = todo.Tag,
-            Time = todo.Time,
-            Title = todo.Title,
-            IsArchived = todo.IsArchived,
+            Title = todo.Title.Value,
+            Description = todo.Description?.Value,
+            DueDate = todo.DueDate?.Value,
+            EffortType = todo.EffortType,
+            EstimatedPomodoros = todo.EstimatedPomodoros,
+            Priority = todo.Priority,
+            WaitingForInfo = todo.WaitingForInfo == null ? null : new WaitingForResponse {
+                Description = todo.WaitingForInfo.Description.Value,
+                ReviewAt = todo.WaitingForInfo.ReviewAt.Value,
+            },
+            Why = todo.Why?.Value,
         };
     }
 }

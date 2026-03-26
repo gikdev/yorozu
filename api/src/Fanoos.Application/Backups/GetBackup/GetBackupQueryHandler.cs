@@ -19,18 +19,23 @@ internal sealed class GetBackupQueryHandler(
 
     private static TodoPersistenceDto MapToDto(Todo t) {
         return new TodoPersistenceDto {
-            Bucket = t.Bucket.ToString(),
-            Context = t.Context,
-            EnergyLevel = t.EnergyLevel.ToString(),
             Id = t.Id,
-            IsArchived = t.IsArchived,
             IsDone = t.IsDone,
-            IsImportant = t.IsImportant,
             IsUrgent = t.IsUrgent,
-            Project = t.Project,
-            Tag = t.Tag,
-            Time = t.Time,
-            Title = t.Title,
+            Title = t.Title.Value,
+            Bucket = (int)t.Bucket,
+            Contexts = t.Contexts.Select(x => x.Value).ToList(),
+            Description = t.Description?.Value,
+            DueDate = t.DueDate?.Value,
+            EffortType = (int)t.EffortType,
+            EnergyLevel = (int)t.EnergyLevel,
+            EstimatedPomodoros = t.EstimatedPomodoros,
+            Priority = (int)t.Priority,
+            Why = t.Why?.Value,
+            WaitingForInfo = t.WaitingForInfo == null ? null : new WaitingForPersistenceDto {
+                Description = t.WaitingForInfo.Description.Value,
+                ReviewAt = t.WaitingForInfo.ReviewAt.Value,
+            },
         };
     }
 }

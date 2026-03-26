@@ -1,6 +1,7 @@
 using ErrorOr;
 using Fanoos.Application.Todos.ChangeTodo;
 using Fanoos.Common.Api;
+using Fanoos.Common.Dto;
 using Fanoos.Common.Endpoints;
 using Fanoos.Domain.Todos;
 using Fanoos.Presentation.Todos.Common;
@@ -43,31 +44,35 @@ internal sealed class ChangeTodo : IEndpoint {
         return new ChangeTodoCommand {
             Id = id,
             Title = request.Title,
-            Context = request.Context,
-            Project = request.Project,
-            Time = request.Time,
-            Tag = request.Tag,
+            Contexts = request.Contexts,
+            Description = request.Description,
+            DueDate = request.DueDate,
             EnergyLevel = request.EnergyLevel,
             Bucket = request.Bucket,
-            IsImportant = request.IsImportant,
             IsUrgent = request.IsUrgent,
             IsDone = request.IsDone,
-            IsArchived = request.IsArchived,
+            EffortType = request.EffortType,
+            EstimatedPomodoros = request.EstimatedPomodoros,
+            Priority = request.Priority,
+            WaitingForInfo = request.WaitingForInfo,
+            Why = request.Why,
         };
     }
 
     private sealed record ChangeTodoRequest {
         public string? Title { get; init; }
-        public ObjectValueOfNullableString? Context { get; init; }
-        public ObjectValueOfNullableString? Project { get; init; }
-        public ObjectValueOfNullableInt? Time { get; init; }
-        public ObjectValueOfNullableString? Tag { get; init; }
+        public StringNullObject? Why { get; init; }
+        public StringNullObject? Description { get; init; }
+        public bool? IsDone { get; init; }
+        public ByteNullObject? EstimatedPomodoros { get; init; }
+        public bool? IsUrgent { get; init; }
+        public DateTimeOffsetNullObject? DueDate { get; init; }
+        public List<string>? Contexts { get; init; }
+        public TodoPriority? Priority { get; init; }
+        public TodoEffortType? EffortType { get; init; }
         public EnergyLevel? EnergyLevel { get; init; }
         public TodoBucket? Bucket { get; init; }
-        public bool? IsImportant { get; init; }
-        public bool? IsUrgent { get; init; }
-        public bool? IsDone { get; init; }
-        public bool? IsArchived { get; init; }
+        public WaitingForInfoNullObject? WaitingForInfo { get; init; }
     }
 
     private sealed class ChangeTodoRequestValidator : AbstractValidator<ChangeTodoRequest>;
