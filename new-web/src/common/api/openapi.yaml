@@ -57,22 +57,18 @@ paths:
       summary: List todos
       operationId: ListTodos
       parameters:
-        - name: archived_status
-          in: query
-          schema:
-            $ref: '#/components/schemas/ArchivedStatus'
         - name: bucket
           in: query
           schema:
-            $ref: '#/components/schemas/TodoBucket'
+            $ref: '#/components/schemas/TodoBucketFilter'
         - name: sort_by
           in: query
           schema:
-            $ref: '#/components/schemas/SortBy'
+            $ref: '#/components/schemas/TodoSortBy'
         - name: sort_order
           in: query
           schema:
-            $ref: '#/components/schemas/SortOrder'
+            $ref: '#/components/schemas/TodoSortOrder'
         - name: q
           in: query
           schema:
@@ -81,6 +77,15 @@ paths:
           in: query
           schema:
             type: string
+        - name: available_energy_level
+          in: query
+          schema:
+            $ref: '#/components/schemas/EnergyLevel'
+        - name: available_pomodoros
+          in: query
+          schema:
+            type: integer
+            format: uint8
       responses:
         '200':
           description: OK
@@ -117,12 +122,6 @@ paths:
           description: No Content
 components:
   schemas:
-    ArchivedStatus:
-      enum:
-        - All
-        - Archived
-        - Active
-      default: Active
     BackupDto:
       required:
         - version
@@ -136,6 +135,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TodoPersistenceDto'
+    ByteNullObject:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          type:
+            - 'null'
+            - integer
+          format: uint8
     ChangeTodoRequest:
       type: object
       properties:
@@ -143,22 +152,44 @@ components:
           type:
             - 'null'
             - string
-        context:
+        why:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/ObjectValueOfNullableString'
-        project:
+            - $ref: '#/components/schemas/StringNullObject'
+        description:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/ObjectValueOfNullableString'
-        time:
+            - $ref: '#/components/schemas/StringNullObject'
+        isDone:
+          type:
+            - 'null'
+            - boolean
+        estimatedPomodoros:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/ObjectValueOfNullableInt'
-        tag:
+            - $ref: '#/components/schemas/ByteNullObject'
+        isUrgent:
+          type:
+            - 'null'
+            - boolean
+        dueDate:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/ObjectValueOfNullableString'
+            - $ref: '#/components/schemas/DateTimeOffsetNullObject'
+        contexts:
+          type:
+            - 'null'
+            - array
+          items:
+            type: string
+        priority:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoPriority'
+        effortType:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoEffortType'
         energyLevel:
           oneOf:
             - type: 'null'
@@ -167,79 +198,30 @@ components:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/TodoBucket'
-        isImportant:
-          type:
-            - 'null'
-            - boolean
-        isUrgent:
-          type:
-            - 'null'
-            - boolean
-        isDone:
-          type:
-            - 'null'
-            - boolean
-        isArchived:
-          type:
-            - 'null'
-            - boolean
+        waitingForInfo:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForRequestNullObject'
     CreateTodoRequest:
-      required:
-        - rawTodoPayload
-        - normalTodoPayload
-      type: object
-      properties:
-        rawTodoPayload:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/RawTodoPayload'
-        normalTodoPayload:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/NormalTodoPayload'
-    EnergyLevel:
-      enum:
-        - None
-        - Low
-        - Medium
-        - High
-        -
-    NormalTodoPayload:
       required:
         - title
       type: object
       properties:
         title:
           type: string
-        context:
+        description:
           type:
             - 'null'
             - string
-        project:
+        why:
           type:
             - 'null'
             - string
-        time:
+        pomodoroEstimate:
           type:
             - 'null'
             - integer
-          format: int32
-        tag:
-          type:
-            - 'null'
-            - string
-        energyLevel:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/EnergyLevel'
-        bucket:
-          oneOf:
-            - type: 'null'
-            - $ref: '#/components/schemas/TodoBucket'
-        isImportant:
-          type:
-            - 'null'
-            - boolean
+          format: uint8
         isUrgent:
           type:
             - 'null'
@@ -248,17 +230,38 @@ components:
           type:
             - 'null'
             - boolean
-    ObjectValueOfNullableInt:
-      required:
-        - value
-      type: object
-      properties:
-        value:
+        dueDate:
           type:
             - 'null'
-            - integer
-          format: int32
-    ObjectValueOfNullableString:
+            - string
+          format: date-time
+        contexts:
+          type:
+            - 'null'
+            - array
+          items:
+            type: string
+        priority:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoPriority'
+        effortType:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoEffortType'
+        energyLevel:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
+        bucket:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoBucket'
+        waitingForInfo:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForInfo'
+    DateTimeOffsetNullObject:
       required:
         - value
       type: object
@@ -267,33 +270,53 @@ components:
           type:
             - 'null'
             - string
-    RawTodoPayload:
-      required:
-        - rawInput
+          format: date-time
+    EnergyLevel:
+      enum:
+        - Unknown
+        - Low
+        - Medium
+        - High
+        - 
+    FutureDateTimeOffset:
       type: object
       properties:
-        rawInput:
+        value:
           type: string
-    SortBy:
-      enum:
-        - None
-        - Time
-        - Context
-        - Project
-        - Tag
-        -
-    SortOrder:
-      enum:
-        - Asc
-        - Desc
-        -
+          format: date-time
+    NotEmptyString:
+      type: object
+      properties:
+        value:
+          type: string
+    StringNullObject:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          type:
+            - 'null'
+            - string
     TodoBucket:
       enum:
         - Uncategorized
         - NextActions
         - Waiting
         - SomedayMaybe
-        -
+    TodoBucketFilter:
+      enum:
+        - All
+        - Uncategorized
+        - NextActions
+        - Waiting
+        - SomedayMaybe
+      default: All
+    TodoEffortType:
+      enum:
+        - Unknown
+        - Cake
+        - Frog
     TodoListResponse:
       required:
         - items
@@ -307,16 +330,18 @@ components:
       required:
         - id
         - title
-        - context
-        - project
-        - time
-        - tag
+        - why
+        - description
+        - estimatedPomodoros
         - energyLevel
         - bucket
-        - isImportant
         - isUrgent
         - isDone
-        - isArchived
+        - dueDate
+        - contexts
+        - priority
+        - effortType
+        - waitingForInfo
       type: object
       properties:
         id:
@@ -324,49 +349,72 @@ components:
           format: uuid
         title:
           type: string
-        context:
+        why:
           type:
             - 'null'
             - string
-        project:
+        description:
           type:
             - 'null'
             - string
-        time:
+        estimatedPomodoros:
           type:
             - 'null'
             - integer
-          format: int32
-        tag:
-          type:
-            - 'null'
-            - string
+          format: uint8
         energyLevel:
-          type: string
+          type: integer
+          format: int32
         bucket:
-          type: string
-        isImportant:
-          type: boolean
+          type: integer
+          format: int32
         isUrgent:
           type: boolean
         isDone:
           type: boolean
-        isArchived:
-          type: boolean
+        dueDate:
+          type:
+            - 'null'
+            - string
+          format: date-time
+        contexts:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          format: int32
+        effortType:
+          type: integer
+          format: int32
+        waitingForInfo:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForPersistenceDto'
+    TodoPriority:
+      enum:
+        - Unknown
+        - A_MustDo
+        - B_ShouldDo
+        - C_NiceToDo
+        - D_Delegate
+        - E_Eliminate
     TodoResponse:
       required:
         - id
         - title
-        - context
-        - project
-        - time
-        - tag
-        - bucket
-        - energyLevel
-        - isImportant
-        - isUrgent
+        - why
+        - description
         - isDone
-        - isArchived
+        - estimatedPomodoros
+        - isUrgent
+        - dueDate
+        - contexts
+        - priority
+        - effortType
+        - energyLevel
+        - bucket
+        - waitingForInfo
       type: object
       properties:
         id:
@@ -374,37 +422,102 @@ components:
           format: uuid
         title:
           type: string
-        context:
+        why:
           type:
             - 'null'
             - string
-        project:
+        description:
           type:
             - 'null'
             - string
-        time:
+        isDone:
+          type: boolean
+        estimatedPomodoros:
           type:
             - 'null'
             - integer
-          format: int32
-        tag:
+          format: uint8
+        isUrgent:
+          type: boolean
+        dueDate:
           type:
             - 'null'
             - string
+          format: date-time
+        contexts:
+          type: array
+          items:
+            type: string
+        priority:
+          $ref: '#/components/schemas/TodoPriority'
+        effortType:
+          $ref: '#/components/schemas/TodoEffortType'
+        energyLevel:
+          $ref: '#/components/schemas/EnergyLevel'
         bucket:
           $ref: '#/components/schemas/TodoBucket'
-        energyLevel:
+        waitingForInfo:
           oneOf:
             - type: 'null'
-            - $ref: '#/components/schemas/EnergyLevel'
-        isImportant:
-          type: boolean
-        isUrgent:
-          type: boolean
-        isDone:
-          type: boolean
-        isArchived:
-          type: boolean
+            - $ref: '#/components/schemas/WaitingForResponse'
+    TodoSortBy:
+      type: integer
+      default: 0
+    TodoSortOrder:
+      type: integer
+      default: 0
+    WaitingForInfo:
+      required:
+        - description
+        - reviewAt
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/NotEmptyString'
+        reviewAt:
+          $ref: '#/components/schemas/FutureDateTimeOffset'
+    WaitingForPersistenceDto:
+      required:
+        - description
+        - reviewAt
+      type: object
+      properties:
+        description:
+          type: string
+        reviewAt:
+          type: string
+          format: date-time
+    WaitingForRequest:
+      required:
+        - description
+        - reviewAt
+      type: object
+      properties:
+        description:
+          type: string
+        reviewAt:
+          type: string
+          format: date-time
+    WaitingForRequestNullObject:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForRequest'
+    WaitingForResponse:
+      required:
+        - description
+        - reviewAt
+      type: object
+      properties:
+        description:
+          type: string
+        reviewAt:
+          type: string
+          format: date-time
 tags:
   - name: Todos
   - name: Backups
