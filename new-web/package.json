@@ -14,6 +14,7 @@
     "@hey-api/openapi-ts": "^0.94.2",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-form": "^1.28.5",
     "@tanstack/react-query": "^5.95.2",
     "@tanstack/react-router": "^1.167.3",
     "axios": "^1.13.6",

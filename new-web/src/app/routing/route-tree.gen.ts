@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
+import { Route as AppsTodosNewRouteImport } from "./../../routes/apps/todos/new"
 import { Route as AppsTodoshomeIndexRouteImport } from "./../../routes/apps/todos/(home)/index"
 
 const homeIndexRoute = homeIndexRouteImport.update({
   id: "/(home)/",
   path: "/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsTodosNewRoute = AppsTodosNewRouteImport.update({
+  id: "/apps/todos/new",
+  path: "/apps/todos/new",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTodoshomeIndexRoute = AppsTodoshomeIndexRouteImport.update({
@@ -25,27 +31,31 @@ const AppsTodoshomeIndexRoute = AppsTodoshomeIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   "/": typeof homeIndexRoute
+  "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos/": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesByTo {
   "/": typeof homeIndexRoute
+  "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/(home)/": typeof homeIndexRoute
+  "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos/(home)/": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/apps/todos/"
+  fullPaths: "/" | "/apps/todos/new" | "/apps/todos/"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/apps/todos"
-  id: "__root__" | "/(home)/" | "/apps/todos/(home)/"
+  to: "/" | "/apps/todos/new" | "/apps/todos"
+  id: "__root__" | "/(home)/" | "/apps/todos/new" | "/apps/todos/(home)/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute
+  AppsTodosNewRoute: typeof AppsTodosNewRoute
   AppsTodoshomeIndexRoute: typeof AppsTodoshomeIndexRoute
 }
 
@@ -56,6 +66,13 @@ declare module "@tanstack/react-router" {
       path: "/"
       fullPath: "/"
       preLoaderRoute: typeof homeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/todos/new": {
+      id: "/apps/todos/new"
+      path: "/apps/todos/new"
+      fullPath: "/apps/todos/new"
+      preLoaderRoute: typeof AppsTodosNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/todos/(home)/": {
@@ -70,6 +87,7 @@ declare module "@tanstack/react-router" {
 
 const rootRouteChildren: RootRouteChildren = {
   homeIndexRoute: homeIndexRoute,
+  AppsTodosNewRoute: AppsTodosNewRoute,
   AppsTodoshomeIndexRoute: AppsTodoshomeIndexRoute,
 }
 export const routeTree = rootRouteImport
