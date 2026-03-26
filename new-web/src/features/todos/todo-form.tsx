@@ -7,12 +7,10 @@ import {
   vTodoBucket,
   vTodoEffortType,
   vTodoPriority,
-  vWaitingForInfo,
-  type CreateTodoRequest,
 } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
 import { MinusIcon, PlusIcon } from "@phosphor-icons/react"
-import { Field, useForm } from "@tanstack/react-form"
+import { useForm } from "@tanstack/react-form"
 import * as v from "valibot"
 
 const vTodoFormData = v.object({
