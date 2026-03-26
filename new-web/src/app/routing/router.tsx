@@ -3,7 +3,7 @@ import { routeTree } from './route-tree.gen'
 
 export const router = createRouter({
   routeTree,
-  defaultPreload: 'intent',
+  defaultPreload: 'viewport',
 })
 
 declare module '@tanstack/react-router' {
