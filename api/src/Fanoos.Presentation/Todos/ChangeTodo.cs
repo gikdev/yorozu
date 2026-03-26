@@ -1,6 +1,7 @@
 using ErrorOr;
 using Fanoos.Application.Todos.ChangeTodo;
 using Fanoos.Common.Api;
+using Fanoos.Common.Domain;
 using Fanoos.Common.Dto;
 using Fanoos.Common.Endpoints;
 using Fanoos.Domain.Todos;
@@ -54,7 +55,12 @@ internal sealed class ChangeTodo : IEndpoint {
             EffortType = request.EffortType,
             EstimatedPomodoros = request.EstimatedPomodoros,
             Priority = request.Priority,
-            WaitingForInfo = request.WaitingForInfo,
+            WaitingForInfo = request.WaitingForInfo == null ? null : new WaitingForInfoNullObject {
+                Value = new WaitingForInfo {
+                    Description = NotEmptyString.Create(request.WaitingForInfo.Value.Description).Value,
+                    ReviewAt = FutureDateTimeOffset._Restore(request.WaitingForInfo.Value.ReviewAt),
+                }
+            },
             Why = request.Why,
         };
     }
@@ -72,7 +78,14 @@ internal sealed class ChangeTodo : IEndpoint {
         public TodoEffortType? EffortType { get; init; }
         public EnergyLevel? EnergyLevel { get; init; }
         public TodoBucket? Bucket { get; init; }
-        public WaitingForInfoNullObject? WaitingForInfo { get; init; }
+        public WaitingForRequestNullObject? WaitingForInfo { get; init; }
+    }
+
+    private sealed record WaitingForRequestNullObject : NullObject<WaitingForRequest>;
+
+    private sealed record WaitingForRequest {
+        public required string Description { get; init; }
+        public required DateTimeOffset ReviewAt { get; init; }
     }
 
     private sealed class ChangeTodoRequestValidator : AbstractValidator<ChangeTodoRequest>;

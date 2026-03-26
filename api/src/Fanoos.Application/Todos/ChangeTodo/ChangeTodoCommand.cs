@@ -23,5 +23,3 @@ public record ChangeTodoCommand : IRequest<ErrorOr<Todo>> {
     public required TodoBucket? Bucket { get; init; }
     public required WaitingForInfoNullObject? WaitingForInfo { get; init; }
 }
-
-public sealed record WaitingForInfoNullObject : NullObject<WaitingForInfo?>;
