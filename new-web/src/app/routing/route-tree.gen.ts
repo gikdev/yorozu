@@ -10,43 +10,43 @@
 
 import { Route as rootRouteImport } from './../../routes/__root'
 import { Route as homeIndexRouteImport } from './../../routes/(home)/index'
-import { Route as AppsTodosIndexRouteImport } from './../../routes/apps/todos/index'
+import { Route as AppsTodoshomeIndexRouteImport } from './../../routes/apps/todos/(home)/index'
 
 const homeIndexRoute = homeIndexRouteImport.update({
   id: '/(home)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosIndexRoute = AppsTodosIndexRouteImport.update({
-  id: '/apps/todos/',
+const AppsTodoshomeIndexRoute = AppsTodoshomeIndexRouteImport.update({
+  id: '/apps/todos/(home)/',
   path: '/apps/todos/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof homeIndexRoute
-  '/apps/todos/': typeof AppsTodosIndexRoute
+  '/apps/todos/': typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof homeIndexRoute
-  '/apps/todos': typeof AppsTodosIndexRoute
+  '/apps/todos': typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(home)/': typeof homeIndexRoute
-  '/apps/todos/': typeof AppsTodosIndexRoute
+  '/apps/todos/(home)/': typeof AppsTodoshomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/apps/todos/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/apps/todos'
-  id: '__root__' | '/(home)/' | '/apps/todos/'
+  id: '__root__' | '/(home)/' | '/apps/todos/(home)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute
-  AppsTodosIndexRoute: typeof AppsTodosIndexRoute
+  AppsTodoshomeIndexRoute: typeof AppsTodoshomeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +58,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof homeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/apps/todos/': {
-      id: '/apps/todos/'
+    '/apps/todos/(home)/': {
+      id: '/apps/todos/(home)/'
       path: '/apps/todos'
       fullPath: '/apps/todos/'
-      preLoaderRoute: typeof AppsTodosIndexRouteImport
+      preLoaderRoute: typeof AppsTodoshomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   homeIndexRoute: homeIndexRoute,
-  AppsTodosIndexRoute: AppsTodosIndexRoute,
+  AppsTodoshomeIndexRoute: AppsTodoshomeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

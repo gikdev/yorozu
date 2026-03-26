@@ -1,7 +1,6 @@
 import { ToggleThemeBtn } from "./-toggle-theme-btn";
 
 export function Header({ version }: { version: number; }) {
-
   return (
     <header className="flex items-center gap-2 border-b-2 border-mist-300 dark:border-mist-800 p-2">
       <img src="/fanoos.png" className="size-10 rounded-md" />
