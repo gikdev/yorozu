@@ -41,6 +41,8 @@ const router = tanstackRouter({
   autoCodeSplitting: false,
   generatedRouteTree: "./src/app/routing/route-tree.gen.ts",
   target: "react",
+  quoteStyle: "double",
+  semicolons: false,
 })
 
 const plugins: PluginOption[] = [
