@@ -1,4 +1,4 @@
-import { tv } from 'tailwind-variants'
+import { tv } from "tailwind-variants"
 
 export const btn = tv({
   base: `
@@ -23,8 +23,8 @@ export const btn = tv({
   `,
   variants: {
     isIcon: {
-      false: 'gap-2 px-4 py-3 min-h-12',
-      true: 'gap-1 p-2 h-12 w-12',
+      false: "gap-2 px-4 py-3 min-h-12",
+      true: "gap-1 p-2 h-12 w-12",
     },
   },
   defaultVariants: {

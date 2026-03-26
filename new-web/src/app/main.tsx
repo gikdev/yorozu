@@ -1,15 +1,14 @@
 import "./styles.css"
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from '@tanstack/react-router'
-import { router } from './routing/router'
-import { Providers } from './providers'
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { RouterProvider } from "@tanstack/react-router"
+import { router } from "./routing/router"
+import { Providers } from "./providers"
 
-const TARGET = '#root'
+const TARGET = "#root"
 
 const targetElement = document.querySelector(TARGET)
-if (targetElement == null)
-  throw new Error(`The element '${TARGET}' was not found!`)
+if (targetElement == null) throw new Error(`The element '${TARGET}' was not found!`)
 
 const root = createRoot(targetElement)
 root.render(

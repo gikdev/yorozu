@@ -1,17 +1,16 @@
 import type { ReactNode } from "react"
 
-type SuccessProps = (
+type SuccessProps =
   | {
-    isList: false
-    successView: ReactNode
-  }
+      isList: false
+      successView: ReactNode
+    }
   | {
-    isList: true
-    listCount: number
-    emptyView: ReactNode
-    fullView: ReactNode
-  }
-)
+      isList: true
+      listCount: number
+      emptyView: ReactNode
+      fullView: ReactNode
+    }
 
 function renderSuccess(p: SuccessProps) {
   if (!p.isList) return p.successView

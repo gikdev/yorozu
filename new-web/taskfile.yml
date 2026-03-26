@@ -1,18 +1,17 @@
 # https://taskfile.dev
-version: '3'
+version: "3"
 
 tasks:
-
   # ---- meta ----
   meta:list:
-    aliases: [ default ]
+    aliases: [default]
     desc: List all tasks
     cmds:
       - task --list-all
 
   # ---- app ----
   app:dev:
-    aliases: [ dev, d ]
+    aliases: [dev, d]
     desc: Start Vite dev server
     cmds:
       - npm run vite -- --host
@@ -22,19 +21,13 @@ tasks:
     cmds:
       - npm run vite -- preview --host
 
-  app:type-check:
-    aliases: [ t ]
-    desc: Run TypeScript type checking
-    cmds:
-      - npm run tsc -- -b
-
   app:build:only:
     desc: Build project without type checking
     cmds:
       - npm run vite -- build
 
   app:build:full:
-    aliases: [ publish ]
+    aliases: [publish]
     desc: Type-check then build project
     cmds:
       - task: app:type-check
@@ -42,13 +35,13 @@ tasks:
 
   # ---- api ----
   api:def:
-    aliases: [ acgd ]
+    aliases: [acgd]
     desc: Download OpenAPI definition
     cmds:
       - curl -o "./src/common/api/openapi.yaml" "http://localhost:5000/openapi.yaml"
 
   api:gen:
-    aliases: [ acg ]
+    aliases: [acg]
     desc: Generate API client
     cmds:
       - npm run openapi-ts
@@ -58,6 +51,19 @@ tasks:
     cmds:
       - task: api:def
       - task: api:gen
+
+  # ---- quality ----
+  quality:type-check:
+    aliases: [t]
+    desc: Run TypeScript type checking
+    cmds:
+      - npm run tsc -- -b
+
+  quality:format:
+    aliases: [f]
+    desc: Run Prettier to format code
+    cmds:
+      - npm run prettier -- . --write
 
   # ---- test ----
   test:unit:

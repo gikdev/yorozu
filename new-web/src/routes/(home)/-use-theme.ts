@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 export function useTheme() {
   const [theme, setTheme] = useState<"dark" | "light" | null>(null)
 
   const toggleTheme = () => {
-    setTheme(p => p === "dark" ? "light" : "dark")
+    setTheme((p) => (p === "dark" ? "light" : "dark"))
   }
 
   useEffect(() => {

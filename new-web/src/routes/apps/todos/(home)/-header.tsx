@@ -1,6 +1,6 @@
-import { btn } from '#/common/atoms/btn';
-import { FunnelIcon, HouseIcon } from '@phosphor-icons/react';
-import { Link } from '@tanstack/react-router';
+import { btn } from "#/common/atoms/btn"
+import { FunnelIcon, HouseIcon } from "@phosphor-icons/react"
+import { Link } from "@tanstack/react-router"
 
 export function Header({}: {}) {
   return (
@@ -9,13 +9,11 @@ export function Header({}: {}) {
         <HouseIcon size={24} />
       </Link>
 
-      <p className="text-sky-500 font-bold text-lg">
-        Todos
-      </p>
+      <p className="text-sky-500 font-bold text-lg">Todos</p>
 
       <button disabled className={btn({ isIcon: true })}>
         <FunnelIcon size={24} />
       </button>
     </header>
-  );
+  )
 }

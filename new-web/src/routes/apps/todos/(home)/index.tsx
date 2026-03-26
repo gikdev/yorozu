@@ -1,11 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Header } from './-header';
+import { createFileRoute } from "@tanstack/react-router"
+import { Header } from "./-header"
 import { listTodosOptions } from "#/common/api/client"
 import { useQuery } from "@tanstack/react-query"
-import type { ReactNode } from 'react';
-import { RenderQuery } from '#/common/helpers/render-query';
+import type { ReactNode } from "react"
+import { RenderQuery } from "#/common/helpers/render-query"
 
-export const Route = createFileRoute('/apps/todos/(home)/')({
+export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
 })
 
@@ -16,7 +16,7 @@ function RouteComponent() {
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
       <Header />
 
-      <div className='flex-1'>
+      <div className="flex-1">
         <RenderQuery
           isList={true}
           status={listTodosQ.status}
@@ -24,7 +24,7 @@ function RouteComponent() {
           loadingView={<p>Loading...</p>}
           listCount={listTodosQ.data!.items.length}
           emptyView={<p>No todos...</p>}
-          fullView={listTodosQ.data?.items.map(t => (
+          fullView={listTodosQ.data?.items.map((t) => (
             <p key={t.id}>{t.title}</p>
           ))}
         />

@@ -1,10 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { version } from '#/app/data/version.json'
-import { appShortcuts } from './-app-shortcuts'
-import { Header } from './-header'
-import { AppShortcut } from './-app-shortcut'
+import { createFileRoute } from "@tanstack/react-router"
+import { version } from "#/app/data/version.json"
+import { appShortcuts } from "./-app-shortcuts"
+import { Header } from "./-header"
+import { AppShortcut } from "./-app-shortcut"
 
-export const Route = createFileRoute('/(home)/')({
+export const Route = createFileRoute("/(home)/")({
   component: RouteComponent,
 })
 
@@ -14,7 +14,7 @@ function RouteComponent() {
       <Header version={version} />
 
       <main className="flex flex-wrap justify-center py-4 px-8">
-        {appShortcuts.map(shortcut => (
+        {appShortcuts.map((shortcut) => (
           <AppShortcut shortcut={shortcut} key={shortcut.id} />
         ))}
       </main>
