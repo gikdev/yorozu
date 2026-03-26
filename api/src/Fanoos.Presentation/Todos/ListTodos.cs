@@ -22,7 +22,7 @@ internal sealed class ListTodos : IEndpoint {
 
     private static async Task<IResult> Handle(
         [FromServices] ISender mediator,
-        [FromQuery(Name = "archived_status")] ArchivedStatus archivedStatus = ArchivedStatus.Active,
+        [FromQuery(Name = "archived_status")] DoneStatus archivedStatus = DoneStatus.Todo,
         [FromQuery(Name = "bucket")] TodoBucket? bucket = null,
         [FromQuery(Name = "sort_by")] SortBy? sortBy = null,
         [FromQuery(Name = "sort_order")] SortOrder? sortOrder = null,
@@ -36,7 +36,7 @@ internal sealed class ListTodos : IEndpoint {
                 sortOrder: sortOrder,
                 sortBy: sortBy,
                 bucket: bucket,
-                archivedStatus: archivedStatus
+                doneStatus: archivedStatus
             )
         );
 

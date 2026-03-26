@@ -1,0 +1,41 @@
+{
+  "name": "new-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "openapi-ts": "openapi-ts",
+    "vite": "vite",
+    "vitest": "vitest",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@hey-api/openapi-ts": "^0.94.2",
+    "@phosphor-icons/react": "^2.1.10",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-router": "^1.167.3",
+    "axios": "^1.13.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.5.0",
+    "tailwind-variants": "^3.2.2",
+    "tailwindcss": "^4.2.1",
+    "valibot": "^1.2.0"
+  },
+  "devDependencies": {
+    "@tanstack/router-plugin": "^1.166.12",
+    "@types/node": "^24.12.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vite-pwa/assets-generator": "^1.0.2",
+    "@vitejs/plugin-react": "^4.7.0",
+    "globals": "^17.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.0",
+    "workbox-core": "^7.4.0",
+    "workbox-window": "^7.4.0"
+  }
+}

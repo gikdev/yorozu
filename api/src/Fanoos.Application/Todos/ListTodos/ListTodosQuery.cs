@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 namespace Fanoos.Application.Todos.ListTodos;
 
 public sealed record ListTodosQuery : IRequest<List<Todo>> {
-    public required ArchivedStatus ArchivedStatus { get; init; }
     public required TodoBucket? Bucket { get; init; }
     public required SortBy SortBy { get; init; }
     public required SortOrder SortOrder { get; init; }
@@ -15,7 +14,6 @@ public sealed record ListTodosQuery : IRequest<List<Todo>> {
     private ListTodosQuery() { }
 
     public static ListTodosQuery Create(
-        ArchivedStatus? archivedStatus,
         TodoBucket? bucket,
         SortBy? sortBy,
         SortOrder? sortOrder,
@@ -23,7 +21,6 @@ public sealed record ListTodosQuery : IRequest<List<Todo>> {
         string? excludeQuery
     ) {
         return new ListTodosQuery {
-            ArchivedStatus = archivedStatus ?? ArchivedStatus.Active,
             Bucket = bucket,
             SortBy = sortBy ?? SortBy.None,
             SortOrder = sortOrder ?? SortOrder.Asc,
@@ -34,19 +31,12 @@ public sealed record ListTodosQuery : IRequest<List<Todo>> {
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum ArchivedStatus {
-    All,
-    Archived,
-    Active,
-}
-
-[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum SortBy {
     None,
-    Time,
+    Title,
     Context,
-    Project,
-    Tag,
+    DueDate,
+    Priority,
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter))]

@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+@import './assets/fonts.css';
+
+@custom-variant dark (&:where(.theme-dark, .theme-dark *));
+
+@theme {
+  --font-main: 'Vazirmatn', sans-serif;
+}

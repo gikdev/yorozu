@@ -24,13 +24,6 @@ internal sealed class TodoRepository(
     public async Task<List<Todo>> ListAsync(ListTodosQuery query, CancellationToken cancellationToken = default) {
         IQueryable<Todo> queryable = db.Todos;
 
-        // 1. Filter by Archived Status
-        queryable = query.ArchivedStatus switch {
-            ArchivedStatus.Active => queryable.Where(t => !t.IsArchived),
-            ArchivedStatus.Archived => queryable.Where(t => t.IsArchived),
-            _ => queryable, 
-        };
-
         // 2. Filter by Bucket
         if (query.Bucket.HasValue) {
             queryable = queryable.Where(t => t.Bucket == query.Bucket.Value);
@@ -65,9 +58,9 @@ internal sealed class TodoRepository(
         // 5. Sorting
         queryable = query.SortOrder switch {
             SortOrder.Asc => query.SortBy switch {
-                SortBy.Time => queryable.OrderBy(t => t.Time),
+                SortBy.Title => queryable.OrderBy(t => t.Title),
                 SortBy.Context => queryable.OrderBy(t => t.Context),
-                SortBy.Project => queryable.OrderBy(t => t.Project),
+                SortBy.DueDate => queryable.OrderBy(t => t.DueDate),
                 SortBy.Tag => queryable.OrderBy(t => t.Tag),
                 _ => queryable,
             },
