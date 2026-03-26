@@ -1,8 +1,9 @@
+import "./styles.css"
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 import { router } from './routing/router'
-import "./styles.css"
+import { Providers } from './providers'
 
 const TARGET = '#root'
 
@@ -13,6 +14,8 @@ if (targetElement == null)
 const root = createRoot(targetElement)
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
   </StrictMode>,
 )
