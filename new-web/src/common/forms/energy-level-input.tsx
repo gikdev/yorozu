@@ -3,6 +3,7 @@ import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
 import { EnergyLevel } from "#/common/api/client"
+import { en } from "../i18n/en"
 
 interface EnergyLevelInputProps {
   title: string
@@ -30,17 +31,17 @@ export function EnergyLevelInput({ title }: EnergyLevelInputProps) {
 
       <div className="flex gap-1 items-center justify-between">
         <EnergyLevelBtn
-          title="Low"
+          title={en.todos.energyLevelLow}
           onClick={handleLowClick}
           isSelected={isLowSelected}
         />
         <EnergyLevelBtn
-          title="Medium"
+          title={en.todos.energyLevelMedium}
           onClick={handleMediumClick}
           isSelected={isMediumSelected}
         />
         <EnergyLevelBtn
-          title="High"
+          title={en.todos.energyLevelHigh}
           onClick={handleHighClick}
           isSelected={isHighSelected}
         />

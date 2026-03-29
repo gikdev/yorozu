@@ -10,7 +10,7 @@ interface ErrorCardProps {
 export function ErrorCard({ message, onRetry }: ErrorCardProps) {
   return (
     <div className="bg-red-900 text-red-100 p-4 flex flex-col items-center gap-2 rounded-md">
-      <p>{message || en.errors.fallback}</p>
+      <p>{message || en.common.errorFallback}</p>
 
       {onRetry && (
         <button
@@ -19,7 +19,7 @@ export function ErrorCard({ message, onRetry }: ErrorCardProps) {
           })}
           onClick={onRetry}
         >
-          <span>{en.actions.retry}</span>
+          <span>{en.common.retry}</span>
           <ArrowsClockwiseIcon size={20} />
         </button>
       )}

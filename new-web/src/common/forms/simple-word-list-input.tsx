@@ -11,7 +11,7 @@ interface SimpleWordListInputProps {
 export function SimpleWordListInput(p: SimpleWordListInputProps) {
   const field = useFieldContext<string[]>()
 
-  const value = field.state.value.join(", ")
+  const value = field.state.value.join(",")
 
   const handleChange = (
     e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>,

@@ -10,6 +10,7 @@ import {
 } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
 import { useAppForm } from "#/common/forms"
+import { en } from "#/common/i18n/en"
 import { CheckCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
 import * as v from "valibot"
 
@@ -175,7 +176,7 @@ export function TodoForm(p: TodoFormProps) {
 
         <form.SimpleSubmitBtn
           className={btn({ className: "w-full", theme: "primary" })}
-          title={p.mode === "CREATE" ? "Create Todo" : "Edit Todo"}
+          title={p.mode === "CREATE" ? en.todos.createTodo : en.todos.editTodo}
         />
       </form>
     </form.AppForm>

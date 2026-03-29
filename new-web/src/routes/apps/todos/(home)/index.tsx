@@ -46,7 +46,7 @@ function EmtpyTodosList() {
   return (
     <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
       <ClipboardTextIcon size={40} />
-      <p>{en.todos.empty}</p>
+      <p>{en.todos.emptyTodos}</p>
     </div>
   )
 }
@@ -55,7 +55,7 @@ function LoadingTodosList() {
   return (
     <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
       <SpinnerIcon size={40} className="animate-spin" />
-      <p>{en.todos.loading}</p>
+      <p>{en.todos.loadingTodos}</p>
     </div>
   )
 }

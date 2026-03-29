@@ -2,6 +2,7 @@ import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
 import { TodoEffortType } from "#/common/api/client"
+import { en } from "../i18n/en"
 
 interface EffortTypeInputProps {
   title: string
@@ -31,13 +32,13 @@ export function EffortTypeInput(p: EffortTypeInputProps) {
           imgPath="/cake.jpg"
           onClick={handleCakeClick}
           isSelected={isCakeSelected}
-          helpText="Cake: easy/enjoyable todo"
+          helpText={en.todos.cakeTodoHelpText}
         />
         <EffortTypeBtn
           imgPath="/frog.png"
           onClick={handleFrogClick}
           isSelected={isFrogSelected}
-          helpText="Frog: hard/disgusting todo"
+          helpText={en.todos.frogTodoHelpText}
         />
       </div>
 
