@@ -4,6 +4,7 @@ import { TodoPriority, vTodoPriority } from "../api/client"
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
 import * as v from "valibot"
+import { input } from "../atoms/input"
 
 interface TodoPriorityInputProps {
   title: string
@@ -36,6 +37,7 @@ export function TodoPriorityInput({ title }: TodoPriorityInputProps) {
         value={field.state.value || TodoPriority.UNKNOWN}
         onBlur={field.handleBlur}
         onChange={handleChange}
+        className={input()}
       >
         <option value={TodoPriority.UNKNOWN}>{TodoPriority.UNKNOWN}</option>
         <option value={TodoPriority.A_MUST_DO}>{TodoPriority.A_MUST_DO}</option>

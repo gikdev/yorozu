@@ -4,6 +4,7 @@ import { TodoBucket, vTodoBucket } from "../api/client"
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
 import * as v from "valibot"
+import { input } from "../atoms/input"
 
 interface TodoBucketInputProps {
   title: string
@@ -36,6 +37,7 @@ export function TodoBucketInput({ title }: TodoBucketInputProps) {
         value={field.state.value || TodoBucket.UNCATEGORIZED}
         onBlur={field.handleBlur}
         onChange={handleChange}
+        className={input()}
       >
         <option value={TodoBucket.UNCATEGORIZED}>
           {TodoBucket.UNCATEGORIZED}
