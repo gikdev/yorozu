@@ -27,7 +27,7 @@ export function CounterNumberInput({ title }: CounterNumberInputProps) {
 
         <input
           type="number"
-          className={input({ className: "text-center" })}
+          className={input({ className: "text-center flex-1" })}
           id={field.name}
           name={field.name}
           value={field.state.value || 0}

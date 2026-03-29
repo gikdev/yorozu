@@ -9,7 +9,7 @@ interface ErrorCardProps {
 
 export function ErrorCard({ message, onRetry }: ErrorCardProps) {
   return (
-    <div className="bg-red-900 text-red-100 p-4 flex flex-col items-center gap-2">
+    <div className="bg-red-900 text-red-100 p-4 flex flex-col items-center gap-2 rounded-md">
       <p>{message || en.errors.fallback}</p>
 
       {onRetry && (

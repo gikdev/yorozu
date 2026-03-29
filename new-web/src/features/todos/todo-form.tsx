@@ -8,6 +8,7 @@ import {
   vTodoEffortType,
   vTodoPriority,
 } from "#/common/api/client"
+import { btn } from "#/common/atoms/btn"
 import { useAppForm } from "#/common/forms"
 import { CheckCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
 import * as v from "valibot"
@@ -78,106 +79,105 @@ export function TodoForm(p: TodoFormProps) {
   })
 
   return (
-    <form
-      className={p.className}
-      onSubmit={e => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
-      }}
-    >
-      <form.AppField name="title">
-        {field => <field.SimpleTextInput title="Title *" />}
-      </form.AppField>
-
-      <form.AppField name="description">
-        {field => <field.SimpleTextInput title="Description:" isMultiline />}
-      </form.AppField>
-
-      <form.AppField name="why">
-        {field => <field.SimpleTextInput title="Why:" isMultiline />}
-      </form.AppField>
-
-      <form.AppField name="pomodoroEstimate">
-        {field => <field.CounterNumberInput title="Estimated Pomodoros:" />}
-      </form.AppField>
-
-      <form.AppField name="contexts">
-        {field => <field.SimpleWordListInput title="Contexts:" />}
-      </form.AppField>
-
-      <form.AppField name="dueDate">
-        {field => <field.PersianUtcDateInput title="Due Date:" />}
-      </form.AppField>
-
-      <div className="flex items-center *:flex-1">
-        <form.AppField name="isUrgent">
-          {field => (
-            <field.SvgToggleInput
-              title="Is Urgent"
-              Icon={WarningOctagonIcon}
-              iconSelectedClass="text-amber-500"
-            />
-          )}
+    <form.AppForm>
+      <form
+        className={p.className}
+        onSubmit={e => {
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
+        }}
+      >
+        <form.AppField name="title">
+          {field => <field.SimpleTextInput title="Title *" />}
         </form.AppField>
 
-        <form.AppField name="isDone">
-          {field => (
-            <field.SvgToggleInput
-              title="Is Done"
-              Icon={CheckCircleIcon}
-              iconSelectedClass="text-emerald-500"
-            />
-          )}
+        <form.AppField name="description">
+          {field => <field.SimpleTextInput title="Description:" isMultiline />}
         </form.AppField>
-      </div>
 
-      <form.AppField name="energyLevel">
-        {field => <field.EnergyLevelInput title="Energy Level:" />}
-      </form.AppField>
+        <form.AppField name="why">
+          {field => <field.SimpleTextInput title="Why:" isMultiline />}
+        </form.AppField>
 
-      <form.AppField name="effortType">
-        {field => <field.EffortTypeInput title="Effort Type:" />}
-      </form.AppField>
+        <form.AppField name="pomodoroEstimate">
+          {field => <field.CounterNumberInput title="Estimated Pomodoros:" />}
+        </form.AppField>
 
-      <form.AppField name="priority">
-        {field => <field.TodoPriorityInput title="Priority:" />}
-      </form.AppField>
+        <form.AppField name="contexts">
+          {field => <field.SimpleWordListInput title="Contexts:" />}
+        </form.AppField>
 
-      <form.AppField name="bucket">
-        {field => <field.TodoBucketInput title="Bucket:" />}
-      </form.AppField>
+        <form.AppField name="dueDate">
+          {field => <field.PersianUtcDateInput title="Due Date:" />}
+        </form.AppField>
 
-      <form.Subscribe selector={s => s.values.bucket === TodoBucket.WAITING}>
-        {shouldShow =>
-          shouldShow && (
-            <>
-              <form.AppField name="waitingForInfo.description">
-                {field => (
-                  <field.SimpleTextInput
-                    title="Waiting For Description:"
-                    isMultiline
-                  />
-                )}
-              </form.AppField>
+        <form.AppField name="energyLevel">
+          {field => <field.EnergyLevelInput title="Energy Level:" />}
+        </form.AppField>
 
-              <form.AppField name="waitingForInfo.reviewAt">
-                {field => (
-                  <field.PersianUtcDateInput title="Waiting For Review At:" />
-                )}
-              </form.AppField>
-            </>
-          )
-        }
-      </form.Subscribe>
+        <form.AppField name="effortType">
+          {field => <field.EffortTypeInput title="Effort Type:" />}
+        </form.AppField>
 
-      <form.Subscribe selector={s => s.values}>
-        {values => (
-          <pre className="overflow-x-auto max-w-full">
-            {JSON.stringify(values, null, 2)}
-          </pre>
-        )}
-      </form.Subscribe>
-    </form>
+        <form.AppField name="priority">
+          {field => <field.TodoPriorityInput title="Priority:" />}
+        </form.AppField>
+
+        <form.AppField name="bucket">
+          {field => <field.TodoBucketInput title="Bucket:" />}
+        </form.AppField>
+
+        <form.Subscribe selector={s => s.values.bucket === TodoBucket.WAITING}>
+          {shouldShow =>
+            shouldShow && (
+              <>
+                <form.AppField name="waitingForInfo.description">
+                  {field => (
+                    <field.SimpleTextInput
+                      title="Waiting For Description:"
+                      isMultiline
+                    />
+                  )}
+                </form.AppField>
+
+                <form.AppField name="waitingForInfo.reviewAt">
+                  {field => (
+                    <field.PersianUtcDateInput title="Waiting For Review At:" />
+                  )}
+                </form.AppField>
+              </>
+            )
+          }
+        </form.Subscribe>
+
+        <div className="flex items-center *:flex-1">
+          <form.AppField name="isUrgent">
+            {field => (
+              <field.SvgToggleInput
+                title="Is Urgent"
+                Icon={WarningOctagonIcon}
+                iconSelectedClass="text-amber-500"
+              />
+            )}
+          </form.AppField>
+
+          <form.AppField name="isDone">
+            {field => (
+              <field.SvgToggleInput
+                title="Is Done"
+                Icon={CheckCircleIcon}
+                iconSelectedClass="text-emerald-500"
+              />
+            )}
+          </form.AppField>
+        </div>
+
+        <form.SimpleSubmitBtn
+          className={btn({ className: "w-full", theme: "primary" })}
+          title={p.mode === "CREATE" ? "Create Todo" : "Edit Todo"}
+        />
+      </form>
+    </form.AppForm>
   )
 }

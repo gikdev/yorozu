@@ -8,6 +8,7 @@ import { TodoPriorityInput } from "./todo-priority-input"
 import { TodoBucketInput } from "./todo-bucket-input"
 import { PersianUtcDateInput } from "./simple-date-input"
 import { SimpleWordListInput } from "./simple-word-list-input"
+import { SimpleSubmitBtn } from "./simple-submit-btn"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
@@ -25,7 +26,9 @@ const { useAppForm } = createFormHook({
     PersianUtcDateInput,
     SimpleWordListInput,
   },
-  formComponents: {},
+  formComponents: {
+    SimpleSubmitBtn,
+  },
 })
 
 export { useAppForm, useFieldContext, useFormContext }

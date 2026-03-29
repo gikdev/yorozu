@@ -4,6 +4,7 @@ export const en = {
     empty: "No tasks yet — add one.",
     add: "Add todo",
     loading: "Loading your todos…",
+    createNewTitle: "Create New",
   },
   actions: {
     save: "Save",
