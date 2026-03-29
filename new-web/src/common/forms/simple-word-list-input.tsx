@@ -12,9 +12,11 @@ export function SimpleWordListInput(p: SimpleWordListInputProps) {
 
   const value = field.state.value.join(", ")
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>,
+  ) => {
     const raw = e.target.value
-    const tokens = raw.split(",");
+    const tokens = raw.split(",")
     field.handleChange(tokens)
   }
 

@@ -149,21 +149,34 @@ export function TodoForm(p: TodoFormProps) {
       </form.AppField>
 
       <form.Subscribe selector={s => s.values.bucket === TodoBucket.WAITING}>
-        {shouldShow => shouldShow && (
-          <>
-            <form.AppField name="waitingForInfo.description">
-              {field => <field.SimpleTextInput title="Waiting For Description:" isMultiline />}
-            </form.AppField>
+        {shouldShow =>
+          shouldShow && (
+            <>
+              <form.AppField name="waitingForInfo.description">
+                {field => (
+                  <field.SimpleTextInput
+                    title="Waiting For Description:"
+                    isMultiline
+                  />
+                )}
+              </form.AppField>
 
-            <form.AppField name="waitingForInfo.reviewAt">
-              {field => <field.PersianUtcDateInput title="Waiting For Review At:" />}
-            </form.AppField>
-          </>
-        )}
+              <form.AppField name="waitingForInfo.reviewAt">
+                {field => (
+                  <field.PersianUtcDateInput title="Waiting For Review At:" />
+                )}
+              </form.AppField>
+            </>
+          )
+        }
       </form.Subscribe>
 
       <form.Subscribe selector={s => s.values}>
-        {values => <pre className="overflow-x-auto max-w-full">{JSON.stringify(values, null, 2)}</pre>}
+        {values => (
+          <pre className="overflow-x-auto max-w-full">
+            {JSON.stringify(values, null, 2)}
+          </pre>
+        )}
       </form.Subscribe>
     </form>
   )
