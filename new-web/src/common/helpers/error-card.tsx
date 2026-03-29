@@ -13,7 +13,12 @@ export function ErrorCard({ message, onRetry }: ErrorCardProps) {
       <p>{message || en.errors.fallback}</p>
 
       {onRetry && (
-        <button className={btn({ className: "flex w-full justify-between" })} onClick={onRetry}>
+        <button
+          className={btn({
+            className: "flex w-full justify-between",
+          })}
+          onClick={onRetry}
+        >
           <span>{en.actions.retry}</span>
           <ArrowsClockwiseIcon size={20} />
         </button>

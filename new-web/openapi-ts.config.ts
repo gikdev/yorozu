@@ -4,8 +4,16 @@ export default defineConfig({
   input: "./src/common/api/openapi.yaml",
   output: "./src/common/api/generated/client",
   plugins: [
-    { name: "@hey-api/client-axios", baseUrl: "/", includeInEntry: true },
-    { name: "@hey-api/typescript", enums: "javascript", includeInEntry: true },
+    {
+      name: "@hey-api/client-axios",
+      baseUrl: "/",
+      includeInEntry: true,
+    },
+    {
+      name: "@hey-api/typescript",
+      enums: "javascript",
+      includeInEntry: true,
+    },
     { name: "valibot", includeInEntry: true },
     {
       name: "@hey-api/sdk",

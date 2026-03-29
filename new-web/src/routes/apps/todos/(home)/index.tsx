@@ -23,10 +23,15 @@ function RouteComponent() {
           isList={true}
           status={listTodosQ.status}
           listCount={listTodosQ.data?.items.length!}
-          errorView={<ErrorCard message={listTodosQ.error?.message} onRetry={listTodosQ.refetch} />}
+          errorView={
+            <ErrorCard
+              message={listTodosQ.error?.message}
+              onRetry={listTodosQ.refetch}
+            />
+          }
           loadingView={<LoadingTodosList />}
           emptyView={<EmtpyTodosList />}
-          fullView={listTodosQ.data?.items.map((t) => (
+          fullView={listTodosQ.data?.items.map(t => (
             <p key={t.id}>{t.title}</p>
           ))}
         />

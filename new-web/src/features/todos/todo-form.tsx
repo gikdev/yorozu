@@ -8,20 +8,19 @@ import {
   vTodoEffortType,
   vTodoPriority,
 } from "#/common/api/client"
-import { btn } from "#/common/atoms/btn"
-import { MinusIcon, PlusIcon } from "@phosphor-icons/react"
-import { useForm } from "@tanstack/react-form"
+import { useAppForm } from "#/common/forms"
+import { CheckCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
 import * as v from "valibot"
 
 const vTodoFormData = v.object({
-  title: v.string(),
+  title: v.pipe(v.string(), v.minLength(1)),
   description: v.string(),
   why: v.string(),
   pomodoroEstimate: v.pipe(
     v.number(),
     v.integer(),
-    v.minValue(0, "Invalid value: Expected uint8 to be >= 0"),
-    v.maxValue(255, "Invalid value: Expected uint8 to be <= 255"),
+    v.minValue(0),
+    v.maxValue(255),
   ),
   isUrgent: v.boolean(),
   isDone: v.boolean(),
@@ -42,16 +41,11 @@ const vTodoFormData = v.object({
 type TodoFormData = v.InferOutput<typeof vTodoFormData>
 
 type TodoFormModeProps =
-  | {
-      mode: "CREATE"
-    }
-  | {
-      mode: "EDIT"
-      defaultValues: TodoFormData
-    }
+  | { mode: "CREATE" }
+  | { mode: "EDIT"; defaultValues: TodoFormData }
 
 type TodoFormProps = TodoFormModeProps & {
-  onSubmit: (data: TodoFormData) => void
+  onSubmit: (data: TodoFormData, onFinish: () => void) => void
   className: string
 }
 
@@ -72,121 +66,105 @@ const emptyValues: TodoFormData = {
 }
 
 export function TodoForm(p: TodoFormProps) {
-  const form = useForm({
+  const form = useAppForm({
     defaultValues: p.mode === "CREATE" ? emptyValues : p.defaultValues,
     validators: {
       onChange: vTodoFormData,
     },
     onSubmit: ({ value }) => {
-      p.onSubmit(value)
+      const onFinish = () => form.reset()
+      p.onSubmit(value, onFinish)
     },
   })
 
   return (
     <form
       className={p.className}
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault()
         e.stopPropagation()
         form.handleSubmit()
       }}
     >
-      <form.Field name="title">
-        {(field) => (
-          <div className="flex flex-col">
-            <label htmlFor={field.name}>Title:</label>
+      <form.AppField name="title">
+        {field => <field.SimpleTextInput title="Title *" />}
+      </form.AppField>
 
-            <input
-              id={field.name}
-              name={field.name}
-              value={field.state.value || ""}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className="p-2 mt-1"
+      <form.AppField name="description">
+        {field => <field.SimpleTextInput title="Description:" isMultiline />}
+      </form.AppField>
+
+      <form.AppField name="why">
+        {field => <field.SimpleTextInput title="Why:" isMultiline />}
+      </form.AppField>
+
+      <form.AppField name="pomodoroEstimate">
+        {field => <field.CounterNumberInput title="Estimated Pomodoros:" />}
+      </form.AppField>
+
+      <form.AppField name="contexts">
+        {field => <field.SimpleWordListInput title="Contexts:" />}
+      </form.AppField>
+
+      <form.AppField name="dueDate">
+        {field => <field.PersianUtcDateInput title="Due Date:" />}
+      </form.AppField>
+
+      <div className="flex items-center *:flex-1">
+        <form.AppField name="isUrgent">
+          {field => (
+            <field.SvgToggleInput
+              title="Is Urgent"
+              Icon={WarningOctagonIcon}
+              iconSelectedClass="text-amber-500"
             />
+          )}
+        </form.AppField>
 
-            {!field.state.meta.isValid && (
-              <em className="mt-1 text-red-500">{field.state.meta.errors.map((e) => e?.message).join(", ")}</em>
-            )}
-          </div>
-        )}
-      </form.Field>
-
-      <form.Field name="description">
-        {(field) => (
-          <div className="flex flex-col">
-            <label htmlFor={field.name}>Description:</label>
-
-            <textarea
-              id={field.name}
-              name={field.name}
-              value={field.state.value || ""}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className="p-2 mt-1"
+        <form.AppField name="isDone">
+          {field => (
+            <field.SvgToggleInput
+              title="Is Done"
+              Icon={CheckCircleIcon}
+              iconSelectedClass="text-emerald-500"
             />
+          )}
+        </form.AppField>
+      </div>
 
-            {!field.state.meta.isValid && (
-              <em className="mt-1 text-red-500">{field.state.meta.errors.map((e) => e?.message).join(", ")}</em>
-            )}
-          </div>
+      <form.AppField name="energyLevel">
+        {field => <field.EnergyLevelInput title="Energy Level:" />}
+      </form.AppField>
+
+      <form.AppField name="effortType">
+        {field => <field.EffortTypeInput title="Effort Type:" />}
+      </form.AppField>
+
+      <form.AppField name="priority">
+        {field => <field.TodoPriorityInput title="Priority:" />}
+      </form.AppField>
+
+      <form.AppField name="bucket">
+        {field => <field.TodoBucketInput title="Bucket:" />}
+      </form.AppField>
+
+      <form.Subscribe selector={s => s.values.bucket === TodoBucket.WAITING}>
+        {shouldShow => shouldShow && (
+          <>
+            <form.AppField name="waitingForInfo.description">
+              {field => <field.SimpleTextInput title="Waiting For Description:" isMultiline />}
+            </form.AppField>
+
+            <form.AppField name="waitingForInfo.reviewAt">
+              {field => <field.PersianUtcDateInput title="Waiting For Review At:" />}
+            </form.AppField>
+          </>
         )}
-      </form.Field>
+      </form.Subscribe>
 
-      <form.Field name="why">
-        {(field) => (
-          <div className="flex flex-col">
-            <label htmlFor={field.name}>Why:</label>
-
-            <textarea
-              id={field.name}
-              name={field.name}
-              value={field.state.value || ""}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className="p-2 mt-1"
-            />
-
-            {!field.state.meta.isValid && (
-              <em className="mt-1 text-red-500">{field.state.meta.errors.map((e) => e?.message).join(", ")}</em>
-            )}
-          </div>
-        )}
-      </form.Field>
-
-      <form.Field name="pomodoroEstimate">
-        {(field) => (
-          <div className="flex flex-col">
-            <label htmlFor={field.name}>Pomodoro Estimate:</label>
-
-            <div className="flex items-center gap-1">
-              <button className={btn({ isIcon: true })} onClick={() => field.handleChange(field.state.value - 1)}>
-                <MinusIcon size={24} />
-              </button>
-
-              <input
-                id={field.name}
-                name={field.name}
-                value={field.state.value || 0}
-                onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(Number.isNaN(e.target.valueAsNumber) ? 0 : e.target.valueAsNumber)}
-                className="p-2 flex-1 text-center"
-                type="number"
-                min={0}
-                max={255}
-              />
-
-              <button className={btn({ isIcon: true })} onClick={() => field.handleChange(field.state.value + 1)}>
-                <PlusIcon size={24} />
-              </button>
-            </div>
-
-            {!field.state.meta.isValid && (
-              <em className="mt-1 text-red-500">{field.state.meta.errors.map((e) => e?.message).join(", ")}</em>
-            )}
-          </div>
-        )}
-      </form.Field>
+      <form.Subscribe selector={s => s.values}>
+        {values => <pre className="overflow-x-auto max-w-full">{JSON.stringify(values, null, 2)}</pre>}
+      </form.Subscribe>
     </form>
   )
 }

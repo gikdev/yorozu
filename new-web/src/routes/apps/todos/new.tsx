@@ -8,7 +8,11 @@ export const Route = createFileRoute("/apps/todos/new")({
 function RouteComponent() {
   return (
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
-      <TodoForm mode="CREATE" className="flex flex-col gap-2" onSubmit={() => {}} />
+      <TodoForm
+        mode="CREATE"
+        className="flex flex-col gap-4"
+        onSubmit={() => {}}
+      />
     </div>
   )
 }

@@ -4,7 +4,7 @@ export function useTheme() {
   const [theme, setTheme] = useState<"dark" | "light" | null>(null)
 
   const toggleTheme = () => {
-    setTheme((p) => (p === "dark" ? "light" : "dark"))
+    setTheme(p => (p === "dark" ? "light" : "dark"))
   }
 
   useEffect(() => {
@@ -21,7 +21,8 @@ export function useTheme() {
   }, [theme])
 
   useEffect(() => {
-    const isDarkTheme = document.documentElement.classList.contains("theme-dark")
+    const isDarkTheme =
+      document.documentElement.classList.contains("theme-dark")
     setTheme(isDarkTheme ? "dark" : "light")
   }, [])
 
