@@ -13,6 +13,7 @@ export function SimpleSubmitBtn(p: SimpleSubmitBtnProps) {
     <form.Subscribe selector={s => [s.canSubmit, s.isSubmitting]}>
       {([canSubmit, isSubmitting]) => (
         <button
+          type="button"
           className={p.className}
           onClick={() => form.handleSubmit()}
           disabled={!canSubmit || isSubmitting}

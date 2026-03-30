@@ -4,8 +4,10 @@ import { listTodosOptions } from "#/common/api/client"
 import { useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
-import { ClipboardTextIcon, SpinnerIcon } from "@phosphor-icons/react"
-import { en } from "#/common/i18n/en"
+import { LoadingTodosList } from "./-loading-todos-list"
+import { EmtpyTodosList } from "./-empty-todos-list"
+import { TodoList } from "#/features/todos/todo-list"
+import { CreateNewTodoFab } from "./-create-new-todo-fab"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -18,44 +20,24 @@ function RouteComponent() {
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
       <Header />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col p-2">
         <RenderQuery
           isList={true}
           status={listTodosQ.status}
           listCount={listTodosQ.data?.items.length!}
           loadingView={<LoadingTodosList />}
           emptyView={<EmtpyTodosList />}
+          fullView={<TodoList todos={listTodosQ.data?.items!} />}
           errorView={
-            <div className="max-w-120 mx-auto p-4">
-              <ErrorCard
-                message={listTodosQ.error?.message}
-                onRetry={listTodosQ.refetch}
-              />
-            </div>
+            <ErrorCard
+              message={listTodosQ.error?.message}
+              onRetry={listTodosQ.refetch}
+            />
           }
-          fullView={listTodosQ.data?.items.map(t => (
-            <p key={t.id}>{t.title}</p>
-          ))}
         />
+
+        <CreateNewTodoFab />
       </div>
-    </div>
-  )
-}
-
-function EmtpyTodosList() {
-  return (
-    <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
-      <ClipboardTextIcon size={40} />
-      <p>{en.todos.emptyTodos}</p>
-    </div>
-  )
-}
-
-function LoadingTodosList() {
-  return (
-    <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
-      <SpinnerIcon size={40} className="animate-spin" />
-      <p>{en.todos.loadingTodos}</p>
     </div>
   )
 }
