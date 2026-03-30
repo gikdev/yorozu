@@ -7,13 +7,14 @@ import {
 } from "@phosphor-icons/react"
 
 type TodoListItemProps = {
+  todoId: string
   title: string
   isDone: boolean
   isCheckboxLoading: boolean
   isTitleLoading: boolean
-  onCheckboxClick: () => void
-  onTitleClick: () => void
-  onMoreOptionsClick: () => void
+  onCheckboxClick: (todoId: string) => void
+  onTitleClick: (todoId: string) => void
+  onMoreOptionsClick: (todoId: string) => void
 }
 
 export function TodoListItem(p: TodoListItemProps) {
@@ -22,7 +23,7 @@ export function TodoListItem(p: TodoListItemProps) {
       <button
         className={btn({ isIcon: true })}
         disabled
-        onClick={p.onCheckboxClick}
+        onClick={() => p.onCheckboxClick(p.todoId)}
       >
         {p.isCheckboxLoading && (
           <CircleNotchIcon size={24} className="animate-spin" />
@@ -36,7 +37,7 @@ export function TodoListItem(p: TodoListItemProps) {
       <button
         className={btn({ className: "flex-1 justify-start text-start" })}
         disabled
-        onClick={p.onTitleClick}
+        onClick={() => p.onTitleClick(p.todoId)}
       >
         {p.isTitleLoading ? (
           <span className="block h-4 w-20 bg-mist-500 animate-pulse" />
@@ -48,7 +49,7 @@ export function TodoListItem(p: TodoListItemProps) {
       <button
         className={btn({ isIcon: true })}
         disabled
-        onClick={p.onMoreOptionsClick}
+        onClick={() => p.onMoreOptionsClick(p.todoId)}
       >
         <DotsThreeIcon size={24} />
       </button>
