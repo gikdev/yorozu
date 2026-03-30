@@ -40,7 +40,7 @@ const vTodoFormData = v.object({
   ),
 })
 
-type TodoFormData = v.InferOutput<typeof vTodoFormData>
+export type TodoFormData = v.InferOutput<typeof vTodoFormData>
 
 type TodoFormModeProps =
   | { mode: "CREATE" }
