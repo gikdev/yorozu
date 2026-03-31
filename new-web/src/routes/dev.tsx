@@ -1,8 +1,11 @@
 import { btn } from "#/common/atoms/btn"
-import { TitledOptionsBottomSheet } from "#/common/organisms/titled-options-bottom-sheet"
+import {
+  TitledOptionsBottomSheet,
+  type TitledOptionsBottomSheetProps,
+} from "#/common/organisms/titled-options-bottom-sheet"
 import { CheckIcon, EyeIcon } from "@phosphor-icons/react"
 import { createFileRoute } from "@tanstack/react-router"
-import { useMemo, useState, type ComponentProps } from "react"
+import { useMemo, useState } from "react"
 
 export const Route = createFileRoute("/dev")({
   component: RouteComponent,
@@ -11,9 +14,7 @@ export const Route = createFileRoute("/dev")({
 function RouteComponent() {
   const [isOpen, setOpen] = useState(false)
 
-  const optionItems: ComponentProps<
-    typeof TitledOptionsBottomSheet
-  >["optionItems"] = useMemo(
+  const optionItems: TitledOptionsBottomSheetProps["optionItems"] = useMemo(
     () => [
       {
         title: "View Todo",

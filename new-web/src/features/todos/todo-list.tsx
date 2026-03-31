@@ -3,9 +3,10 @@ import { TodoListItem } from "./todo-list-item"
 
 type TodoListProps = {
   todos: TodoResponse[]
-  onCheckboxClick: (todoId: string) => void
+  onCheckboxClick: (todoId: string, isCurrentlyDone: boolean) => void
   onTitleClick: (todoId: string) => void
   onMoreOptionsClick: (todoId: string) => void
+  loadingCheckboxTodoId: string | null
 }
 
 export function TodoList(p: TodoListProps) {
@@ -15,13 +16,13 @@ export function TodoList(p: TodoListProps) {
         <TodoListItem
           key={t.id}
           todoId={t.id}
-          isCheckboxLoading={false}
+          title={t.title}
           isDone={t.isDone}
           isTitleLoading={false}
+          isCheckboxLoading={t.id === p.loadingCheckboxTodoId}
+          onTitleClick={p.onTitleClick}
           onCheckboxClick={p.onCheckboxClick}
           onMoreOptionsClick={p.onMoreOptionsClick}
-          onTitleClick={p.onTitleClick}
-          title={t.title}
         />
       ))}
     </div>

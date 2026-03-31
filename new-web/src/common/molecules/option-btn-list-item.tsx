@@ -1,7 +1,7 @@
 import type { Icon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 
-interface OptionBtnListItemProps {
+export interface OptionBtnListItemProps {
   title: string
   helpText?: string
   Icon?: Icon

@@ -1,12 +1,14 @@
-import type { ComponentProps } from "react"
 import { BottomSheet } from "../molecules/bottom-sheet"
 import { BottomSheetHeader } from "../molecules/bottom-sheet-header"
-import { OptionBtnList } from "../molecules/option-btn-list"
+import {
+  OptionBtnList,
+  type OptionBtnListProps,
+} from "../molecules/option-btn-list"
 
-interface TitledOptionsBottomSheetProps {
+export interface TitledOptionsBottomSheetProps {
   title: string
   onClose: () => void
-  optionItems: ComponentProps<typeof OptionBtnList>["optionItems"]
+  optionItems: OptionBtnListProps["optionItems"]
 }
 
 export function TitledOptionsBottomSheet(p: TitledOptionsBottomSheetProps) {

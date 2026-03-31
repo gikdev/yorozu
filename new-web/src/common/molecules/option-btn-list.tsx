@@ -1,8 +1,10 @@
-import type { ComponentProps } from "react"
-import { OptionBtnListItem } from "./option-btn-list-item"
+import {
+  OptionBtnListItem,
+  type OptionBtnListItemProps,
+} from "./option-btn-list-item"
 
-interface OptionBtnListProps {
-  optionItems: Array<ComponentProps<typeof OptionBtnListItem>>
+export interface OptionBtnListProps {
+  optionItems: OptionBtnListItemProps[]
 }
 
 export function OptionBtnList(p: OptionBtnListProps) {
