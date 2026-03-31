@@ -13,11 +13,7 @@ import {
   TitledOptionsBottomSheet,
   type TitledOptionsBottomSheetProps,
 } from "#/common/organisms/titled-options-bottom-sheet"
-import {
-  EyeIcon,
-  PencilSimpleIcon,
-  TrashIcon
-} from "@phosphor-icons/react"
+import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -25,9 +21,11 @@ export const Route = createFileRoute("/apps/todos/(home)/")({
 
 function RouteComponent() {
   const listTodosQ = useQuery(listTodosOptions())
-  const changeTodoM = useMutation(changeTodoMutation())
 
-  const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<string | null>(null)
+  const changeTodoM = useMutation(changeTodoMutation())
+  const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<
+    string | null
+  >(null)
 
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
   const isTodoOptionsSheetOpen = selectedTodoId != null
@@ -37,14 +35,17 @@ function RouteComponent() {
   const checkOrUncheckTodo = (todoId: string, isCurrentlyDone: boolean) => {
     setLoadingCheckboxTodoId(todoId)
 
-    changeTodoM.mutate({
-      path: { id: todoId },
-      body: { isDone: !isCurrentlyDone },
-    }, {
-      onError: error => alert(error.message),
-      onSuccess: () => listTodosQ.refetch(),
-      onSettled: () => setLoadingCheckboxTodoId(null),
-    })
+    changeTodoM.mutate(
+      {
+        path: { id: todoId },
+        body: { isDone: !isCurrentlyDone },
+      },
+      {
+        onError: error => alert(error.message),
+        onSuccess: () => listTodosQ.refetch(),
+        onSettled: () => setLoadingCheckboxTodoId(null),
+      },
+    )
   }
   const viewTodoDetails = (todoId: string) => {
     alert("Not Implemented Yet!")

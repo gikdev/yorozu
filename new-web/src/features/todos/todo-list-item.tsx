@@ -3,7 +3,7 @@ import {
   DotsThreeIcon,
   CircleNotchIcon,
   CheckCircleIcon,
-  CircleIcon
+  CircleIcon,
 } from "@phosphor-icons/react"
 
 type TodoListItemProps = {
@@ -19,7 +19,10 @@ type TodoListItemProps = {
 
 export function TodoListItem(p: TodoListItemProps) {
   return (
-    <div data-done={p.isDone} className="flex items-center gap-0 data-[done=true]:opacity-50">
+    <div
+      data-done={p.isDone}
+      className="flex items-center gap-0 data-[done=true]:opacity-50"
+    >
       <button
         className={btn({ isIcon: true })}
         onClick={() => p.onCheckboxClick(p.todoId, p.isDone)}
