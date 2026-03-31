@@ -1,16 +1,16 @@
-openapi: "3.1.1"
+openapi: '3.1.1'
 info:
   title: Fanoos.Api | v1
   version: 1.0.0
 servers:
   - url: http://localhost:5000/
 paths:
-  "/api/todos/{id}":
+  '/api/todos/{id}':
     patch:
       tags:
         - Todos
       summary: Change todo
-      description: "Toggle status, (un)archive, and change the title of the todo."
+      description: 'Toggle status, (un)archive, and change the title of the todo.'
       operationId: ChangeTodo
       parameters:
         - name: id
@@ -23,15 +23,49 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChangeTodoRequest"
+              $ref: '#/components/schemas/ChangeTodoRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TodoResponse"
+                $ref: '#/components/schemas/TodoResponse'
+    delete:
+      tags:
+        - Todos
+      summary: Delete todo
+      operationId: DeleteTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '201':
+          description: Created
+    get:
+      tags:
+        - Todos
+      summary: Get todo
+      operationId: GetTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
   /api/todos:
     post:
       tags:
@@ -42,15 +76,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTodoRequest"
+              $ref: '#/components/schemas/CreateTodoRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TodoResponse"
+                $ref: '#/components/schemas/TodoResponse'
     get:
       tags:
         - Todos
@@ -60,15 +94,15 @@ paths:
         - name: bucket
           in: query
           schema:
-            $ref: "#/components/schemas/TodoBucketFilter"
+            $ref: '#/components/schemas/TodoBucketFilter'
         - name: sort_by
           in: query
           schema:
-            $ref: "#/components/schemas/TodoSortBy"
+            $ref: '#/components/schemas/TodoSortBy'
         - name: sort_order
           in: query
           schema:
-            $ref: "#/components/schemas/TodoSortOrder"
+            $ref: '#/components/schemas/TodoSortOrder'
         - name: q
           in: query
           schema:
@@ -80,19 +114,19 @@ paths:
         - name: available_energy_level
           in: query
           schema:
-            $ref: "#/components/schemas/EnergyLevel"
+            $ref: '#/components/schemas/EnergyLevel'
         - name: available_pomodoros
           in: query
           schema:
             type: integer
             format: uint8
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TodoListResponse"
+                $ref: '#/components/schemas/TodoListResponse'
   /api/backups:
     get:
       tags:
@@ -100,12 +134,12 @@ paths:
       summary: Get backup
       operationId: GetBackup
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BackupDto"
+                $ref: '#/components/schemas/BackupDto'
     post:
       tags:
         - Backups
@@ -115,10 +149,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BackupDto"
+              $ref: '#/components/schemas/BackupDto'
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
 components:
   schemas:
@@ -134,7 +168,7 @@ components:
         todos:
           type: array
           items:
-            $ref: "#/components/schemas/TodoPersistenceDto"
+            $ref: '#/components/schemas/TodoPersistenceDto'
     ByteNullObject:
       required:
         - value
@@ -142,7 +176,7 @@ components:
       properties:
         value:
           type:
-            - "null"
+            - 'null'
             - integer
           format: uint8
     ChangeTodoRequest:
@@ -150,58 +184,58 @@ components:
       properties:
         title:
           type:
-            - "null"
+            - 'null'
             - string
         why:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/StringNullObject"
+            - type: 'null'
+            - $ref: '#/components/schemas/StringNullObject'
         description:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/StringNullObject"
+            - type: 'null'
+            - $ref: '#/components/schemas/StringNullObject'
         isDone:
           type:
-            - "null"
+            - 'null'
             - boolean
         estimatedPomodoros:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/ByteNullObject"
+            - type: 'null'
+            - $ref: '#/components/schemas/ByteNullObject'
         isUrgent:
           type:
-            - "null"
+            - 'null'
             - boolean
         dueDate:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/DateTimeOffsetNullObject"
+            - type: 'null'
+            - $ref: '#/components/schemas/DateTimeOffsetNullObject'
         contexts:
           type:
-            - "null"
+            - 'null'
             - array
           items:
             type: string
         priority:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoPriority"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoPriority'
         effortType:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoEffortType"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoEffortType'
         energyLevel:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/EnergyLevel"
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
         bucket:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoBucket"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoBucket'
         waitingForInfo:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequestNullObject"
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForRequestNullObject'
     CreateTodoRequest:
       required:
         - title
@@ -211,56 +245,56 @@ components:
           type: string
         description:
           type:
-            - "null"
+            - 'null'
             - string
         why:
           type:
-            - "null"
+            - 'null'
             - string
         pomodoroEstimate:
           type:
-            - "null"
+            - 'null'
             - integer
           format: uint8
         isUrgent:
           type:
-            - "null"
+            - 'null'
             - boolean
         isDone:
           type:
-            - "null"
+            - 'null'
             - boolean
         dueDate:
           type:
-            - "null"
+            - 'null'
             - string
           format: date-time
         contexts:
           type:
-            - "null"
+            - 'null'
             - array
           items:
             type: string
         priority:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoPriority"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoPriority'
         effortType:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoEffortType"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoEffortType'
         energyLevel:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/EnergyLevel"
+            - type: 'null'
+            - $ref: '#/components/schemas/EnergyLevel'
         bucket:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoBucket"
+            - type: 'null'
+            - $ref: '#/components/schemas/TodoBucket'
         waitingForInfo:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForInfo"
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForInfo'
     DateTimeOffsetNullObject:
       required:
         - value
@@ -268,7 +302,7 @@ components:
       properties:
         value:
           type:
-            - "null"
+            - 'null'
             - string
           format: date-time
     EnergyLevel:
@@ -277,7 +311,7 @@ components:
         - Low
         - Medium
         - High
-        -
+        - 
     FutureDateTimeOffset:
       type: object
       properties:
@@ -296,7 +330,7 @@ components:
       properties:
         value:
           type:
-            - "null"
+            - 'null'
             - string
     TodoBucket:
       enum:
@@ -325,7 +359,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/TodoResponse"
+            $ref: '#/components/schemas/TodoResponse'
     TodoPersistenceDto:
       required:
         - id
@@ -351,15 +385,15 @@ components:
           type: string
         why:
           type:
-            - "null"
+            - 'null'
             - string
         description:
           type:
-            - "null"
+            - 'null'
             - string
         estimatedPomodoros:
           type:
-            - "null"
+            - 'null'
             - integer
           format: uint8
         energyLevel:
@@ -374,7 +408,7 @@ components:
           type: boolean
         dueDate:
           type:
-            - "null"
+            - 'null'
             - string
           format: date-time
         contexts:
@@ -389,8 +423,8 @@ components:
           format: int32
         waitingForInfo:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForPersistenceDto"
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForPersistenceDto'
     TodoPriority:
       enum:
         - Unknown
@@ -424,24 +458,24 @@ components:
           type: string
         why:
           type:
-            - "null"
+            - 'null'
             - string
         description:
           type:
-            - "null"
+            - 'null'
             - string
         isDone:
           type: boolean
         estimatedPomodoros:
           type:
-            - "null"
+            - 'null'
             - integer
           format: uint8
         isUrgent:
           type: boolean
         dueDate:
           type:
-            - "null"
+            - 'null'
             - string
           format: date-time
         contexts:
@@ -449,17 +483,17 @@ components:
           items:
             type: string
         priority:
-          $ref: "#/components/schemas/TodoPriority"
+          $ref: '#/components/schemas/TodoPriority'
         effortType:
-          $ref: "#/components/schemas/TodoEffortType"
+          $ref: '#/components/schemas/TodoEffortType'
         energyLevel:
-          $ref: "#/components/schemas/EnergyLevel"
+          $ref: '#/components/schemas/EnergyLevel'
         bucket:
-          $ref: "#/components/schemas/TodoBucket"
+          $ref: '#/components/schemas/TodoBucket'
         waitingForInfo:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForResponse"
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForResponse'
     TodoSortBy:
       type: integer
       default: 0
@@ -473,9 +507,9 @@ components:
       type: object
       properties:
         description:
-          $ref: "#/components/schemas/NotEmptyString"
+          $ref: '#/components/schemas/NotEmptyString'
         reviewAt:
-          $ref: "#/components/schemas/FutureDateTimeOffset"
+          $ref: '#/components/schemas/FutureDateTimeOffset'
     WaitingForPersistenceDto:
       required:
         - description
@@ -505,8 +539,8 @@ components:
       properties:
         value:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequest"
+            - type: 'null'
+            - $ref: '#/components/schemas/WaitingForRequest'
     WaitingForResponse:
       required:
         - description
