@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Header } from "./-header"
-import { listTodosOptions, changeTodoMutation } from "#/common/api/client"
+import {
+  listTodosOptions,
+  changeTodoMutation,
+  deleteTodoMutation,
+} from "#/common/api/client"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
@@ -26,6 +30,8 @@ function RouteComponent() {
   const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<
     string | null
   >(null)
+
+  const deleteTodoM = useMutation(deleteTodoMutation())
 
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
   const isTodoOptionsSheetOpen = selectedTodoId != null
@@ -56,8 +62,19 @@ function RouteComponent() {
     console.warn("Not Implemented Yet!", { todoId })
   }
   const removeTodo = (todoId: string) => {
-    alert("Not Implemented Yet!")
-    console.warn("Not Implemented Yet!", { todoId })
+    const isConfirmed = window.confirm("Sure?")
+    if (!isConfirmed) return
+
+    deleteTodoM.mutate(
+      { path: { id: todoId } },
+      {
+        onError: error => alert(error.message),
+        onSuccess: () => {
+          setSelectedTodoId(null)
+          listTodosQ.refetch()
+        },
+      },
+    )
   }
 
   const optionItems: TitledOptionsBottomSheetProps["optionItems"] = [
