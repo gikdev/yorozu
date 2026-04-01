@@ -8,7 +8,7 @@ interface WaitingForCardProps {
 
 export function WaitingForCard(p: WaitingForCardProps) {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center text-center">
       <p className="flex gap-1 items-center">
         <ClockIcon size={16} />
         <span>Review At</span>

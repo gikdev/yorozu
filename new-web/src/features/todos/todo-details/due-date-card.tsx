@@ -7,7 +7,7 @@ interface DueDateCardProps {
 
 export function DueDateCard(p: DueDateCardProps) {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center text-center">
       <p className="text-2xl font-bold text-mist-100">
         {toPersianDateEn(p.dueDate)}
       </p>

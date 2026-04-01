@@ -15,7 +15,7 @@ export function EnergyLevelCard({ energyLevel }: EnergyLevelCardProps) {
   const is3rdOn = energyLevel === EnergyLevel.HIGH
 
   return (
-    <div className="flex flex-col gap-2 items-center">
+    <div className="flex flex-col gap-2 items-center text-center">
       <div className="flex items-center">
         <LightningIcon size={40} weight={is1stOn ? "fill" : "regular"} />
         <LightningIcon size={40} weight={is2ndOn ? "fill" : "regular"} />

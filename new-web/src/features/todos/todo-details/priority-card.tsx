@@ -36,7 +36,7 @@ export function PriorityCard(p: PriorityCardProps) {
 
   return (
     <div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center text-center"
       title={`Priority: ${letter} - ${hint}`}
     >
       <p className="text-5xl font-bold text-mist-100">{letter}</p>

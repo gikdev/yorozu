@@ -24,8 +24,11 @@ export function TodoBucketCard(p: TodoBucketCardProps) {
   }
 
   return (
-    <div className="flex flex-col items-center" title={`Bucket: ${title}`}>
-      <p className="text-2xl font-bold text-mist-100">{title}</p>
+    <div
+      className="flex flex-col items-center text-center"
+      title={`Bucket: ${title}`}
+    >
+      <p className="text-2xl font-bold text-mist-100 wrap-break-word">{title}</p>
 
       <p className="flex gap-1 items-center">
         <SquaresFourIcon size={16} />

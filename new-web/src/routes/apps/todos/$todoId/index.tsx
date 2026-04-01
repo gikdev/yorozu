@@ -41,14 +41,14 @@ function RouteComponent() {
         <p className="">{en.todos.todoDetailsTitle}</p>
 
         <div className="flex items-center ms-auto">
-          <button
-            type="button"
-            disabled
+          <Link
+            to="/apps/todos/$todoId/edit"
+            params={{ todoId }}
             className={btn({ isIcon: true })}
             title="Edit Todo"
           >
             <PencilSimpleIcon size={20} />
-          </button>
+          </Link>
 
           <button
             type="button"

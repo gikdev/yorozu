@@ -16,7 +16,7 @@ export function EffortTypeCard(p: EffortTypeCardProps) {
   if (src == null) return null
 
   return (
-    <div className="flex flex-col gap-2 items-center">
+    <div className="flex flex-col gap-2 items-center text-center">
       <img src={src} className="object-cover rounded-md size-16" />
 
       <p className="flex gap-1 items-center">

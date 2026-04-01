@@ -80,7 +80,7 @@ export function TodoDetails(p: TodoDetailsProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-y-8 gap-x-2">
+      <div className="flex flex-wrap items-center justify-center gap-8">
         {dueDate && <DueDateCard dueDate={dueDate} />}
 
         <PriorityCard priority={priority} />
