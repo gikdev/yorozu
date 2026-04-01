@@ -122,6 +122,29 @@ public sealed class Todo : IAggregateRoot {
         return Result.Success;
     }
 
+    public ErrorOr<Success> Update(
+        TodoBucket? bucket,
+        WaitingForInfo? waitingForInfo,
+        bool? isUrgent
+    ) {
+        var newBucket = bucket ?? Bucket;
+        var newWaitingForInfo = waitingForInfo ?? WaitingForInfo;
+        var newUrgent = isUrgent ?? IsUrgent;
+
+        var r1 = EnsureUrgentSomedayInvariant(newBucket, newUrgent);
+        if (r1.IsError) return r1.Errors;
+
+        var r2 = EnsureBucketAndWaitingInfoInvariant(newBucket, newWaitingForInfo);
+        if (r2.IsError) return r2.Errors;
+
+        Bucket = newBucket;
+        WaitingForInfo = newWaitingForInfo;
+        IsUrgent = newUrgent;
+
+        return Result.Success;
+    }
+
+
     private static ErrorOr<Success> EnsureUrgentSomedayInvariant(TodoBucket bucket, bool isUrgent) {
         bool isInSomedayBucket = bucket == TodoBucket.SomedayMaybe;
 

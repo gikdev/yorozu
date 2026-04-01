@@ -17,10 +17,9 @@ namespace Fanoos.Presentation.Todos.ChangeTodo;
 internal sealed class ChangeTodoEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
-            .MapPatch("todos/{id:guid}", Handle)
+            .MapPut("todos/{id:guid}", Handle)
             .WithName(nameof(ChangeTodo))
             .WithSummary("Change todo")
-            .WithDescription("Toggle status, (un)archive, and change the title of the todo.")
             .WithTags(ApiTags.Todos)
             .Accepts<ChangeTodoRequest>("application/json")
             .Produces<TodoResponse>();
@@ -48,10 +47,10 @@ internal sealed class ChangeTodoEndpoint : IEndpoint {
         WaitingForInfo? waitingForInfo = null;
 
         if (request.WaitingForInfo != null) {
-            var descriptionResult = NotEmptyString.Create(request.WaitingForInfo.Value.Description);
+            var descriptionResult = NotEmptyString.Create(request.WaitingForInfo.Description);
             if (descriptionResult.IsError) return descriptionResult.Errors;
 
-            var reviewAtResult = FutureDateTimeOffset.Create(request.WaitingForInfo.Value.ReviewAt, DateTimeOffset.UtcNow);
+            var reviewAtResult = FutureDateTimeOffset.Create(request.WaitingForInfo.ReviewAt, DateTimeOffset.UtcNow);
             if (reviewAtResult.IsError) return reviewAtResult.Errors;
 
             waitingForInfo = new() {
@@ -73,9 +72,7 @@ internal sealed class ChangeTodoEndpoint : IEndpoint {
             EffortType = request.EffortType,
             EstimatedPomodoros = request.EstimatedPomodoros,
             Priority = request.Priority,
-            WaitingForInfo = request.WaitingForInfo == null ? null : new WaitingForInfoNullObject {
-                Value = waitingForInfo,
-            },
+            WaitingForInfo = request.WaitingForInfo == null ? null : waitingForInfo,
             Why = request.Why,
         };
     }

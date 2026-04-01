@@ -17,94 +17,61 @@ internal sealed class ChangeTodoCommandHandler(
 
         if (todo is null) return Error.NotFound(description: "Task was not found");
 
-        if (request.Title != null) {
-            var result = NotEmptyString.Create(request.Title);
-            if (result.IsError) return result.Errors;
-            var newTitle = result.Value;
-            todo.Title = newTitle;
-        }
+        var titleResult = NotEmptyString.Create(request.Title);
+        if (titleResult.IsError) return titleResult.Errors;
+        var newTitle = titleResult.Value;
+        todo.Title = newTitle;
 
         if (request.Why != null) {
-            if (request.Why.Value == null) {
-                todo.Why = null;
-            } else {
-                var result = NotEmptyString.Create(request.Why.Value);
-                if (result.IsError) return result.Errors;
-                var newWhy = result.Value;
-                todo.Why = newWhy;
-            }
+            var result = NotEmptyString.Create(request.Why);
+            if (result.IsError) return result.Errors;
+            var newWhy = result.Value;
+            todo.Why = newWhy;
+        } else {
+            todo.Why = null;
         }
 
         if (request.Description != null) {
-            if (request.Description.Value == null) {
-                todo.Description = null;
-            } else {
-                var result = NotEmptyString.Create(request.Description.Value);
-                if (result.IsError) return result.Errors;
-                var newDescription = result.Value;
-                todo.Description = newDescription;
-            }
-        }
-
-        if (request.IsDone.HasValue) {
-            if (request.IsDone.Value)
-                todo.MarkDone();
-            else
-                todo.MarkUndone();
-        }
-
-        if (request.EstimatedPomodoros != null) {
-            todo.EstimatedPomodoros = request.EstimatedPomodoros.Value;
-        }
-
-        if (request.IsUrgent.HasValue) {
-            var result = todo.SetUrgency(request.IsUrgent.Value);
+            var result = NotEmptyString.Create(request.Description);
             if (result.IsError) return result.Errors;
+            var newDescription = result.Value;
+            todo.Description = newDescription;
+        } else {
+            todo.Description = null;
         }
 
-        if (request.DueDate != null) {
-            if (request.DueDate.Value == null) {
-                todo.DueDate = null;
-            } else {
-                var result = FutureDateTimeOffset.Create(request.DueDate.Value.Value, DateTimeOffset.UtcNow);
-                if (result.IsError) return result.Errors;
-                var newDueDate = result.Value;
-                todo.DueDate = newDueDate;
-            }
-        }
+        if (request.IsDone)
+            todo.MarkDone();
+        else
+            todo.MarkUndone();
 
-        if (request.Contexts != null) {
-            var contextsResults = request.Contexts.Select(x => NotEmptyString.Create(x));
+        todo.EstimatedPomodoros = request.EstimatedPomodoros;
 
-            if (contextsResults.Any(x => x.IsError)) {
-                return contextsResults.First(x => x.IsError).Errors;
-            }
-
-            var contexts = contextsResults.Select(x => x.Value).ToList();
-
-            todo.SetContexts(contexts);
-        }
-
-        if (request.Priority.HasValue) {
-            todo.Priority = request.Priority.Value;
-        }
-
-        if (request.EffortType.HasValue) {
-            todo.EffortType = request.EffortType.Value;
-        }
-
-        if (request.EnergyLevel.HasValue) {
-            todo.EnergyLevel = request.EnergyLevel.Value;
-        }
-
-        if (request.Bucket.HasValue) {
-            var result = todo.MoveToBucket(request.Bucket.Value, null);
+        if (request.DueDate.HasValue) {
+            var result = FutureDateTimeOffset.Create(request.DueDate.Value, DateTimeOffset.UtcNow);
             if (result.IsError) return result.Errors;
+            var newDueDate = result.Value;
+            todo.DueDate = newDueDate;
+        } else {
+            todo.DueDate = null;
         }
 
-        if (request.WaitingForInfo != null) {
-            todo.SetWaitingForInfo(request.WaitingForInfo.Value);
-        }
+        var contextsResults = request.Contexts.Select(NotEmptyString.Create);
+        if (contextsResults.Any(x => x.IsError))
+            return contextsResults.First(x => x.IsError).Errors;
+        var contexts = contextsResults.Select(x => x.Value).ToList();
+        todo.SetContexts(contexts);
+
+        todo.Priority = request.Priority;
+        todo.EffortType = request.EffortType;
+        todo.EnergyLevel = request.EnergyLevel;
+
+        var updateResult = todo.Update(
+            isUrgent: request.IsUrgent,
+            waitingForInfo: request.WaitingForInfo,
+            bucket: request.Bucket
+        );
+        if (updateResult.IsError) return updateResult.Errors;
 
         await todoRepository.UpdateAsync(todo, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

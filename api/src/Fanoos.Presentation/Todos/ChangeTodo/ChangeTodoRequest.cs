@@ -1,21 +1,20 @@
-using Fanoos.Common.Dto;
 using Fanoos.Domain.Todos;
-
+using Fanoos.Presentation.Todos.Common;
 
 namespace Fanoos.Presentation.Todos.ChangeTodo;
 
 internal sealed record ChangeTodoRequest {
-    public string? Title { get; init; }
-    public StringNullObject? Why { get; init; }
-    public StringNullObject? Description { get; init; }
-    public bool? IsDone { get; init; }
-    public ByteNullObject? EstimatedPomodoros { get; init; }
-    public bool? IsUrgent { get; init; }
-    public DateTimeOffsetNullObject? DueDate { get; init; }
-    public List<string>? Contexts { get; init; }
-    public TodoPriority? Priority { get; init; }
-    public TodoEffortType? EffortType { get; init; }
-    public EnergyLevel? EnergyLevel { get; init; }
-    public TodoBucket? Bucket { get; init; }
-    public WaitingForRequestNullObject? WaitingForInfo { get; init; }
+    public required string Title { get; init; }
+    public required string? Why { get; init; }
+    public required string? Description { get; init; }
+    public required bool IsDone { get; init; }
+    public required byte? EstimatedPomodoros { get; init; }
+    public required bool IsUrgent { get; init; }
+    public required DateTimeOffset? DueDate { get; init; }
+    public required List<string> Contexts { get; init; }
+    public required TodoPriority Priority { get; init; }
+    public required TodoEffortType EffortType { get; init; }
+    public required EnergyLevel EnergyLevel { get; init; }
+    public required TodoBucket Bucket { get; init; }
+    public required WaitingForRequest? WaitingForInfo { get; init; }
 }

@@ -9,17 +9,17 @@ namespace Fanoos.Application.Todos.ChangeTodo;
 
 public record ChangeTodoCommand : IRequest<ErrorOr<Todo>> {
     public required Guid Id { get; init; }
-    public required string? Title { get; init; }
-    public required StringNullObject? Why { get; init; }
-    public required StringNullObject? Description { get; init; }
-    public required bool? IsDone { get; init; }
-    public required ByteNullObject? EstimatedPomodoros { get; init; }
-    public required bool? IsUrgent { get; init; }
-    public required DateTimeOffsetNullObject? DueDate { get; init; }
-    public required List<string>? Contexts { get; init; }
-    public required TodoPriority? Priority { get; init; }
-    public required TodoEffortType? EffortType { get; init; }
-    public required EnergyLevel? EnergyLevel { get; init; }
-    public required TodoBucket? Bucket { get; init; }
-    public required WaitingForInfoNullObject? WaitingForInfo { get; init; }
+    public required string Title { get; init; }
+    public required string? Why { get; init; }
+    public required string? Description { get; init; }
+    public required bool IsDone { get; init; }
+    public required byte? EstimatedPomodoros { get; init; }
+    public required bool IsUrgent { get; init; }
+    public required DateTimeOffset? DueDate { get; init; }
+    public required List<string> Contexts { get; init; }
+    public required TodoPriority Priority { get; init; }
+    public required TodoEffortType EffortType { get; init; }
+    public required EnergyLevel EnergyLevel { get; init; }
+    public required TodoBucket Bucket { get; init; }
+    public required WaitingForInfo? WaitingForInfo { get; init; }
 }
