@@ -1,5 +1,6 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
+using System.Text.Json.Serialization;
 using ErrorOr;
 
 namespace Fanoos.Common.Domain;
@@ -8,6 +9,14 @@ public sealed record NotEmptyString {
     private NotEmptyString() { }
 
     public string Value { get; init; }
+
+    [JsonConstructor]
+    public NotEmptyString(string value) {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ArgumentException("Value cannot be empty");
+
+        Value = value;
+    }
 
     public static ErrorOr<NotEmptyString> Create(string value) {
         if (string.IsNullOrWhiteSpace(value))

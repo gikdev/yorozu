@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Header } from "./-header"
 import {
   listTodosOptions,
@@ -24,6 +24,8 @@ export const Route = createFileRoute("/apps/todos/(home)/")({
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+
   const listTodosQ = useQuery(listTodosOptions())
 
   const changeTodoM = useMutation(changeTodoMutation())
@@ -54,8 +56,10 @@ function RouteComponent() {
     )
   }
   const viewTodoDetails = (todoId: string) => {
-    alert("Not Implemented Yet!")
-    console.warn("Not Implemented Yet!", { todoId })
+    navigate({
+      to: "/apps/todos/todos/$todoId",
+      params: { todoId },
+    })
   }
   const editTodo = (todoId: string) => {
     alert("Not Implemented Yet!")

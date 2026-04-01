@@ -12,6 +12,7 @@ export const en = {
     energyLevelHigh: "High",
     createTodo: "Create Todo",
     editTodo: "Edit Todo",
+    todoDetailsTitle: "Todo Details",
   },
   common: {
     validating: "Validating",
