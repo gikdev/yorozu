@@ -4,22 +4,32 @@ import { ErrorCard } from "#/common/helpers/error-card"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { en } from "#/common/i18n/en"
 import { TodoDetails } from "#/features/todos/todo-details"
+import { useDeleteTodo } from "#/features/todos/use-delete-todo"
 import {
   ArrowLeftIcon,
   PencilSimpleIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/apps/todos/todos/$todoId")({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+
   const { todoId } = Route.useParams()
 
   const getTodoQ = useQuery(getTodoOptions({ path: { id: todoId } }))
+
+  const [deleteTodo] = useDeleteTodo({
+    onError: error => alert(error.message),
+    onSuccess: () => {
+      navigate({ to: "/apps/todos" })
+    },
+  })
 
   return (
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
@@ -44,7 +54,7 @@ function RouteComponent() {
             type="button"
             className={btn({ isIcon: true })}
             title="Delete Todo"
-            disabled
+            onClick={() => deleteTodo(todoId)}
           >
             <TrashIcon size={20} />
           </button>

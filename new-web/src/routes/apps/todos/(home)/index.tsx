@@ -1,10 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Header } from "./-header"
-import {
-  listTodosOptions,
-  changeTodoMutation,
-  deleteTodoMutation,
-} from "#/common/api/client"
+import { listTodosOptions, changeTodoMutation } from "#/common/api/client"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
@@ -18,6 +14,7 @@ import {
   type TitledOptionsBottomSheetProps,
 } from "#/common/organisms/titled-options-bottom-sheet"
 import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
+import { useDeleteTodo } from "#/features/todos/use-delete-todo"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -33,7 +30,13 @@ function RouteComponent() {
     string | null
   >(null)
 
-  const deleteTodoM = useMutation(deleteTodoMutation())
+  const [deleteTodo] = useDeleteTodo({
+    onError: error => alert(error.message),
+    onSuccess: () => {
+      setSelectedTodoId(null)
+      listTodosQ.refetch()
+    },
+  })
 
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
   const isTodoOptionsSheetOpen = selectedTodoId != null
@@ -65,21 +68,6 @@ function RouteComponent() {
     alert("Not Implemented Yet!")
     console.warn("Not Implemented Yet!", { todoId })
   }
-  const removeTodo = (todoId: string) => {
-    const isConfirmed = window.confirm("Sure?")
-    if (!isConfirmed) return
-
-    deleteTodoM.mutate(
-      { path: { id: todoId } },
-      {
-        onError: error => alert(error.message),
-        onSuccess: () => {
-          setSelectedTodoId(null)
-          listTodosQ.refetch()
-        },
-      },
-    )
-  }
 
   const optionItems: TitledOptionsBottomSheetProps["optionItems"] = [
     {
@@ -95,7 +83,7 @@ function RouteComponent() {
     {
       title: "Delete Todo",
       Icon: TrashIcon,
-      onClick: () => removeTodo(selectedTodoId!),
+      onClick: () => deleteTodo(selectedTodoId!),
     },
   ]
 
