@@ -1,6 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Header } from "./-header"
-import { listTodosOptions, changeTodoMutation } from "#/common/api/client"
+import {
+  listTodosOptions,
+  changeTodoCompletionMutation,
+  TodoCompletionChangeAction,
+} from "#/common/api/client"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
@@ -26,7 +30,7 @@ function RouteComponent() {
 
   const listTodosQ = useQuery(listTodosOptions())
 
-  const changeTodoM = useMutation(changeTodoMutation())
+  const changeTodoCompletionM = useMutation(changeTodoCompletionMutation())
   const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<
     string | null
   >(null)
@@ -47,10 +51,14 @@ function RouteComponent() {
   const checkOrUncheckTodo = (todoId: string, isCurrentlyDone: boolean) => {
     setLoadingCheckboxTodoId(todoId)
 
-    changeTodoM.mutate(
+    changeTodoCompletionM.mutate(
       {
         path: { id: todoId },
-        body: { isDone: !isCurrentlyDone },
+        body: {
+          completionChangeAction: isCurrentlyDone
+            ? TodoCompletionChangeAction.MARK_NOT_DONE
+            : TodoCompletionChangeAction.MARK_DONE,
+        },
       },
       {
         onError: error => alert(extractErrorMessage(error)),

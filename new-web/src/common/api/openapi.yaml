@@ -126,6 +126,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoResponse"
+  "/api/todos/{id}/completion":
+    patch:
+      tags:
+        - Todos
+      summary: Change todo completion
+      operationId: ChangeTodoCompletion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeTodoCompletionRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoResponse"
   /api/backups:
     get:
       tags:
@@ -168,6 +194,13 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TodoPersistenceDto"
+    ChangeTodoCompletionRequest:
+      required:
+        - completionChangeAction
+      type: object
+      properties:
+        completionChangeAction:
+          $ref: "#/components/schemas/TodoCompletionChangeAction"
     ChangeTodoRequest:
       required:
         - title
@@ -312,6 +345,11 @@ components:
         - Waiting
         - SomedayMaybe
       default: All
+    TodoCompletionChangeAction:
+      enum:
+        - Toggle
+        - MarkNotDone
+        - MarkDone
     TodoEffortType:
       enum:
         - Unknown

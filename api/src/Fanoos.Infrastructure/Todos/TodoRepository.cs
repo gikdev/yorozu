@@ -1,5 +1,4 @@
 using Fanoos.Application.Todos;
-using Fanoos.Application.Todos.ListTodos;
 using Fanoos.Domain.Todos;
 using Fanoos.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;

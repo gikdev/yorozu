@@ -3,7 +3,6 @@
 
 using ErrorOr;
 using Fanoos.Common.Domain;
-using Fanoos.Common.Exceptions;
 
 namespace Fanoos.Domain.Habits;
 

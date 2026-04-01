@@ -1,7 +1,6 @@
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable IDE1006 // Naming Styles
 
-using System.Text.Json.Serialization;
 using ErrorOr;
 
 namespace Fanoos.Common.Domain;

@@ -1,6 +1,5 @@
 using ErrorOr;
 using Fanoos.Common.Data;
-using Fanoos.Common.Domain;
 using Fanoos.Domain.Todos;
 using MediatR;
 
