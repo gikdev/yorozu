@@ -1,5 +1,6 @@
 import { createTodoMutation, type CreateTodoRequest } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
+import { extractErrorMessage } from "#/common/helpers/errors"
 import { en } from "#/common/i18n/en"
 import { TodoForm, type TodoFormData } from "#/features/todos/todo-form"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
@@ -34,7 +35,7 @@ function RouteComponent() {
               { body },
               {
                 onSuccess: () => onFinish(),
-                onError: error => alert(error.message),
+                onError: error => alert(extractErrorMessage(error)),
               },
             )
           }}

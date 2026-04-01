@@ -15,6 +15,7 @@ import {
 } from "#/common/organisms/titled-options-bottom-sheet"
 import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
 import { useDeleteTodo } from "#/features/todos/use-delete-todo"
+import { extractErrorMessage } from "#/common/helpers/errors"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -31,7 +32,7 @@ function RouteComponent() {
   >(null)
 
   const [deleteTodo] = useDeleteTodo({
-    onError: error => alert(error.message),
+    onError: error => alert(extractErrorMessage(error)),
     onSuccess: () => {
       setSelectedTodoId(null)
       listTodosQ.refetch()
@@ -52,7 +53,7 @@ function RouteComponent() {
         body: { isDone: !isCurrentlyDone },
       },
       {
-        onError: error => alert(error.message),
+        onError: error => alert(extractErrorMessage(error)),
         onSuccess: () => listTodosQ.refetch(),
         onSettled: () => setLoadingCheckboxTodoId(null),
       },

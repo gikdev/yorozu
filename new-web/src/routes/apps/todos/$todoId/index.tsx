@@ -1,6 +1,7 @@
 import { getTodoOptions } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
 import { ErrorCard } from "#/common/helpers/error-card"
+import { extractErrorMessage } from "#/common/helpers/errors"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { en } from "#/common/i18n/en"
 import { TodoDetails } from "#/features/todos/todo-details"
@@ -25,7 +26,7 @@ function RouteComponent() {
   const getTodoQ = useQuery(getTodoOptions({ path: { id: todoId } }))
 
   const [deleteTodo] = useDeleteTodo({
-    onError: error => alert(error.message),
+    onError: error => alert(extractErrorMessage(error)),
     onSuccess: () => {
       navigate({ to: "/apps/todos" })
     },
