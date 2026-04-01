@@ -27,11 +27,20 @@ internal sealed class ListTodosEndpoint : IEndpoint {
         [FromQuery(Name = "sort_order")] TodoSortOrder sortOrder = TodoSortOrder.Asc,
         [FromQuery(Name = "q")] string? includeQuery = null,
         [FromQuery(Name = "exclude_query")] string? excludeQuery = null,
-        [FromQuery(Name = "available_energy_level")] EnergyLevel? availableEnergyLevel = null,
+        [FromQuery(Name = "available_energy_level")] EnergyLevelFilter availableEnergyLevel = EnergyLevelFilter.All,
         [FromQuery(Name = "available_pomodoros")] byte? availablePomodoros = null
     ) {
+        EnergyLevel? equivalentAvailableEnergyLevel = availableEnergyLevel switch {
+            EnergyLevelFilter.All => null,
+            EnergyLevelFilter.Unknown => EnergyLevel.Unknown,
+            EnergyLevelFilter.Low => EnergyLevel.Low,
+            EnergyLevelFilter.Medium => EnergyLevel.Medium,
+            EnergyLevelFilter.High => EnergyLevel.High,
+            _ => null,
+        };
+
         var dto = new OrganizeTodosDto {
-            AvailableEnergyLevel = availableEnergyLevel,
+            AvailableEnergyLevel = equivalentAvailableEnergyLevel,
             AvailablePomodoros = availablePomodoros,
             Bucket = bucketFilter switch {
                 TodoBucketFilter.Uncategorized => TodoBucket.Uncategorized,
