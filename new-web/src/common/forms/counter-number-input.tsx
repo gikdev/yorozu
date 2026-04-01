@@ -13,7 +13,7 @@ export function CounterNumberInput({ title }: CounterNumberInputProps) {
   const field = useFieldContext<number>()
 
   return (
-    <div className={fieldContainer({className: "w-full"})}>
+    <div className={fieldContainer({ className: "w-full" })}>
       <label htmlFor={field.name}>{title}</label>
 
       <div className="flex items-center gap-1 *:shrink-0">

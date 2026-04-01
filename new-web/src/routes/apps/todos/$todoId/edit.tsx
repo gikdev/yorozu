@@ -115,9 +115,12 @@ const map = {
           isUrgent: i.isUrgent,
           priority: i.priority,
           title: i.title,
-          waitingForInfo: i.waitingForInfo != null ? {
-            value: i.waitingForInfo,
-          } : null,
+          waitingForInfo:
+            i.waitingForInfo != null
+              ? {
+                  value: i.waitingForInfo,
+                }
+              : null,
           why: { value: i.why },
         }
       },
