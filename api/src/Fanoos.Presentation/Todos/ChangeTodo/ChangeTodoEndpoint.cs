@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-
 namespace Fanoos.Presentation.Todos.ChangeTodo;
 
 internal sealed class ChangeTodoEndpoint : IEndpoint {
@@ -36,12 +35,31 @@ internal sealed class ChangeTodoEndpoint : IEndpoint {
         var validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid) return validationResult.ToValidationProblem();
 
-        ErrorOr<Todo> result = await mediator.Send(MapToCommand(request, id));
+        var commandResult = MapToCommand(request, id);
+        if (commandResult.IsError) return ApiResults.Problem(commandResult.Errors);
+
+        var command = commandResult.Value;
+        var result = await mediator.Send(command);
 
         return result.MatchResponse(item => Results.Ok(item.MapToResponse()));
     }
 
-    private static ChangeTodoCommand MapToCommand(ChangeTodoRequest request, Guid id) {
+    private static ErrorOr<ChangeTodoCommand> MapToCommand(ChangeTodoRequest request, Guid id) {
+        WaitingForInfo? waitingForInfo = null;
+
+        if (request.WaitingForInfo != null) {
+            var descriptionResult = NotEmptyString.Create(request.WaitingForInfo.Value.Description);
+            if (descriptionResult.IsError) return descriptionResult.Errors;
+
+            var reviewAtResult = FutureDateTimeOffset.Create(request.WaitingForInfo.Value.ReviewAt, DateTimeOffset.UtcNow);
+            if (reviewAtResult.IsError) return reviewAtResult.Errors;
+
+            waitingForInfo = new() {
+                Description = descriptionResult.Value,
+                ReviewAt = reviewAtResult.Value,
+            };
+        }
+
         return new ChangeTodoCommand {
             Id = id,
             Title = request.Title,
@@ -56,10 +74,7 @@ internal sealed class ChangeTodoEndpoint : IEndpoint {
             EstimatedPomodoros = request.EstimatedPomodoros,
             Priority = request.Priority,
             WaitingForInfo = request.WaitingForInfo == null ? null : new WaitingForInfoNullObject {
-                Value = new WaitingForInfo {
-                    Description = NotEmptyString.Create(request.WaitingForInfo.Value.Description).Value,
-                    ReviewAt = FutureDateTimeOffset._Restore(request.WaitingForInfo.Value.ReviewAt),
-                }
+                Value = waitingForInfo,
             },
             Why = request.Why,
         };

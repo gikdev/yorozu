@@ -1,6 +1,9 @@
+using ErrorOr;
 using Fanoos.Application.Todos.CreateTodo;
 using Fanoos.Common.Api;
+using Fanoos.Common.Domain;
 using Fanoos.Common.Endpoints;
+using Fanoos.Domain.Todos;
 using Fanoos.Presentation.Todos.Common;
 using FluentValidation;
 using MediatR;
@@ -30,14 +33,33 @@ internal sealed class CreateTodoEndpoint : IEndpoint {
         var validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid) return validationResult.ToValidationProblem();
 
-        var result = await mediator.Send(MapToCommand(request));
+        var commandResult = MapToCommand(request);
+        if (commandResult.IsError) return ApiResults.Problem(commandResult.Errors);
+
+        var command = commandResult.Value;
+        var result = await mediator.Send(command);
 
         return result.MatchResponse(
             item => Results.Ok(item.MapToResponse())
         );
     }
 
-    private static CreateTodoCommand MapToCommand(CreateTodoRequest request) {
+    private static ErrorOr<CreateTodoCommand> MapToCommand(CreateTodoRequest request) {
+        WaitingForInfo? waitingForInfo = null;
+
+        if (request.WaitingForInfo != null) {
+            var descriptionResult = NotEmptyString.Create(request.WaitingForInfo.Description);
+            if (descriptionResult.IsError) return descriptionResult.Errors;
+
+            var reviewAtResult = FutureDateTimeOffset.Create(request.WaitingForInfo.ReviewAt, DateTimeOffset.UtcNow);
+            if (reviewAtResult.IsError) return reviewAtResult.Errors;
+
+            waitingForInfo = new() {
+                Description = descriptionResult.Value,
+                ReviewAt = reviewAtResult.Value,
+            };
+        }
+
         return new CreateTodoCommand {
             Bucket = request.Bucket,
             Contexts = request.Contexts,
@@ -50,7 +72,7 @@ internal sealed class CreateTodoEndpoint : IEndpoint {
             PomodoroEstimate = request.PomodoroEstimate,
             Priority = request.Priority,
             Title = request.Title,
-            WaitingForInfo = request.WaitingForInfo,
+            WaitingForInfo = waitingForInfo,
             Why = request.Why,
         };
     }

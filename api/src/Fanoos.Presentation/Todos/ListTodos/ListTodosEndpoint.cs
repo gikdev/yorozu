@@ -39,21 +39,24 @@ internal sealed class ListTodosEndpoint : IEndpoint {
             _ => null,
         };
 
+        TodoBucket? bucket = bucketFilter switch {
+            TodoBucketFilter.Uncategorized => TodoBucket.Uncategorized,
+            TodoBucketFilter.NextActions => TodoBucket.NextActions,
+            TodoBucketFilter.SomedayMaybe => TodoBucket.SomedayMaybe,
+            TodoBucketFilter.Waiting => TodoBucket.Waiting,
+            _ => null,
+        };
+
         var dto = new OrganizeTodosDto {
             AvailableEnergyLevel = equivalentAvailableEnergyLevel,
             AvailablePomodoros = availablePomodoros,
-            Bucket = bucketFilter switch {
-                TodoBucketFilter.Uncategorized => TodoBucket.Uncategorized,
-                TodoBucketFilter.NextActions => TodoBucket.NextActions,
-                TodoBucketFilter.SomedayMaybe => TodoBucket.SomedayMaybe,
-                TodoBucketFilter.Waiting => TodoBucket.Waiting,
-                _ => null,
-            },
+            Bucket = bucket,
             ExcludeQuery = excludeQuery,
             IncludeQuery = includeQuery,
             SortBy = sortBy,
             SortOrder = sortOrder,
         };
+
         var query = new ListTodosQuery(dto);
         List<Todo> todos = await mediator.Send(query);
 

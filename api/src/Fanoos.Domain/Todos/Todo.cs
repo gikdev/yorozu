@@ -1,7 +1,6 @@
 #pragma warning disable CA1002 // Do not expose generic lists
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-using System.Collections.ObjectModel;
 using ErrorOr;
 using Fanoos.Common.Domain;
 
@@ -46,7 +45,7 @@ public sealed class Todo : IAggregateRoot {
     public TodoEffortType EffortType { get; set; }
     public EnergyLevel EnergyLevel { get; set; }
     public TodoBucket Bucket { get; private set; }
-    public WaitingForInfo? WaitingForInfo { get; set; }
+    public WaitingForInfo? WaitingForInfo { get; private set; }
 
     public static ErrorOr<Todo> Create(
         NotEmptyString title,
@@ -92,11 +91,24 @@ public sealed class Todo : IAggregateRoot {
         _contexts = contexts;
     }
 
-    public ErrorOr<Success> MoveToBucket(TodoBucket bucket) {
-        var result = EnsureUrgentSomedayInvariant(bucket, IsUrgent);
-        if (result.IsError) return result.Errors;
+    public ErrorOr<Success> MoveToBucket(TodoBucket bucket, WaitingForInfo? waitingForInfo) {
+        var result1 = EnsureUrgentSomedayInvariant(bucket, IsUrgent);
+        if (result1.IsError) return result1.Errors;
+
+        var result2 = EnsureBucketAndWaitingInfoInvariant(bucket, waitingForInfo);
+        if (result2.IsError) return result2.Errors;
 
         Bucket = bucket;
+        WaitingForInfo = waitingForInfo;
+
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> SetWaitingForInfo(WaitingForInfo? waitingForInfo) {
+        var result = EnsureBucketAndWaitingInfoInvariant(Bucket, waitingForInfo);
+        if (result.IsError) return result.Errors;
+
+        WaitingForInfo = waitingForInfo;
 
         return Result.Success;
     }
@@ -115,6 +127,16 @@ public sealed class Todo : IAggregateRoot {
 
         if (isUrgent && isInSomedayBucket)
             return TodoErrors.UrgentTodoCannotBeInSomedayBucket;
+
+        return Result.Success;
+    }
+
+    private static ErrorOr<Success> EnsureBucketAndWaitingInfoInvariant(TodoBucket bucket, WaitingForInfo? waitingForInfo) {
+        if (bucket == TodoBucket.Waiting && waitingForInfo == null)
+            return TodoErrors.WaitingBucketNeedsWaitingInfo;
+
+        if (bucket != TodoBucket.Waiting && waitingForInfo != null)
+            return TodoErrors.CantHaveWaitingInfoWhenNotInWaitingBucket;
 
         return Result.Success;
     }

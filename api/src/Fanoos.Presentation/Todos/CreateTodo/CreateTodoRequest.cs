@@ -1,4 +1,5 @@
 using Fanoos.Domain.Todos;
+using Fanoos.Presentation.Todos.Common;
 
 namespace Fanoos.Presentation.Todos.CreateTodo;
 
@@ -15,5 +16,5 @@ internal sealed record CreateTodoRequest {
     public TodoEffortType? EffortType { get; init; }
     public EnergyLevel? EnergyLevel { get; init; }
     public TodoBucket? Bucket { get; init; }
-    public WaitingForInfo? WaitingForInfo { get; init; }
+    public WaitingForRequest? WaitingForInfo { get; init; }
 }

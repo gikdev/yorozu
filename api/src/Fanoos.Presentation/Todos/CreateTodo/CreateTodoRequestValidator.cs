@@ -6,5 +6,13 @@ internal sealed class CreateTodoRequestValidator : AbstractValidator<CreateTodoR
     public CreateTodoRequestValidator() {
         RuleFor(x => x.Title)
             .NotEmpty();
+
+        When(x => x.WaitingForInfo != null, () => {
+            RuleFor(x => x.WaitingForInfo!.Description)
+                .NotEmpty();
+
+            RuleFor(x => x.WaitingForInfo!.ReviewAt)
+                .NotEmpty();
+        });
     }
 }

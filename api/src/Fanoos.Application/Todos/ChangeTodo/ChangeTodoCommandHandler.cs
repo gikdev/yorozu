@@ -98,17 +98,12 @@ internal sealed class ChangeTodoCommandHandler(
         }
 
         if (request.Bucket.HasValue) {
-            var result = todo.MoveToBucket(request.Bucket.Value);
+            var result = todo.MoveToBucket(request.Bucket.Value, null);
             if (result.IsError) return result.Errors;
         }
 
-        // TODO: Make this a method
         if (request.WaitingForInfo != null) {
-            if (request.WaitingForInfo.Value == null) {
-                todo.WaitingForInfo = null;
-            } else {
-                todo.WaitingForInfo = request.WaitingForInfo.Value;
-            }
+            todo.SetWaitingForInfo(request.WaitingForInfo.Value);
         }
 
         await todoRepository.UpdateAsync(todo, cancellationToken);

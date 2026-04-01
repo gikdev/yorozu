@@ -1,4 +1,4 @@
-namespace Fanoos.Presentation.Todos.ChangeTodo;
+namespace Fanoos.Presentation.Todos.Common;
 
 internal sealed record WaitingForRequest {
     public required string Description { get; init; }

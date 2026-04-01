@@ -2,7 +2,7 @@ using Fanoos.Domain.Todos;
 
 namespace Fanoos.Presentation.Todos.Common;
 
-internal static class Mappings {
+internal static class Mapper {
     internal static TodoResponse MapToResponse(this Todo todo) {
         return new TodoResponse {
             Id = todo.Id,
