@@ -60,13 +60,15 @@ function RouteComponent() {
   }
   const viewTodoDetails = (todoId: string) => {
     navigate({
-      to: "/apps/todos/todos/$todoId",
+      to: "/apps/todos/$todoId",
       params: { todoId },
     })
   }
   const editTodo = (todoId: string) => {
-    alert("Not Implemented Yet!")
-    console.warn("Not Implemented Yet!", { todoId })
+    navigate({
+      to: "/apps/todos/$todoId/edit",
+      params: { todoId },
+    })
   }
 
   const optionItems: TitledOptionsBottomSheetProps["optionItems"] = [

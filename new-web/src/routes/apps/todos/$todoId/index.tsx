@@ -13,7 +13,7 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/apps/todos/todos/$todoId")({
+export const Route = createFileRoute("/apps/todos/$todoId/")({
   component: RouteComponent,
 })
 

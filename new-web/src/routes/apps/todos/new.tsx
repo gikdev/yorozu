@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react"
 import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/apps/todos/todos/new")({
+export const Route = createFileRoute("/apps/todos/new")({
   component: RouteComponent,
 })
 
