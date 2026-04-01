@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router"
 
 export const CreateNewTodoFab = () => (
   <Link
-    to="/apps/todos/todos/new"
+    to="/apps/todos/new"
     className={btn({
       className: "fixed bottom-6 right-6",
       isIcon: true,

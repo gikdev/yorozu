@@ -5,86 +5,7 @@ info:
 servers:
   - url: http://localhost:5000/
 paths:
-  "/api/todos/{id}":
-    patch:
-      tags:
-        - Todos
-      summary: Change todo
-      description: "Toggle status, (un)archive, and change the title of the todo."
-      operationId: ChangeTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ChangeTodoRequest"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
-    delete:
-      tags:
-        - Todos
-      summary: Delete todo
-      operationId: DeleteTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "201":
-          description: Created
-    get:
-      tags:
-        - Todos
-      summary: Get todo
-      operationId: GetTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
   /api/todos:
-    post:
-      tags:
-        - Todos
-      summary: Create todo
-      operationId: CreateTodo
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateTodoRequest"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
     get:
       tags:
         - Todos
@@ -114,7 +35,7 @@ paths:
         - name: available_energy_level
           in: query
           schema:
-            $ref: "#/components/schemas/EnergyLevel"
+            $ref: "#/components/schemas/EnergyLevelFilter"
         - name: available_pomodoros
           in: query
           schema:
@@ -127,6 +48,85 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoListResponse"
+    post:
+      tags:
+        - Todos
+      summary: Create todo
+      operationId: CreateTodo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTodoRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoResponse"
+  "/api/todos/{id}":
+    get:
+      tags:
+        - Todos
+      summary: Get todo
+      operationId: GetTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoResponse"
+    delete:
+      tags:
+        - Todos
+      summary: Delete todo
+      operationId: DeleteTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+    patch:
+      tags:
+        - Todos
+      summary: Change todo
+      description: "Toggle status, (un)archive, and change the title of the todo."
+      operationId: ChangeTodo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeTodoRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoResponse"
   /api/backups:
     get:
       tags:
@@ -294,7 +294,7 @@ components:
         waitingForInfo:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/WaitingForInfo"
+            - $ref: "#/components/schemas/WaitingForRequest"
     DateTimeOffsetNullObject:
       required:
         - value
@@ -312,17 +312,14 @@ components:
         - Medium
         - High
         -
-    FutureDateTimeOffset:
-      type: object
-      properties:
-        value:
-          type: string
-          format: date-time
-    NotEmptyString:
-      type: object
-      properties:
-        value:
-          type: string
+    EnergyLevelFilter:
+      enum:
+        - Unknown
+        - Low
+        - Medium
+        - High
+        - All
+      default: All
     StringNullObject:
       required:
         - value
@@ -338,6 +335,7 @@ components:
         - NextActions
         - Waiting
         - SomedayMaybe
+        -
     TodoBucketFilter:
       enum:
         - All
@@ -351,6 +349,7 @@ components:
         - Unknown
         - Cake
         - Frog
+        -
     TodoListResponse:
       required:
         - items
@@ -433,6 +432,7 @@ components:
         - C_NiceToDo
         - D_Delegate
         - E_Eliminate
+        -
     TodoResponse:
       required:
         - id
@@ -495,21 +495,17 @@ components:
             - type: "null"
             - $ref: "#/components/schemas/WaitingForResponse"
     TodoSortBy:
-      type: integer
-      default: 0
+      enum:
+        - None
+        - Title
+        - DueDate
+        - Priority
+      default: None
     TodoSortOrder:
-      type: integer
-      default: 0
-    WaitingForInfo:
-      required:
-        - description
-        - reviewAt
-      type: object
-      properties:
-        description:
-          $ref: "#/components/schemas/NotEmptyString"
-        reviewAt:
-          $ref: "#/components/schemas/FutureDateTimeOffset"
+      enum:
+        - Asc
+        - Desc
+      default: Asc
     WaitingForPersistenceDto:
       required:
         - description

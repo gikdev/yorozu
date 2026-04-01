@@ -64,8 +64,8 @@ class Mapper {
       why: input.why || null,
       waitingForInfo: input.waitingForInfo
         ? {
-            description: { value: input.waitingForInfo.description },
-            reviewAt: { value: input.waitingForInfo.reviewAt },
+            description: input.waitingForInfo.description,
+            reviewAt: input.waitingForInfo.reviewAt,
           }
         : null,
     }

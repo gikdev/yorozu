@@ -1,7 +1,6 @@
 import {
   changeTodoMutation,
   getTodoOptions,
-  type ChangeTodoData,
   type ChangeTodoRequest,
   type TodoResponse,
 } from "#/common/api/client"
