@@ -1,7 +1,6 @@
 using Fanoos.Application.Todos.CreateTodo;
 using Fanoos.Common.Api;
 using Fanoos.Common.Endpoints;
-using Fanoos.Domain.Todos;
 using Fanoos.Presentation.Todos.Common;
 using FluentValidation;
 using MediatR;
@@ -10,9 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace Fanoos.Presentation.Todos;
+namespace Fanoos.Presentation.Todos.CreateTodo;
 
-internal sealed class CreateTodo : IEndpoint {
+internal sealed class CreateTodoEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
             .MapPost("todos", Handle)
@@ -54,28 +53,5 @@ internal sealed class CreateTodo : IEndpoint {
             WaitingForInfo = request.WaitingForInfo,
             Why = request.Why,
         };
-    }
-
-    private sealed record CreateTodoRequest {
-        public required string Title { get; init; }
-        public string? Description { get; init; }
-        public string? Why { get; init; }
-        public byte? PomodoroEstimate { get; init; }
-        public bool? IsUrgent { get; init; }
-        public bool? IsDone { get; init; }
-        public DateTimeOffset? DueDate { get; init; }
-        public IEnumerable<string>? Contexts { get; init; }
-        public TodoPriority? Priority { get; init; }
-        public TodoEffortType? EffortType { get; init; }
-        public EnergyLevel? EnergyLevel { get; init; }
-        public TodoBucket? Bucket { get; init; }
-        public WaitingForInfo? WaitingForInfo { get; init; }
-    }
-
-    private sealed class CreateTodoRequestValidator : AbstractValidator<CreateTodoRequest> {
-        public CreateTodoRequestValidator() {
-            RuleFor(x => x.Title)
-                .NotEmpty();
-        }
     }
 }

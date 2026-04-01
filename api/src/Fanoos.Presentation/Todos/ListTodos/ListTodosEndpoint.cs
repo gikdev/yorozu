@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace Fanoos.Presentation.Todos;
+namespace Fanoos.Presentation.Todos.ListTodos;
 
-internal sealed class ListTodos : IEndpoint {
+internal sealed class ListTodosEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
             .MapGet("todos", Handle)
@@ -49,10 +49,6 @@ internal sealed class ListTodos : IEndpoint {
         List<Todo> todos = await mediator.Send(query);
 
         return Results.Ok(MapToListResponse(todos));
-    }
-
-    private sealed record TodoListResponse {
-        public required List<TodoResponse> Items { get; init; }
     }
 
     private static TodoListResponse MapToListResponse(List<Todo> todos) {

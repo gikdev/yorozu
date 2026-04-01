@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Fanoos.Presentation.Todos;
+namespace Fanoos.Presentation.Todos.ListTodos;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum TodoBucketFilter {

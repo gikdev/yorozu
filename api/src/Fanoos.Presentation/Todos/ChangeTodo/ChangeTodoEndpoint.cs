@@ -2,7 +2,6 @@ using ErrorOr;
 using Fanoos.Application.Todos.ChangeTodo;
 using Fanoos.Common.Api;
 using Fanoos.Common.Domain;
-using Fanoos.Common.Dto;
 using Fanoos.Common.Endpoints;
 using Fanoos.Domain.Todos;
 using Fanoos.Presentation.Todos.Common;
@@ -13,9 +12,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace Fanoos.Presentation.Todos;
 
-internal sealed class ChangeTodo : IEndpoint {
+namespace Fanoos.Presentation.Todos.ChangeTodo;
+
+internal sealed class ChangeTodoEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
             .MapPatch("todos/{id:guid}", Handle)
@@ -64,29 +64,4 @@ internal sealed class ChangeTodo : IEndpoint {
             Why = request.Why,
         };
     }
-
-    private sealed record ChangeTodoRequest {
-        public string? Title { get; init; }
-        public StringNullObject? Why { get; init; }
-        public StringNullObject? Description { get; init; }
-        public bool? IsDone { get; init; }
-        public ByteNullObject? EstimatedPomodoros { get; init; }
-        public bool? IsUrgent { get; init; }
-        public DateTimeOffsetNullObject? DueDate { get; init; }
-        public List<string>? Contexts { get; init; }
-        public TodoPriority? Priority { get; init; }
-        public TodoEffortType? EffortType { get; init; }
-        public EnergyLevel? EnergyLevel { get; init; }
-        public TodoBucket? Bucket { get; init; }
-        public WaitingForRequestNullObject? WaitingForInfo { get; init; }
-    }
-
-    private sealed record WaitingForRequestNullObject : NullObject<WaitingForRequest>;
-
-    private sealed record WaitingForRequest {
-        public required string Description { get; init; }
-        public required DateTimeOffset ReviewAt { get; init; }
-    }
-
-    private sealed class ChangeTodoRequestValidator : AbstractValidator<ChangeTodoRequest>;
 }
