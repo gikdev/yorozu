@@ -58,14 +58,14 @@ function RouteComponent() {
           isList={false}
           status={getTodoQ.status}
           loadingView={<LoadingCard title="Loading form…" />}
-          successView={
+          successView={() => (
             <TodoForm
               mode="EDIT"
               className="flex flex-col gap-8"
               onSubmit={handleFormSubmit}
               defaultValues={map.todoResponse.to.todoFormData(getTodoQ.data!)}
             />
-          }
+          )}
           errorView={
             <ErrorCard
               message={extractErrorMessage(getTodoQ.error)}
@@ -106,22 +106,17 @@ const map = {
         return {
           bucket: i.bucket,
           contexts: i.contexts,
-          description: { value: i.description },
-          dueDate: { value: i.dueDate },
+          description: i.description,
+          dueDate: i.dueDate,
           effortType: i.effortType,
           energyLevel: i.energyLevel,
-          estimatedPomodoros: { value: i.pomodoroEstimate },
+          estimatedPomodoros: i.pomodoroEstimate,
           isDone: i.isDone,
           isUrgent: i.isUrgent,
           priority: i.priority,
           title: i.title,
-          waitingForInfo:
-            i.waitingForInfo != null
-              ? {
-                  value: i.waitingForInfo,
-                }
-              : null,
-          why: { value: i.why },
+          waitingForInfo: i.waitingForInfo != null ? i.waitingForInfo : null,
+          why: i.why,
         }
       },
     },

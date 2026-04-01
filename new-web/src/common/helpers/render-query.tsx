@@ -3,18 +3,18 @@ import type { ReactNode } from "react"
 type SuccessProps =
   | {
       isList: false
-      successView: ReactNode
+      successView: () => ReactNode
     }
   | {
       isList: true
       listCount: number
       emptyView: ReactNode
-      fullView: ReactNode
+      fullView: () => ReactNode
     }
 
 function renderSuccess(p: SuccessProps) {
-  if (!p.isList) return p.successView
-  return p.listCount < 1 ? p.emptyView : p.fullView
+  if (!p.isList) return p.successView()
+  return p.listCount < 1 ? p.emptyView : p.fullView()
 }
 
 type RenderQueryProps = {
@@ -26,5 +26,6 @@ type RenderQueryProps = {
 export function RenderQuery(p: RenderQueryProps) {
   if (p.status === "pending") return p.loadingView
   if (p.status === "error") return p.errorView
-  return renderSuccess(p)
+  if (p.status === "success") return renderSuccess(p)
+  return null
 }

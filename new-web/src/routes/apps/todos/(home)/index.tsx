@@ -101,7 +101,7 @@ function RouteComponent() {
           listCount={listTodosQ.data?.items.length!}
           loadingView={<LoadingCard title="Loading your todos…" />}
           emptyView={<EmtpyTodosList />}
-          fullView={
+          fullView={() => (
             <TodoList
               todos={listTodosQ.data?.items!}
               onCheckboxClick={checkOrUncheckTodo}
@@ -109,7 +109,7 @@ function RouteComponent() {
               onTitleClick={viewTodoDetails}
               loadingCheckboxTodoId={loadingCheckboxTodoId}
             />
-          }
+          )}
           errorView={
             <ErrorCard
               message={extractErrorMessage(listTodosQ.error)}

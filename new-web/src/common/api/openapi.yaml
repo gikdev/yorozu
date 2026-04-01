@@ -101,11 +101,10 @@ paths:
       responses:
         "204":
           description: No Content
-    patch:
+    put:
       tags:
         - Todos
       summary: Change todo
-      description: "Toggle status, (un)archive, and change the title of the todo."
       operationId: ChangeTodo
       parameters:
         - name: id
@@ -169,73 +168,63 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TodoPersistenceDto"
-    ByteNullObject:
+    ChangeTodoRequest:
       required:
-        - value
+        - title
+        - why
+        - description
+        - isDone
+        - estimatedPomodoros
+        - isUrgent
+        - dueDate
+        - contexts
+        - priority
+        - effortType
+        - energyLevel
+        - bucket
+        - waitingForInfo
       type: object
       properties:
-        value:
+        title:
+          type: string
+        why:
+          type:
+            - "null"
+            - string
+        description:
+          type:
+            - "null"
+            - string
+        isDone:
+          type: boolean
+        estimatedPomodoros:
           type:
             - "null"
             - integer
           format: uint8
-    ChangeTodoRequest:
-      type: object
-      properties:
-        title:
+        isUrgent:
+          type: boolean
+        dueDate:
           type:
             - "null"
             - string
-        why:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/StringNullObject"
-        description:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/StringNullObject"
-        isDone:
-          type:
-            - "null"
-            - boolean
-        estimatedPomodoros:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/ByteNullObject"
-        isUrgent:
-          type:
-            - "null"
-            - boolean
-        dueDate:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/DateTimeOffsetNullObject"
+          format: date-time
         contexts:
-          type:
-            - "null"
-            - array
+          type: array
           items:
             type: string
         priority:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoPriority"
+          $ref: "#/components/schemas/TodoPriority"
         effortType:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoEffortType"
+          $ref: "#/components/schemas/TodoEffortType"
         energyLevel:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/EnergyLevel"
+          $ref: "#/components/schemas/EnergyLevel"
         bucket:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoBucket"
+          $ref: "#/components/schemas/TodoBucket"
         waitingForInfo:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequestNullObject"
+            - $ref: "#/components/schemas/WaitingForRequest"
     CreateTodoRequest:
       required:
         - title
@@ -295,23 +284,12 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/WaitingForRequest"
-    DateTimeOffsetNullObject:
-      required:
-        - value
-      type: object
-      properties:
-        value:
-          type:
-            - "null"
-            - string
-          format: date-time
     EnergyLevel:
       enum:
         - Unknown
         - Low
         - Medium
         - High
-        -
     EnergyLevelFilter:
       enum:
         - Unknown
@@ -320,22 +298,12 @@ components:
         - High
         - All
       default: All
-    StringNullObject:
-      required:
-        - value
-      type: object
-      properties:
-        value:
-          type:
-            - "null"
-            - string
     TodoBucket:
       enum:
         - Uncategorized
         - NextActions
         - Waiting
         - SomedayMaybe
-        -
     TodoBucketFilter:
       enum:
         - All
@@ -349,7 +317,6 @@ components:
         - Unknown
         - Cake
         - Frog
-        -
     TodoListResponse:
       required:
         - items
@@ -432,7 +399,6 @@ components:
         - C_NiceToDo
         - D_Delegate
         - E_Eliminate
-        -
     TodoResponse:
       required:
         - id
@@ -528,15 +494,6 @@ components:
         reviewAt:
           type: string
           format: date-time
-    WaitingForRequestNullObject:
-      required:
-        - value
-      type: object
-      properties:
-        value:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequest"
     WaitingForResponse:
       required:
         - description

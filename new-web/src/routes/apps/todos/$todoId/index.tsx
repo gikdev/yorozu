@@ -68,7 +68,7 @@ function RouteComponent() {
           isList={false}
           status={getTodoQ.status}
           loadingView={<LoadingCard title="Loading details…" />}
-          successView={<TodoDetails todo={getTodoQ.data!} />}
+          successView={() => <TodoDetails todo={getTodoQ.data!} />}
           errorView={
             <ErrorCard
               message={extractErrorMessage(getTodoQ.error)}
