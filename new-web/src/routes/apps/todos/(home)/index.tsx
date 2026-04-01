@@ -4,7 +4,6 @@ import { listTodosOptions, changeTodoMutation } from "#/common/api/client"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
-import { LoadingTodosList } from "./-loading-todos-list"
 import { EmtpyTodosList } from "./-empty-todos-list"
 import { TodoList } from "#/features/todos/todo-list"
 import { CreateNewTodoFab } from "./-create-new-todo-fab"
@@ -16,6 +15,7 @@ import {
 import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
 import { useDeleteTodo } from "#/features/todos/use-delete-todo"
 import { extractErrorMessage } from "#/common/helpers/errors"
+import { LoadingCard } from "#/common/molecules/loading-card"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -99,7 +99,7 @@ function RouteComponent() {
           isList={true}
           status={listTodosQ.status}
           listCount={listTodosQ.data?.items.length!}
-          loadingView={<LoadingTodosList />}
+          loadingView={<LoadingCard title="Loading your todos…" />}
           emptyView={<EmtpyTodosList />}
           fullView={
             <TodoList
@@ -112,7 +112,7 @@ function RouteComponent() {
           }
           errorView={
             <ErrorCard
-              message={listTodosQ.error?.message}
+              message={extractErrorMessage(listTodosQ.error)}
               onRetry={listTodosQ.refetch}
             />
           }

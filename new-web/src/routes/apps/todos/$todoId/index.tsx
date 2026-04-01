@@ -4,6 +4,7 @@ import { ErrorCard } from "#/common/helpers/error-card"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { en } from "#/common/i18n/en"
+import { LoadingCard } from "#/common/molecules/loading-card"
 import { TodoDetails } from "#/features/todos/todo-details"
 import { useDeleteTodo } from "#/features/todos/use-delete-todo"
 import {
@@ -66,11 +67,11 @@ function RouteComponent() {
         <RenderQuery
           isList={false}
           status={getTodoQ.status}
-          loadingView={<p>Loading...</p>}
+          loadingView={<LoadingCard title="Loading details…" />}
           successView={<TodoDetails todo={getTodoQ.data!} />}
           errorView={
             <ErrorCard
-              message={getTodoQ.error?.message}
+              message={extractErrorMessage(getTodoQ.error)}
               onRetry={getTodoQ.refetch}
             />
           }

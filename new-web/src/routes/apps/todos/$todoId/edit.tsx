@@ -9,6 +9,7 @@ import { btn } from "#/common/atoms/btn"
 import { ErrorCard } from "#/common/helpers/error-card"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { RenderQuery } from "#/common/helpers/render-query"
+import { LoadingCard } from "#/common/molecules/loading-card"
 import { TodoForm, type TodoFormData } from "#/features/todos/todo-form"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -57,7 +58,7 @@ function RouteComponent() {
         <RenderQuery
           isList={false}
           status={getTodoQ.status}
-          loadingView={<p>Loading...</p>}
+          loadingView={<LoadingCard title="Loading form…" />}
           successView={
             <TodoForm
               mode="EDIT"
@@ -68,7 +69,7 @@ function RouteComponent() {
           }
           errorView={
             <ErrorCard
-              message={getTodoQ.error?.message}
+              message={extractErrorMessage(getTodoQ.error)}
               onRetry={getTodoQ.refetch}
             />
           }
