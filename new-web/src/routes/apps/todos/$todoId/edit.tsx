@@ -106,7 +106,7 @@ const map = {
         return {
           bucket: i.bucket,
           contexts: i.contexts,
-          description: i.description,
+          description: i.description || null,
           dueDate: i.dueDate,
           effortType: i.effortType,
           energyLevel: i.energyLevel,
@@ -116,7 +116,7 @@ const map = {
           priority: i.priority,
           title: i.title,
           waitingForInfo: i.waitingForInfo != null ? i.waitingForInfo : null,
-          why: i.why,
+          why: i.why || null,
         }
       },
     },

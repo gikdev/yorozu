@@ -42,15 +42,15 @@ public static class TodoService {
 
         organizedTodos = todoSortOrder switch {
             TodoSortOrder.Asc => sortBy switch {
-                TodoSortBy.Title => organizedTodos.OrderBy(t => t.Title).ToList(),
-                TodoSortBy.DueDate => organizedTodos.OrderBy(t => t.DueDate).ToList(),
+                TodoSortBy.Title => organizedTodos.OrderBy(t => t.Title.Value).ToList(),
+                TodoSortBy.DueDate => organizedTodos.OrderBy(t => t.DueDate?.Value).ToList(),
                 TodoSortBy.Priority => organizedTodos.OrderBy(t => t.Priority).ToList(),
                 _ => organizedTodos,
             },
 
             TodoSortOrder.Desc => sortBy switch {
-                TodoSortBy.Title => organizedTodos.OrderByDescending(t => t.Title).ToList(),
-                TodoSortBy.DueDate => organizedTodos.OrderByDescending(t => t.DueDate).ToList(),
+                TodoSortBy.Title => organizedTodos.OrderByDescending(t => t.Title.Value).ToList(),
+                TodoSortBy.DueDate => organizedTodos.OrderByDescending(t => t.DueDate?.Value).ToList(),
                 TodoSortBy.Priority => organizedTodos.OrderByDescending(t => t.Priority).ToList(),
                 _ => organizedTodos,
             },

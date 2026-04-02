@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsTodosNewRouteImport } from "./../../routes/apps/todos/new"
+import { Route as AppsTodosFilterRouteImport } from "./../../routes/apps/todos/filter"
 import { Route as AppsTodoshomeIndexRouteImport } from "./../../routes/apps/todos/(home)/index"
 import { Route as AppsTodosTodoIdIndexRouteImport } from "./../../routes/apps/todos/$todoId/index"
 import { Route as AppsTodosTodoIdEditRouteImport } from "./../../routes/apps/todos/$todoId/edit"
@@ -29,6 +30,11 @@ const homeIndexRoute = homeIndexRouteImport.update({
 const AppsTodosNewRoute = AppsTodosNewRouteImport.update({
   id: "/apps/todos/new",
   path: "/apps/todos/new",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsTodosFilterRoute = AppsTodosFilterRouteImport.update({
+  id: "/apps/todos/filter",
+  path: "/apps/todos/filter",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTodoshomeIndexRoute = AppsTodoshomeIndexRouteImport.update({
@@ -50,6 +56,7 @@ const AppsTodosTodoIdEditRoute = AppsTodosTodoIdEditRouteImport.update({
 export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/": typeof homeIndexRoute
+  "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/": typeof homeIndexRoute
+  "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId": typeof AppsTodosTodoIdIndexRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/dev": typeof DevRoute
   "/(home)/": typeof homeIndexRoute
+  "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | "/dev"
     | "/"
+    | "/apps/todos/filter"
     | "/apps/todos/new"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId/"
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | "/dev"
     | "/"
+    | "/apps/todos/filter"
     | "/apps/todos/new"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId"
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | "__root__"
     | "/dev"
     | "/(home)/"
+    | "/apps/todos/filter"
     | "/apps/todos/new"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId/"
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   homeIndexRoute: typeof homeIndexRoute
+  AppsTodosFilterRoute: typeof AppsTodosFilterRoute
   AppsTodosNewRoute: typeof AppsTodosNewRoute
   AppsTodosTodoIdEditRoute: typeof AppsTodosTodoIdEditRoute
   AppsTodosTodoIdIndexRoute: typeof AppsTodosTodoIdIndexRoute
@@ -131,6 +144,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsTodosNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/todos/filter": {
+      id: "/apps/todos/filter"
+      path: "/apps/todos/filter"
+      fullPath: "/apps/todos/filter"
+      preLoaderRoute: typeof AppsTodosFilterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/todos/(home)/": {
       id: "/apps/todos/(home)/"
       path: "/apps/todos"
@@ -158,6 +178,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   homeIndexRoute: homeIndexRoute,
+  AppsTodosFilterRoute: AppsTodosFilterRoute,
   AppsTodosNewRoute: AppsTodosNewRoute,
   AppsTodosTodoIdEditRoute: AppsTodosTodoIdEditRoute,
   AppsTodosTodoIdIndexRoute: AppsTodosTodoIdIndexRoute,

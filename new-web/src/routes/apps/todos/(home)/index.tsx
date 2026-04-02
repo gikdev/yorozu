@@ -20,6 +20,7 @@ import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
 import { useDeleteTodo } from "#/features/todos/use-delete-todo"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { LoadingCard } from "#/common/molecules/loading-card"
+import { useTodoQueryStore } from "#/features/todos/use-todo-query-store"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -27,8 +28,21 @@ export const Route = createFileRoute("/apps/todos/(home)/")({
 
 function RouteComponent() {
   const navigate = useNavigate()
+  const queryStore = useTodoQueryStore()
 
-  const listTodosQ = useQuery(listTodosOptions())
+  const listTodosQ = useQuery(
+    listTodosOptions({
+      query: {
+        available_energy_level: queryStore.availableEnergyLevel,
+        available_pomodoros: queryStore.availablePomodoros ?? undefined,
+        bucket: queryStore.bucket,
+        q: queryStore.q || undefined,
+        exclude_query: queryStore.excludeQuery || undefined,
+        sort_by: queryStore.sortBy,
+        sort_order: queryStore.sortOrder,
+      },
+    }),
+  )
 
   const changeTodoCompletionM = useMutation(changeTodoCompletionMutation())
   const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<

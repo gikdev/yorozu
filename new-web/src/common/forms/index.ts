@@ -9,6 +9,8 @@ import { TodoBucketInput } from "./todo-bucket-input"
 import { PersianUtcDateInput } from "./simple-date-input"
 import { SimpleWordListInput } from "./simple-word-list-input"
 import { SimpleSubmitBtn } from "./simple-submit-btn"
+import { TagOptionsInput } from "./tag-options-input"
+import { SimpleCheckboxInput } from "./simple-checkbox-input"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
@@ -25,6 +27,8 @@ const { useAppForm } = createFormHook({
     TodoBucketInput,
     PersianUtcDateInput,
     SimpleWordListInput,
+    TagOptionsInput,
+    SimpleCheckboxInput,
   },
   formComponents: {
     SimpleSubmitBtn,
