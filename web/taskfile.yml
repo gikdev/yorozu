@@ -30,7 +30,7 @@ tasks:
     aliases: [publish]
     desc: Type-check then build project
     cmds:
-      - task: app:type-check
+      - task: quality:type-check
       - task: app:build:only
 
   # ---- api ----
