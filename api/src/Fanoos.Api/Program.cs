@@ -18,9 +18,11 @@ builder.Services.AddFanoosInfrastructure(configuration);
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {
-    app.ApplyMigrations();
-}
+// Note: Used to be in "dev" mode only, but since it's a personal project, and is used locally, it auto applies migrations...
+app.ApplyMigrations();
+// if (app.Environment.IsDevelopment()) {
+//     app.ApplyMigrations();
+// }
 
 app.UseExceptionHandler();
 app.MapEndpoints(app.MapGroup("/api"));
