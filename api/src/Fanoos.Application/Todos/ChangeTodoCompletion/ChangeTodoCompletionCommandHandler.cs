@@ -1,4 +1,3 @@
-#pragma warning disable CA1851 // Possible multiple enumerations of 'IEnumerable' collection
 
 using ErrorOr;
 using Fanoos.Common.Data;

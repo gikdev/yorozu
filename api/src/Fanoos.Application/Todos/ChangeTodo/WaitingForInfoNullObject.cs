@@ -1,4 +1,3 @@
-#pragma warning disable CA1002 // Do not expose generic lists
 
 using Fanoos.Common.Dto;
 using Fanoos.Domain.Todos;

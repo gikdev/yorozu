@@ -18,9 +18,9 @@ public static class FanoosInfrastructure {
     ) {
         services.AddDbContext<MainDbCtx>((sp, options) =>
             options
-                .UseNpgsql(
+                .UseSqlite(
                     configuration.GetConnectionString("Database"),
-                    npgsqlOptions => npgsqlOptions
+                    options => options
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Main)
                 )
                 .UseSnakeCaseNamingConvention()

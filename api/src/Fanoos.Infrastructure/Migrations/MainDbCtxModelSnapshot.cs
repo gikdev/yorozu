@@ -4,7 +4,6 @@ using Fanoos.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,65 +17,62 @@ namespace Fanoos.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("main")
-                .HasAnnotation("ProductVersion", "10.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+                .HasAnnotation("ProductVersion", "10.0.3");
 
             modelBuilder.Entity("Fanoos.Domain.Todos.Todo", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
+                        .HasColumnType("TEXT")
                         .HasColumnName("id");
 
                     b.Property<int>("Bucket")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("bucket");
 
                     b.Property<string>("Contexts")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("contexts");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<DateTimeOffset?>("DueDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("due_date");
 
                     b.Property<int>("EffortType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("effort_type");
 
                     b.Property<int>("EnergyLevel")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("energy_level");
 
                     b.Property<byte?>("EstimatedPomodoros")
-                        .HasColumnType("smallint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("estimated_pomodoros");
 
                     b.Property<bool>("IsDone")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_done");
 
                     b.Property<bool>("IsUrgent")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_urgent");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("priority");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("title");
 
                     b.Property<string>("Why")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("why");
 
                     b.HasKey("Id")
@@ -90,16 +86,16 @@ namespace Fanoos.Infrastructure.Migrations
                     b.OwnsOne("Fanoos.Domain.Todos.WaitingForInfo", "WaitingForInfo", b1 =>
                         {
                             b1.Property<Guid>("TodoId")
-                                .HasColumnType("uuid")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("id");
 
                             b1.Property<string>("Description")
                                 .IsRequired()
-                                .HasColumnType("text")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("waiting_for_description");
 
                             b1.Property<DateTimeOffset>("ReviewAt")
-                                .HasColumnType("timestamp with time zone")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("waiting_for_review_at");
 
                             b1.HasKey("TodoId");
