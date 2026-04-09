@@ -2,11 +2,11 @@ import { btn } from "#/common/atoms/btn"
 import {
   TodoListFilterForm,
   type TodoListFilterFormData,
-} from "#/features/todos/todo-list-filter-form"
+} from "#/features/todos/views/todo-list-filter-form"
 import {
   useTodoQueryStore,
   type TodoQueryState,
-} from "#/features/todos/use-todo-query-store"
+} from "#/features/todos/hooks/use-todo-query-store"
 import { ArrowLeftIcon, FunnelXIcon } from "@phosphor-icons/react"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 

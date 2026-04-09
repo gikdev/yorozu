@@ -5,8 +5,8 @@ import { extractErrorMessage } from "#/common/helpers/errors"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { en } from "#/common/i18n/en"
 import { LoadingCard } from "#/common/molecules/loading-card"
-import { TodoDetails } from "#/features/todos/todo-details"
-import { useDeleteTodo } from "#/features/todos/use-delete-todo"
+import { TodoDetails } from "#/features/todos/views/todo-details"
+import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
 import {
   ArrowLeftIcon,
   PencilSimpleIcon,

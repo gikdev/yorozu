@@ -3,7 +3,7 @@
 publish/
 output/
 output*.zip
-*.db
+*.db*
 
 # Environment
 .env*

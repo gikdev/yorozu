@@ -1,10 +1,10 @@
 import { btn } from "#/common/atoms/btn"
 import { en } from "#/common/i18n/en"
-import { useTodoQueryStore } from "#/features/todos/use-todo-query-store"
+import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
 import { FunnelIcon, HouseIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 
-export function Header({}: {}) {
+export function Header() {
   const hasFilter = useTodoQueryStore(s => s.hasFilter())
 
   return (

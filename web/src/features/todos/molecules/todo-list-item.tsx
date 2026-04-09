@@ -1,6 +1,5 @@
 import { btn } from "#/common/atoms/btn"
 import {
-  DotsThreeIcon,
   CircleNotchIcon,
   CheckCircleIcon,
   CircleIcon,
@@ -14,7 +13,6 @@ type TodoListItemProps = {
   isTitleLoading: boolean
   onCheckboxClick: (todoId: string, isCurrentlyDone: boolean) => void
   onTitleClick: (todoId: string) => void
-  onMoreOptionsClick: (todoId: string) => void
 }
 
 export function TodoListItem(p: TodoListItemProps) {
@@ -45,13 +43,6 @@ export function TodoListItem(p: TodoListItemProps) {
         ) : (
           <span>{p.title}</span>
         )}
-      </button>
-
-      <button
-        className={btn({ isIcon: true })}
-        onClick={() => p.onMoreOptionsClick(p.todoId)}
-      >
-        <DotsThreeIcon size={24} />
       </button>
     </div>
   )

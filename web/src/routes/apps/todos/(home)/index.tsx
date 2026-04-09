@@ -9,7 +9,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
 import { EmtpyTodosList } from "./-empty-todos-list"
-import { TodoList } from "#/features/todos/todo-list"
+import { TodoList } from "#/features/todos/organisms/todo-list"
 import { CreateNewTodoFab } from "./-create-new-todo-fab"
 import { useState } from "react"
 import {
@@ -17,10 +17,10 @@ import {
   type TitledOptionsBottomSheetProps,
 } from "#/common/organisms/titled-options-bottom-sheet"
 import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
-import { useDeleteTodo } from "#/features/todos/use-delete-todo"
+import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { LoadingCard } from "#/common/molecules/loading-card"
-import { useTodoQueryStore } from "#/features/todos/use-todo-query-store"
+import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -60,7 +60,6 @@ function RouteComponent() {
   const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
   const isTodoOptionsSheetOpen = selectedTodoId != null
   const closeTodoOptionsSheet = () => setSelectedTodoId(null)
-  const openTodoOptionsSheet = (todoId: string) => setSelectedTodoId(todoId)
 
   const checkOrUncheckTodo = (todoId: string, isCurrentlyDone: boolean) => {
     setLoadingCheckboxTodoId(todoId)
@@ -127,7 +126,6 @@ function RouteComponent() {
             <TodoList
               todos={listTodosQ.data?.items!}
               onCheckboxClick={checkOrUncheckTodo}
-              onMoreOptionsClick={openTodoOptionsSheet}
               onTitleClick={viewTodoDetails}
               loadingCheckboxTodoId={loadingCheckboxTodoId}
             />
