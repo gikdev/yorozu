@@ -1,6 +1,6 @@
 ﻿namespace Backend.Domain.InDevelopment;
 
-public enum YoungSchema {
+public enum EarlyMaladaptiveSchema {
     // Disconnection & Rejection
     AbandonmentOrInstability    = 1,
     MistrustOrAbuse             = 2,
