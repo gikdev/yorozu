@@ -6,6 +6,7 @@ type TodoListProps = {
   onCheckboxClick: (todoId: string, isCurrentlyDone: boolean) => void
   onTitleClick: (todoId: string) => void
   loadingCheckboxTodoId: string | null
+  selectedTodoId: string | null
 }
 
 export function TodoList(p: TodoListProps) {
@@ -17,6 +18,7 @@ export function TodoList(p: TodoListProps) {
           todoId={t.id}
           title={t.title}
           isDone={t.isDone}
+          isSelected={t.id === p.selectedTodoId}
           isTitleLoading={false}
           isCheckboxLoading={t.id === p.loadingCheckboxTodoId}
           onTitleClick={p.onTitleClick}

@@ -1,14 +1,16 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { Header } from "./-header"
-import { RenderQuery } from "#/common/helpers/render-query"
-import { ErrorCard } from "#/common/helpers/error-card"
-import { EmtpyTodosList } from "./-empty-todos-list"
-import { TodoList } from "#/features/todos/organisms/todo-list"
-import { CreateNewTodoFab } from "./-create-new-todo-fab"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import { LoadingCard } from "#/common/molecules/loading-card"
-import { useChangeTodoCompletion } from "#/features/todos/hooks/use-change-todo-completion"
-import { useListTodosQuery } from "#/features/todos/hooks/use-list-todos-query"
+import { btn } from "#/common/atoms/btn"
+import { en } from "#/common/i18n/en"
+import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
+import { Header } from "#/features/todos/molecules/header"
+import { ClipboardTextIcon, FunnelIcon } from "@phosphor-icons/react"
+import { Link } from "@tanstack/react-router"
+import { PlusCircleIcon } from "@phosphor-icons/react"
+import { GoHomeButton } from "#/common/molecules/go-home-button"
+import { useIsMobile } from "#/common/hooks/use-is-mobile"
+import { TodoListView } from "#/features/todos/views/todo-list-view"
+import { useState } from "react"
+import { TodoDetailsView } from "#/features/todos/views/todo-details-view"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -16,45 +18,100 @@ export const Route = createFileRoute("/apps/todos/(home)/")({
 
 function RouteComponent() {
   const navigate = useNavigate()
-  const listTodosQ = useListTodosQuery()
-  const [loadingCheckboxTodoId, toggleTodo] = useChangeTodoCompletion()
+  const isMobile = useIsMobile()
+  const hasFilter = useTodoQueryStore(s => s.hasFilter())
+  const [selectedDetailsTodoId, setSelectedDetailsTodoId] = useState<
+    string | null
+  >(null)
 
   const viewTodoDetails = (todoId: string) => {
-    navigate({
-      to: "/apps/todos/$todoId",
-      params: { todoId },
-    })
+    if (isMobile) {
+      navigate({
+        to: "/apps/todos/$todoId",
+        params: { todoId },
+      })
+    } else {
+      setSelectedDetailsTodoId(currentTodoId =>
+        currentTodoId === todoId ? null : todoId,
+      )
+    }
+  }
+
+  const showTodoFilters = () => {
+    if (isMobile) {
+      navigate({ to: "/apps/todos/filter" })
+    } else {
+      navigate({ to: "/apps/todos/filter" })
+    }
   }
 
   return (
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
-      <Header />
+      <Header>
+        <GoHomeButton />
 
-      <div className="flex-1 flex flex-col p-2">
-        <RenderQuery
-          isList={true}
-          status={listTodosQ.status}
-          listCount={listTodosQ.data?.items.length!}
-          loadingView={<LoadingCard title="Loading your todos…" />}
-          emptyView={<EmtpyTodosList />}
-          fullView={() => (
-            <TodoList
-              todos={listTodosQ.data?.items!}
-              onCheckboxClick={todoId => toggleTodo(todoId, listTodosQ.refetch)}
-              onTitleClick={viewTodoDetails}
-              loadingCheckboxTodoId={loadingCheckboxTodoId}
-            />
-          )}
-          errorView={
-            <ErrorCard
-              message={extractErrorMessage(listTodosQ.error)}
-              onRetry={listTodosQ.refetch}
-            />
-          }
-        />
+        <p className="text-sky-500 font-bold text-lg mx-auto">
+          {en.todos.appTitle}
+        </p>
 
-        <CreateNewTodoFab />
+        <TodosFilterBtn hasFilter={hasFilter} onClick={showTodoFilters} />
+      </Header>
+
+      <div className="flex-1 flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col p-2 md:w-80 border-mist-800 border-e-2">
+          <TodoListView
+            onTitleClick={viewTodoDetails}
+            selectedTodoId={selectedDetailsTodoId}
+          />
+
+          <CreateNewTodoFab />
+        </div>
+
+        {!isMobile && (
+          <div className="flex-1 p-4">
+            {selectedDetailsTodoId ? (
+              <TodoDetailsView todoId={selectedDetailsTodoId} />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
+                <ClipboardTextIcon size={40} />
+                <p>No todos selected yet.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+interface TodosFilterBtnProps {
+  hasFilter: boolean
+  onClick: () => void
+}
+
+const TodosFilterBtn = (p: TodosFilterBtnProps) => (
+  <button
+    type="button"
+    onClick={p.onClick}
+    className={btn({ isIcon: true, className: "relative" })}
+  >
+    <FunnelIcon size={24} />
+
+    {p.hasFilter && (
+      <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-sky-500" />
+    )}
+  </button>
+)
+
+const CreateNewTodoFab = () => (
+  <Link
+    to="/apps/todos/new"
+    className={btn({
+      className: "fixed bottom-6 right-6",
+      isIcon: true,
+      theme: "primary",
+    })}
+  >
+    <PlusCircleIcon weight="fill" size={24} />
+  </Link>
+)

@@ -9,6 +9,7 @@ type TodoListItemProps = {
   todoId: string
   title: string
   isDone: boolean
+  isSelected: boolean
   isCheckboxLoading: boolean
   isTitleLoading: boolean
   onCheckboxClick: (todoId: string, isCurrentlyDone: boolean) => void
@@ -19,7 +20,7 @@ export function TodoListItem(p: TodoListItemProps) {
   return (
     <div
       data-done={p.isDone}
-      className="flex items-center gap-0 data-[done=true]:opacity-50"
+      className="flex items-center gap-0 data-[done=true]:opacity-70"
     >
       <button
         className={btn({ isIcon: true })}
@@ -28,14 +29,19 @@ export function TodoListItem(p: TodoListItemProps) {
         {p.isCheckboxLoading && (
           <CircleNotchIcon size={24} className="animate-spin" />
         )}
+
         {!p.isCheckboxLoading && p.isDone && (
           <CheckCircleIcon weight="fill" size={24} />
         )}
+
         {!p.isCheckboxLoading && !p.isDone && <CircleIcon size={24} />}
       </button>
 
       <button
-        className={btn({ className: "flex-1 justify-start text-start" })}
+        className={btn({
+          className: "flex-1 justify-start text-start",
+          theme: p.isSelected ? "primary" : "glass",
+        })}
         onClick={() => p.onTitleClick(p.todoId)}
       >
         {p.isTitleLoading ? (
