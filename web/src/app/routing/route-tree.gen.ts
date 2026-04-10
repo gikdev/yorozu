@@ -11,9 +11,9 @@
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
+import { Route as AppsTodosIndexRouteImport } from "./../../routes/apps/todos/index"
 import { Route as AppsTodosNewRouteImport } from "./../../routes/apps/todos/new"
 import { Route as AppsTodosFilterRouteImport } from "./../../routes/apps/todos/filter"
-import { Route as AppsTodoshomeIndexRouteImport } from "./../../routes/apps/todos/(home)/index"
 import { Route as AppsTodosTodoIdIndexRouteImport } from "./../../routes/apps/todos/$todoId/index"
 import { Route as AppsTodosTodoIdEditRouteImport } from "./../../routes/apps/todos/$todoId/edit"
 
@@ -27,6 +27,11 @@ const homeIndexRoute = homeIndexRouteImport.update({
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsTodosIndexRoute = AppsTodosIndexRouteImport.update({
+  id: "/apps/todos/",
+  path: "/apps/todos/",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsTodosNewRoute = AppsTodosNewRouteImport.update({
   id: "/apps/todos/new",
   path: "/apps/todos/new",
@@ -35,11 +40,6 @@ const AppsTodosNewRoute = AppsTodosNewRouteImport.update({
 const AppsTodosFilterRoute = AppsTodosFilterRouteImport.update({
   id: "/apps/todos/filter",
   path: "/apps/todos/filter",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsTodoshomeIndexRoute = AppsTodoshomeIndexRouteImport.update({
-  id: "/apps/todos/(home)/",
-  path: "/apps/todos/",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTodosTodoIdIndexRoute = AppsTodosTodoIdIndexRouteImport.update({
@@ -58,18 +58,18 @@ export interface FileRoutesByFullPath {
   "/": typeof homeIndexRoute
   "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
+  "/apps/todos/": typeof AppsTodosIndexRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
-  "/apps/todos/": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/": typeof homeIndexRoute
   "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
+  "/apps/todos": typeof AppsTodosIndexRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId": typeof AppsTodosTodoIdIndexRoute
-  "/apps/todos": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,9 +77,9 @@ export interface FileRoutesById {
   "/(home)/": typeof homeIndexRoute
   "/apps/todos/filter": typeof AppsTodosFilterRoute
   "/apps/todos/new": typeof AppsTodosNewRoute
+  "/apps/todos/": typeof AppsTodosIndexRoute
   "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
   "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
-  "/apps/todos/(home)/": typeof AppsTodoshomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,27 +88,27 @@ export interface FileRouteTypes {
     | "/"
     | "/apps/todos/filter"
     | "/apps/todos/new"
+    | "/apps/todos/"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId/"
-    | "/apps/todos/"
   fileRoutesByTo: FileRoutesByTo
   to:
     | "/dev"
     | "/"
     | "/apps/todos/filter"
     | "/apps/todos/new"
+    | "/apps/todos"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId"
-    | "/apps/todos"
   id:
     | "__root__"
     | "/dev"
     | "/(home)/"
     | "/apps/todos/filter"
     | "/apps/todos/new"
+    | "/apps/todos/"
     | "/apps/todos/$todoId/edit"
     | "/apps/todos/$todoId/"
-    | "/apps/todos/(home)/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,9 +116,9 @@ export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute
   AppsTodosFilterRoute: typeof AppsTodosFilterRoute
   AppsTodosNewRoute: typeof AppsTodosNewRoute
+  AppsTodosIndexRoute: typeof AppsTodosIndexRoute
   AppsTodosTodoIdEditRoute: typeof AppsTodosTodoIdEditRoute
   AppsTodosTodoIdIndexRoute: typeof AppsTodosTodoIdIndexRoute
-  AppsTodoshomeIndexRoute: typeof AppsTodoshomeIndexRoute
 }
 
 declare module "@tanstack/react-router" {
@@ -137,6 +137,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof homeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/todos/": {
+      id: "/apps/todos/"
+      path: "/apps/todos"
+      fullPath: "/apps/todos/"
+      preLoaderRoute: typeof AppsTodosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/todos/new": {
       id: "/apps/todos/new"
       path: "/apps/todos/new"
@@ -149,13 +156,6 @@ declare module "@tanstack/react-router" {
       path: "/apps/todos/filter"
       fullPath: "/apps/todos/filter"
       preLoaderRoute: typeof AppsTodosFilterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/todos/(home)/": {
-      id: "/apps/todos/(home)/"
-      path: "/apps/todos"
-      fullPath: "/apps/todos/"
-      preLoaderRoute: typeof AppsTodoshomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/todos/$todoId/": {
@@ -180,9 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   homeIndexRoute: homeIndexRoute,
   AppsTodosFilterRoute: AppsTodosFilterRoute,
   AppsTodosNewRoute: AppsTodosNewRoute,
+  AppsTodosIndexRoute: AppsTodosIndexRoute,
   AppsTodosTodoIdEditRoute: AppsTodosTodoIdEditRoute,
   AppsTodosTodoIdIndexRoute: AppsTodosTodoIdIndexRoute,
-  AppsTodoshomeIndexRoute: AppsTodoshomeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

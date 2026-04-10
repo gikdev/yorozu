@@ -8,6 +8,10 @@ import { useQuery } from "@tanstack/react-query"
 
 export interface TodoDetailsViewProps {
   todoId: string
+  onEdit: (() => void) | null
+  isEditBtnLoading: boolean
+  onDelete: (() => void) | null
+  isDeleteBtnLoading: boolean
 }
 
 export function TodoDetailsView(p: TodoDetailsViewProps) {
@@ -18,7 +22,15 @@ export function TodoDetailsView(p: TodoDetailsViewProps) {
       isList={false}
       status={getTodoQ.status}
       loadingView={<LoadingCard title="Loading details…" />}
-      successView={() => <TodoDetails todo={getTodoQ.data!} />}
+      successView={() => (
+        <TodoDetails
+          onDelete={p.onDelete}
+          isDeleteBtnLoading={p.isDeleteBtnLoading}
+          onEdit={p.onEdit}
+          isEditBtnLoading={p.isEditBtnLoading}
+          todo={getTodoQ.data!}
+        />
+      )}
       errorView={
         <ErrorCard
           message={extractErrorMessage(getTodoQ.error)}

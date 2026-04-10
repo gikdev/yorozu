@@ -6,6 +6,9 @@ import {
   InfoIcon,
   TagIcon,
   QuestionIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+  CircleNotchIcon,
 } from "@phosphor-icons/react"
 import { WaitingForCard } from "./waiting-for-card"
 import { DueDateCard } from "./due-date-card"
@@ -14,9 +17,14 @@ import { EffortTypeCard } from "./effort-type-card"
 import { EnergyLevelCard } from "./energy-level-card"
 import { PomodoroCard } from "./pomodoro-card"
 import { PriorityCard } from "./priority-card"
+import { btn } from "#/common/atoms/btn"
 
 interface TodoDetailsProps {
   todo: TodoResponse
+  onEdit: (() => void) | null
+  isEditBtnLoading: boolean
+  onDelete: (() => void) | null
+  isDeleteBtnLoading: boolean
 }
 
 export function TodoDetails(p: TodoDetailsProps) {
@@ -101,6 +109,44 @@ export function TodoDetails(p: TodoDetailsProps) {
           description={waitingForInfo.description}
           reviewAt={waitingForInfo.reviewAt}
         />
+      )}
+
+      {(p.onEdit || p.onDelete) && (
+        <div className="flex flex-col gap-2 md:flex-row md:*:flex-1">
+          {p.onEdit && (
+            <button
+              type="button"
+              className={btn()}
+              onClick={p.onEdit}
+              disabled={p.isEditBtnLoading}
+            >
+              {p.isEditBtnLoading ? (
+                <CircleNotchIcon size={20} className="animate-spin" />
+              ) : (
+                <PencilSimpleIcon size={20} />
+              )}
+
+              <span>Edit</span>
+            </button>
+          )}
+
+          {p.onDelete && (
+            <button
+              type="button"
+              className={btn()}
+              onClick={p.onDelete}
+              disabled={p.isDeleteBtnLoading}
+            >
+              {p.isEditBtnLoading ? (
+                <CircleNotchIcon size={20} className="animate-spin" />
+              ) : (
+                <TrashIcon size={20} />
+              )}
+
+              <span>Delete</span>
+            </button>
+          )}
+        </div>
       )}
     </div>
   )

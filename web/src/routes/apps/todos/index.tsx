@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { btn } from "#/common/atoms/btn"
-import { en } from "#/common/i18n/en"
 import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
 import { Header } from "#/features/todos/molecules/header"
 import { ClipboardTextIcon, FunnelIcon } from "@phosphor-icons/react"
@@ -11,8 +10,9 @@ import { useIsMobile } from "#/common/hooks/use-is-mobile"
 import { TodoListView } from "#/features/todos/views/todo-list-view"
 import { useState } from "react"
 import { TodoDetailsView } from "#/features/todos/views/todo-details-view"
+import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
 
-export const Route = createFileRoute("/apps/todos/(home)/")({
+export const Route = createFileRoute("/apps/todos/")({
   component: RouteComponent,
 })
 
@@ -23,6 +23,23 @@ function RouteComponent() {
   const [selectedDetailsTodoId, setSelectedDetailsTodoId] = useState<
     string | null
   >(null)
+
+  const [removeTodo, deleteTodoM] = useDeleteTodo({})
+
+  const handleTodoDeleteClick = () => {
+    if (!selectedDetailsTodoId) return
+
+    removeTodo(selectedDetailsTodoId)
+  }
+
+  const handleTodoEditClick = () => {
+    if (!selectedDetailsTodoId) return
+
+    navigate({
+      to: "/apps/todos/$todoId/edit",
+      params: { todoId: selectedDetailsTodoId },
+    })
+  }
 
   const viewTodoDetails = (todoId: string) => {
     if (isMobile) {
@@ -38,11 +55,7 @@ function RouteComponent() {
   }
 
   const showTodoFilters = () => {
-    if (isMobile) {
-      navigate({ to: "/apps/todos/filter" })
-    } else {
-      navigate({ to: "/apps/todos/filter" })
-    }
+    navigate({ to: "/apps/todos/filter" })
   }
 
   return (
@@ -51,7 +64,7 @@ function RouteComponent() {
         <GoHomeButton />
 
         <p className="text-sky-500 font-bold text-lg mx-auto">
-          {en.todos.appTitle}
+          Todos
         </p>
 
         <TodosFilterBtn hasFilter={hasFilter} onClick={showTodoFilters} />
@@ -70,7 +83,13 @@ function RouteComponent() {
         {!isMobile && (
           <div className="flex-1 p-4">
             {selectedDetailsTodoId ? (
-              <TodoDetailsView todoId={selectedDetailsTodoId} />
+              <TodoDetailsView
+                todoId={selectedDetailsTodoId}
+                isDeleteBtnLoading={deleteTodoM.isPending}
+                onDelete={handleTodoDeleteClick}
+                isEditBtnLoading={false}
+                onEdit={handleTodoEditClick}
+              />
             ) : (
               <div className="flex flex-col items-center justify-center py-8 flex-1 text-mist-400 gap-2">
                 <ClipboardTextIcon size={40} />
