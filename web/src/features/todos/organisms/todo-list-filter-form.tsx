@@ -30,6 +30,7 @@ export type TodoListFilterFormData = v.InferOutput<
 
 type TodoListFilterFormProps = {
   onSubmit: (data: TodoListFilterFormData) => void
+  onReset: () => void
   className: string
   defaultValues: TodoListFilterFormData
 }
@@ -140,7 +141,10 @@ export function TodoListFilterForm(p: TodoListFilterFormProps) {
         <div className="flex flex-col gap-2">
           <button
             type="reset"
-            onClick={() => form.reset()}
+            onClick={() => {
+              form.reset()
+              p.onReset()
+            }}
             className={btn({ className: "w-full" })}
           >
             Reset

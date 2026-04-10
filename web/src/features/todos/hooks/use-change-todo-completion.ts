@@ -1,6 +1,6 @@
 import {
   changeTodoCompletionMutation,
-  TodoCompletionChangeAction
+  TodoCompletionChangeAction,
 } from "#/common/api/client"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"

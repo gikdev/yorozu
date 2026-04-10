@@ -1,18 +1,13 @@
-import { getTodoOptions } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
-import { ErrorCard } from "#/common/helpers/error-card"
 import { extractErrorMessage } from "#/common/helpers/errors"
-import { RenderQuery } from "#/common/helpers/render-query"
 import { en } from "#/common/i18n/en"
-import { LoadingCard } from "#/common/molecules/loading-card"
-import { TodoDetails } from "#/features/todos/views/todo-details"
 import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
+import { TodoDetailsView } from "#/features/todos/views/todo-details-view"
 import {
   ArrowLeftIcon,
   PencilSimpleIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
-import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/apps/todos/$todoId/")({
@@ -21,11 +16,7 @@ export const Route = createFileRoute("/apps/todos/$todoId/")({
 
 function RouteComponent() {
   const navigate = useNavigate()
-
   const { todoId } = Route.useParams()
-
-  const getTodoQ = useQuery(getTodoOptions({ path: { id: todoId } }))
-
   const [deleteTodo] = useDeleteTodo({
     onError: error => alert(extractErrorMessage(error)),
     onSuccess: () => {
@@ -64,18 +55,7 @@ function RouteComponent() {
       </header>
 
       <div className="flex-1 flex flex-col p-4">
-        <RenderQuery
-          isList={false}
-          status={getTodoQ.status}
-          loadingView={<LoadingCard title="Loading details…" />}
-          successView={() => <TodoDetails todo={getTodoQ.data!} />}
-          errorView={
-            <ErrorCard
-              message={extractErrorMessage(getTodoQ.error)}
-              onRetry={getTodoQ.refetch}
-            />
-          }
-        />
+        <TodoDetailsView todoId={todoId} />
       </div>
     </div>
   )
