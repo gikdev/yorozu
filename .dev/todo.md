@@ -1,7 +1,7 @@
 # Todo:
 
 - `o` Modal for "editing", "new", "filter" (modal instead of page for desktop basically: "VIEWS")
-- `o` Remove "..." of todo component
+- `x` Remove "..." of todo component
 - `o` Show some important stuff (like urgency of a todo) in todo component
 - `o` Show side by side todo details on desktop
 - `o` Focus button
