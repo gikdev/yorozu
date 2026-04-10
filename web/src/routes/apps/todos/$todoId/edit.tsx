@@ -1,4 +1,7 @@
 import { btn } from "#/common/atoms/btn"
+import { fullPage } from "#/common/atoms/full-page"
+import { header } from "#/common/atoms/header"
+import { phonePage } from "#/common/atoms/phone-page"
 import { EditTodoView } from "#/features/todos/views/edit-todo-view"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router"
@@ -15,17 +18,19 @@ function RouteComponent() {
     navigate({ to: "/apps/todos/$todoId", params: { todoId } })
 
   return (
-    <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
-      <header className="flex items-center gap-2 border-b-2 border-mist-800 p-2">
-        <Link to="/apps/todos" className={btn({ isIcon: true })}>
-          <ArrowLeftIcon size={24} />
-        </Link>
+    <div className={fullPage()}>
+      <div className={phonePage()}>
+        <header className={header()}>
+          <Link to="/apps/todos" className={btn({ isIcon: true })}>
+            <ArrowLeftIcon size={24} />
+          </Link>
 
-        <p className="">Edit Todo</p>
-      </header>
+          <p>Edit Todo</p>
+        </header>
 
-      <div className="flex-1 flex flex-col p-4">
-        <EditTodoView onFinish={goToTodoDetails} todoId={todoId} />
+        <main className="flex-1 flex flex-col p-4">
+          <EditTodoView onFinish={goToTodoDetails} todoId={todoId} />
+        </main>
       </div>
     </div>
   )

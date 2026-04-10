@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { btn } from "#/common/atoms/btn"
 import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
-import { Header } from "#/features/todos/molecules/header"
 import { ClipboardTextIcon, FunnelIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 import { PlusCircleIcon } from "@phosphor-icons/react"
@@ -11,6 +10,7 @@ import { TodoListView } from "#/features/todos/views/todo-list-view"
 import { useState } from "react"
 import { TodoDetailsView } from "#/features/todos/views/todo-details-view"
 import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
+import { header } from "#/common/atoms/header"
 
 export const Route = createFileRoute("/apps/todos/")({
   component: RouteComponent,
@@ -60,15 +60,13 @@ function RouteComponent() {
 
   return (
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
-      <Header>
+      <header className={header()}>
         <GoHomeButton />
 
-        <p className="text-sky-500 font-bold text-lg mx-auto">
-          Todos
-        </p>
+        <p className="text-sky-500 font-bold text-lg mx-auto">Todos</p>
 
         <TodosFilterBtn hasFilter={hasFilter} onClick={showTodoFilters} />
-      </Header>
+      </header>
 
       <div className="flex-1 flex flex-col md:flex-row gap-2">
         <div className="flex flex-col p-2 md:w-80 border-mist-800 border-e-2">

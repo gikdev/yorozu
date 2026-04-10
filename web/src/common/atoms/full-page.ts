@@ -1,0 +1,5 @@
+import { tv } from "tailwind-variants"
+
+export const fullPage = tv({
+  base: "bg-mist-950 min-h-dvh text-mist-300 flex flex-col",
+})

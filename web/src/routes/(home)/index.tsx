@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { version } from "#/app/data/version.json"
 import { appShortcuts } from "./-app-shortcuts"
-import { Header } from "./-header"
 import { AppShortcut } from "./-app-shortcut"
+import { header } from "#/common/atoms/header"
+import { fullPage } from "#/common/atoms/full-page"
+import { phonePage } from "#/common/atoms/phone-page"
 
 export const Route = createFileRoute("/(home)/")({
   component: RouteComponent,
@@ -10,14 +12,26 @@ export const Route = createFileRoute("/(home)/")({
 
 function RouteComponent() {
   return (
-    <div className="bg-slate-200 dark:bg-mist-900 min-h-dvh text-mist-700 dark:text-mist-300 flex flex-col">
-      <Header version={version} />
+    <div className={fullPage()}>
+      <div className={phonePage()}>
+        <header className={header()}>
+          <img src="/fanoos.png" className="size-10 rounded-md" />
 
-      <main className="flex flex-wrap justify-center py-4 px-8">
-        {appShortcuts.map(shortcut => (
-          <AppShortcut shortcut={shortcut} key={shortcut.id} />
-        ))}
-      </main>
+          <p className="gap-1 items-center flex">
+            <span className="text-lg sm:text-2xl font-bold text-sky-500 dark:text-sky-500">
+              Fanoos
+            </span>
+
+            <sup>v{version}</sup>
+          </p>
+        </header>
+
+        <main className="flex flex-wrap justify-center py-4 px-8">
+          {appShortcuts.map(shortcut => (
+            <AppShortcut shortcut={shortcut} key={shortcut.id} />
+          ))}
+        </main>
+      </div>
     </div>
   )
 }
