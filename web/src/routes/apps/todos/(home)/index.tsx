@@ -1,26 +1,14 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { Header } from "./-header"
-import {
-  listTodosOptions,
-  changeTodoCompletionMutation,
-  TodoCompletionChangeAction,
-} from "#/common/api/client"
-import { useMutation, useQuery } from "@tanstack/react-query"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { ErrorCard } from "#/common/helpers/error-card"
 import { EmtpyTodosList } from "./-empty-todos-list"
 import { TodoList } from "#/features/todos/organisms/todo-list"
 import { CreateNewTodoFab } from "./-create-new-todo-fab"
-import { useState } from "react"
-import {
-  TitledOptionsBottomSheet,
-  type TitledOptionsBottomSheetProps,
-} from "#/common/organisms/titled-options-bottom-sheet"
-import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
-import { useDeleteTodo } from "#/features/todos/hooks/use-delete-todo"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { LoadingCard } from "#/common/molecules/loading-card"
-import { useTodoQueryStore } from "#/features/todos/hooks/use-todo-query-store"
+import { useChangeTodoCompletion } from "#/features/todos/hooks/use-change-todo-completion"
+import { useListTodosQuery } from "#/features/todos/hooks/use-list-todos-query"
 
 export const Route = createFileRoute("/apps/todos/(home)/")({
   component: RouteComponent,
@@ -28,88 +16,15 @@ export const Route = createFileRoute("/apps/todos/(home)/")({
 
 function RouteComponent() {
   const navigate = useNavigate()
-  const queryStore = useTodoQueryStore()
+  const listTodosQ = useListTodosQuery()
+  const [loadingCheckboxTodoId, toggleTodo] = useChangeTodoCompletion()
 
-  const listTodosQ = useQuery(
-    listTodosOptions({
-      query: {
-        available_energy_level: queryStore.availableEnergyLevel,
-        available_pomodoros: queryStore.availablePomodoros ?? undefined,
-        bucket: queryStore.bucket,
-        q: queryStore.q || undefined,
-        exclude_query: queryStore.excludeQuery || undefined,
-        sort_by: queryStore.sortBy,
-        sort_order: queryStore.sortOrder,
-      },
-    }),
-  )
-
-  const changeTodoCompletionM = useMutation(changeTodoCompletionMutation())
-  const [loadingCheckboxTodoId, setLoadingCheckboxTodoId] = useState<
-    string | null
-  >(null)
-
-  const [deleteTodo] = useDeleteTodo({
-    onError: error => alert(extractErrorMessage(error)),
-    onSuccess: () => {
-      setSelectedTodoId(null)
-      listTodosQ.refetch()
-    },
-  })
-
-  const [selectedTodoId, setSelectedTodoId] = useState<string | null>(null)
-  const isTodoOptionsSheetOpen = selectedTodoId != null
-  const closeTodoOptionsSheet = () => setSelectedTodoId(null)
-
-  const checkOrUncheckTodo = (todoId: string, isCurrentlyDone: boolean) => {
-    setLoadingCheckboxTodoId(todoId)
-
-    changeTodoCompletionM.mutate(
-      {
-        path: { id: todoId },
-        body: {
-          completionChangeAction: isCurrentlyDone
-            ? TodoCompletionChangeAction.MARK_NOT_DONE
-            : TodoCompletionChangeAction.MARK_DONE,
-        },
-      },
-      {
-        onError: error => alert(extractErrorMessage(error)),
-        onSuccess: () => listTodosQ.refetch(),
-        onSettled: () => setLoadingCheckboxTodoId(null),
-      },
-    )
-  }
   const viewTodoDetails = (todoId: string) => {
     navigate({
       to: "/apps/todos/$todoId",
       params: { todoId },
     })
   }
-  const editTodo = (todoId: string) => {
-    navigate({
-      to: "/apps/todos/$todoId/edit",
-      params: { todoId },
-    })
-  }
-
-  const optionItems: TitledOptionsBottomSheetProps["optionItems"] = [
-    {
-      title: "View Todo",
-      Icon: EyeIcon,
-      onClick: () => viewTodoDetails(selectedTodoId!),
-    },
-    {
-      title: "Edit Todo",
-      Icon: PencilSimpleIcon,
-      onClick: () => editTodo(selectedTodoId!),
-    },
-    {
-      title: "Delete Todo",
-      Icon: TrashIcon,
-      onClick: () => deleteTodo(selectedTodoId!),
-    },
-  ]
 
   return (
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
@@ -125,7 +40,7 @@ function RouteComponent() {
           fullView={() => (
             <TodoList
               todos={listTodosQ.data?.items!}
-              onCheckboxClick={checkOrUncheckTodo}
+              onCheckboxClick={todoId => toggleTodo(todoId, listTodosQ.refetch)}
               onTitleClick={viewTodoDetails}
               loadingCheckboxTodoId={loadingCheckboxTodoId}
             />
@@ -140,14 +55,6 @@ function RouteComponent() {
 
         <CreateNewTodoFab />
       </div>
-
-      {isTodoOptionsSheetOpen && (
-        <TitledOptionsBottomSheet
-          title="More Options"
-          onClose={closeTodoOptionsSheet}
-          optionItems={optionItems}
-        />
-      )}
     </div>
   )
 }
