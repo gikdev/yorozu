@@ -21,7 +21,7 @@ public sealed partial class TodoTests {
             );
 
             // Assert
-            todoResult.Value.Title.Should().Be(title);
+            todoResult.Value.Title.Value.Should().Be(title);
         }
 
         [Fact]

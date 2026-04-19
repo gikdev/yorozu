@@ -30,7 +30,7 @@ public sealed partial class TodoTests {
             var todoResult = TodoTestsUtils.CreateTodo(bucket: startingBucket);
 
             // Act
-            todoResult.Value.MoveToBucket(newBucket);
+            todoResult.Value.MoveToBucket(newBucket, null);
 
             // Assert
             todoResult.Value.Bucket.Should().Be(newBucket);
@@ -44,7 +44,7 @@ public sealed partial class TodoTests {
             var todoResult = TodoTestsUtils.CreateTodo(bucket: startingBucket, isUrgent: true);
 
             // Act
-            var moveResult = todoResult.Value.MoveToBucket(newBucket);
+            var moveResult = todoResult.Value.MoveToBucket(newBucket, null);
 
             // Assert
             moveResult.IsError.Should().BeTrue();

@@ -1,24 +1,20 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Fanoos.Infrastructure.Migrations
-{
+namespace Fanoos.Infrastructure.Migrations {
     /// <inheritdoc />
-    public partial class Initial : Migration
-    {
+    public partial class Initial : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.EnsureSchema(
                 name: "main");
 
             migrationBuilder.CreateTable(
                 name: "todos",
                 schema: "main",
-                columns: table => new
-                {
+                columns: table => new {
                     id = table.Column<Guid>(type: "TEXT", nullable: false),
                     title = table.Column<string>(type: "TEXT", nullable: false),
                     why = table.Column<string>(type: "TEXT", nullable: true),
@@ -35,15 +31,13 @@ namespace Fanoos.Infrastructure.Migrations
                     waiting_for_description = table.Column<string>(type: "TEXT", nullable: true),
                     waiting_for_review_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("pk_todos", x => x.id);
                 });
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "todos",
                 schema: "main");
