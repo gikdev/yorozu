@@ -8,5 +8,5 @@ export default defineConfig({
   headLinkOptions: {
     preset: "2023",
   },
-  images: ["public/fanoos.svg"],
+  images: ["public/yorozu.svg"],
 })

@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="compose.yml" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="Yorozu.slnx" />
+    <File Path="NuGet.config" />
+    <File Path="TaskFile.yml" />
+  </Folder>
+
+  <Project Path="src/Yorozu.Api/Yorozu.Api.csproj" />
+  <Project Path="src/Yorozu.Application/Yorozu.Application.csproj" />
+  <Project Path="src/Yorozu.Common/Yorozu.Common.csproj" />
+  <Project Path="src/Yorozu.Domain/Yorozu.Domain.csproj" />
+  <Project Path="src/Yorozu.Infrastructure/Yorozu.Infrastructure.csproj" />
+  <Project Path="src/Yorozu.Presentation/Yorozu.Presentation.csproj" />
+  <Project Path="test/Yorozu.Domain.Tests.Unit/Yorozu.Domain.Tests.Unit.csproj" />
+</Solution>

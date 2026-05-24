@@ -1,15 +1,15 @@
-name: fanoos
+name: yorozu
 
 services:
-  fanoos.db:
-    container_name: fanoos.db
+  yorozu.db:
+    container_name: yorozu.db
     image: postgres:16
     restart: on-failure
 
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: fanoos
+      POSTGRES_DB: yorozu
 
     ports:
       - "5432:5432"

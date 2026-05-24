@@ -16,7 +16,7 @@ const vitePwaPlugin = VitePWA({
   },
 
   manifest: {
-    id: "ir.bahrami85.fanoos",
+    id: "ir.bahrami85.yorozu",
     name: "فانوس",
     short_name: "فانوس",
     description: "یه برنامه کاربردی...",

@@ -3,9 +3,9 @@ version: '3'
 
 vars:
   ASPNETCORE_ENVIRONMENT: Development
-  PROJECT_PATH: "./src/Fanoos.Infrastructure"
-  SOLUTION_FILE_PATH: "./Fanoos.slnx"
-  STARTUP_PATH: "./src/Fanoos.Api"
+  PROJECT_PATH: "./src/Yorozu.Infrastructure"
+  SOLUTION_FILE_PATH: "./Yorozu.slnx"
+  STARTUP_PATH: "./src/Yorozu.Api"
   PUBLISH_OUTPUT_PATH: "./publish"
   NUGET_CONFIG_FILE: "./NuGet.config"
 
@@ -87,4 +87,4 @@ tasks:
     desc: Open psql shell inside container
     interactive: true
     cmds:
-      - docker exec -it fanoos.db psql -U postgres -d fanoos
+      - docker exec -it yorozu.db psql -U postgres -d yorozu

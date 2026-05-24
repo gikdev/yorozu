@@ -1,0 +1,45 @@
+using ErrorOr;
+using Yorozu.Common.Domain;
+using Yorozu.Domain.Todos;
+
+namespace Yorozu.Domain.Tests.Unit.Todos;
+
+internal static class TodoTestsUtils {
+    internal static ErrorOr<Todo> CreateTodo(
+        NotEmptyString? title = null,
+        NotEmptyString? why = null,
+        NotEmptyString? description = null,
+        byte? estimatedPomodoros = null,
+        bool? isUrgent = null,
+        bool? isDone = null,
+        FutureDateTimeOffset? dueDate = null,
+        List<NotEmptyString>? contexts = null,
+        TodoPriority? priority = null,
+        TodoEffortType? effortType = null,
+        EnergyLevel? energyLevel = null,
+        TodoBucket? bucket = null,
+        WaitingForInfo? waitingForInfo = null,
+        Guid? id = null
+    ) {
+        var fallbackTitle = NotEmptyString.Create("Sth").Value;
+
+        var result = Todo.Create(
+            id: id,
+            title: title ?? fallbackTitle,
+            why: why,
+            description: description,
+            estimatedPomodoros: estimatedPomodoros,
+            isUrgent: isUrgent,
+            isDone: isDone,
+            dueDate: dueDate,
+            contexts: contexts,
+            priority: priority,
+            effortType: effortType,
+            energyLevel: energyLevel,
+            bucket: bucket,
+            waitingForInfo: waitingForInfo
+        );
+
+        return result;
+    }
+}

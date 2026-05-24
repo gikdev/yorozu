@@ -1,6 +1,6 @@
 openapi: "3.1.1"
 info:
-  title: Fanoos.Api | v1
+  title: Yorozu.Api | v1
   version: 1.0.0
 servers:
   - url: http://localhost:5000/

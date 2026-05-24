@@ -15,11 +15,11 @@ function RouteComponent() {
     <div className={fullPage()}>
       <div className={phonePage()}>
         <header className={header()}>
-          <img src="/fanoos.png" className="size-10 rounded-md" />
+          <img src="/yorozu.png" className="size-10 rounded-md" />
 
           <p className="gap-1 items-center flex">
             <span className="text-lg sm:text-2xl font-bold text-sky-500 dark:text-sky-500">
-              Fanoos
+              Yorozu
             </span>
 
             <sup>v{version}</sup>
