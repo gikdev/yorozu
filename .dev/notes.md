@@ -1,8 +1,5 @@
 # Notes
 
-## Cheap hosting:
-
-- [Chabokan's ASP.NET Core](https://hub.chabokan.net/fa/services/create/aspnet-core/?)
-- [Chabokan's PostgreSQL](https://hub.chabokan.net/fa/services/create/postgresql/?)
-- [Liara's ASP.NET Core](https://liara.ir/landing/%D9%87%D8%A7%D8%B3%D8%AA-%D8%AF%D8%A7%D8%AA-%D9%86%D8%AA-dotnet/)
-- [Liara's PostgreSQL](https://liara.ir/landing/%D9%87%D8%A7%D8%B3%D8%AA-%D8%A7%D8%A8%D8%B1%DB%8C-postgre-sql/)
+- Hosting:
+  - [Chabokan](https://chabokan.net/)
+  - [Liara](https://liara.ir/)

@@ -30,7 +30,7 @@ public static class YorozuInfrastructure {
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MainDbCtx>());
 
-        services.AddScoped<ITodoRepository, TodoRepository>();
+        // services.AddScoped<ITodoRepository, TodoRepository>();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 

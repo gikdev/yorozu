@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Yorozu.Infrastructure.Database;
 
 public sealed class MainDbCtx(DbContextOptions<MainDbCtx> options) : DbContext(options), IUnitOfWork {
-    internal DbSet<Todo> Todos => Set<Todo>();
+    // internal DbSet<Todo> Todos => Set<Todo>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.HasDefaultSchema(Schemas.Main);
 
-        modelBuilder.ApplyConfiguration(new TodoConfiguration());
+        // modelBuilder.ApplyConfiguration(new TodoConfiguration());
     }
 }

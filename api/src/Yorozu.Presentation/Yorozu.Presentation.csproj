@@ -1,6 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Yorozu.Application\Yorozu.Application.csproj" />
-    <ProjectReference Include="..\Yorozu.Common\Yorozu.Common.csproj" />
-  </ItemGroup>
-</Project>
