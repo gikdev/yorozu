@@ -1,0 +1,7 @@
+Kanban Project Thingy
+
+Problem: You need a personal project board that respects your focus limits and doesn't encourage multitasking burnout.
+
+Dream: Projects have identity (icon, color, emoji). Tasks move through states (to-do, in progress, done, waiting for). The board intelligently limits how many tasks can be "in progress" at once. Archive + delete ability! Subtasks, due dates, notes per task. One-click compact PDF export of a whole project. Feels calm, not corporate. There's also a archived tasks section... with export/import.
+
+MVP: A single board with 5 columns, a limit for in-progress, basic task cards (only title), and deletion only, but multiple projects with export/import.
