@@ -1,4 +1,4 @@
-Single Tasking Helper
+OneThing: Single Tasking Helper
 
 Problem: Too many tasks, too many mental tabs, paralysis at start of work.
 

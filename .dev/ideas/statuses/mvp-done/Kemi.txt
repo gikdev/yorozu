@@ -1,4 +1,4 @@
-Choice Helper
+Kemi: Choice Helper
 
 Problem: Decision paralysis when faced with a list of options (what to watch, eat, work on). Staring at the whole list freezes you.
 
