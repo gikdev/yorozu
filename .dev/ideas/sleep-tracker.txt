@@ -1,0 +1,7 @@
+Sleep Tracker
+
+Problem: Inconsistent sleep patterns, no insight into causes or quality. You want data you could someday share with a sleep doctor.
+
+Dream: Log bed and wake times. Note causes for late sleep or early waking. Visualize trends (consistency, duration, bed/wake time drift). Insights like “You sleep later when you work past 10pm.” Printable monthly report for a professional. Gentle wind-down reminders.
+
+MVP: Manual sleep/wake entry, simple streak or bar chart, notes field for causes. localStorage.

@@ -1,0 +1,7 @@
+Mood Tracker
+
+Problem: You intellectualize emotions and lose track of patterns. You suspect specific triggers but lack data.
+
+Dream: Quick daily check-in: select from a predefined list of moods (with short explanations) or describe how you feel and let AI suggest the mood. Log context: who you were with, where, what doing, weather, time. Dashboard shows mood trends over time, filters by context. Discover correlations (“anxious mostly around X”). Private, encrypted, designed for self-knowledge.
+
+MVP: Daily mood picker (emoji-based) with optional note, simple monthly mood chart, context tags. localStorage.

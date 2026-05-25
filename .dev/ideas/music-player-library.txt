@@ -1,0 +1,7 @@
+Music Library + Player (OP/EDs, Soundtracks, Beloved Tracks)
+
+Problem: Your favorite music – especially anime OP/EDs – is scattered across YouTube, local files, and streaming. No unified emotional library.
+
+Dream: A library with moods, categories, genres, and types (OP, ED, insert song). Artists and albums have cover art. Hearts, bookmarks, playlists, folders. Track source (local file, YouTube link, streaming). Player for local files. Optionally, a visualizer or mini-player that syncs with the cyan orb of focus.
+
+MVP: A simple library with manual entries (title, artist, source link, mood tag), hearts, and basic playlist support. Local file playback via HTML5 audio. Single file.

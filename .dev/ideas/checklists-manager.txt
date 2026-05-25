@@ -1,0 +1,7 @@
+Checklists Manager (Checklist Manifesto)
+
+Problem: Important recurring procedures need strict, repeatable checklists that can be reset and printed.
+
+Dream: Define a checklist once (ordered or unordered). Items can be required or optional, can have substeps and notes. Multiple states: not started, in progress, done, skipped. Cloning: clean clone (fresh start) or literal clone (keep current state). Usage mode, then reset, archive, or delete. Print-ready output, beautiful on paper. Categories/tags for sets of checklists (Health, Dev, Travel).
+
+MVP: Create a checklist, check items off, reset, archive. Basic print stylesheet. Single HTML file.
