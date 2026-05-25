@@ -1,4 +1,4 @@
-Unified Content Tracker (Anime, Books, Courses, Podcasts, etc.)
+Hondana: Unified Content Tracker (Anime, Books, Courses, Podcasts, etc.)
 
 Problem: You consume many types of content (anime, novels, video courses, podcasts) for different purposes – fun, learning, immersion. Currently scattered, no unified progress view, no privacy controls, no balanced diet nudges.
 
