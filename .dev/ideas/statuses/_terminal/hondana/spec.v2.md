@@ -11,8 +11,7 @@ Hondana is a personal, private library manager for all the content you consume: 
 ## 2. Core Concepts (Ubiquitous Language)
 
 - **Content Item** — Any consumable media. Has a title, type, total length (if known), and optional cover art.
-  - 🔹 **Option A:** `Type` is a fixed enum: Anime, Book, Course, Podcast, Other.
-  - 🔹 **Option B:** `Type` is a string with predefined suggestions, allowing custom types (e.g., "Manga", "Audiobook") for full flexibility.
+  - `Type` is fixed enum: none, readables, listenables, and watchables...
 
 - **Intention Track** — A *reason* you engage with a Content Item. Each track is independent.
   - 🔹 **Option A:** Standard intentions are a fixed enum: Fun, Learning, Immersion, Teaching, Custom.
