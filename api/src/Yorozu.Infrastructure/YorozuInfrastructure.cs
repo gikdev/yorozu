@@ -1,13 +1,11 @@
-using Yorozu.Application.Todos;
-using Yorozu.Common;
-using Yorozu.Common.Data;
-using Yorozu.Common.Endpoints;
-using Yorozu.Infrastructure.Database;
-using Yorozu.Infrastructure.Todos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Yorozu.Common;
+using Yorozu.Common.Data;
+using Yorozu.Common.Endpoints;
+using Yorozu.Infrastructure.Database;
 
 namespace Yorozu.Infrastructure;
 

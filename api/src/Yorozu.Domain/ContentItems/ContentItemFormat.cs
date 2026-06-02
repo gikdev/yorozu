@@ -2,7 +2,7 @@
 
 namespace Yorozu.Domain.ContentItems;
 
-public enum ContentItemType {
+public enum ContentItemFormat {
     Readable = 1,
     Listenable = 2,
     Watchable = 3,

@@ -1,7 +1,7 @@
 using System.Reflection;
-using Yorozu.Common.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Yorozu.Common.Behaviors;
 
 namespace Yorozu.Common;
 

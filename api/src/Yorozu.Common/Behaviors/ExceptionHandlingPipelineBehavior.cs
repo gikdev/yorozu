@@ -1,6 +1,6 @@
-using Yorozu.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Yorozu.Common.Exceptions;
 
 namespace Yorozu.Common.Behaviors;
 

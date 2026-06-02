@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
+using Scalar.AspNetCore;
 using Yorozu.Api.Extensions;
 using Yorozu.Api.Middleware;
 using Yorozu.Common.Endpoints;
 using Yorozu.Infrastructure;
-using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;

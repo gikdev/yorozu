@@ -1,5 +1,5 @@
-using Yorozu.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using Yorozu.Infrastructure.Database;
 
 namespace Yorozu.Api.Extensions;
 

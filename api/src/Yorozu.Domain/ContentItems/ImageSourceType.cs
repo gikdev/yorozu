@@ -2,8 +2,5 @@
 
 namespace Yorozu.Domain.ContentItems;
 
-public enum TitleKind {
-    None = 0,
-    Real = 1,
-    Nick = 2,
-}
+public enum ImageSourceType { Url = 1 }
+

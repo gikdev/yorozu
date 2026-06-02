@@ -1,7 +1,5 @@
-using Yorozu.Common.Data;
-using Yorozu.Domain.Todos;
-using Yorozu.Infrastructure.Todos;
 using Microsoft.EntityFrameworkCore;
+using Yorozu.Common.Data;
 
 namespace Yorozu.Infrastructure.Database;
 

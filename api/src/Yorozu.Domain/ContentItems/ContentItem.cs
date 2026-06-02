@@ -1,125 +1,136 @@
-#pragma warning disable CA1008 // Enums should have zero value
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
+using ErrorOr;
 using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
-public class ContentItem : IAggregateRoot {
-    public required Guid Id { get; init; }
-    public required ContentItemType Type { get; set; }
-    public required List<Title> Titles { get; set; }
-    public required List<ConsumptionTrack> ConsumptionTracks { get; set; }
-    public required List<string> Tags { get; set; }
-    public required List<Genre> Genres { get; set; }
-    public required ContentUnitSpecification UnitSpecification { get; set; }
-    public required ContentItemGallery Gallery { get; set; }
-    public required bool IsSecret { get; set; }
-    public required bool IsBookmarked { get; set; }
-    public required bool IsFavorite { get; set; }
-    public required List<Goal> Goals { get; set; }
-    public required List<Note> Notes { get; set; }
-    public required List<ToDoItem> Todos { get; set; }
-    public required List<Location> Locations { get; set; }
-}
+public class ContentItem : IAggregateRoot, IHasTimestamps {
+    private readonly List<NonEmptyString> _tags = [];
+    private readonly List<Genre> _genres = [];
+    private readonly List<Location> _locations = [];
+    private readonly List<ConsumptionTrack> _consumptionTracks = [];
+    private readonly List<ContentItemImage> _images = [];
 
-public class ContentItemGallery {
-    public List<GalleryImage> Images { get; set; } = [];
-    public Guid? PrimaryImageId { get; set; }
-    public string? PlaceholderColor { get; set; } = "#3A3A3A";
-}
+    public Guid Id { get; private init; } = Guid.NewGuid();
+    public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? UpdatedAt { get; private set; }
 
-public enum ImageSourceType { Url, FilePath }
+    public NonEmptyString FullTitle { get; private set; }
+    public NonEmptyString? NickName { get; private set; }
+    public NonEmptyString Title => NickName ?? FullTitle;
 
-public class GalleryImage {
-    public Guid Id { get; init; }
-    public ImageSourceType SourceType { get; set; }
-    public string Value { get; set; } = string.Empty;
-    public int SortOrder { get; set; }
-}
+    public ContentItemFormat Format { get; private set; }
+    public IReadOnlyCollection<NonEmptyString> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<Genre> Genres => _genres.AsReadOnly();
 
-public interface IHasTimestamps {
-    DateTimeOffset CreatedAt { get; }
-    DateTimeOffset UpdatedAt { get; set; }
-}
+    public bool IsSecret { get; private set; }
+    public bool IsBookmarked { get; private set; }
+    public bool IsFavorite { get; private set; }
 
-public record ContentUnitSpecification {
-    public required ContentUnitType UnitType { get; init; }
-    public required int? TotalUnits { get; init; }
-    public required bool IsOngoing { get; init; }
-}
+    public IReadOnlyCollection<Location> Locations => _locations.AsReadOnly();
 
-public class Location {
-    public required Guid Id { get; init; }
-    public required LocationType Type { get; set; }
-    public required string Value { get; set; }
-    public required string Title { get; set; }
-}
+    public ContentUnitSpecification? UnitSpecification { get; private set; }
+    public IReadOnlyCollection<ConsumptionTrack> ConsumptionTracks => _consumptionTracks.AsReadOnly();
 
-public enum LocationType { FilePath, Url, Physical }
+    public Guid? PrimaryImageId { get; private set; }
+    public ContentItemImage? PrimaryImage => Images.ToList().Find(i => i.Id == PrimaryImageId);
+    public IReadOnlyCollection<ContentItemImage> Images => _images.AsReadOnly();
 
-public enum Genre {
-    // Demographics / Target audience
-    Shounen, Shoujo, Seinen, Josei, Kids, Adult,
+    public string PlaceholderColor { get; private set; } = "#3A3A3A";
+    public string PlaceholderLetter => Title.Value[0].ToString();
 
-    // Anime-specific sub-genres / tropes
-    Isekai, Mecha, MagicalGirl, Harem, ReverseHarem, CuteGirlsDoingCuteThings, Cyberpunk,
+    private ContentItem() {
+    }
 
-    // General fiction
-    Action, Adventure, Comedy, Drama, Fantasy, Horror, Mystery, Romance, SciFi,
-    SliceOfLife, Thriller, Historical, Supernatural, Psychological, Tragedy,
-    Dystopian, Western, Crime,
+    public static ErrorOr<ContentItem> Create(
+        NonEmptyString fullTitle,
+        ContentItemFormat format
+    ) {
+        return new ContentItem {
+            FullTitle = fullTitle,
+            Format = format,
+        };
+    }
 
-    // Non-fiction / real-world
-    NonFiction, SelfHelp, Biography, Memoir, Technology, Science, Philosophy,
-    Art, Music, Cooking, Travel, Business, Health, Education, Sports,
-    TrueCrime, History, Politics
-}
+    public void UpdateFullTitle(NonEmptyString fullTitle) {
+        FullTitle = fullTitle;
+        MarkUpdated();
+    }
 
-public class ConsumptionTrack {
-    public required Guid Id { get; init; }
-    public required IntentionType Type { get; set; }
-    public required ConsumptionStatus Status { get; set; }
-    public required ContentUnitType UnitType { get; set; }
-    public required int CurrentUnit { get; set; }
-    public string? Description { get; set; }
-}
+    public void ChangeNickName(NonEmptyString nickName) {
+        NickName = nickName;
+        MarkUpdated();
+    }
 
-public class Title {
-    public required Guid Id { get; init; }
-    public required string Text { get; init; }
-    public required Language Language { get; init; }
-    public required TitleKind Kind { get; init; }
-}
+    public void Bookmark() {
+        IsBookmarked = true;
+        MarkUpdated();
+    }
 
-public class QuickRecommendation {
-    public Guid Id { get; init; } = Guid.NewGuid();
-    public required string Title { get; set; }
-    public ContentItemType? Type { get; set; }
-    public string? Link { get; set; }
-    public string? Note { get; set; }
-    public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
-}
+    public void Unbookmark() {
+        IsBookmarked = false;
+        MarkUpdated();
+    }
 
-public class Goal {
-    public Guid Id { get; init; } = Guid.NewGuid();
-    public required Guid ConsumptionTrackId { get; set; }
-    public required string Description { get; set; }
-    public DateTime? DueDate { get; set; }
-    public bool IsCompleted { get; set; }
-}
+    public void ToggleBookmark() {
+        IsBookmarked = !IsBookmarked;
+        MarkUpdated();
+    }
 
-public class Note {
-    public Guid Id { get; init; } = Guid.NewGuid();
-    public required string Text { get; set; }
-    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
-    public Guid? ConsumptionTrackId { get; set; }   // optional link
-}
+    public void Favorite() {
+        IsFavorite = true;
+        MarkUpdated();
+    }
 
-public class ToDoItem {
-    public Guid Id { get; init; } = Guid.NewGuid();
-    public required string Description { get; set; }
-    public DateTime? DueDate { get; set; }
-    public bool IsCompleted { get; set; }
-    public Guid? ConsumptionTrackId { get; set; }   // optional link
-    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+    public void Unfavorite() {
+        IsFavorite = false;
+        MarkUpdated();
+    }
+
+    public void ToggleFavorite() {
+        IsFavorite = !IsFavorite;
+        MarkUpdated();
+    }
+
+    public void MarkSecret() {
+        IsSecret = true;
+        MarkUpdated();
+    }
+
+    public void UnmarkSecret() {
+        IsSecret = false;
+        MarkUpdated();
+    }
+
+    public void ToggleSecret() {
+        IsSecret = !IsSecret;
+        MarkUpdated();
+    }
+
+    public void AddTag(NonEmptyString tag) {
+        if (_tags.Contains(tag)) return;
+        _tags.Add(tag);
+        MarkUpdated();
+    }
+
+    public void RemoveTag(NonEmptyString tag) {
+        var isSuccess = _tags.Remove(tag);
+        if (!isSuccess) return;
+        MarkUpdated();
+    }
+
+    public void AddGenre(Genre genre) {
+        if (_genres.Contains(genre)) return;
+        _genres.Add(genre);
+        MarkUpdated();
+    }
+
+    public void RemoveGenre(Genre genre) {
+        var isSuccess = _genres.Remove(genre);
+        if (!isSuccess) return;
+        MarkUpdated();
+    }
+
+    private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
 }
