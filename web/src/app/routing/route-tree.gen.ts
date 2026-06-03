@@ -11,11 +11,11 @@
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
-import { Route as AppsTodosIndexRouteImport } from "./../../routes/apps/todos/index"
-import { Route as AppsTodosNewRouteImport } from "./../../routes/apps/todos/new"
-import { Route as AppsTodosFilterRouteImport } from "./../../routes/apps/todos/filter"
-import { Route as AppsTodosTodoIdIndexRouteImport } from "./../../routes/apps/todos/$todoId/index"
-import { Route as AppsTodosTodoIdEditRouteImport } from "./../../routes/apps/todos/$todoId/edit"
+import { Route as AppsTimeOrbsRouteImport } from "./../../routes/apps/time-orbs"
+import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-focus"
+import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
+import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
+import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 
 const DevRoute = DevRouteImport.update({
   id: "/dev",
@@ -27,98 +27,98 @@ const homeIndexRoute = homeIndexRouteImport.update({
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosIndexRoute = AppsTodosIndexRouteImport.update({
-  id: "/apps/todos/",
-  path: "/apps/todos/",
+const AppsTimeOrbsRoute = AppsTimeOrbsRouteImport.update({
+  id: "/apps/time-orbs",
+  path: "/apps/time-orbs",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosNewRoute = AppsTodosNewRouteImport.update({
-  id: "/apps/todos/new",
-  path: "/apps/todos/new",
+const AppsSingleFocusRoute = AppsSingleFocusRouteImport.update({
+  id: "/apps/single-focus",
+  path: "/apps/single-focus",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosFilterRoute = AppsTodosFilterRouteImport.update({
-  id: "/apps/todos/filter",
-  path: "/apps/todos/filter",
+const AppsKanbanRoute = AppsKanbanRouteImport.update({
+  id: "/apps/kanban",
+  path: "/apps/kanban",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosTodoIdIndexRoute = AppsTodosTodoIdIndexRouteImport.update({
-  id: "/apps/todos/$todoId/",
-  path: "/apps/todos/$todoId/",
+const AppsExpensesRoute = AppsExpensesRouteImport.update({
+  id: "/apps/expenses",
+  path: "/apps/expenses",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTodosTodoIdEditRoute = AppsTodosTodoIdEditRouteImport.update({
-  id: "/apps/todos/$todoId/edit",
-  path: "/apps/todos/$todoId/edit",
+const AppsChoiceRoute = AppsChoiceRouteImport.update({
+  id: "/apps/choice",
+  path: "/apps/choice",
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
+  "/apps/choice": typeof AppsChoiceRoute
+  "/apps/expenses": typeof AppsExpensesRoute
+  "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
-  "/apps/todos/filter": typeof AppsTodosFilterRoute
-  "/apps/todos/new": typeof AppsTodosNewRoute
-  "/apps/todos/": typeof AppsTodosIndexRoute
-  "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
-  "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
 }
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
+  "/apps/choice": typeof AppsChoiceRoute
+  "/apps/expenses": typeof AppsExpensesRoute
+  "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
-  "/apps/todos/filter": typeof AppsTodosFilterRoute
-  "/apps/todos/new": typeof AppsTodosNewRoute
-  "/apps/todos": typeof AppsTodosIndexRoute
-  "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
-  "/apps/todos/$todoId": typeof AppsTodosTodoIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/dev": typeof DevRoute
+  "/apps/choice": typeof AppsChoiceRoute
+  "/apps/expenses": typeof AppsExpensesRoute
+  "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
-  "/apps/todos/filter": typeof AppsTodosFilterRoute
-  "/apps/todos/new": typeof AppsTodosNewRoute
-  "/apps/todos/": typeof AppsTodosIndexRoute
-  "/apps/todos/$todoId/edit": typeof AppsTodosTodoIdEditRoute
-  "/apps/todos/$todoId/": typeof AppsTodosTodoIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | "/dev"
+    | "/apps/choice"
+    | "/apps/expenses"
+    | "/apps/kanban"
+    | "/apps/single-focus"
+    | "/apps/time-orbs"
     | "/"
-    | "/apps/todos/filter"
-    | "/apps/todos/new"
-    | "/apps/todos/"
-    | "/apps/todos/$todoId/edit"
-    | "/apps/todos/$todoId/"
   fileRoutesByTo: FileRoutesByTo
   to:
     | "/dev"
+    | "/apps/choice"
+    | "/apps/expenses"
+    | "/apps/kanban"
+    | "/apps/single-focus"
+    | "/apps/time-orbs"
     | "/"
-    | "/apps/todos/filter"
-    | "/apps/todos/new"
-    | "/apps/todos"
-    | "/apps/todos/$todoId/edit"
-    | "/apps/todos/$todoId"
   id:
     | "__root__"
     | "/dev"
+    | "/apps/choice"
+    | "/apps/expenses"
+    | "/apps/kanban"
+    | "/apps/single-focus"
+    | "/apps/time-orbs"
     | "/(home)/"
-    | "/apps/todos/filter"
-    | "/apps/todos/new"
-    | "/apps/todos/"
-    | "/apps/todos/$todoId/edit"
-    | "/apps/todos/$todoId/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   DevRoute: typeof DevRoute
+  AppsChoiceRoute: typeof AppsChoiceRoute
+  AppsExpensesRoute: typeof AppsExpensesRoute
+  AppsKanbanRoute: typeof AppsKanbanRoute
+  AppsSingleFocusRoute: typeof AppsSingleFocusRoute
+  AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
-  AppsTodosFilterRoute: typeof AppsTodosFilterRoute
-  AppsTodosNewRoute: typeof AppsTodosNewRoute
-  AppsTodosIndexRoute: typeof AppsTodosIndexRoute
-  AppsTodosTodoIdEditRoute: typeof AppsTodosTodoIdEditRoute
-  AppsTodosTodoIdIndexRoute: typeof AppsTodosTodoIdIndexRoute
 }
 
 declare module "@tanstack/react-router" {
@@ -137,39 +137,39 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof homeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/todos/": {
-      id: "/apps/todos/"
-      path: "/apps/todos"
-      fullPath: "/apps/todos/"
-      preLoaderRoute: typeof AppsTodosIndexRouteImport
+    "/apps/time-orbs": {
+      id: "/apps/time-orbs"
+      path: "/apps/time-orbs"
+      fullPath: "/apps/time-orbs"
+      preLoaderRoute: typeof AppsTimeOrbsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/todos/new": {
-      id: "/apps/todos/new"
-      path: "/apps/todos/new"
-      fullPath: "/apps/todos/new"
-      preLoaderRoute: typeof AppsTodosNewRouteImport
+    "/apps/single-focus": {
+      id: "/apps/single-focus"
+      path: "/apps/single-focus"
+      fullPath: "/apps/single-focus"
+      preLoaderRoute: typeof AppsSingleFocusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/todos/filter": {
-      id: "/apps/todos/filter"
-      path: "/apps/todos/filter"
-      fullPath: "/apps/todos/filter"
-      preLoaderRoute: typeof AppsTodosFilterRouteImport
+    "/apps/kanban": {
+      id: "/apps/kanban"
+      path: "/apps/kanban"
+      fullPath: "/apps/kanban"
+      preLoaderRoute: typeof AppsKanbanRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/todos/$todoId/": {
-      id: "/apps/todos/$todoId/"
-      path: "/apps/todos/$todoId"
-      fullPath: "/apps/todos/$todoId/"
-      preLoaderRoute: typeof AppsTodosTodoIdIndexRouteImport
+    "/apps/expenses": {
+      id: "/apps/expenses"
+      path: "/apps/expenses"
+      fullPath: "/apps/expenses"
+      preLoaderRoute: typeof AppsExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/todos/$todoId/edit": {
-      id: "/apps/todos/$todoId/edit"
-      path: "/apps/todos/$todoId/edit"
-      fullPath: "/apps/todos/$todoId/edit"
-      preLoaderRoute: typeof AppsTodosTodoIdEditRouteImport
+    "/apps/choice": {
+      id: "/apps/choice"
+      path: "/apps/choice"
+      fullPath: "/apps/choice"
+      preLoaderRoute: typeof AppsChoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -177,12 +177,12 @@ declare module "@tanstack/react-router" {
 
 const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
+  AppsChoiceRoute: AppsChoiceRoute,
+  AppsExpensesRoute: AppsExpensesRoute,
+  AppsKanbanRoute: AppsKanbanRoute,
+  AppsSingleFocusRoute: AppsSingleFocusRoute,
+  AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
-  AppsTodosFilterRoute: AppsTodosFilterRoute,
-  AppsTodosNewRoute: AppsTodosNewRoute,
-  AppsTodosIndexRoute: AppsTodosIndexRoute,
-  AppsTodosTodoIdEditRoute: AppsTodosTodoIdEditRoute,
-  AppsTodosTodoIdIndexRoute: AppsTodosTodoIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
