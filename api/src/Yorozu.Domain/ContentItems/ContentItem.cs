@@ -6,11 +6,14 @@ using Yorozu.Common.Domain;
 namespace Yorozu.Domain.ContentItems;
 
 public class ContentItem : IAggregateRoot, IHasTimestamps {
+    public static Error MustHaveUnitSpecificationError { get; } = Error.Validation(
+        description: "A unit specification is required to track consumption.",
+        code: "ContentItem.MustHaveUnitSpecification"
+    );
+
     private readonly List<NonEmptyString> _tags = [];
     private readonly List<Genre> _genres = [];
-    private readonly List<Location> _locations = [];
     private readonly List<ConsumptionTrack> _consumptionTracks = [];
-    private readonly List<ContentItemImage> _images = [];
 
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
@@ -28,28 +31,26 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public bool IsBookmarked { get; private set; }
     public bool IsFavorite { get; private set; }
 
-    public IReadOnlyCollection<Location> Locations => _locations.AsReadOnly();
+    public Location? Location { get; private set; }
 
     public ContentUnitSpecification? UnitSpecification { get; private set; }
     public IReadOnlyCollection<ConsumptionTrack> ConsumptionTracks => _consumptionTracks.AsReadOnly();
 
-    public Guid? PrimaryImageId { get; private set; }
-    public ContentItemImage? PrimaryImage => Images.ToList().Find(i => i.Id == PrimaryImageId);
-    public IReadOnlyCollection<ContentItemImage> Images => _images.AsReadOnly();
-
+    public CoverImage? CoverImage { get; private set; }
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
     public string PlaceholderLetter => Title.Value[0].ToString();
 
-    private ContentItem() {
-    }
+    private ContentItem() { }
 
-    public static ErrorOr<ContentItem> Create(
+    public static ContentItem Create(
         NonEmptyString fullTitle,
-        ContentItemFormat format
+        ContentItemFormat format,
+        Guid? id = null
     ) {
         return new ContentItem {
             FullTitle = fullTitle,
             Format = format,
+            Id = id ?? Guid.NewGuid(),
         };
     }
 
@@ -58,7 +59,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void ChangeNickName(NonEmptyString nickName) {
+    public void ChangeNickName(NonEmptyString? nickName) {
         NickName = nickName;
         MarkUpdated();
     }
@@ -132,5 +133,70 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
+    public void SetCoverImage(CoverImage img) {
+        CoverImage = img;
+        MarkUpdated();
+    }
+
+    public void RemoveCoverImage() {
+        CoverImage = null;
+        MarkUpdated();
+    }
+
+    public void ChangeLocation(Location? location) {
+        Location = location;
+        MarkUpdated();
+    }
+
+    public void SetUnitSpecification(ContentUnitSpecification spec) {
+        UnitSpecification = spec;
+        MarkUpdated();
+    }
+
+    public void RemoveUnitSpecification() {
+        UnitSpecification = null;
+        _consumptionTracks.Clear();
+        MarkUpdated();
+    }
+
+    public ErrorOr<Guid> AddConsumptionTrack(
+        IntentionType type,
+        NonEmptyString title,
+        NonEmptyString? description = null,
+        Guid? trackId = null
+    ) {
+        if (UnitSpecification is null)
+            return MustHaveUnitSpecificationError;
+
+        var track = new ConsumptionTrack {
+            Title = title,
+            Type = type,
+            Id = trackId ?? Guid.NewGuid(),
+            Description = description,
+        };
+
+        _consumptionTracks.Add(track);
+
+        MarkUpdated();
+
+        return track.Id;
+    }
+
+    public void RemoveConsumptionTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(x => x.Id == trackId);
+        if (track == null) return;
+
+        _consumptionTracks.Remove(track);
+        MarkUpdated();
+    }
+
+    public void SetPlaceholderColor(string? color) {
+        PlaceholderColor = color ?? "#3A3A3A";
+        MarkUpdated();
+    }
+
     private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
+
+    public override bool Equals(object? obj) => obj is ContentItem other && Id.Equals(other.Id);
+    public override int GetHashCode() => Id.GetHashCode();
 }
