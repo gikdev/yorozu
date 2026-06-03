@@ -10,6 +10,10 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         description: "A unit specification is required to track consumption.",
         code: "ContentItem.MustHaveUnitSpecification"
     );
+    public static Error TrackNotFoundError(Guid id) => Error.NotFound(
+        description: $"Consumption track with id '{id}' was not found.",
+        code: "ContentItem.TrackNotFound"
+    );
 
     private readonly List<NonEmptyString> _tags = [];
     private readonly List<Genre> _genres = [];
@@ -46,13 +50,11 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         NonEmptyString fullTitle,
         ContentItemFormat format,
         Guid? id = null
-    ) {
-        return new ContentItem {
-            FullTitle = fullTitle,
-            Format = format,
-            Id = id ?? Guid.NewGuid(),
-        };
-    }
+    ) => new() {
+        FullTitle = fullTitle,
+        Format = format,
+        Id = id ?? Guid.NewGuid(),
+    };
 
     public void UpdateFullTitle(NonEmptyString fullTitle) {
         FullTitle = fullTitle;
@@ -116,9 +118,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     }
 
     public void RemoveTag(NonEmptyString tag) {
-        var isSuccess = _tags.Remove(tag);
-        if (!isSuccess) return;
-        MarkUpdated();
+        if (_tags.Remove(tag))
+            MarkUpdated();
     }
 
     public void AddGenre(Genre genre) {
@@ -128,9 +129,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     }
 
     public void RemoveGenre(Genre genre) {
-        var isSuccess = _genres.Remove(genre);
-        if (!isSuccess) return;
-        MarkUpdated();
+        if (_genres.Remove(genre))
+            MarkUpdated();
     }
 
     public void SetCoverImage(CoverImage img) {
@@ -148,8 +148,27 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
+    public void SetPlaceholderColor(string? color) {
+        PlaceholderColor = color ?? "#3A3A3A";
+        MarkUpdated();
+    }
+
     public void SetUnitSpecification(ContentUnitSpecification spec) {
         UnitSpecification = spec;
+
+        // Auto-cap & auto-complete tracks that exceed the new total
+        if (!spec.IsOngoing && spec.TotalUnits.HasValue) {
+            foreach (var track in _consumptionTracks) {
+                if (track.CurrentUnit > spec.TotalUnits.Value) {
+                    track.ForceProgress(spec.TotalUnits.Value);
+
+                    if (track.Status == ConsumptionStatus.InProgress) {
+                        track.ForceComplete();
+                    }
+                }
+            }
+        }
+
         MarkUpdated();
     }
 
@@ -168,31 +187,108 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         if (UnitSpecification is null)
             return MustHaveUnitSpecificationError;
 
-        var track = new ConsumptionTrack {
-            Title = title,
-            Type = type,
-            Id = trackId ?? Guid.NewGuid(),
-            Description = description,
-        };
-
+        var track = ConsumptionTrack.Create(type, title, description, trackId);
         _consumptionTracks.Add(track);
-
         MarkUpdated();
-
         return track.Id;
     }
 
-    public void RemoveConsumptionTrack(Guid trackId) {
+    public ErrorOr<Success> RemoveConsumptionTrack(Guid trackId) {
         var track = _consumptionTracks.FirstOrDefault(x => x.Id == trackId);
-        if (track == null) return;
+        if (track is null)
+            return TrackNotFoundError(trackId);
 
         _consumptionTracks.Remove(track);
         MarkUpdated();
+        return Result.Success;
     }
 
-    public void SetPlaceholderColor(string? color) {
-        PlaceholderColor = color ?? "#3A3A3A";
+    public ErrorOr<Success> StartTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.Start();
+        if (result.IsError) return result.Errors;
+
         MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> PauseTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.Pause();
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> ResumeTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.Resume();
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> CompleteTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.Complete();
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> DropTrack(Guid trackId) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.Drop();
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> SetTrackProgress(Guid trackId, int newValue) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.SetProgress(newValue, UnitSpecification?.TotalUnits);
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> IncrementTrackProgress(Guid trackId, int amount = 1) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.IncrementProgress(amount, UnitSpecification?.TotalUnits);
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> DecrementTrackProgress(Guid trackId, int amount = 1) {
+        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
+        if (track is null) return TrackNotFoundError(trackId);
+
+        var result = track.DecrementProgress(amount);
+        if (result.IsError) return result.Errors;
+
+        MarkUpdated();
+        return Result.Success;
     }
 
     private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
