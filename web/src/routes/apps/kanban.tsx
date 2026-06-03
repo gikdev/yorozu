@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { DownloadIcon, UploadIcon, TrashIcon } from "@phosphor-icons/react"
 
 export const Route = createFileRoute("/apps/kanban")({
   component: KanbanBoard,
@@ -20,14 +21,70 @@ interface Project {
   tasks: Task[]
 }
 
+const STORAGE_KEY = "kanban-data"
+
 function KanbanBoard() {
-  const [projects, setProjects] = useState<Project[]>([])
-  const [currentProjectId, setCurrentProjectId] = useState<number | null>(null)
+  // Load from localStorage on initial render
+  const [projects, setProjects] = useState<Project[]>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed)) return parsed
+      } catch (e) {
+        console.error("Failed to load kanban data from localStorage", e)
+      }
+    }
+    return []
+  })
+
+  const [currentProjectId, setCurrentProjectId] = useState<number | null>(() => {
+    const savedCurrent = localStorage.getItem(`${STORAGE_KEY}-current`)
+    if (savedCurrent) {
+      try {
+        const parsed = JSON.parse(savedCurrent)
+        if (typeof parsed === "number") return parsed
+      } catch (e) {
+        console.error("Failed to load current project from localStorage", e)
+      }
+    }
+    return null
+  })
+
   const [newProjectTitle, setNewProjectTitle] = useState("")
-
   const [newTaskTitle, setNewTaskTitle] = useState("")
+  const [idCounter, setIdCounter] = useState(() => {
+    const savedCounter = localStorage.getItem(`${STORAGE_KEY}-counter`)
+    if (savedCounter) {
+      try {
+        const parsed = JSON.parse(savedCounter)
+        if (typeof parsed === "number") return parsed
+      } catch (e) {
+        console.error("Failed to load ID counter from localStorage", e)
+      }
+    }
+    return 1
+  })
 
-  const [idCounter, setIdCounter] = useState(1)
+  // Save projects to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects))
+  }, [projects])
+
+  // Save current project ID to localStorage
+  useEffect(() => {
+    if (currentProjectId === null) {
+      localStorage.removeItem(`${STORAGE_KEY}-current`)
+    } else {
+      localStorage.setItem(`${STORAGE_KEY}-current`, JSON.stringify(currentProjectId))
+    }
+  }, [currentProjectId])
+
+  // Save ID counter to localStorage
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY}-counter`, JSON.stringify(idCounter))
+  }, [idCounter])
+
   const nextId = () => {
     const id = idCounter
     setIdCounter(id + 1)
@@ -108,6 +165,76 @@ function KanbanBoard() {
     )
   }
 
+  // Export data as JSON file
+  const exportData = () => {
+    const data = {
+      projects,
+      currentProjectId,
+      idCounter,
+      version: "1.0",
+      exportedAt: new Date().toISOString(),
+    }
+    const dataStr = JSON.stringify(data, null, 2)
+    const blob = new Blob([dataStr], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `kanban-backup-${new Date().toISOString().split("T")[0]}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  // Import data from JSON file
+  const importData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string
+        const data = JSON.parse(content)
+
+        // Validate imported data structure
+        if (data.projects && Array.isArray(data.projects)) {
+          setProjects(data.projects)
+          if (typeof data.currentProjectId === "number") {
+            // Check if the imported project ID actually exists in projects
+            const projectExists = data.projects.some((p: Project) => p.id === data.currentProjectId)
+            setCurrentProjectId(projectExists ? data.currentProjectId : null)
+          }
+          if (typeof data.idCounter === "number") {
+            setIdCounter(data.idCounter)
+          }
+          alert("✅ Data imported successfully!")
+        } else {
+          alert("❌ Invalid file format. Please export a valid Kanban backup.")
+        }
+      } catch (error) {
+        console.error("Import failed:", error)
+        alert("❌ Failed to import data. Check the file format.")
+      }
+    }
+    reader.readAsText(file)
+
+    // Reset file input
+    event.target.value = ""
+  }
+
+  // Reset everything with confirmation
+  const resetAll = () => {
+    if (!window.confirm("⚠️ This will delete ALL projects and tasks. Are you ABSOLUTELY sure?")) return
+
+    setProjects([])
+    setCurrentProjectId(null)
+    setIdCounter(1)
+    localStorage.removeItem(STORAGE_KEY)
+    localStorage.removeItem(`${STORAGE_KEY}-current`)
+    localStorage.removeItem(`${STORAGE_KEY}-counter`)
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex">
       <title>Kanban</title>
@@ -159,6 +286,44 @@ function KanbanBoard() {
             </li>
           ))}
         </ul>
+
+        {/* Import/Export/Reset buttons */}
+        <div className="border-t border-gray-700 pt-3 mt-auto space-y-2">
+          <button
+            onClick={exportData}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 rounded text-sm font-medium transition"
+            title="Export all data"
+          >
+            <DownloadIcon size={18} />
+            <span>Export</span>
+          </button>
+
+          <label className="w-full">
+            <input
+              type="file"
+              accept=".json"
+              onChange={importData}
+              className="hidden"
+            />
+            <button
+              onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm font-medium transition"
+              title="Import data from file"
+            >
+              <UploadIcon size={18} />
+              <span>Import</span>
+            </button>
+          </label>
+
+          <button
+            onClick={resetAll}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm font-medium transition"
+            title="Reset everything"
+          >
+            <TrashIcon size={18} />
+            <span>Reset</span>
+          </button>
+        </div>
       </aside>
 
       {/* Main board */}

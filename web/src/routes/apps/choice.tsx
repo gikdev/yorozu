@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/apps/choice")({
@@ -7,9 +7,23 @@ export const Route = createFileRoute("/apps/choice")({
 
 type Mode = "winner" | "ranked"
 
+const STORAGE_KEY = "focus-choice-items"
+
 export default function FocusChoiceApp() {
-  // --- Shared state ---
-  const [items, setItems] = useState<string[]>([])
+  // --- Shared state with localStorage ---
+  const [items, setItems] = useState<string[]>(() => {
+    // Load from localStorage on initial render
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed)) return parsed
+      } catch (e) {
+        console.error("Failed to load from localStorage", e)
+      }
+    }
+    return []
+  })
   const [itemInput, setItemInput] = useState("")
   const [, setMode] = useState<Mode | null>(null)
   const [stage, setStage] = useState<
@@ -34,6 +48,11 @@ export default function FocusChoiceApp() {
   const [resolveRanking, setResolveRanking] = useState<
     ((v: boolean) => void) | null
   >(null)
+
+  // --- Save to localStorage whenever items change ---
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+  }, [items])
 
   // --- Add / remove items ---
   const addItem = useCallback(() => {
@@ -120,7 +139,7 @@ export default function FocusChoiceApp() {
     }
   }
 
-  // --- Reset ---
+  // --- Reset (clears localStorage) ---
   const reset = () => {
     setStage("input")
     setFinalChampion(null)
@@ -128,6 +147,7 @@ export default function FocusChoiceApp() {
     setItems([])
     setPairs([])
     setRoundWinners([])
+    localStorage.removeItem(STORAGE_KEY)
   }
 
   return (

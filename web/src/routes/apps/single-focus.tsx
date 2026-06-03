@@ -5,10 +5,33 @@ export const Route = createFileRoute("/apps/single-focus")({
   component: FocusHelper,
 })
 
+const STORAGE_KEY = "single-focus"
+
 function FocusHelper() {
   const [focusInput, setFocusInput] = useState("")
-  const [currentFocus, setCurrentFocus] = useState<string | null>(null)
+  const [currentFocus, setCurrentFocus] = useState<string | null>(() => {
+    // Load saved focus from localStorage on initial render
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (typeof parsed === "string" || parsed === null) return parsed
+      } catch (e) {
+        console.error("Failed to load focus from localStorage", e)
+      }
+    }
+    return null
+  })
   const [showToast, setShowToast] = useState(false)
+
+  // Save currentFocus to localStorage whenever it changes
+  useEffect(() => {
+    if (currentFocus === null) {
+      localStorage.removeItem(STORAGE_KEY)
+    } else {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(currentFocus))
+    }
+  }, [currentFocus])
 
   // Auto-hide toast after 3 seconds
   useEffect(() => {
