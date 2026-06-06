@@ -3,7 +3,8 @@
 namespace Yorozu.Domain.ContentItems;
 
 public enum ContentItemFormat {
-    Readable = 1,
-    Listenable = 2,
-    Watchable = 3,
+    Readable = 1542,
+    Listenable = 2687,
+    Watchable = 4536,
+    Mixed = 4478,
 }

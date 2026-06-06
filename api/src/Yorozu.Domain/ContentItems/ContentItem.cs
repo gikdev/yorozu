@@ -44,6 +44,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
     public string PlaceholderLetter => Title.Value[0].ToString();
 
+    public bool CanAddTracks => UnitSpecification != null;
+
     private ContentItem() { }
 
     public static ContentItem Create(
@@ -184,7 +186,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         NonEmptyString? description = null,
         Guid? trackId = null
     ) {
-        if (UnitSpecification is null)
+        if (!CanAddTracks)
             return MustHaveUnitSpecificationError;
 
         var track = ConsumptionTrack.Create(type, title, description, trackId);

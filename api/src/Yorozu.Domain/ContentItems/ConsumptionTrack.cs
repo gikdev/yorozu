@@ -1,8 +1,9 @@
 using ErrorOr;
+using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
-public class ConsumptionTrack {
+public class ConsumptionTrack : IEntity {
     // ---------- errors ----------
     public static Error AlreadyStartedError { get; } = Error.Conflict(
         description: "Only idle tracks can be started.",
@@ -48,6 +49,14 @@ public class ConsumptionTrack {
     public DateTimeOffset? CompletedAt { get; private set; }
     public DateTimeOffset? DroppedAt { get; private set; }
     public DateTimeOffset? PausedAt { get; private set; }
+
+    public bool CanStart => Status == ConsumptionStatus.Idle;
+    public bool CanPause => Status == ConsumptionStatus.InProgress;
+    public bool CanResume => Status == ConsumptionStatus.OnHold;
+    public bool CanComplete => Status == ConsumptionStatus.InProgress;
+    public bool CanDrop => !Status.IsTerminal;
+    public bool CanProgress => Status.AllowsProgress;
+    public bool CanDecrement => Status.AllowsProgress && CurrentUnit > 0;
 
     private ConsumptionTrack() { }
 
