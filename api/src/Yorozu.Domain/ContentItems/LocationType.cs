@@ -2,5 +2,8 @@
 
 namespace Yorozu.Domain.ContentItems;
 
-public enum LocationType { FilePath = 1, Url = 2, Physical = 3 }
-
+public enum LocationType {
+    FilePath = 4578,
+    Url = 6589,
+    Physical = 2325,
+}

@@ -1,5 +1,3 @@
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-
 using ErrorOr;
 
 namespace Yorozu.Domain.ContentItems;
@@ -42,7 +40,7 @@ public class ConsumptionTrack {
     public Guid Id { get; private init; } = Guid.NewGuid();
     public IntentionType Type { get; private set; }
     public ConsumptionStatus Status { get; private set; } = ConsumptionStatus.Idle;
-    public NonEmptyString Title { get; private set; }
+    public NonEmptyString Title { get; private set; } = null!;
     public int CurrentUnit { get; private set; }
     public NonEmptyString? Description { get; private set; }
 
@@ -73,6 +71,7 @@ public class ConsumptionTrack {
 
         Status = ConsumptionStatus.InProgress;
         StartedAt = DateTimeOffset.UtcNow;
+
         return Result.Success;
     }
 
@@ -82,6 +81,7 @@ public class ConsumptionTrack {
 
         Status = ConsumptionStatus.OnHold;
         PausedAt = DateTimeOffset.UtcNow;
+
         return Result.Success;
     }
 
@@ -93,6 +93,7 @@ public class ConsumptionTrack {
             );
 
         Status = ConsumptionStatus.InProgress;
+
         return Result.Success;
     }
 
@@ -102,22 +103,24 @@ public class ConsumptionTrack {
 
         Status = ConsumptionStatus.Completed;
         CompletedAt = DateTimeOffset.UtcNow;
+
         return Result.Success;
     }
 
     public ErrorOr<Success> Drop() {
-        if (Status is ConsumptionStatus.Completed or ConsumptionStatus.Dropped)
+        if (Status.IsTerminal)
             return Status == ConsumptionStatus.Completed
                 ? AlreadyCompletedError
                 : AlreadyDroppedError;
 
         Status = ConsumptionStatus.Dropped;
         DroppedAt = DateTimeOffset.UtcNow;
+
         return Result.Success;
     }
 
     public ErrorOr<Success> SetProgress(int newValue, int? totalUnits) {
-        if (Status != ConsumptionStatus.InProgress)
+        if (!Status.AllowsProgress)
             return NotInProgressError;
 
         if (newValue < 0)
@@ -127,6 +130,7 @@ public class ConsumptionTrack {
             return CannotExceedTotalUnitsError(totalUnits.Value);
 
         CurrentUnit = newValue;
+
         return Result.Success;
     }
 
@@ -134,7 +138,7 @@ public class ConsumptionTrack {
         if (amount <= 0)
             return IncrementMustBePositiveError;
 
-        if (Status != ConsumptionStatus.InProgress)
+        if (!Status.AllowsProgress)
             return NotInProgressError;
 
         var newValue = CurrentUnit + amount;
@@ -142,6 +146,7 @@ public class ConsumptionTrack {
             return CannotExceedTotalUnitsError(totalUnits.Value);
 
         CurrentUnit = newValue;
+        
         return Result.Success;
     }
 
@@ -149,7 +154,7 @@ public class ConsumptionTrack {
         if (amount <= 0)
             return DecrementMustBePositiveError;
 
-        if (Status != ConsumptionStatus.InProgress)
+        if (!Status.AllowsProgress)
             return NotInProgressError;
 
         var newValue = CurrentUnit - amount;
@@ -157,6 +162,7 @@ public class ConsumptionTrack {
             return CannotGoBelowZeroError;
 
         CurrentUnit = newValue;
+
         return Result.Success;
     }
 
