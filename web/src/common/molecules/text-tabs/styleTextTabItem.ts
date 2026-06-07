@@ -6,6 +6,7 @@ export const styleTextTabItem = tv({
     flex items-center justify-center
     flex-1
     transition-all duration-300
+    hover:bg-mist-900
   `,
   variants: {
     isActive: {

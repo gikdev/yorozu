@@ -12,14 +12,15 @@ export const bottomNavTabs: BottomNavItemShape[] = [
     id: "home",
     icon: HouseIcon,
     label: "Home",
-    to: linkOptions({ to: "." }).to,
+    to: linkOptions({ to: "/apps/hondana" }).to,
+    disabled: false,
   },
   {
     id: "library",
     icon: SquaresFourIcon,
     label: "Library",
-    to: linkOptions({ to: "." }).to,
-    disabled: true,
+    to: linkOptions({ to: "/apps/hondana/library" }).to,
+    disabled: false,
   },
   {
     id: "search",

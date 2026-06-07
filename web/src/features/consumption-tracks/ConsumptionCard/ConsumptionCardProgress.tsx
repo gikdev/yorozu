@@ -16,9 +16,7 @@ export function ConsumptionCardProgress(p: ConsumptionCardProgressProps) {
           </span>
           <span className="text-sky-400 font-bold">Airing</span>
         </div>
-        <p className="text-xs">
-          Episode {p.current}
-        </p>
+        <p className="text-xs">Episode {p.current}</p>
       </div>
     )
   }

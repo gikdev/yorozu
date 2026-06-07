@@ -5,8 +5,6 @@ export const Route = createFileRoute("/apps/choice")({
   component: FocusChoiceApp,
 })
 
-type Mode = "winner" | "ranked"
-
 const STORAGE_KEY = "focus-choice-items"
 
 export default function FocusChoiceApp() {
@@ -25,7 +23,6 @@ export default function FocusChoiceApp() {
     return []
   })
   const [itemInput, setItemInput] = useState("")
-  const [, setMode] = useState<Mode | null>(null)
   const [stage, setStage] = useState<
     | "input"
     | "selectMode"

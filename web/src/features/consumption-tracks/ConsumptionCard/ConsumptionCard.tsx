@@ -2,14 +2,15 @@ import { PlusIcon } from "@phosphor-icons/react"
 import { ConsumptionCardImage } from "./ConsumptionCardImage"
 import { ConsumptionCardTitle } from "./ConsumptionCardTitle"
 import { ConsumptionCardProgress } from "./ConsumptionCardProgress"
-import type { FormatType } from "./ConsumptionCardFormatIcon"
+import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
+import { styleConsumptionCardBtn } from "./styleConsumptionCardBtn"
 
 interface ConsumptionCardProps {
   imageSrc?: string | null
   imageFallbackLetter: string
   title: string
   subtitle: string
-  formatType: FormatType
+  formatType: ContentItemFormatType
   current: number
   total: number | null
   onAdd?: () => void
@@ -30,13 +31,11 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
           subtitle={p.subtitle}
           formatType={p.formatType}
         />
+
         <ConsumptionCardProgress current={p.current} total={p.total} />
       </div>
 
-      <button
-        className="w-16 h-32 p-4 bg-sky-950 flex items-center justify-center text-sky-400 hover:bg-sky-900 hover:text-sky-100 cursor-pointer shrink-0"
-        onClick={p.onAdd}
-      >
+      <button className={styleConsumptionCardBtn()} onClick={p.onAdd}>
         <PlusIcon size={24} />
       </button>
     </div>

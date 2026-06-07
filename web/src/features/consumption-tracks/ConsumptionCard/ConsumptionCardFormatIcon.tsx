@@ -1,21 +1,12 @@
-import { CircleIcon } from "@phosphor-icons/react"
-import type { Icon } from "@phosphor-icons/react"
-
-export type FormatType = "readable" | "watchable" | "listenable" | "mixed"
-
-const formatIconMap: Record<FormatType, Icon> = {
-  mixed: CircleIcon,
-  listenable: CircleIcon,
-  watchable: CircleIcon,
-  readable: CircleIcon,
-}
+import { contentItemFormatIconMap } from "#/features/content-items/contentItemFormatIconMap"
+import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
 
 interface ConsumptionCardFormatIconProps {
-  type: FormatType
+  type: ContentItemFormatType
 }
 
 export function ConsumptionCardFormatIcon(p: ConsumptionCardFormatIconProps) {
-  const IconComponent = formatIconMap[p.type]
+  const IconComponent = contentItemFormatIconMap[p.type]
 
   return <IconComponent size={12} />
 }

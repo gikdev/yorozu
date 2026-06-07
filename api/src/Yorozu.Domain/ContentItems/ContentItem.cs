@@ -39,12 +39,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
 
     public ContentUnitSpecification? UnitSpecification { get; private set; }
     public IReadOnlyCollection<ConsumptionTrack> ConsumptionTracks => _consumptionTracks.AsReadOnly();
+    public bool HasAnyTracks => _consumptionTracks.Count > 0;
+    public bool CanAddTracks => UnitSpecification != null;
 
     public CoverImage? CoverImage { get; private set; }
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
     public string PlaceholderLetter => Title.Value[0].ToString();
-
-    public bool CanAddTracks => UnitSpecification != null;
 
     private ContentItem() { }
 

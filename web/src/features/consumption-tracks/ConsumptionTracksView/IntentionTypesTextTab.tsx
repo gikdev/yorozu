@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { intentionTypesTabs } from "./-intentionTypesTabs"
+import { intentionTypesTabs } from "./intentionTypesTabs"
 import { TextTabs } from "#/common/molecules/text-tabs"
 
 export function IntentionTypesTextTab() {
