@@ -16,7 +16,7 @@ import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
-import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondana/index"
+import { Route as AppsHondanahomeIndexRouteImport } from "./../../routes/apps/hondana/(home)/index"
 
 const DevRoute = DevRouteImport.update({
   id: "/dev",
@@ -53,8 +53,8 @@ const AppsChoiceRoute = AppsChoiceRouteImport.update({
   path: "/apps/choice",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsHondanaIndexRoute = AppsHondanaIndexRouteImport.update({
-  id: "/apps/hondana/",
+const AppsHondanahomeIndexRoute = AppsHondanahomeIndexRouteImport.update({
+  id: "/apps/hondana/(home)/",
   path: "/apps/hondana/",
   getParentRoute: () => rootRouteImport,
 } as any)
@@ -67,7 +67,7 @@ export interface FileRoutesByFullPath {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana/": typeof AppsHondanaIndexRoute
+  "/apps/hondana/": typeof AppsHondanahomeIndexRoute
 }
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
@@ -77,7 +77,7 @@ export interface FileRoutesByTo {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana": typeof AppsHondanaIndexRoute
+  "/apps/hondana": typeof AppsHondanahomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,7 +88,7 @@ export interface FileRoutesById {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
-  "/apps/hondana/": typeof AppsHondanaIndexRoute
+  "/apps/hondana/(home)/": typeof AppsHondanahomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,7 +120,7 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/(home)/"
-    | "/apps/hondana/"
+    | "/apps/hondana/(home)/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,7 +131,7 @@ export interface RootRouteChildren {
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
   AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
-  AppsHondanaIndexRoute: typeof AppsHondanaIndexRoute
+  AppsHondanahomeIndexRoute: typeof AppsHondanahomeIndexRoute
 }
 
 declare module "@tanstack/react-router" {
@@ -185,11 +185,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsChoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/hondana/": {
-      id: "/apps/hondana/"
+    "/apps/hondana/(home)/": {
+      id: "/apps/hondana/(home)/"
       path: "/apps/hondana"
       fullPath: "/apps/hondana/"
-      preLoaderRoute: typeof AppsHondanaIndexRouteImport
+      preLoaderRoute: typeof AppsHondanahomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -203,7 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsSingleFocusRoute: AppsSingleFocusRoute,
   AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
-  AppsHondanaIndexRoute: AppsHondanaIndexRoute,
+  AppsHondanahomeIndexRoute: AppsHondanahomeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
