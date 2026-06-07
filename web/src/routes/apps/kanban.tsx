@@ -38,18 +38,20 @@ function KanbanBoard() {
     return []
   })
 
-  const [currentProjectId, setCurrentProjectId] = useState<number | null>(() => {
-    const savedCurrent = localStorage.getItem(`${STORAGE_KEY}-current`)
-    if (savedCurrent) {
-      try {
-        const parsed = JSON.parse(savedCurrent)
-        if (typeof parsed === "number") return parsed
-      } catch (e) {
-        console.error("Failed to load current project from localStorage", e)
+  const [currentProjectId, setCurrentProjectId] = useState<number | null>(
+    () => {
+      const savedCurrent = localStorage.getItem(`${STORAGE_KEY}-current`)
+      if (savedCurrent) {
+        try {
+          const parsed = JSON.parse(savedCurrent)
+          if (typeof parsed === "number") return parsed
+        } catch (e) {
+          console.error("Failed to load current project from localStorage", e)
+        }
       }
-    }
-    return null
-  })
+      return null
+    },
+  )
 
   const [newProjectTitle, setNewProjectTitle] = useState("")
   const [newTaskTitle, setNewTaskTitle] = useState("")
@@ -76,7 +78,10 @@ function KanbanBoard() {
     if (currentProjectId === null) {
       localStorage.removeItem(`${STORAGE_KEY}-current`)
     } else {
-      localStorage.setItem(`${STORAGE_KEY}-current`, JSON.stringify(currentProjectId))
+      localStorage.setItem(
+        `${STORAGE_KEY}-current`,
+        JSON.stringify(currentProjectId),
+      )
     }
   }, [currentProjectId])
 
@@ -192,7 +197,7 @@ function KanbanBoard() {
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = e => {
       try {
         const content = e.target?.result as string
         const data = JSON.parse(content)
@@ -202,7 +207,9 @@ function KanbanBoard() {
           setProjects(data.projects)
           if (typeof data.currentProjectId === "number") {
             // Check if the imported project ID actually exists in projects
-            const projectExists = data.projects.some((p: Project) => p.id === data.currentProjectId)
+            const projectExists = data.projects.some(
+              (p: Project) => p.id === data.currentProjectId,
+            )
             setCurrentProjectId(projectExists ? data.currentProjectId : null)
           }
           if (typeof data.idCounter === "number") {
@@ -225,7 +232,12 @@ function KanbanBoard() {
 
   // Reset everything with confirmation
   const resetAll = () => {
-    if (!window.confirm("⚠️ This will delete ALL projects and tasks. Are you ABSOLUTELY sure?")) return
+    if (
+      !window.confirm(
+        "⚠️ This will delete ALL projects and tasks. Are you ABSOLUTELY sure?",
+      )
+    )
+      return
 
     setProjects([])
     setCurrentProjectId(null)
@@ -306,7 +318,11 @@ function KanbanBoard() {
               className="hidden"
             />
             <button
-              onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
+              onClick={() =>
+                document
+                  .querySelector<HTMLInputElement>('input[type="file"]')
+                  ?.click()
+              }
               className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm font-medium transition"
               title="Import data from file"
             >

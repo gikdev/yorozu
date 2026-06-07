@@ -1,4 +1,5 @@
 import {
+  BooksIcon,
   CirclesFourIcon,
   CurrencyDollarIcon,
   KanbanIcon,
@@ -38,5 +39,11 @@ export const appShortcuts: IAppShortcut[] = [
     name: "Expenses",
     Icon: CurrencyDollarIcon,
     url: linkOptions({ to: "/apps/expenses" }).to,
+  },
+  {
+    id: "hondana",
+    name: "本棚",
+    Icon: BooksIcon,
+    url: linkOptions({ to: "/apps/hondana" }).to,
   },
 ]
