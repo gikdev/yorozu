@@ -18,28 +18,25 @@ export function ContentItemCard(p: ContentItemCardProps) {
   const FormatIcon = contentItemFormatIconMap[p.format]
 
   return (
-    <button onClick={p.onDetails} className="flex flex-col rounded-lg bg-mist-900 border border-mist-800 cursor-pointer hover:-translate-y-1 transition-all duration-200">
+    <button
+      onClick={p.onDetails}
+      className="flex flex-col rounded-lg bg-mist-900 border border-mist-800 cursor-pointer hover:-translate-y-1 transition-all duration-200 max-h-max"
+    >
       <ContentItemCardImage
         src={p.coverImageUrl}
         alt={p.title}
         fallbackLetter={p.placeholderLetter}
       />
 
-      <p className="font-bold text-mist-100 truncate px-4 py-2">
-        {p.title}
-      </p>
+      <p className="font-bold text-mist-100 truncate px-4 py-2">{p.title}</p>
 
-      <div className="flex items-center justify-center gap-1 text-mist-300 px-4 py-2">
+      <div className="flex items-center justify-center gap-1 text-mist-300 px-4 pt-2 pb-4">
         <FormatIcon size={16} weight="fill" />
 
         {p.isOngoing ? (
           <ClockIcon size={16} />
         ) : (
-          <CheckCircleIcon
-            size={16}
-            weight="fill"
-            className="text-green-400"
-          />
+          <CheckCircleIcon size={16} weight="fill" className="text-green-400" />
         )}
 
         <BookmarkSimpleIcon
