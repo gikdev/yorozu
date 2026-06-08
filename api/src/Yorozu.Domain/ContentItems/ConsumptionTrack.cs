@@ -41,9 +41,9 @@ public class ConsumptionTrack : IEntity {
     public Guid Id { get; private init; } = Guid.NewGuid();
     public IntentionType Type { get; private set; }
     public ConsumptionStatus Status { get; private set; } = ConsumptionStatus.Idle;
-    public NonEmptyString Title { get; private set; } = null!;
+    public NotEmptyString Title { get; private set; } = null!;
     public int CurrentUnit { get; private set; }
-    public NonEmptyString? Description { get; private set; }
+    public NotEmptyString? Description { get; private set; }
 
     public DateTimeOffset? StartedAt { get; private set; }
     public DateTimeOffset? CompletedAt { get; private set; }
@@ -62,8 +62,8 @@ public class ConsumptionTrack : IEntity {
 
     public static ConsumptionTrack Create(
         IntentionType type,
-        NonEmptyString title,
-        NonEmptyString? description = null,
+        NotEmptyString title,
+        NotEmptyString? description = null,
         Guid? id = null
     ) => new() {
         Id = id ?? Guid.NewGuid(),

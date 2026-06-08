@@ -15,7 +15,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         code: "ContentItem.TrackNotFound"
     );
 
-    private readonly List<NonEmptyString> _tags = [];
+    private readonly List<NotEmptyString> _tags = [];
     private readonly List<Genre> _genres = [];
     private readonly List<ConsumptionTrack> _consumptionTracks = [];
 
@@ -23,12 +23,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; private set; }
 
-    public NonEmptyString FullTitle { get; private set; }
-    public NonEmptyString? NickName { get; private set; }
-    public NonEmptyString Title => NickName ?? FullTitle;
+    public NotEmptyString FullTitle { get; private set; }
+    public NotEmptyString? NickName { get; private set; }
+    public NotEmptyString Title => NickName ?? FullTitle;
 
     public ContentItemFormat Format { get; private set; }
-    public IReadOnlyCollection<NonEmptyString> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<NotEmptyString> Tags => _tags.AsReadOnly();
     public IReadOnlyCollection<Genre> Genres => _genres.AsReadOnly();
 
     public bool IsSecret { get; private set; }
@@ -49,7 +49,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     private ContentItem() { }
 
     public static ContentItem Create(
-        NonEmptyString fullTitle,
+        NotEmptyString fullTitle,
         ContentItemFormat format,
         Guid? id = null
     ) => new() {
@@ -58,12 +58,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         Id = id ?? Guid.NewGuid(),
     };
 
-    public void UpdateFullTitle(NonEmptyString fullTitle) {
+    public void UpdateFullTitle(NotEmptyString fullTitle) {
         FullTitle = fullTitle;
         MarkUpdated();
     }
 
-    public void ChangeNickName(NonEmptyString? nickName) {
+    public void ChangeNickName(NotEmptyString? nickName) {
         NickName = nickName;
         MarkUpdated();
     }
@@ -113,13 +113,13 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void AddTag(NonEmptyString tag) {
+    public void AddTag(NotEmptyString tag) {
         if (_tags.Contains(tag)) return;
         _tags.Add(tag);
         MarkUpdated();
     }
 
-    public void RemoveTag(NonEmptyString tag) {
+    public void RemoveTag(NotEmptyString tag) {
         if (_tags.Remove(tag))
             MarkUpdated();
     }
@@ -182,8 +182,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
 
     public ErrorOr<Guid> AddConsumptionTrack(
         IntentionType type,
-        NonEmptyString title,
-        NonEmptyString? description = null,
+        NotEmptyString title,
+        NotEmptyString? description = null,
         Guid? trackId = null
     ) {
         if (!CanAddTracks)

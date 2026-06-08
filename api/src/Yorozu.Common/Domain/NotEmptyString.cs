@@ -5,18 +5,23 @@ using ErrorOr;
 namespace Yorozu.Common.Domain;
 
 public sealed record NotEmptyString {
-    private NotEmptyString() { }
+    public static Error ValueCanNotBeEmptyError { get; } = Error.Validation(
+        description: "Value cannot be an empty string",
+        code: "NonEmptyString.ValueCanNotBeEmpty"
+    );
 
-    public string Value { get; init; }
+    private NotEmptyString() {}
+
+    public string Value { get; private init; }
 
     public static ErrorOr<NotEmptyString> Create(string value) {
-        if (string.IsNullOrWhiteSpace(value))
-            return NotEmptyStringErrors.ValueIsEmpty;
+        if (string.IsNullOrWhiteSpace(value)) {
+            return ValueCanNotBeEmptyError;
+        }
 
-        var notEmptyString = new NotEmptyString {
-            Value = value
-        };
-
-        return notEmptyString;
+        return new NotEmptyString { Value = value };
     }
+
+    public static implicit operator string(NotEmptyString s) => s.Value;
+    public override string ToString() => Value;
 }

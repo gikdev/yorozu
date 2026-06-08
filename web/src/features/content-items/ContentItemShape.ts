@@ -57,7 +57,8 @@ export const sampleContentItems: ContentItemCardShape[] = [
     totalUnits: 320,
     unitType: "pages",
     hasAnyTracks: false,
-    coverImageUrl: "https://dkstatics-public.digikala.com/digikala-products/120628475.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
+    coverImageUrl:
+      "https://dkstatics-public.digikala.com/digikala-products/120628475.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
     placeholderLetter: "A",
   },
 ]

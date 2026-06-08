@@ -5,59 +5,17 @@ info:
 servers:
   - url: http://localhost:5000/
 paths:
-  /api/todos:
-    get:
-      tags:
-        - Todos
-      summary: List todos
-      operationId: ListTodos
-      parameters:
-        - name: bucket
-          in: query
-          schema:
-            $ref: "#/components/schemas/TodoBucketFilter"
-        - name: sort_by
-          in: query
-          schema:
-            $ref: "#/components/schemas/TodoSortBy"
-        - name: sort_order
-          in: query
-          schema:
-            $ref: "#/components/schemas/TodoSortOrder"
-        - name: q
-          in: query
-          schema:
-            type: string
-        - name: exclude_query
-          in: query
-          schema:
-            type: string
-        - name: available_energy_level
-          in: query
-          schema:
-            $ref: "#/components/schemas/EnergyLevelFilter"
-        - name: available_pomodoros
-          in: query
-          schema:
-            type: integer
-            format: uint8
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoListResponse"
+  /api/content-items:
     post:
       tags:
-        - Todos
-      summary: Create todo
-      operationId: CreateTodo
+        - Content Items
+      summary: Create new content item
+      operationId: CreateContentItem
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTodoRequest"
+              $ref: "#/components/schemas/CreateContentItemRequest"
         required: true
       responses:
         "200":
@@ -65,484 +23,225 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TodoResponse"
-  "/api/todos/{id}":
-    get:
-      tags:
-        - Todos
-      summary: Get todo
-      operationId: GetTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
-    delete:
-      tags:
-        - Todos
-      summary: Delete todo
-      operationId: DeleteTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          description: No Content
-    put:
-      tags:
-        - Todos
-      summary: Change todo
-      operationId: ChangeTodo
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ChangeTodoRequest"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
-  "/api/todos/{id}/completion":
-    patch:
-      tags:
-        - Todos
-      summary: Change todo completion
-      operationId: ChangeTodoCompletion
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ChangeTodoCompletionRequest"
-        required: true
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoResponse"
-  /api/backups:
-    get:
-      tags:
-        - Backups
-      summary: Get backup
-      operationId: GetBackup
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BackupDto"
-    post:
-      tags:
-        - Backups
-      summary: Restore backup
-      operationId: RestoreBackup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/BackupDto"
-        required: true
-      responses:
-        "204":
-          description: No Content
+                $ref: "#/components/schemas/ContentItemResponse"
 components:
   schemas:
-    BackupDto:
-      required:
-        - version
-        - todos
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int32
-        todos:
-          type: array
-          items:
-            $ref: "#/components/schemas/TodoPersistenceDto"
-    ChangeTodoCompletionRequest:
-      required:
-        - completionChangeAction
-      type: object
-      properties:
-        completionChangeAction:
-          $ref: "#/components/schemas/TodoCompletionChangeAction"
-    ChangeTodoRequest:
-      required:
-        - title
-        - why
-        - description
-        - isDone
-        - estimatedPomodoros
-        - isUrgent
-        - dueDate
-        - contexts
-        - priority
-        - effortType
-        - energyLevel
-        - bucket
-        - waitingForInfo
-      type: object
-      properties:
-        title:
-          type: string
-        why:
-          type:
-            - "null"
-            - string
-        description:
-          type:
-            - "null"
-            - string
-        isDone:
-          type: boolean
-        estimatedPomodoros:
-          type:
-            - "null"
-            - integer
-          format: uint8
-        isUrgent:
-          type: boolean
-        dueDate:
-          type:
-            - "null"
-            - string
-          format: date-time
-        contexts:
-          type: array
-          items:
-            type: string
-        priority:
-          $ref: "#/components/schemas/TodoPriority"
-        effortType:
-          $ref: "#/components/schemas/TodoEffortType"
-        energyLevel:
-          $ref: "#/components/schemas/EnergyLevel"
-        bucket:
-          $ref: "#/components/schemas/TodoBucket"
-        waitingForInfo:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequest"
-    CreateTodoRequest:
-      required:
-        - title
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type:
-            - "null"
-            - string
-        why:
-          type:
-            - "null"
-            - string
-        pomodoroEstimate:
-          type:
-            - "null"
-            - integer
-          format: uint8
-        isUrgent:
-          type:
-            - "null"
-            - boolean
-        isDone:
-          type:
-            - "null"
-            - boolean
-        dueDate:
-          type:
-            - "null"
-            - string
-          format: date-time
-        contexts:
-          type:
-            - "null"
-            - array
-          items:
-            type: string
-        priority:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoPriority"
-        effortType:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoEffortType"
-        energyLevel:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/EnergyLevel"
-        bucket:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/TodoBucket"
-        waitingForInfo:
-          oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/WaitingForRequest"
-    EnergyLevel:
+    ContentItemFormat:
       enum:
-        - Unknown
-        - Low
-        - Medium
-        - High
-    EnergyLevelFilter:
-      enum:
-        - Unknown
-        - Low
-        - Medium
-        - High
-        - All
-      default: All
-    TodoBucket:
-      enum:
-        - Uncategorized
-        - NextActions
-        - Waiting
-        - SomedayMaybe
-    TodoBucketFilter:
-      enum:
-        - All
-        - Uncategorized
-        - NextActions
-        - Waiting
-        - SomedayMaybe
-      default: All
-    TodoCompletionChangeAction:
-      enum:
-        - Toggle
-        - MarkNotDone
-        - MarkDone
-    TodoEffortType:
-      enum:
-        - Unknown
-        - Cake
-        - Frog
-    TodoListResponse:
-      required:
-        - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/TodoResponse"
-    TodoPersistenceDto:
+        - Readable
+        - Listenable
+        - Mixed
+        - Watchable
+    ContentItemResponse:
       required:
         - id
+        - createdAt
+        - updatedAt
+        - fullTitle
+        - nickName
         - title
-        - why
-        - description
-        - estimatedPomodoros
-        - energyLevel
-        - bucket
-        - isUrgent
-        - isDone
-        - dueDate
-        - contexts
-        - priority
-        - effortType
-        - waitingForInfo
+        - format
+        - tags
+        - genres
+        - isSecret
+        - isBookmarked
+        - isFavorite
+        - location
+        - unitSpec
+        - hasAnyTracks
+        - coverImageUrl
+        - placeholderColor
+        - placeholderLetter
       type: object
       properties:
         id:
           type: string
           format: uuid
-        title:
+        createdAt:
           type: string
-        why:
-          type:
-            - "null"
-            - string
-        description:
-          type:
-            - "null"
-            - string
-        estimatedPomodoros:
-          type:
-            - "null"
-            - integer
-          format: uint8
-        energyLevel:
-          type: integer
-          format: int32
-        bucket:
-          type: integer
-          format: int32
-        isUrgent:
-          type: boolean
-        isDone:
-          type: boolean
-        dueDate:
+          format: date-time
+        updatedAt:
           type:
             - "null"
             - string
           format: date-time
-        contexts:
+        fullTitle:
+          type: string
+        nickName:
+          type:
+            - "null"
+            - string
+        title:
+          type: string
+        format:
+          $ref: "#/components/schemas/ContentItemFormat"
+        tags:
           type: array
           items:
             type: string
-        priority:
-          type: integer
-          format: int32
-        effortType:
-          type: integer
-          format: int32
-        waitingForInfo:
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        isSecret:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isFavorite:
+          type: boolean
+        location:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/WaitingForPersistenceDto"
-    TodoPriority:
+            - $ref: "#/components/schemas/LocationRto"
+        unitSpec:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/ContentUnitSpecRto"
+        hasAnyTracks:
+          type: boolean
+        coverImageUrl:
+          type:
+            - "null"
+            - string
+        placeholderColor:
+          type: string
+        placeholderLetter:
+          type: string
+    ContentUnitSpecRto:
+      required:
+        - isOngoing
+        - unitType
+        - totalUnits
+      type: object
+      properties:
+        isOngoing:
+          type: boolean
+        unitType:
+          $ref: "#/components/schemas/ContentUnitType"
+        totalUnits:
+          type:
+            - "null"
+            - integer
+          format: int32
+    ContentUnitType:
       enum:
         - Unknown
-        - A_MustDo
-        - B_ShouldDo
-        - C_NiceToDo
-        - D_Delegate
-        - E_Eliminate
-    TodoResponse:
+        - Session
+        - Minute
+        - Lesson
+        - Volume
+        - Hour
+        - Chapter
+        - Page
+        - Track
+        - Episode
+        - Percent
+    CreateContentItemRequest:
       required:
-        - id
-        - title
-        - why
-        - description
-        - isDone
-        - estimatedPomodoros
-        - isUrgent
-        - dueDate
-        - contexts
-        - priority
-        - effortType
-        - energyLevel
-        - bucket
-        - waitingForInfo
+        - fullTitle
+        - format
       type: object
       properties:
-        id:
+        fullTitle:
           type: string
-          format: uuid
-        title:
-          type: string
-        why:
+        format:
+          $ref: "#/components/schemas/ContentItemFormat"
+        nickName:
           type:
             - "null"
             - string
-        description:
-          type:
-            - "null"
-            - string
-        isDone:
-          type: boolean
-        estimatedPomodoros:
-          type:
-            - "null"
-            - integer
-          format: uint8
-        isUrgent:
-          type: boolean
-        dueDate:
-          type:
-            - "null"
-            - string
-          format: date-time
-        contexts:
+        tags:
           type: array
           items:
             type: string
-        priority:
-          $ref: "#/components/schemas/TodoPriority"
-        effortType:
-          $ref: "#/components/schemas/TodoEffortType"
-        energyLevel:
-          $ref: "#/components/schemas/EnergyLevel"
-        bucket:
-          $ref: "#/components/schemas/TodoBucket"
-        waitingForInfo:
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        isSecret:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isFavorite:
+          type: boolean
+        coverImagePath:
+          type:
+            - "null"
+            - string
+        location:
           oneOf:
             - type: "null"
-            - $ref: "#/components/schemas/WaitingForResponse"
-    TodoSortBy:
+            - $ref: "#/components/schemas/LocationRto"
+        unitSpec:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/ContentUnitSpecRto"
+    Genre:
       enum:
-        - None
-        - Title
-        - DueDate
-        - Priority
-      default: None
-    TodoSortOrder:
+        - Travel
+        - Shounen
+        - Cyberpunk
+        - Psychological
+        - Isekai
+        - Comedy
+        - Memoir
+        - Education
+        - SciFi
+        - Mystery
+        - MagicalGirl
+        - Action
+        - Josei
+        - Dystopian
+        - History
+        - Art
+        - NonFiction
+        - Kids
+        - Philosophy
+        - Historical
+        - Fantasy
+        - ReverseHarem
+        - Crime
+        - Sports
+        - SliceOfLife
+        - Music
+        - Shoujo
+        - Harem
+        - Tragedy
+        - TrueCrime
+        - Cooking
+        - Thriller
+        - Drama
+        - Adult
+        - Biography
+        - Business
+        - Technology
+        - Western
+        - Horror
+        - Mecha
+        - Politics
+        - Science
+        - Supernatural
+        - Health
+        - Romance
+        - CuteGirlsDoingCuteThings
+        - Seinen
+        - Adventure
+        - SelfHelp
+        - Reincarnation
+    LocationRto:
+      required:
+        - type
+        - value
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/LocationType"
+        value:
+          type: string
+    LocationType:
       enum:
-        - Asc
-        - Desc
-      default: Asc
-    WaitingForPersistenceDto:
-      required:
-        - description
-        - reviewAt
-      type: object
-      properties:
-        description:
-          type: string
-        reviewAt:
-          type: string
-          format: date-time
-    WaitingForRequest:
-      required:
-        - description
-        - reviewAt
-      type: object
-      properties:
-        description:
-          type: string
-        reviewAt:
-          type: string
-          format: date-time
-    WaitingForResponse:
-      required:
-        - description
-        - reviewAt
-      type: object
-      properties:
-        description:
-          type: string
-        reviewAt:
-          type: string
-          format: date-time
+        - Physical
+        - FilePath
+        - Url
 tags:
-  - name: Todos
-  - name: Backups
+  - name: Content Items

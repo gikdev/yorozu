@@ -1,15 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
 import { BottomNav } from "../-common/BottomNav"
 import { PageHeader } from "#/common/molecules/page-header"
 import { AppShell } from "#/common/molecules/AppShell"
 import { sampleContentItems } from "#/features/content-items/ContentItemShape"
 import { ContentItemCard } from "#/features/content-items/ContentItemCard/ContentItemCard"
+import { Fab } from "#/common/molecules/Fab"
 
 export const Route = createFileRoute("/apps/hondana/library/")({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  // TODO: Add fetching, loading & error states, when the corresponding API endpoint got ready.
+
   return (
     <AppShell>
       <PageHeader title="Library" />
@@ -21,6 +24,13 @@ function RouteComponent() {
       </main>
 
       <BottomNav activeTabId="library" />
+
+      <Fab
+        bottom={80}
+        right={24}
+        type="link"
+        to={linkOptions({ to: "/apps/hondana/library/new" }).to}
+      />
     </AppShell>
   )
 }

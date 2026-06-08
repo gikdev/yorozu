@@ -10,6 +10,7 @@ ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.ConfigureHttpJsonOptions(o => {
     o.SerializerOptions.NumberHandling = JsonNumberHandling.Strict;
+    o.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();

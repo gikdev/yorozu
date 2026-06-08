@@ -11,7 +11,7 @@ export function PageHeaderBackButton(p: PageHeaderBackButtonProps) {
       to={p.to}
       aria-label="Go back"
       title="Go back"
-      className="p-1 -ml-1 text-mist-50 hover:text-sky-400 transition-colors rounded"
+      className="min-h-12 aspect-square flex items-center justify-center transition-colors rounded-full hover:bg-mist-800 hover:text-mist-100"
     >
       <ArrowLeftIcon size={24} weight="bold" />
     </Link>

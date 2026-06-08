@@ -13,6 +13,7 @@ public enum Genre {
 
     // Anime-specific sub-genres / tropes
     Isekai = 2156,
+    Reincarnation = 9834,
     Mecha = 7849,
     MagicalGirl = 3418,
     Harem = 6295,
