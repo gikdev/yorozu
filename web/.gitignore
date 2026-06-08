@@ -1,5 +1,7 @@
 # Custom
 generated/
+public/lyrics/
+!public/lyrics.txt
 
 # Logs
 logs

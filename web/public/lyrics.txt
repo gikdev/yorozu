@@ -1,0 +1,3 @@
+./lyrics/Kill Shot.mp3
+./lyrics/あわ.mp3
+./lyrics/幸せ.mp3

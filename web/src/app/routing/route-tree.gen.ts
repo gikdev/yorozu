@@ -16,8 +16,11 @@ import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
+import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
+import { Route as AppsLyricsIdRouteImport } from "./../../routes/apps/lyrics/$id"
 import { Route as AppsHondanaLibraryIndexRouteImport } from "./../../routes/apps/hondana/library/index"
 import { Route as AppsHondanahomeIndexRouteImport } from "./../../routes/apps/hondana/(home)/index"
+import { Route as AppsLyricsPrintIdRouteImport } from "./../../routes/apps/lyrics/print.$id"
 import { Route as AppsHondanaLibraryNewRouteImport } from "./../../routes/apps/hondana/library/new"
 
 const DevRoute = DevRouteImport.update({
@@ -55,6 +58,16 @@ const AppsChoiceRoute = AppsChoiceRouteImport.update({
   path: "/apps/choice",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsLyricsIndexRoute = AppsLyricsIndexRouteImport.update({
+  id: "/apps/lyrics/",
+  path: "/apps/lyrics/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsLyricsIdRoute = AppsLyricsIdRouteImport.update({
+  id: "/apps/lyrics/$id",
+  path: "/apps/lyrics/$id",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsHondanaLibraryIndexRoute = AppsHondanaLibraryIndexRouteImport.update({
   id: "/apps/hondana/library/",
   path: "/apps/hondana/library/",
@@ -63,6 +76,11 @@ const AppsHondanaLibraryIndexRoute = AppsHondanaLibraryIndexRouteImport.update({
 const AppsHondanahomeIndexRoute = AppsHondanahomeIndexRouteImport.update({
   id: "/apps/hondana/(home)/",
   path: "/apps/hondana/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsLyricsPrintIdRoute = AppsLyricsPrintIdRouteImport.update({
+  id: "/apps/lyrics/print/$id",
+  path: "/apps/lyrics/print/$id",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsHondanaLibraryNewRoute = AppsHondanaLibraryNewRouteImport.update({
@@ -79,7 +97,10 @@ export interface FileRoutesByFullPath {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
+  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps/lyrics/": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
+  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana/": typeof AppsHondanahomeIndexRoute
   "/apps/hondana/library/": typeof AppsHondanaLibraryIndexRoute
 }
@@ -91,7 +112,10 @@ export interface FileRoutesByTo {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
+  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps/lyrics": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
+  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana": typeof AppsHondanahomeIndexRoute
   "/apps/hondana/library": typeof AppsHondanaLibraryIndexRoute
 }
@@ -104,7 +128,10 @@ export interface FileRoutesById {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
+  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps/lyrics/": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
+  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana/(home)/": typeof AppsHondanahomeIndexRoute
   "/apps/hondana/library/": typeof AppsHondanaLibraryIndexRoute
 }
@@ -118,7 +145,10 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/"
+    | "/apps/lyrics/$id"
+    | "/apps/lyrics/"
     | "/apps/hondana/library/new"
+    | "/apps/lyrics/print/$id"
     | "/apps/hondana/"
     | "/apps/hondana/library/"
   fileRoutesByTo: FileRoutesByTo
@@ -130,7 +160,10 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/"
+    | "/apps/lyrics/$id"
+    | "/apps/lyrics"
     | "/apps/hondana/library/new"
+    | "/apps/lyrics/print/$id"
     | "/apps/hondana"
     | "/apps/hondana/library"
   id:
@@ -142,7 +175,10 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/(home)/"
+    | "/apps/lyrics/$id"
+    | "/apps/lyrics/"
     | "/apps/hondana/library/new"
+    | "/apps/lyrics/print/$id"
     | "/apps/hondana/(home)/"
     | "/apps/hondana/library/"
   fileRoutesById: FileRoutesById
@@ -155,7 +191,10 @@ export interface RootRouteChildren {
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
   AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
+  AppsLyricsIdRoute: typeof AppsLyricsIdRoute
+  AppsLyricsIndexRoute: typeof AppsLyricsIndexRoute
   AppsHondanaLibraryNewRoute: typeof AppsHondanaLibraryNewRoute
+  AppsLyricsPrintIdRoute: typeof AppsLyricsPrintIdRoute
   AppsHondanahomeIndexRoute: typeof AppsHondanahomeIndexRoute
   AppsHondanaLibraryIndexRoute: typeof AppsHondanaLibraryIndexRoute
 }
@@ -211,6 +250,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsChoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/lyrics/": {
+      id: "/apps/lyrics/"
+      path: "/apps/lyrics"
+      fullPath: "/apps/lyrics/"
+      preLoaderRoute: typeof AppsLyricsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/lyrics/$id": {
+      id: "/apps/lyrics/$id"
+      path: "/apps/lyrics/$id"
+      fullPath: "/apps/lyrics/$id"
+      preLoaderRoute: typeof AppsLyricsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/hondana/library/": {
       id: "/apps/hondana/library/"
       path: "/apps/hondana/library"
@@ -223,6 +276,13 @@ declare module "@tanstack/react-router" {
       path: "/apps/hondana"
       fullPath: "/apps/hondana/"
       preLoaderRoute: typeof AppsHondanahomeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/lyrics/print/$id": {
+      id: "/apps/lyrics/print/$id"
+      path: "/apps/lyrics/print/$id"
+      fullPath: "/apps/lyrics/print/$id"
+      preLoaderRoute: typeof AppsLyricsPrintIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/hondana/library/new": {
@@ -243,7 +303,10 @@ const rootRouteChildren: RootRouteChildren = {
   AppsSingleFocusRoute: AppsSingleFocusRoute,
   AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
+  AppsLyricsIdRoute: AppsLyricsIdRoute,
+  AppsLyricsIndexRoute: AppsLyricsIndexRoute,
   AppsHondanaLibraryNewRoute: AppsHondanaLibraryNewRoute,
+  AppsLyricsPrintIdRoute: AppsLyricsPrintIdRoute,
   AppsHondanahomeIndexRoute: AppsHondanahomeIndexRoute,
   AppsHondanaLibraryIndexRoute: AppsHondanaLibraryIndexRoute,
 }
