@@ -1,5 +1,8 @@
 import { AppShell } from "#/common/molecules/AppShell"
-import { PageHeader } from "#/common/molecules/page-header"
+import {
+  PageHeader,
+  PageHeaderBackButton,
+} from "#/common/molecules/page-header"
 import { myFavLyricSongs } from "#/features/lyrics/myFavLyrics"
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
 import { SongCard } from "#/features/lyrics/SongCard"
@@ -11,7 +14,10 @@ export const Route = createFileRoute("/apps/lyrics/")({
 function RouteComponent() {
   return (
     <AppShell>
-      <PageHeader title="Lyrics" />
+      <PageHeader
+        title="Lyrics"
+        left={<PageHeaderBackButton to={linkOptions({ to: "/" }).to} />}
+      />
 
       <main className="flex-1 overflow-y-auto min-h-0 p-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

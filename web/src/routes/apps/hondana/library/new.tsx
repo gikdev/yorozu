@@ -42,7 +42,7 @@ function RouteComponent() {
         },
       },
       {
-        onSettled(data, error, variables, onMutateResult, context) {
+        onSettled(data, error, variables, _onMutateResult, _context) {
           console.log({ data, error, variables })
         },
       },
