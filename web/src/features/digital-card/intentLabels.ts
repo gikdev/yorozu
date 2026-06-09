@@ -5,21 +5,17 @@ export const intentLabels: Record<Intent, MultilingualString> = {
   message: {
     en: "Message",
     fa: "پیام",
-    ja: "メッセージ",
   },
   learn: {
     en: "Learn",
     fa: "آموزش",
-    ja: "学ぶ",
   },
   follow: {
     en: "Follow",
     fa: "دنبال کن",
-    ja: "フォロー",
   },
   work: {
     en: "Work",
     fa: "پروژه‌ها",
-    ja: "仕事",
   },
 }

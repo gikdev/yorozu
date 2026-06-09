@@ -6,19 +6,19 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "eitaa-work",
-        label: { en: "Eitaa (PV)", fa: "ایتا (PV)", ja: "Eitaa (PV)" },
+        label: { en: "Eitaa (PV)", fa: "ایتا (PV)" },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/bahrami_work",
       },
       {
         id: "bale-work",
-        label: { en: "Bale (PV)", fa: "بله (PV)", ja: "Bale (PV)" },
+        label: { en: "Bale (PV)", fa: "بله (PV)" },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/bahrami_work",
       },
       {
         id: "rubika-work",
-        label: { en: "Rubika (PV)", fa: "روبيکا (PV)", ja: "Rubika (PV)" },
+        label: { en: "Rubika (PV)", fa: "روبيکا (PV)" },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/bahrami_work",
       },
@@ -32,7 +32,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Eitaa (Programming Education)",
           fa: "ایتا (آموزش برنامه‌نویسی)",
-          ja: "Eitaa (プログラミング教育)",
         },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/bahrami_codes",
@@ -42,7 +41,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Bale (Programming Education)",
           fa: "بله (آموزش برنامه‌نویسی)",
-          ja: "Bale (プログラミング教育)",
         },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/bahrami_codes",
@@ -52,7 +50,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Rubika (Programming Education)",
           fa: "روبيکا (آموزش برنامه‌نویسی)",
-          ja: "Rubika (プログラミング教育)",
         },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/bahrami_codes",
@@ -62,7 +59,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Aparat (Programming Education)",
           fa: "آپارات (آموزش برنامه‌نویسی)",
-          ja: "Aparat (プログラミング教育)",
         },
         logo: "/digital-card/aparat.svg",
         href: "https://www.aparat.com/bahrami_codes",
@@ -72,7 +68,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Virasty (Programming Education)",
           fa: "ویراستی (آموزش برنامه‌نویسی)",
-          ja: "Virasty (プログラミング教育)",
         },
         logo: "/digital-card/virasty.svg",
         href: "https://virasty.com/bahrami_codes",
@@ -87,7 +82,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Eitaa (Personal Channel)",
           fa: "ایتا (کانال شخصی)",
-          ja: "Eitaa (個人チャンネル)",
         },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/itsbahrami",
@@ -97,7 +91,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Bale (Personal Channel)",
           fa: "بله (کانال شخصی)",
-          ja: "Bale (個人チャンネル)",
         },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/itsbahrami",
@@ -107,7 +100,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Rubika (Personal Channel)",
           fa: "روبيکا (کانال شخصی)",
-          ja: "Rubika (個人チャンネル)",
         },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/iambahrami",
@@ -117,7 +109,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Aparat (Personal Channel)",
           fa: "آپارات (کانال شخصی)",
-          ja: "Aparat (個人チャンネル)",
         },
         logo: "/digital-card/aparat.svg",
         href: "https://www.aparat.com/itsbahrami",
@@ -127,7 +118,6 @@ export const intentGroups: IntentGroup[] = [
         label: {
           en: "Virasty (Personal Channel)",
           fa: "ویراستی (کانال شخصی)",
-          ja: "Virasty (個人チャンネル)",
         },
         logo: "/digital-card/virasty.svg",
         href: "https://virasty.com/itsbahrami",
@@ -139,7 +129,7 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "github",
-        label: { en: "GitHub", fa: "گیت‌هاب", ja: "GitHub" },
+        label: { en: "GitHub", fa: "گیت‌هاب" },
         logo: "/digital-card/github.svg",
         href: "https://github.com/gikdev",
       },

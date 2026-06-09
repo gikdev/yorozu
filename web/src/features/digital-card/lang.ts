@@ -1,1 +1,1 @@
-export type Lang = "en" | "fa" | "ja"
+export type Lang = "en" | "fa"

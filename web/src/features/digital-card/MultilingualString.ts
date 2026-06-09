@@ -1,1 +1,1 @@
-export type MultilingualString = { en: string; fa: string; ja: string }
+export type MultilingualString = { en: string; fa: string }
