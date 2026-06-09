@@ -224,8 +224,9 @@ function Ledger() {
           <div className="bg-gray-900 rounded-lg p-4 border border-gray-800">
             <p className="text-sm text-gray-400">Balance</p>
             <p
-              className={`text-xl font-semibold ${netBalance >= 0 ? "text-green-400" : "text-red-400"
-                }`}
+              className={`text-xl font-semibold ${
+                netBalance >= 0 ? "text-green-400" : "text-red-400"
+              }`}
             >
               {formatNetAmount(netBalance)}
             </p>
@@ -273,10 +274,11 @@ function Ledger() {
                 <button
                   type="button"
                   onClick={() => setType("income")}
-                  className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 text-sm font-medium transition-colors ${type === "income"
+                  className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 text-sm font-medium transition-colors ${
+                    type === "income"
                       ? "bg-cyan-600 text-white"
                       : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-                    }`}
+                  }`}
                 >
                   <PlusIcon size={16} weight="bold" />
                   Income
@@ -284,10 +286,11 @@ function Ledger() {
                 <button
                   type="button"
                   onClick={() => setType("expense")}
-                  className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 text-sm font-medium transition-colors ${type === "expense"
+                  className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 text-sm font-medium transition-colors ${
+                    type === "expense"
                       ? "bg-cyan-600 text-white"
                       : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-                    }`}
+                  }`}
                 >
                   <MinusIcon size={16} weight="bold" />
                   Expense
@@ -369,10 +372,11 @@ function Ledger() {
 
                     <div className="flex items-center space-x-4 ml-4">
                       <span
-                        className={`font-semibold ${t.type === "income"
+                        className={`font-semibold ${
+                          t.type === "income"
                             ? "text-green-400"
                             : "text-red-400"
-                          }`}
+                        }`}
                       >
                         {formatAmount(t.amount, t.type)}
                       </span>

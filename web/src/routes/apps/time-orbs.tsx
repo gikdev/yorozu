@@ -37,7 +37,7 @@ const loadData = (): AppData => {
       const parsed = JSON.parse(raw)
       if (Array.isArray(parsed.sessions)) return { sessions: parsed.sessions }
     }
-  } catch { }
+  } catch {}
   return { sessions: [] }
 }
 
@@ -167,24 +167,26 @@ export default function TimeOrbTracker() {
             <div key={cat.key} className="flex flex-col items-center gap-2">
               <button
                 onClick={() => handleCategoryClick(cat.key)}
-                className={`w-24 h-24 rounded-full transition-all duration-300 shadow-lg ${isActive
+                className={`w-24 h-24 rounded-full transition-all duration-300 shadow-lg ${
+                  isActive
                     ? "scale-110 animate-float shadow-[0_0_30px_5px_rgba(255,255,255,0.3)]"
                     : "bg-gray-700 text-gray-500 shadow-none"
-                  }`}
+                }`}
                 style={
                   isActive
                     ? {
-                      backgroundColor: cat.color,
-                      boxShadow: `0 0 40px 10px ${cat.color}80`,
-                    }
+                        backgroundColor: cat.color,
+                        boxShadow: `0 0 40px 10px ${cat.color}80`,
+                      }
                     : {}
                 }
               >
                 {/* Orb is empty, color only */}
               </button>
               <span
-                className={`text-sm font-medium ${isActive ? "text-white" : "text-gray-500"
-                  }`}
+                className={`text-sm font-medium ${
+                  isActive ? "text-white" : "text-gray-500"
+                }`}
               >
                 {cat.label}
               </span>
