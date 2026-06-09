@@ -4,6 +4,8 @@ publish/
 output/
 output*.zip
 *.db*
+wwwroot/
+!wwwroot/.gitkeep
 
 # Environment
 .env*
