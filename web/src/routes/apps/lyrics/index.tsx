@@ -16,7 +16,7 @@ function RouteComponent() {
     <AppShell>
       <PageHeader
         title="Lyrics"
-        left={<PageHeaderBackButton to={linkOptions({ to: "/" }).to} />}
+        left={<PageHeaderBackButton to={linkOptions({ to: "/apps" }).to} />}
       />
 
       <main className="flex-1 overflow-y-auto min-h-0 p-6">

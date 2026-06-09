@@ -253,7 +253,7 @@ function KanbanBoard() {
       {/* Sidebar */}
       <aside className="w-64 bg-gray-800 p-4 flex flex-col gap-3 border-r border-gray-700">
         <h2 className="text-lg font-semibold text-blue-300">
-          <Link to="/">🚪</Link>
+          <Link to="/apps">🚪</Link>
           <span>Projects</span>
         </h2>
 
@@ -278,11 +278,10 @@ function KanbanBoard() {
           {projects.map(p => (
             <li
               key={p.id}
-              className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer text-sm ${
-                p.id === currentProjectId
+              className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer text-sm ${p.id === currentProjectId
                   ? "bg-blue-600 text-white"
                   : "hover:bg-gray-700 text-gray-300"
-              }`}
+                }`}
               onClick={() => setCurrentProjectId(p.id)}
             >
               <span className="truncate">{p.title}</span>

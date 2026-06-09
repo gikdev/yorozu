@@ -153,7 +153,7 @@ export default function FocusChoiceApp() {
       <div className="w-full max-w-lg mx-auto space-y-6">
         {/* Heading */}
         <h1 className="text-2xl font-bold text-center text-cyan-300">
-          <Link to="/">🚪</Link>
+          <Link to="/apps">🚪</Link>
           <span>Pairwise Chooser</span>
         </h1>
 
@@ -333,7 +333,7 @@ function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
+      ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
 }

@@ -62,7 +62,7 @@ function FocusHelper() {
           /* Input state */
           <form onSubmit={handleSetFocus} className="space-y-4">
             <label htmlFor="focus-input" className="block text-lg font-medium">
-              <Link to="/">🚪</Link>
+              <Link to="/apps">🚪</Link>
               <span>What do you want to focus on?</span>
             </label>
             <input

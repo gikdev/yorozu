@@ -17,6 +17,7 @@ import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
+import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
 import { Route as AppsLyricsIdRouteImport } from "./../../routes/apps/lyrics/$id"
 import { Route as AppsHondanaLibraryIndexRouteImport } from "./../../routes/apps/hondana/library/index"
 import { Route as AppsHondanahomeIndexRouteImport } from "./../../routes/apps/hondana/(home)/index"
@@ -63,6 +64,11 @@ const AppsLyricsIndexRoute = AppsLyricsIndexRouteImport.update({
   path: "/apps/lyrics/",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppshomeIndexRoute = AppshomeIndexRouteImport.update({
+  id: "/apps/(home)/",
+  path: "/apps/",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsLyricsIdRoute = AppsLyricsIdRouteImport.update({
   id: "/apps/lyrics/$id",
   path: "/apps/lyrics/$id",
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps/": typeof AppshomeIndexRoute
   "/apps/lyrics/": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
   "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps": typeof AppshomeIndexRoute
   "/apps/lyrics": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
   "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
+  "/apps/(home)/": typeof AppshomeIndexRoute
   "/apps/lyrics/": typeof AppsLyricsIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
   "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | "/apps/time-orbs"
     | "/"
     | "/apps/lyrics/$id"
+    | "/apps/"
     | "/apps/lyrics/"
     | "/apps/hondana/library/new"
     | "/apps/lyrics/print/$id"
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | "/apps/time-orbs"
     | "/"
     | "/apps/lyrics/$id"
+    | "/apps"
     | "/apps/lyrics"
     | "/apps/hondana/library/new"
     | "/apps/lyrics/print/$id"
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | "/apps/time-orbs"
     | "/(home)/"
     | "/apps/lyrics/$id"
+    | "/apps/(home)/"
     | "/apps/lyrics/"
     | "/apps/hondana/library/new"
     | "/apps/lyrics/print/$id"
@@ -192,6 +204,7 @@ export interface RootRouteChildren {
   AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsLyricsIdRoute: typeof AppsLyricsIdRoute
+  AppshomeIndexRoute: typeof AppshomeIndexRoute
   AppsLyricsIndexRoute: typeof AppsLyricsIndexRoute
   AppsHondanaLibraryNewRoute: typeof AppsHondanaLibraryNewRoute
   AppsLyricsPrintIdRoute: typeof AppsLyricsPrintIdRoute
@@ -257,6 +270,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsLyricsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/(home)/": {
+      id: "/apps/(home)/"
+      path: "/apps"
+      fullPath: "/apps/"
+      preLoaderRoute: typeof AppshomeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/lyrics/$id": {
       id: "/apps/lyrics/$id"
       path: "/apps/lyrics/$id"
@@ -304,6 +324,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
   AppsLyricsIdRoute: AppsLyricsIdRoute,
+  AppshomeIndexRoute: AppshomeIndexRoute,
   AppsLyricsIndexRoute: AppsLyricsIndexRoute,
   AppsHondanaLibraryNewRoute: AppsHondanaLibraryNewRoute,
   AppsLyricsPrintIdRoute: AppsLyricsPrintIdRoute,
