@@ -1,5 +1,5 @@
-import type { Intent } from "./Intent"
-import { intents } from "./intents"
+import { intents } from "../data/intents"
+import type { Intent } from "../types/Intent"
 import { IntentTab } from "./IntentTab"
 
 interface IntentTabsProps {

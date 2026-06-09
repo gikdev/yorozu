@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants"
-import type { Intent } from "./Intent"
-import { useIntentLabel } from "./useIntentLabel"
+import { useIntentLabel } from "../hooks/useIntentLabel"
+import type { Intent } from "../types/Intent"
 
 const styleIntentBtn = tv({
   base: "flex-1 py-2.5 text-xs transition-colors",

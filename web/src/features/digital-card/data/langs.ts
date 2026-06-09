@@ -1,4 +1,4 @@
-import type { Lang } from "./lang"
+import type { Lang } from "../types/lang";
 
 export const langs: { value: Lang; label: string }[] = [
   { value: "fa", label: "فارسی" },

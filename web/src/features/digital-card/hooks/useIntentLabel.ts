@@ -1,5 +1,5 @@
-import type { Intent } from "./Intent"
-import { intentLabels } from "./intentLabels"
+import { intentLabels } from "../data/intentLabels"
+import type { Intent } from "../types/Intent"
 import { useLang } from "./useLang"
 
 export function useIntentLabel(intent: Intent) {

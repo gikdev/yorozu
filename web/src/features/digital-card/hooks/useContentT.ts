@@ -1,4 +1,4 @@
-import type { IContent } from "./IContent"
+import type { IContent } from "../types/IContent"
 import { useContent } from "./useContent"
 import { useLang } from "./useLang"
 

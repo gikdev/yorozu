@@ -1,9 +1,10 @@
 import { LangSwitch } from "./LangSwitch"
 import { CardHeader } from "./CardHeader"
 import { ContactModal } from "./ContactModal"
-import { useDigitalCardStore } from "./useDigitalCardStore"
-import { useLang } from "./useLang"
-import { useContentT } from "./useContentT"
+import { useContentT } from "../hooks/useContentT"
+import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
+import { useLang } from "../hooks/useLang"
+
 
 export function DigitalCard() {
   const lang = useLang()

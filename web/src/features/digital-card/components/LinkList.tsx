@@ -1,5 +1,5 @@
-import { intentGroups } from "./intentGroups"
-import type { Intent } from "./Intent"
+import { intentGroups } from "../data/intentGroups"
+import type { Intent } from "../types/Intent"
 import { LinkItem } from "./LinkItem"
 
 interface LinkListProps {

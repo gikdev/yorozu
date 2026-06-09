@@ -1,5 +1,5 @@
-import type { ILinkItem } from "./ILinkItem"
-import { useT } from "./useT"
+import { useT } from "../hooks/useT"
+import type { ILinkItem } from "../types/ILinkItem"
 
 interface LinkItemProps {
   link: ILinkItem

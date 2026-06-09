@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { IntentTabs } from "./IntentTabs"
 import { LinkList } from "./LinkList"
-import { useDigitalCardStore } from "./useDigitalCardStore"
-import type { Intent } from "./Intent"
-import { useContentT } from "./useContentT"
+import { useContentT } from "../hooks/useContentT"
+import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
+import type { Intent } from "../types/Intent"
 
 export function ContactModal() {
   const [intent, setIntent] = useState<Intent>("message")

@@ -1,5 +1,5 @@
-import type { Intent } from "./Intent"
-import type { MultilingualString } from "./MultilingualString"
+import type { Intent } from "../types/Intent";
+import type { MultilingualString } from "../types/MultilingualString";
 
 export const intentLabels: Record<Intent, MultilingualString> = {
   message: {

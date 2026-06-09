@@ -1,4 +1,4 @@
-import type { IntentGroup } from "./IntentGroup"
+import type { IntentGroup } from "../types/IntentGroup";
 
 export const intentGroups: IntentGroup[] = [
   {

@@ -1,4 +1,4 @@
-import type { IContent } from "./IContent"
+import type { IContent } from "../types/IContent";
 
 export const content: IContent = {
   fullName: {

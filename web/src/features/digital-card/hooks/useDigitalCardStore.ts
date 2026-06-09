@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import type { Lang } from "./lang"
+import type { Lang } from "../types/lang"
 
 interface DigitalCardState {
   lang: Lang

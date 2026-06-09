@@ -1,6 +1,6 @@
-import { langs } from "./langs"
-import type { Lang } from "./lang"
-import { useDigitalCardStore } from "./useDigitalCardStore"
+import { langs } from "../data/langs"
+import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
+import type { Lang } from "../types/lang"
 
 export function LangSwitch() {
   const lang = useDigitalCardStore(s => s.lang)

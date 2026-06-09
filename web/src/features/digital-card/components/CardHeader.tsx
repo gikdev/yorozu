@@ -1,4 +1,4 @@
-import { useContentT } from "./useContentT"
+import { useContentT } from "../hooks/useContentT"
 
 export function CardHeader() {
   const fullName = useContentT("fullName")
