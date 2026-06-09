@@ -8,6 +8,8 @@ export const contents: Record<Lang, Content> = {
     tagline: "Fullstack web app developer · programming educator",
     description:
       "I build web apps and share what I learn — programming on my professional channels, and whatever's on my mind (languages, books, life, random thoughts) on my personal ones.",
+    contactMe: "Contact Me",
+    close: "Close",
   },
   fa: {
     fullName: "محمدمهدی بهرامی",
@@ -15,6 +17,8 @@ export const contents: Record<Lang, Content> = {
     tagline: "توسعه‌دهنده فول‌استک · مدرس برنامه‌نویسی",
     description:
       "اپ می‌سازم و یاد می‌دم — برنامه‌نویسی در کانال‌های حرفه‌ای، و هر چیزی که ذهنم درگیرشه (زبان، کتاب، زندگی، حرف‌های تصادفی) در کانال‌های شخصی.",
+    contactMe: "ارتباط با من",
+    close: "بستن",
   },
   ja: {
     fullName: "バフラミ モハンマドマフディ",
@@ -22,5 +26,7 @@ export const contents: Record<Lang, Content> = {
     tagline: "フルスタック開発者 · プログラミング講師",
     description:
       "Webアプリを作りながら、学んだことを発信しています。プロチャンネルではプログラミング、個人チャンネルでは言語・本・日常など気になることを何でも。",
+    contactMe: "連絡する",
+    close: "閉じる",
   },
 }

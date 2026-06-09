@@ -3,4 +3,6 @@ export type Content = {
   nickname: string
   tagline: string
   description: string
+  contactMe: string
+  close: string
 }
