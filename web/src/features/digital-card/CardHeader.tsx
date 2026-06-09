@@ -4,7 +4,6 @@ export function CardHeader() {
   const fullName = useContentT("fullName")
   const nickname = useContentT("nickname")
   const tagline = useContentT("tagline")
-  const description = useContentT("description")
 
   return (
     <div className="flex flex-col items-center p-4 text-center gap-2">
@@ -20,10 +19,6 @@ export function CardHeader() {
       </div>
 
       <p className="text-mist-400 leading-relaxed">{tagline}</p>
-
-      <p className="text-xs text-mist-500 leading-relaxed max-w-xs">
-        {description}
-      </p>
     </div>
   )
 }

@@ -4,7 +4,6 @@ export interface IContent {
   fullName: MultilingualString
   nickname: MultilingualString
   tagline: MultilingualString
-  description: MultilingualString
   contactMe: MultilingualString
   close: MultilingualString
 }
