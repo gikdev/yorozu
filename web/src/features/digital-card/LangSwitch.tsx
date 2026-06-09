@@ -1,16 +1,15 @@
-import type { Lang } from "./lang"
 import { langs } from "./langs"
+import type { Lang } from "./lang"
+import { useDigitalCardStore } from "./useDigitalCardStore"
 
-type Props = {
-  value: Lang
-  onChange: (lang: Lang) => void
-}
+export function LangSwitch() {
+  const lang = useDigitalCardStore(s => s.lang)
+  const setLang = useDigitalCardStore(s => s.setLang)
 
-export function LangSwitch({ value, onChange }: Props) {
   return (
     <select
-      value={value}
-      onChange={e => onChange(e.target.value as Lang)}
+      value={lang}
+      onChange={e => setLang(e.target.value as Lang)}
       className="rounded-lg bg-mist-800 border border-mist-700 text-mist-300 text-xs p-1 focus:outline-none focus:border-sky-500"
     >
       {langs.map(l => (

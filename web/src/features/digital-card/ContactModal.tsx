@@ -1,28 +1,27 @@
 import { useState } from "react"
-import type { Lang } from "./lang"
-import type { Intent } from "./Intent"
 import { intents } from "./intents"
-import { intentLabels } from "./intentLabels"
 import { intentGroups } from "./intentGroups"
-import type { Content } from "./Content"
+import type { Intent } from "./Intent"
+import { useContent } from "./useContent"
+import { useDigitalCardStore } from "./useDigitalCardStore"
+import { useLang } from "./useLang"
+import { intentLabels } from "./intentLabels"
 
-type ContactModalProps = {
-  lang: Lang
-  content: Content
-  onClose: () => void
-}
-
-export function ContactModal(p: ContactModalProps) {
+export function ContactModal() {
   const [intent, setIntent] = useState<Intent>("message")
+  const lang = useLang()
+  const content = useContent()
+  const setOpen = useDigitalCardStore(s => s.setOpen)
+
   const group = intentGroups.find(g => g.intent === intent)!
 
   return (
     <div
       className="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50"
-      onClick={p.onClose}
+      onClick={() => setOpen(false)}
     >
       <div
-        className="w-full max-w-sm bg-mist-900 rounded-2xl border border-mist-800 overflow-hidden"
+        className="w-full max-w-lg bg-mist-900 rounded-2xl border border-mist-800 overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         {/* Tabs */}
@@ -37,7 +36,7 @@ export function ContactModal(p: ContactModalProps) {
                   : "text-mist-500 hover:text-mist-300"
               }`}
             >
-              {intentLabels[i][p.lang]}
+              {intentLabels[i][lang]}
             </button>
           ))}
         </div>
@@ -54,9 +53,7 @@ export function ContactModal(p: ContactModalProps) {
             >
               <img src={link.logo} alt="" className="w-12 h-12 rounded-xl" />
               <span className="text-xs text-mist-400 text-center leading-tight">
-                {typeof link.label === "string"
-                  ? link.label
-                  : link.label[p.lang]}
+                {typeof link.label === "string" ? link.label : link.label[lang]}
               </span>
             </a>
           ))}
@@ -65,10 +62,10 @@ export function ContactModal(p: ContactModalProps) {
         {/* Close */}
         <div className="px-4 pb-4">
           <button
-            onClick={p.onClose}
+            onClick={() => setOpen(false)}
             className="w-full py-2 rounded-xl border border-mist-700 text-mist-400 text-sm hover:bg-mist-800 transition-colors"
           >
-            {p.content.close}
+            {content.close}
           </button>
         </div>
       </div>

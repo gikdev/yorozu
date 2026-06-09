@@ -1,8 +1,8 @@
-import type { Content } from "./Content"
+import { useContent } from "./useContent"
 
-interface CardHeaderProps extends Content {}
+export function CardHeader() {
+  const p = useContent()
 
-export function CardHeader(p: CardHeaderProps) {
   return (
     <div className="flex flex-col items-center p-4 text-center gap-2">
       <img
@@ -13,7 +13,6 @@ export function CardHeader(p: CardHeaderProps) {
 
       <div>
         <h1 className="text-xl font-medium text-mist-100">{p.fullName}</h1>
-
         <p className="text-sky-400">{p.nickname}</p>
       </div>
 

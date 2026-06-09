@@ -1,28 +1,28 @@
-import { useState } from "react"
-import { type Lang } from "./lang"
-import { contents } from "./contents"
 import { LangSwitch } from "./LangSwitch"
 import { CardHeader } from "./CardHeader"
 import { ContactModal } from "./ContactModal"
+import { useContent } from "./useContent"
+import { useDigitalCardStore } from "./useDigitalCardStore"
+import { useLang } from "./useLang"
 
 export function DigitalCard() {
-  const [lang, setLang] = useState<Lang>("fa")
-  const [open, setOpen] = useState(false)
+  const lang = useLang()
+  const open = useDigitalCardStore(s => s.open)
+  const setOpen = useDigitalCardStore(s => s.setOpen)
+  const content = useContent()
   const isRtl = lang === "fa"
-  const dir = isRtl ? "rtl" : "ltr"
-  const content = contents[lang]
 
   return (
     <div
       className="font-main min-h-screen flex items-center justify-center bg-mist-950 px-4 py-8"
-      dir={dir}
+      dir={isRtl ? "rtl" : "ltr"}
     >
       <div className="w-full max-w-sm rounded-2xl border border-mist-800 bg-mist-900 overflow-hidden">
         <div className="flex justify-end px-4 pt-4">
-          <LangSwitch value={lang} onChange={setLang} />
+          <LangSwitch />
         </div>
 
-        <CardHeader {...content} />
+        <CardHeader />
 
         <div className="px-4 pb-5">
           <button
@@ -34,13 +34,7 @@ export function DigitalCard() {
         </div>
       </div>
 
-      {open && (
-        <ContactModal
-          content={content}
-          lang={lang}
-          onClose={() => setOpen(false)}
-        />
-      )}
+      {open && <ContactModal />}
     </div>
   )
 }

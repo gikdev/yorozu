@@ -6,19 +6,19 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "eitaa-work",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/bahrami_work",
       },
       {
         id: "bale-work",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/bahrami_work",
       },
       {
         id: "rubika-work",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/bahrami_work",
       },
@@ -29,31 +29,31 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "eitaa-codes",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/bahrami_codes",
       },
       {
         id: "bale-codes",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/bahrami_codes",
       },
       {
         id: "rubika-codes",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/bahrami_codes",
       },
       {
         id: "aparat-codes",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/aparat.svg",
         href: "https://www.aparat.com/bahrami_codes",
       },
       {
         id: "virasty-codes",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/virasty.svg",
         href: "https://virasty.com/bahrami_codes",
       },
@@ -64,31 +64,31 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "eitaa-personal",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/eitaa.svg",
         href: "https://eitaa.com/itsbahrami",
       },
       {
         id: "bale-personal",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/bale.svg",
         href: "https://ble.ir/itsbahrami",
       },
       {
         id: "rubika-personal",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/rubika.svg",
         href: "https://rubika.ir/iambahrami",
       },
       {
         id: "aparat-personal",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/aparat.svg",
         href: "https://www.aparat.com/itsbahrami",
       },
       {
         id: "virasty-personal",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/virasty.svg",
         href: "https://virasty.com/itsbahrami",
       },
@@ -99,7 +99,7 @@ export const intentGroups: IntentGroup[] = [
     links: [
       {
         id: "github",
-        label: { en: "---", fa: "---", ja: "---" },
+        label: { en: "-EN-", fa: "-FA-", ja: "-JA-" },
         logo: "/digital-card/github.svg",
         href: "https://github.com/gikdev",
       },
