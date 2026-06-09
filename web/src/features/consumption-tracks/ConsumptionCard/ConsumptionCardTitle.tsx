@@ -1,10 +1,10 @@
+import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
 import { ConsumptionCardFormatIcon } from "./ConsumptionCardFormatIcon"
-import type { FormatType } from "./ConsumptionCardFormatIcon"
 
 interface ConsumptionCardTitleProps {
   title: string
   subtitle: string
-  formatType: FormatType
+  formatType: ContentItemFormatType
 }
 
 export function ConsumptionCardTitle(p: ConsumptionCardTitleProps) {
