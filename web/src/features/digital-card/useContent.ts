@@ -1,7 +1,5 @@
-import { contents } from "./contents"
-import { useLang } from "./useLang"
+import { content } from "./content"
 
 export function useContent() {
-  const lang = useLang()
-  return contents[lang]
+  return content
 }

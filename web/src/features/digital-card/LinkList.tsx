@@ -1,10 +1,9 @@
-import type { Intent } from "./Intent"
 import { intentGroups } from "./intentGroups"
-import type { Lang } from "./lang"
+import type { Intent } from "./Intent"
+import { LinkItem } from "./LinkItem"
 
-type LinkListProps = {
+interface LinkListProps {
   intent: Intent
-  lang: Lang
 }
 
 export function LinkList(p: LinkListProps) {
@@ -14,16 +13,7 @@ export function LinkList(p: LinkListProps) {
   return (
     <div className="flex flex-col divide-y divide-mist-800">
       {group.links.map(link => (
-        <a
-          key={link.id}
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 px-4 py-3 hover:bg-mist-800 transition-colors"
-        >
-          <img src={link.logo} alt="" className="w-7 h-7 rounded-md" />
-          <span className="text-mist-300">{link.label[p.lang]}</span>
-        </a>
+        <LinkItem key={link.id} link={link} />
       ))}
     </div>
   )

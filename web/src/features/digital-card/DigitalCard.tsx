@@ -1,15 +1,15 @@
 import { LangSwitch } from "./LangSwitch"
 import { CardHeader } from "./CardHeader"
 import { ContactModal } from "./ContactModal"
-import { useContent } from "./useContent"
 import { useDigitalCardStore } from "./useDigitalCardStore"
 import { useLang } from "./useLang"
+import { useContentT } from "./useContentT"
 
 export function DigitalCard() {
   const lang = useLang()
   const open = useDigitalCardStore(s => s.open)
   const setOpen = useDigitalCardStore(s => s.setOpen)
-  const content = useContent()
+  const contactMe = useContentT("contactMe")
   const isRtl = lang === "fa"
 
   return (
@@ -29,7 +29,7 @@ export function DigitalCard() {
             onClick={() => setOpen(true)}
             className="w-full py-2.5 rounded-xl bg-sky-500 text-mist-950 text-sm font-medium hover:bg-sky-400 transition-colors"
           >
-            {content.contactMe}
+            {contactMe}
           </button>
         </div>
       </div>

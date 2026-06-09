@@ -1,7 +1,7 @@
 import type { Intent } from "./Intent"
-import type { LinkItem } from "./LinkItem"
+import type { ILinkItem } from "./ILinkItem"
 
 export type IntentGroup = {
   intent: Intent
-  links: LinkItem[]
+  links: ILinkItem[]
 }
