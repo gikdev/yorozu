@@ -17,8 +17,8 @@ const vitePwaPlugin = VitePWA({
 
   manifest: {
     id: "ir.bahrami85.yorozu",
-    name: "فانوس",
-    short_name: "فانوس",
+    name: "یوروزو",
+    short_name: "یوروزو",
     description: "یه برنامه کاربردی...",
     theme_color: "#0284C7",
   },
