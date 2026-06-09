@@ -5,7 +5,6 @@ import { useContentT } from "../hooks/useContentT"
 import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
 import { useLang } from "../hooks/useLang"
 
-
 export function DigitalCard() {
   const lang = useLang()
   const open = useDigitalCardStore(s => s.open)
