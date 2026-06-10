@@ -1,3 +1,7 @@
 ./lyrics/Kill Shot.mp3
+./lyrics/Kyori-kan.mp3
+./lyrics/SOUVENIR.mp3
+./lyrics/Vita Philosophica.mp3
 ./lyrics/あわ.mp3
 ./lyrics/幸せ.mp3
+./lyrics/普通.mp3
