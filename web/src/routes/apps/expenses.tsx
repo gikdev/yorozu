@@ -201,7 +201,7 @@ function Ledger() {
       <div className="max-w-xl mx-auto">
         {/* Header */}
         <h1 className="text-3xl font-bold text-cyan-400 mb-6 text-center flex items-center justify-center gap-3">
-          <Link to="/" className="hover:opacity-80">
+          <Link to="/apps" className="hover:opacity-80">
             🚪
           </Link>
           <span>💎 Gems Ledger</span>

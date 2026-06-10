@@ -217,7 +217,7 @@ export default function TimeOrbTracker() {
       </div>
 
       <div className="flex gap-4 mt-4">
-        <Link to="/" className={btn({ isIcon: true })}>
+        <Link to="/apps" className={btn({ isIcon: true })}>
           🚪
         </Link>
         <button

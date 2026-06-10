@@ -153,7 +153,7 @@ export default function FocusChoiceApp() {
       <div className="w-full max-w-lg mx-auto space-y-6">
         {/* Heading */}
         <h1 className="text-2xl font-bold text-center text-cyan-300">
-          <Link to="/">🚪</Link>
+          <Link to="/apps">🚪</Link>
           <span>Pairwise Chooser</span>
         </h1>
 

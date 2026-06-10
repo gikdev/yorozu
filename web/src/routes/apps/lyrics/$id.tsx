@@ -37,7 +37,6 @@ function RouteComponent() {
           <Link
             to="/apps/lyrics/print/$id"
             params={{ id: song.id }}
-            target="_blank"
             className="min-h-12 aspect-square flex items-center justify-center transition-colors rounded-full hover:bg-mist-800 hover:text-mist-100"
           >
             <PrinterIcon size={18} />
