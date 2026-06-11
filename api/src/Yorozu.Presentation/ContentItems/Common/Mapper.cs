@@ -6,7 +6,7 @@ namespace Yorozu.Presentation.ContentItems.Common;
 internal static class Mapper {
     internal static ContentItemResponse MapToResponse(ContentItem i)
         => new() {
-            CoverImageUrl = i.CoverImage?.Url,
+            CoverImageUrl = i.CoverImageUrl?.Value,
             CreatedAt = i.CreatedAt,
             Format = i.Format,
             FullTitle = i.FullTitle.Value,

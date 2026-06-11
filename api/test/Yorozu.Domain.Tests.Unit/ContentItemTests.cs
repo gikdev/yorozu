@@ -1,12 +1,13 @@
 using Yorozu.Domain.ContentItems;
 using FluentAssertions;
+using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.Tests.Unit;
 
 public class ContentItemTests {
     [Fact]
     public void Create_WithValidTitleAndFormat_SetsProperties() {
-        var title = NonEmptyString.Create("My Item").Value;
+        var title = NotEmptyString.Create("My Item").Value;
         var format = ContentItemFormat.Readable;
 
         var item = ContentItem.Create(title, format);
@@ -69,7 +70,7 @@ public class ContentItemTests {
     [Fact]
     public void AddTag_NewTag_AddsToList() {
         var item = CreateValidContentItem();
-        var tag = NonEmptyString.Create("fantasy").Value;
+        var tag = NotEmptyString.Create("fantasy").Value;
 
         item.AddTag(tag);
 
@@ -79,7 +80,7 @@ public class ContentItemTests {
     [Fact]
     public void AddTag_DuplicateTag_DoesNotAddAgain() {
         var item = CreateValidContentItem();
-        var tag = NonEmptyString.Create("fantasy").Value;
+        var tag = NotEmptyString.Create("fantasy").Value;
         item.AddTag(tag);
         item.AddTag(tag);
 
@@ -89,7 +90,7 @@ public class ContentItemTests {
     [Fact]
     public void RemoveTag_ExistingTag_RemovesIt() {
         var item = CreateValidContentItem();
-        var tag = NonEmptyString.Create("fantasy").Value;
+        var tag = NotEmptyString.Create("fantasy").Value;
         item.AddTag(tag);
 
         item.RemoveTag(tag);
@@ -101,7 +102,7 @@ public class ContentItemTests {
     [Fact]
     public void SetUnitSpecification_Ongoing_SetsSpecWithoutClearingTracks() {
         var item = CreateValidContentItem();
-        var spec = ContentUnitSpecification.CreateOngoing(ContentUnitType.Episode);
+        var spec = ContentUnitSpecification.CreateOngoing(ContentUnitType.Episode).Value;
 
         item.SetUnitSpecification(spec);
 
@@ -111,8 +112,8 @@ public class ContentItemTests {
     [Fact]
     public void RemoveUnitSpecification_ClearsTracks() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, 10));
-        item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("My Track").Value);
+        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, 10).Value);
+        item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("My Track").Value);
 
         item.RemoveUnitSpecification();
 
@@ -123,12 +124,12 @@ public class ContentItemTests {
     [Fact]
     public void SetUnitSpecification_FinishedWithTotal_CapsTracksExceedingTotalAndCompletesInProgress() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page));
-        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("Read").Value).Value;
+        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page).Value);
+        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Read").Value).Value;
         item.StartTrack(trackId);
         item.SetTrackProgress(trackId, 50);
 
-        var newSpec = ContentUnitSpecification.CreateFinished(ContentUnitType.Page, 30);
+        var newSpec = ContentUnitSpecification.CreateFinished(ContentUnitType.Page, 30).Value;
         item.SetUnitSpecification(newSpec);
 
         var track = item.ConsumptionTracks.First();
@@ -142,7 +143,7 @@ public class ContentItemTests {
     public void AddConsumptionTrack_WithoutUnitSpec_ReturnsError() {
         var item = CreateValidContentItem();
 
-        var result = item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("X").Value);
+        var result = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("X").Value);
 
         result.IsError.Should().BeTrue();
         result.Errors.Should().Contain(e => e.Code == ContentItem.MustHaveUnitSpecificationError.Code);
@@ -151,9 +152,9 @@ public class ContentItemTests {
     [Fact]
     public void AddConsumptionTrack_WithSpec_ReturnsTrackId() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12));
+        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12).Value);
 
-        var result = item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("Watch").Value);
+        var result = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Watch").Value);
 
         ErrorOrAssert.IsSuccess(result);
         result.Value.Should().NotBe(Guid.Empty);
@@ -337,8 +338,8 @@ public class ContentItemTests {
     [Fact]
     public void SetProgress_OngoingSpec_AllowsAnyValue() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page));
-        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("Infinity").Value).Value;
+        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page).Value);
+        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Infinity").Value).Value;
         item.StartTrack(trackId);
 
         var result = item.SetTrackProgress(trackId, 9999);
@@ -359,7 +360,7 @@ public class ContentItemTests {
     }
 
     [Fact]
-    public void RemoveConsumptionTrack_NonExisting_ReturnsError() {
+    public void RemoveConsumptionTrack_NotExisting_ReturnsError() {
         var item = CreateItemWithTrack();
 
         var result = item.RemoveConsumptionTrack(Guid.NewGuid());
@@ -368,14 +369,14 @@ public class ContentItemTests {
     }
 
     private static ContentItem CreateValidContentItem() {
-        var title = NonEmptyString.Create("Test Content").Value;
+        var title = NotEmptyString.Create("Test Content").Value;
         return ContentItem.Create(title, ContentItemFormat.Watchable);
     }
 
     private static ContentItem CreateItemWithTrack() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12));
-        item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("Main").Value);
+        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12).Value);
+        item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Main").Value);
         return item;
     }
 
@@ -385,8 +386,8 @@ public class ContentItemTests {
 
     private static ContentItem CreateStartedTrackWithTotal(int totalUnits) {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, totalUnits));
-        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NonEmptyString.Create("Track").Value).Value;
+        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, totalUnits).Value);
+        var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Track").Value).Value;
         item.StartTrack(trackId);
         return item;
     }

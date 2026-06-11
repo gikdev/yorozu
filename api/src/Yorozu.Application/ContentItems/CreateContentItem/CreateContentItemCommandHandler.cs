@@ -42,11 +42,11 @@ internal class CreateContentItemCommandHandler(
         if (request.IsSecret) contentItem.MarkSecret();
 
         if (request.CoverImagePath != null) {
-            var cover = new CoverImage {
-                Url = request.CoverImagePath
-            };
+            var urlResult = NotEmptyString.Create(request.CoverImagePath);
+            if (urlResult.IsError) return urlResult.Errors;
+            var url = urlResult.Value;
 
-            contentItem.SetCoverImage(cover);
+            contentItem.SetCoverImageUrl(url);
         }
 
         if (request.Location != null) {
