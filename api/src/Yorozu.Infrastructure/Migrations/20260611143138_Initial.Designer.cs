@@ -11,7 +11,7 @@ using Yorozu.Infrastructure.Database;
 namespace Yorozu.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbCtx))]
-    [Migration("20260611141518_Initial")]
+    [Migration("20260611143138_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -126,7 +126,7 @@ namespace Yorozu.Infrastructure.Migrations
 
             modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b =>
                 {
-                    b.OwnsOne("Yorozu.Domain.ContentItems.ContentUnitSpecification", "UnitSpecification", b1 =>
+                    b.OwnsOne("Yorozu.Domain.ContentItems.ContentUnitSpec", "UnitSpec", b1 =>
                         {
                             b1.Property<Guid>("ContentItemId")
                                 .HasColumnType("TEXT");
@@ -170,7 +170,7 @@ namespace Yorozu.Infrastructure.Migrations
 
                     b.Navigation("Location");
 
-                    b.Navigation("UnitSpecification");
+                    b.Navigation("UnitSpec");
                 });
 
             modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b =>

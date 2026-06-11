@@ -61,7 +61,7 @@ internal class CreateContentItemCommandHandler(
         }
 
         if (request.UnitSpec != null) {
-            var unitSpecResult = ContentUnitSpecification.Create(
+            var unitSpecResult = ContentUnitSpec.Create(
                 request.UnitSpec.IsOngoing,
                 request.UnitSpec.UnitType,
                 request.UnitSpec.TotalUnits
@@ -69,7 +69,7 @@ internal class CreateContentItemCommandHandler(
             if (unitSpecResult.IsError) return unitSpecResult.Errors;
             var unitSpec = unitSpecResult.Value;
 
-            contentItem.SetUnitSpecification(unitSpec);
+            contentItem.SetUnitSpec(unitSpec);
         }
 
         contentItemRepository.Add(contentItem);

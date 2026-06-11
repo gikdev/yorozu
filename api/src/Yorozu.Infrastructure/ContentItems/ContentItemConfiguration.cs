@@ -25,7 +25,7 @@ internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> 
         builder.Ignore(x => x.CanAddTracks);
 
         builder.OwnsOne(x => x.Location);
-        builder.OwnsOne(x => x.UnitSpecification);
+        builder.OwnsOne(x => x.UnitSpec);
 
         builder.PrimitiveCollection<List<string>>("_tags")
             .HasField("_tags")

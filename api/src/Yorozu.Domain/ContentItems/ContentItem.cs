@@ -6,9 +6,9 @@ using Yorozu.Common.Domain;
 namespace Yorozu.Domain.ContentItems;
 
 public class ContentItem : IAggregateRoot, IHasTimestamps {
-    public static Error MustHaveUnitSpecificationError { get; } = Error.Validation(
-        description: "A unit specification is required to track consumption.",
-        code: "ContentItem.MustHaveUnitSpecification"
+    public static Error MustHaveUnitSpecError { get; } = Error.Validation(
+        description: "A unit spec is required to track consumption.",
+        code: "ContentItem.MustHaveUnitSpec"
     );
     public static Error TrackNotFoundError(Guid id) => Error.NotFound(
         description: $"Consumption track with id '{id}' was not found.",
@@ -38,10 +38,10 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
 
     public Location? Location { get; private set; }
 
-    public ContentUnitSpecification? UnitSpecification { get; private set; }
+    public ContentUnitSpec? UnitSpec { get; private set; }
     public IReadOnlyCollection<ConsumptionTrack> ConsumptionTracks => _consumptionTracks.AsReadOnly();
     public bool HasAnyTracks => _consumptionTracks.Count > 0;
-    public bool CanAddTracks => UnitSpecification != null;
+    public bool CanAddTracks => UnitSpec != null;
 
     public NotEmptyString? CoverImageUrl { get; private set; }
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
@@ -156,8 +156,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void SetUnitSpecification(ContentUnitSpecification spec) {
-        UnitSpecification = spec;
+    public void SetUnitSpec(ContentUnitSpec spec) {
+        UnitSpec = spec;
 
         // Auto-cap & auto-complete tracks that exceed the new total
         if (!spec.IsOngoing && spec.TotalUnits.HasValue) {
@@ -175,8 +175,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void RemoveUnitSpecification() {
-        UnitSpecification = null;
+    public void RemoveUnitSpec() {
+        UnitSpec = null;
         _consumptionTracks.Clear();
         MarkUpdated();
     }
@@ -188,7 +188,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         Guid? trackId = null
     ) {
         if (!CanAddTracks)
-            return MustHaveUnitSpecificationError;
+            return MustHaveUnitSpecError;
 
         var track = ConsumptionTrack.Create(type, title, description, trackId);
         _consumptionTracks.Add(track);
@@ -265,7 +265,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
         if (track is null) return TrackNotFoundError(trackId);
 
-        var result = track.SetProgress(newValue, UnitSpecification?.TotalUnits);
+        var result = track.SetProgress(newValue, UnitSpec?.TotalUnits);
         if (result.IsError) return result.Errors;
 
         MarkUpdated();
@@ -276,7 +276,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
         if (track is null) return TrackNotFoundError(trackId);
 
-        var result = track.IncrementProgress(amount, UnitSpecification?.TotalUnits);
+        var result = track.IncrementProgress(amount, UnitSpec?.TotalUnits);
         if (result.IsError) return result.Errors;
 
         MarkUpdated();

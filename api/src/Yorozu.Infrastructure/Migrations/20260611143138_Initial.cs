@@ -27,9 +27,9 @@ namespace Yorozu.Infrastructure.Migrations
                     IsFavorite = table.Column<bool>(type: "INTEGER", nullable: false),
                     Location_Type = table.Column<int>(type: "INTEGER", nullable: true),
                     Location_Value = table.Column<string>(type: "TEXT", nullable: true),
-                    UnitSpecification_UnitType = table.Column<int>(type: "INTEGER", nullable: true),
-                    UnitSpecification_TotalUnits = table.Column<int>(type: "INTEGER", nullable: true),
-                    UnitSpecification_IsOngoing = table.Column<bool>(type: "INTEGER", nullable: true),
+                    UnitSpec_UnitType = table.Column<int>(type: "INTEGER", nullable: true),
+                    UnitSpec_TotalUnits = table.Column<int>(type: "INTEGER", nullable: true),
+                    UnitSpec_IsOngoing = table.Column<bool>(type: "INTEGER", nullable: true),
                     CoverImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     PlaceholderColor = table.Column<string>(type: "TEXT", nullable: false),
                     _tags = table.Column<string>(type: "TEXT", nullable: false)

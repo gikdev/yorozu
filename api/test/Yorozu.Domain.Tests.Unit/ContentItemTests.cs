@@ -98,39 +98,39 @@ internal class ContentItemTests {
         item.Tags.Should().NotContain(tag);
     }
 
-    // 4. Unit Specification
+    // 4. Unit Spec
     [Fact]
-    public void SetUnitSpecification_Ongoing_SetsSpecWithoutClearingTracks() {
+    public void SetUnitSpec_Ongoing_SetsSpecWithoutClearingTracks() {
         var item = CreateValidContentItem();
-        var spec = ContentUnitSpecification.CreateOngoing(ContentUnitType.Episode).Value;
+        var spec = ContentUnitSpec.CreateOngoing(ContentUnitType.Episode).Value;
 
-        item.SetUnitSpecification(spec);
+        item.SetUnitSpec(spec);
 
-        item.UnitSpecification.Should().Be(spec);
+        item.UnitSpec.Should().Be(spec);
     }
 
     [Fact]
-    public void RemoveUnitSpecification_ClearsTracks() {
+    public void RemoveUnitSpec_ClearsTracks() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, 10).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateFinished(ContentUnitType.Chapter, 10).Value);
         item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("My Track").Value);
 
-        item.RemoveUnitSpecification();
+        item.RemoveUnitSpec();
 
-        item.UnitSpecification.Should().BeNull();
+        item.UnitSpec.Should().BeNull();
         item.ConsumptionTracks.Should().BeEmpty();
     }
 
     [Fact]
-    public void SetUnitSpecification_FinishedWithTotal_CapsTracksExceedingTotalAndCompletesInProgress() {
+    public void SetUnitSpec_FinishedWithTotal_CapsTracksExceedingTotalAndCompletesInProgress() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateOngoing(ContentUnitType.Page).Value);
         var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Read").Value).Value;
         item.StartTrack(trackId);
         item.SetTrackProgress(trackId, 50);
 
-        var newSpec = ContentUnitSpecification.CreateFinished(ContentUnitType.Page, 30).Value;
-        item.SetUnitSpecification(newSpec);
+        var newSpec = ContentUnitSpec.CreateFinished(ContentUnitType.Page, 30).Value;
+        item.SetUnitSpec(newSpec);
 
         var track = item.ConsumptionTracks.First();
         track.CurrentUnit.Should().Be(30);
@@ -146,13 +146,13 @@ internal class ContentItemTests {
         var result = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("X").Value);
 
         result.IsError.Should().BeTrue();
-        result.Errors.Should().Contain(e => e.Code == ContentItem.MustHaveUnitSpecificationError.Code);
+        result.Errors.Should().Contain(e => e.Code == ContentItem.MustHaveUnitSpecError.Code);
     }
 
     [Fact]
     public void AddConsumptionTrack_WithSpec_ReturnsTrackId() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateFinished(ContentUnitType.Episode, 12).Value);
 
         var result = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Watch").Value);
 
@@ -338,7 +338,7 @@ internal class ContentItemTests {
     [Fact]
     public void SetProgress_OngoingSpec_AllowsAnyValue() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateOngoing(ContentUnitType.Page).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateOngoing(ContentUnitType.Page).Value);
         var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Infinity").Value).Value;
         item.StartTrack(trackId);
 
@@ -375,7 +375,7 @@ internal class ContentItemTests {
 
     private static ContentItem CreateItemWithTrack() {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Episode, 12).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateFinished(ContentUnitType.Episode, 12).Value);
         item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Main").Value);
         return item;
     }
@@ -386,7 +386,7 @@ internal class ContentItemTests {
 
     private static ContentItem CreateStartedTrackWithTotal(int totalUnits) {
         var item = CreateValidContentItem();
-        item.SetUnitSpecification(ContentUnitSpecification.CreateFinished(ContentUnitType.Chapter, totalUnits).Value);
+        item.SetUnitSpec(ContentUnitSpec.CreateFinished(ContentUnitType.Chapter, totalUnits).Value);
         var trackId = item.AddConsumptionTrack(IntentionType.Fun, NotEmptyString.Create("Track").Value).Value;
         item.StartTrack(trackId);
         return item;

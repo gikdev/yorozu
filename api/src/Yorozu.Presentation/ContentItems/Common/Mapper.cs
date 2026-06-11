@@ -22,10 +22,10 @@ internal static class Mapper {
             PlaceholderLetter = i.PlaceholderLetter,
             Tags = i.Tags.ToList().ConvertAll(x => x.Value),
             Title = i.Title,
-            UnitSpec = i.UnitSpecification == null ? null : new ContentUnitSpecRto(
-                i.UnitSpecification.IsOngoing,
-                i.UnitSpecification.UnitType,
-                i.UnitSpecification.TotalUnits
+            UnitSpec = i.UnitSpec == null ? null : new ContentUnitSpecRto(
+                i.UnitSpec.IsOngoing,
+                i.UnitSpec.UnitType,
+                i.UnitSpec.TotalUnits
             ),
             UpdatedAt = i.UpdatedAt,
         };
