@@ -33,7 +33,7 @@ function RouteComponent() {
               isSecret={ci.isSecret}
               placeholderLetter={ci.placeholderLetter}
               title={ci.title}
-              onDetails={() => { }}
+              onDetails={() => {}}
             />
           ))}
         </main>

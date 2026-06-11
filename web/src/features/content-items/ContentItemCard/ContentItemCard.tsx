@@ -46,8 +46,12 @@ export function ContentItemCard(p: ContentItemCardProps) {
         <FormatIcon size={16} weight="fill" />
 
         {p.isOngoing === null && <QuestionIcon size={16} />}
-        {p.isOngoing === true && <ClockIcon size={16} weight="fill" className="text-cyan-400" />}
-        {p.isOngoing === false && <CheckCircleIcon size={16} weight="fill" className="text-green-400" />}
+        {p.isOngoing === true && (
+          <ClockIcon size={16} weight="fill" className="text-cyan-400" />
+        )}
+        {p.isOngoing === false && (
+          <CheckCircleIcon size={16} weight="fill" className="text-green-400" />
+        )}
 
         <BookmarkSimpleIcon
           size={16}
