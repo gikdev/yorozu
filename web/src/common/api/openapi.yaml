@@ -3,9 +3,21 @@ info:
   title: Yorozu.Api | v1
   version: 1.0.0
 servers:
-  - url: http://localhost:5000/
+  - url: http://localhost:5050/
 paths:
   /api/content-items:
+    get:
+      tags:
+        - Content Items
+      summary: List content items
+      operationId: ListContentItems
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentItemsResponse"
     post:
       tags:
         - Content Items
@@ -107,6 +119,15 @@ components:
           type: string
         placeholderLetter:
           type: string
+    ContentItemsResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentItemResponse"
     ContentUnitSpecRto:
       required:
         - isOngoing

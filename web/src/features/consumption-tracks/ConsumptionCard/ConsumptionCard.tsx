@@ -2,15 +2,15 @@ import { PlusIcon } from "@phosphor-icons/react"
 import { ConsumptionCardImage } from "./ConsumptionCardImage"
 import { ConsumptionCardTitle } from "./ConsumptionCardTitle"
 import { ConsumptionCardProgress } from "./ConsumptionCardProgress"
-import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
 import { styleConsumptionCardBtn } from "./styleConsumptionCardBtn"
+import type { ContentItemFormat } from "#/common/api/client"
 
 interface ConsumptionCardProps {
   imageSrc?: string | null
   imageFallbackLetter: string
   title: string
   subtitle: string
-  formatType: ContentItemFormatType
+  formatType: ContentItemFormat
   current: number
   total: number | null
   onAdd?: () => void

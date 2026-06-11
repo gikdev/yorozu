@@ -17,9 +17,9 @@ const vitePwaPlugin = VitePWA({
 
   manifest: {
     id: "ir.bahrami85.yorozu",
-    name: "یوروزو",
-    short_name: "یوروزو",
-    description: "یه برنامه کاربردی...",
+    name: "Yorozu",
+    short_name: "Yorozu",
+    description: "A super app.",
     theme_color: "#0284C7",
   },
 
@@ -63,7 +63,7 @@ const plugins: PluginOption[] = [
 const server: UserConfig["server"] = {
   proxy: {
     "/api": {
-      target: "http://localhost:5000",
+      target: "http://localhost:5050",
       changeOrigin: true,
       secure: false,
     },

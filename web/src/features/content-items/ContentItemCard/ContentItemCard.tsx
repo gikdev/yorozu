@@ -5,12 +5,24 @@ import {
   QueueIcon,
   CheckCircleIcon,
   ClockIcon,
+  QuestionIcon,
 } from "@phosphor-icons/react"
 import type { ContentItemCardShape } from "../ContentItemShape"
 import { ContentItemCardImage } from "./ContentItemCardImage"
 import { contentItemFormatIconMap } from "../contentItemFormatIconMap"
+import type { ContentItemFormat } from "#/common/api/client"
 
-interface ContentItemCardProps extends ContentItemCardShape {
+interface ContentItemCardProps {
+  id: string
+  coverImageUrl: string | null
+  title: string
+  isBookmarked: boolean
+  isSecret: boolean
+  isFavorite: boolean
+  hasAnyTracks: boolean
+  isOngoing: boolean | null
+  placeholderLetter: string
+  format: ContentItemFormat
   onDetails: () => void
 }
 
@@ -33,11 +45,9 @@ export function ContentItemCard(p: ContentItemCardProps) {
       <div className="flex items-center justify-center gap-1 text-mist-300 px-4 pt-2 pb-4">
         <FormatIcon size={16} weight="fill" />
 
-        {p.isOngoing ? (
-          <ClockIcon size={16} />
-        ) : (
-          <CheckCircleIcon size={16} weight="fill" className="text-green-400" />
-        )}
+        {p.isOngoing === null && <QuestionIcon size={16} />}
+        {p.isOngoing === true && <ClockIcon size={16} weight="fill" className="text-cyan-400" />}
+        {p.isOngoing === false && <CheckCircleIcon size={16} weight="fill" className="text-green-400" />}
 
         <BookmarkSimpleIcon
           size={16}

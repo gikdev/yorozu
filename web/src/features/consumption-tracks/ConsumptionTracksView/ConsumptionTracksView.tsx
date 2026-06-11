@@ -12,7 +12,7 @@ export function ConsumptionTracksView() {
           imageFallbackLetter="本"
           title="First watch"
           subtitle="本好き S4"
-          formatType="watchable"
+          formatType="Watchable"
           current={9}
           total={12}
           onAdd={() => {}}
@@ -23,7 +23,7 @@ export function ConsumptionTracksView() {
           imageFallbackLetter="S"
           title="Currently watching"
           subtitle="Solo Leveling S2"
-          formatType="readable"
+          formatType="Readable"
           current={5}
           total={null}
           onAdd={() => {}}
@@ -34,7 +34,7 @@ export function ConsumptionTracksView() {
           imageFallbackLetter="S"
           title="Currently watching"
           subtitle="Solo Leveling S2"
-          formatType="readable"
+          formatType="Readable"
           current={5}
           total={null}
           onAdd={() => {}}
@@ -45,7 +45,7 @@ export function ConsumptionTracksView() {
           imageFallbackLetter="S"
           title="Currently watching"
           subtitle="Solo Leveling S2"
-          formatType="readable"
+          formatType="Readable"
           current={5}
           total={null}
           onAdd={() => {}}
@@ -56,7 +56,7 @@ export function ConsumptionTracksView() {
           imageFallbackLetter="S"
           title="Currently watching"
           subtitle="Solo Leveling S2"
-          formatType="readable"
+          formatType="Readable"
           current={5}
           total={null}
           onAdd={() => {}}

@@ -1,4 +1,4 @@
-import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
+import type { ContentItemFormat } from "#/common/api/client"
 import {
   ArticleNyTimesIcon,
   CircleDashedIcon,
@@ -7,9 +7,9 @@ import {
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
 
-export const contentItemFormatIconMap: Record<ContentItemFormatType, Icon> = {
-  mixed: CircleDashedIcon,
-  listenable: HeadphonesIcon,
-  watchable: MonitorPlayIcon,
-  readable: ArticleNyTimesIcon,
+export const contentItemFormatIconMap: Record<ContentItemFormat, Icon> = {
+  Mixed: CircleDashedIcon,
+  Listenable: HeadphonesIcon,
+  Watchable: MonitorPlayIcon,
+  Readable: ArticleNyTimesIcon,
 }

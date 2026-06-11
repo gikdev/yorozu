@@ -1,9 +1,9 @@
-import type { ContentItemFormatType } from "./ContentItemFormatType"
+import type { ContentItemFormat } from "#/common/api/client"
 
 export interface ContentItemCardShape {
   id: string
   title: string
-  format: ContentItemFormatType
+  format: ContentItemFormat
   isSecret: boolean
   isBookmarked: boolean
   isFavorite: boolean
@@ -19,7 +19,7 @@ export const sampleContentItems: ContentItemCardShape[] = [
   {
     id: "1",
     title: "本好き S4",
-    format: "watchable",
+    format: "Watchable",
     isSecret: false,
     isBookmarked: true,
     isFavorite: true,
@@ -35,7 +35,7 @@ export const sampleContentItems: ContentItemCardShape[] = [
   {
     id: "5",
     title: "Rust Programming: Zero to Production",
-    format: "watchable",
+    format: "Watchable",
     isSecret: false,
     isBookmarked: true,
     isFavorite: false,
@@ -49,7 +49,7 @@ export const sampleContentItems: ContentItemCardShape[] = [
   {
     id: "8",
     title: "Atomic Habits",
-    format: "readable",
+    format: "Readable",
     isSecret: false,
     isBookmarked: true,
     isFavorite: false,
