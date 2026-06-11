@@ -3,11 +3,9 @@ import {
   HeartIcon,
   LockKeyIcon,
   QueueIcon,
-  CheckCircleIcon,
   ClockIcon,
   QuestionIcon,
 } from "@phosphor-icons/react"
-import type { ContentItemCardShape } from "../ContentItemShape"
 import { ContentItemCardImage } from "./ContentItemCardImage"
 import { contentItemFormatIconMap } from "../contentItemFormatIconMap"
 import type { ContentItemFormat } from "#/common/api/client"
@@ -43,36 +41,38 @@ export function ContentItemCard(p: ContentItemCardProps) {
       <p className="font-bold text-mist-100 truncate px-4 py-2">{p.title}</p>
 
       <div className="flex items-center justify-center gap-1 text-mist-300 px-4 pt-2 pb-4">
-        <FormatIcon size={16} weight="fill" />
+        <FormatIcon size={20} weight="fill" />
 
-        {p.isOngoing === null && <QuestionIcon size={16} />}
-        {p.isOngoing === true && (
-          <ClockIcon size={16} weight="fill" className="text-cyan-400" />
-        )}
-        {p.isOngoing === false && (
-          <CheckCircleIcon size={16} weight="fill" className="text-green-400" />
+        {p.isOngoing === null ? (
+          <QuestionIcon size={20} />
+        ) : (
+          <ClockIcon
+            size={20}
+            weight="fill"
+            className={p.isOngoing ? "text-cyan-400" : "text-green-400"}
+          />
         )}
 
         <BookmarkSimpleIcon
-          size={16}
+          size={20}
           weight={p.isBookmarked ? "fill" : "regular"}
           className={p.isBookmarked ? "text-yellow-400" : ""}
         />
 
         <HeartIcon
-          size={16}
+          size={20}
           weight={p.isFavorite ? "fill" : "regular"}
           className={p.isFavorite ? "text-red-400" : ""}
         />
 
         <LockKeyIcon
-          size={16}
+          size={20}
           weight={p.isSecret ? "fill" : "regular"}
           className={p.isSecret ? "text-purple-400" : ""}
         />
 
         <QueueIcon
-          size={16}
+          size={20}
           weight={p.hasAnyTracks ? "fill" : "regular"}
           className={p.hasAnyTracks ? "text-blue-400" : ""}
         />
