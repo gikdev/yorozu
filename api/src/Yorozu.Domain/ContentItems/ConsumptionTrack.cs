@@ -155,7 +155,7 @@ public class ConsumptionTrack : IEntity {
             return CannotExceedTotalUnitsError(totalUnits.Value);
 
         CurrentUnit = newValue;
-        
+
         return Result.Success;
     }
 

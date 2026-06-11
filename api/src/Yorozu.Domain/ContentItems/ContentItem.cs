@@ -15,7 +15,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         code: "ContentItem.TrackNotFound"
     );
 
-    private readonly List<NotEmptyString> _tags = [];
+    private readonly List<string> _tags = [];
     private readonly List<Genre> _genres = [];
     private readonly List<ConsumptionTrack> _consumptionTracks = [];
 
@@ -28,8 +28,9 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public NotEmptyString Title => NickName ?? FullTitle;
 
     public ContentItemFormat Format { get; private set; }
-    public IReadOnlyCollection<NotEmptyString> Tags => _tags.AsReadOnly();
     public IReadOnlyCollection<Genre> Genres => _genres.AsReadOnly();
+    public IReadOnlyCollection<NotEmptyString> Tags =>
+        _tags.Select(t => NotEmptyString.Create(t).Value).ToList().AsReadOnly();
 
     public bool IsSecret { get; private set; }
     public bool IsBookmarked { get; private set; }
@@ -115,12 +116,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
 
     public void AddTag(NotEmptyString tag) {
         if (_tags.Contains(tag)) return;
-        _tags.Add(tag);
+        _tags.Add(tag.Value);
         MarkUpdated();
     }
 
     public void RemoveTag(NotEmptyString tag) {
-        if (_tags.Remove(tag))
+        if (_tags.Remove(tag.Value))
             MarkUpdated();
     }
 

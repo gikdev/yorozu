@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
 using Yorozu.Domain.ContentItems;
@@ -7,6 +8,7 @@ using Yorozu.Domain.ContentItems;
 namespace Yorozu.Application.ContentItems.CreateContentItem;
 
 internal class CreateContentItemCommandHandler(
+    IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateContentItemCommand, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(CreateContentItemCommand request, CancellationToken cancellationToken) {
@@ -70,6 +72,7 @@ internal class CreateContentItemCommandHandler(
             contentItem.SetUnitSpecification(unitSpec);
         }
 
+        contentItemRepository.Add(contentItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return contentItem;

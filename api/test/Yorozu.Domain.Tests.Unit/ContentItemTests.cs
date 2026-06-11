@@ -1,10 +1,10 @@
-using Yorozu.Domain.ContentItems;
 using FluentAssertions;
 using Yorozu.Common.Domain;
+using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Domain.Tests.Unit;
 
-public class ContentItemTests {
+internal class ContentItemTests {
     [Fact]
     public void Create_WithValidTitleAndFormat_SetsProperties() {
         var title = NotEmptyString.Create("My Item").Value;

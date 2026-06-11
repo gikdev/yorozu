@@ -1,14 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Yorozu.Common.Data;
+using Yorozu.Domain.ContentItems;
+using Yorozu.Infrastructure.ContentItems;
 
 namespace Yorozu.Infrastructure.Database;
 
 public sealed class MainDbCtx(DbContextOptions<MainDbCtx> options) : DbContext(options), IUnitOfWork {
-    // internal DbSet<Todo> Todos => Set<Todo>();
+    internal DbSet<ContentItem> ContentItems => Set<ContentItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        modelBuilder.HasDefaultSchema(Schemas.Main);
+        if (Database.ProviderName != "Microsoft.EntityFrameworkCore.Sqlite")
+            modelBuilder.HasDefaultSchema(Schemas.Main);
 
-        // modelBuilder.ApplyConfiguration(new TodoConfiguration());
+        modelBuilder.ApplyConfiguration(new ContentItemConfiguration());
+        modelBuilder.ApplyConfiguration(new ConsumptionTrackConfiguration());
     }
 }

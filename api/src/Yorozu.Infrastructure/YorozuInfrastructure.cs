@@ -2,9 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Endpoints;
+using Yorozu.Infrastructure.ContentItems;
 using Yorozu.Infrastructure.Database;
 
 namespace Yorozu.Infrastructure;
@@ -21,14 +23,13 @@ public static class YorozuInfrastructure {
                     options => options
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Main)
                 )
-                .UseSnakeCaseNamingConvention()
         );
 
         services.AddApplication(Application.AssemblyReference.Assembly);
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MainDbCtx>());
 
-        // services.AddScoped<ITodoRepository, TodoRepository>();
+        services.AddScoped<IContentItemRepository, ContentItemRepository>();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 

@@ -10,7 +10,7 @@ public sealed record NotEmptyString {
         code: "NonEmptyString.ValueCanNotBeEmpty"
     );
 
-    private NotEmptyString() {}
+    private NotEmptyString() { }
 
     public string Value { get; private init; }
 
