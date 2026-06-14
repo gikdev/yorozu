@@ -15,6 +15,7 @@ import { Route as AppsTimeOrbsRouteImport } from "./../../routes/apps/time-orbs"
 import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-focus"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
+import { Route as AppsChronoTrackRouteImport } from "./../../routes/apps/chrono-track"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
@@ -52,6 +53,11 @@ const AppsKanbanRoute = AppsKanbanRouteImport.update({
 const AppsExpensesRoute = AppsExpensesRouteImport.update({
   id: "/apps/expenses",
   path: "/apps/expenses",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsChronoTrackRoute = AppsChronoTrackRouteImport.update({
+  id: "/apps/chrono-track",
+  path: "/apps/chrono-track",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsChoiceRoute = AppsChoiceRouteImport.update({
@@ -98,6 +104,7 @@ const AppsHondanaLibraryNewRoute = AppsHondanaLibraryNewRouteImport.update({
 export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
+  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
+  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
+  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
   fullPaths:
     | "/dev"
     | "/apps/choice"
+    | "/apps/chrono-track"
     | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
   to:
     | "/dev"
     | "/apps/choice"
+    | "/apps/chrono-track"
     | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | "__root__"
     | "/dev"
     | "/apps/choice"
+    | "/apps/chrono-track"
     | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
@@ -198,6 +210,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
+  AppsChronoTrackRoute: typeof AppsChronoTrackRoute
   AppsExpensesRoute: typeof AppsExpensesRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
@@ -254,6 +267,13 @@ declare module "@tanstack/react-router" {
       path: "/apps/expenses"
       fullPath: "/apps/expenses"
       preLoaderRoute: typeof AppsExpensesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/chrono-track": {
+      id: "/apps/chrono-track"
+      path: "/apps/chrono-track"
+      fullPath: "/apps/chrono-track"
+      preLoaderRoute: typeof AppsChronoTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/choice": {
@@ -318,6 +338,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   AppsChoiceRoute: AppsChoiceRoute,
+  AppsChronoTrackRoute: AppsChronoTrackRoute,
   AppsExpensesRoute: AppsExpensesRoute,
   AppsKanbanRoute: AppsKanbanRoute,
   AppsSingleFocusRoute: AppsSingleFocusRoute,

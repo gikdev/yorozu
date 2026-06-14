@@ -1,11 +1,13 @@
 import {
   BooksIcon,
+  BoundingBoxIcon,
   CirclesFourIcon,
   CurrencyDollarIcon,
   FileAudioIcon,
   KanbanIcon,
   ListChecksIcon,
   TargetIcon,
+  UserSwitchIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -52,5 +54,11 @@ export const appShortcuts: IAppShortcut[] = [
     name: "Lyrics",
     Icon: FileAudioIcon,
     url: linkOptions({ to: "/apps/lyrics" }).to,
+  },
+  {
+    id: "chrono-track",
+    name: "Chrono Track",
+    Icon: BoundingBoxIcon,
+    url: linkOptions({ to: "/apps/chrono-track" }).to,
   },
 ]
