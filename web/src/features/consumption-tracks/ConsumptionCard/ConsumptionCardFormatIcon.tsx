@@ -1,8 +1,8 @@
+import type { ContentItemFormat } from "#/common/api/client"
 import { contentItemFormatIconMap } from "#/features/content-items/contentItemFormatIconMap"
-import type { ContentItemFormatType } from "#/features/content-items/ContentItemFormatType"
 
 interface ConsumptionCardFormatIconProps {
-  type: ContentItemFormatType
+  type: ContentItemFormat
 }
 
 export function ConsumptionCardFormatIcon(p: ConsumptionCardFormatIconProps) {

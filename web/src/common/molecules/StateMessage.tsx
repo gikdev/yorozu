@@ -1,9 +1,4 @@
 import type { Icon } from "@phosphor-icons/react"
-import {
-  SpinnerGapIcon,
-  WarningCircleIcon,
-  BooksIcon,
-} from "@phosphor-icons/react"
 import { cn } from "tailwind-variants"
 import { btn } from "../atoms/btn"
 

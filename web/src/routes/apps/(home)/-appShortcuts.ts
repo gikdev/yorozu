@@ -7,7 +7,6 @@ import {
   KanbanIcon,
   ListChecksIcon,
   TargetIcon,
-  UserSwitchIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
