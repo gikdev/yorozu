@@ -14,7 +14,7 @@ export default defineConfig({
       enums: "javascript",
       includeInEntry: true,
     },
-    { name: "valibot", includeInEntry: true },
+    { name: "zod", includeInEntry: true },
     {
       name: "@hey-api/sdk",
       operations: { strategy: "byTags" },
