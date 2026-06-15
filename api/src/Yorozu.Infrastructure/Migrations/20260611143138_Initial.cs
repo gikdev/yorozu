@@ -1,20 +1,16 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Yorozu.Infrastructure.Migrations
-{
+namespace Yorozu.Infrastructure.Migrations {
     /// <inheritdoc />
-    public partial class Initial : Migration
-    {
+    public partial class Initial : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "ContentItems",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
@@ -34,15 +30,13 @@ namespace Yorozu.Infrastructure.Migrations
                     PlaceholderColor = table.Column<string>(type: "TEXT", nullable: false),
                     _tags = table.Column<string>(type: "TEXT", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ContentItems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ConsumptionTrack",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
@@ -55,8 +49,7 @@ namespace Yorozu.Infrastructure.Migrations
                     PausedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
                     ContentItemId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ConsumptionTrack", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ConsumptionTrack_ContentItems_ContentItemId",
@@ -73,8 +66,7 @@ namespace Yorozu.Infrastructure.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "ConsumptionTrack");
 

@@ -4,7 +4,7 @@ using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Domain.Tests.Unit;
 
-internal class ContentItemTests {
+public class ContentItemTests {
     [Fact]
     public void Create_WithValidTitleAndFormat_SetsProperties() {
         var title = NotEmptyString.Create("My Item").Value;
