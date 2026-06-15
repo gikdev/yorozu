@@ -23,29 +23,33 @@ import {
 const genreTagOptions: Array<{ title: string; value: Genre }> = Object.values(
   Genre,
 ).map(genre => ({ title: genre, value: genre }))
+
 const formatTagOptions: Array<{ title: string; value: ContentItemFormat }> =
   Object.values(ContentItemFormat).map(format => ({
     title: format,
     value: format,
   }))
+
 const locationTypeTagOptions: Array<{ title: string; value: LocationType }> =
   Object.values(LocationType).map(type => ({ title: type, value: type }))
+
 const unitTypeTagOptions: Array<{ title: string; value: ContentUnitType }> =
   Object.values(ContentUnitType).map(type => ({ title: type, value: type }))
 
 export function ContentItemForm(p: ContentItemFormProps) {
   const form = useAppForm({
-    defaultValues: contentItemFormEmptyValues,
+    defaultValues:
+      p.mode === "UPDATE" ? p.initialValues : contentItemFormEmptyValues,
     validators: {
       onSubmit: ContentItemFormSchema,
     },
-    onSubmit({ value }) {
-      p.onSubmit(value)
+    async onSubmit({ value }) {
+      await p.onSubmit(value, form.reset)
     },
   })
 
   return (
-    <form className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <form.AppForm>
         <form.AppField name="coverImagePath">
           {field => <field.ImgUrlWithPreviewInput title="Cover Image" />}
@@ -189,6 +193,6 @@ export function ContentItemForm(p: ContentItemFormProps) {
 
         <form.SimpleSubmitBtn className={btn()} title="Submit" />
       </form.AppForm>
-    </form>
+    </div>
   )
 }

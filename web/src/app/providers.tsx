@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import type { PropsWithChildren } from "react"
+import { Toaster } from "react-hot-toast"
 
 const queryClient = new QueryClient()
 
@@ -13,5 +14,8 @@ declare global {
 window.__TANSTACK_QUERY_CLIENT__ = queryClient
 
 export const Providers = ({ children }: PropsWithChildren) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+    <Toaster position="top-center" reverseOrder={false} />
+    {children}
+  </QueryClientProvider>
 )
