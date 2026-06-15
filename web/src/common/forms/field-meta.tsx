@@ -12,5 +12,5 @@ export function FieldMeta({ meta }: { meta: AnyFieldMeta }) {
     return <p className="text-red-500 text-xs">{errorMsg}</p>
   }
 
-  return null
+  return <p>&nbsp;</p>
 }

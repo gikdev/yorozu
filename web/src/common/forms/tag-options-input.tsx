@@ -3,9 +3,14 @@ import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
 import { btn } from "../atoms/btn"
 
+export type TagOption = {
+  title: string
+  value: string
+}
+
 interface TagOptionsInputProps {
   title: string
-  options: Array<{ title: string; value: string }>
+  options: Array<TagOption>
 }
 
 export function TagOptionsInput(p: TagOptionsInputProps) {
