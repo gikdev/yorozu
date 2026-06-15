@@ -24,3 +24,6 @@ internal record ContentItemResponse {
     public required string PlaceholderLetter { get; init; }
 }
 
+
+internal record LocationRto(LocationType Type, string Value);
+internal record ContentUnitSpecRto(bool IsOngoing, ContentUnitType UnitType, int? TotalUnits);

@@ -5,6 +5,47 @@ info:
 servers:
   - url: http://localhost:5050/
 paths:
+  "/api/content-items/{id}":
+    put:
+      tags:
+        - Content Items
+      summary: Update a content item
+      operationId: UpdateContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateContentItemRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentItemResponse"
+    delete:
+      tags:
+        - Content Items
+      summary: Delete a content item
+      operationId: DeleteContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
   /api/content-items:
     get:
       tags:
@@ -264,5 +305,54 @@ components:
         - Physical
         - FilePath
         - Url
+    UpdateContentItemRequest:
+      required:
+        - fullTitle
+        - format
+        - nickName
+        - tags
+        - genres
+        - isSecret
+        - isBookmarked
+        - isFavorite
+        - coverImagePath
+        - location
+        - unitSpec
+      type: object
+      properties:
+        fullTitle:
+          type: string
+        format:
+          $ref: "#/components/schemas/ContentItemFormat"
+        nickName:
+          type:
+            - "null"
+            - string
+        tags:
+          type: array
+          items:
+            type: string
+        genres:
+          type: array
+          items:
+            $ref: "#/components/schemas/Genre"
+        isSecret:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isFavorite:
+          type: boolean
+        coverImagePath:
+          type:
+            - "null"
+            - string
+        location:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/LocationRto"
+        unitSpec:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/ContentUnitSpecRto"
 tags:
   - name: Content Items

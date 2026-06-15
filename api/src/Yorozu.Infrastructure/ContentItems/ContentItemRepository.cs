@@ -8,8 +8,12 @@ namespace Yorozu.Infrastructure.ContentItems;
 internal class ContentItemRepository(
     MainDbCtx db
 ) : IContentItemRepository {
-    public void Add(ContentItem contentItem)
-        => db.ContentItems.Add(contentItem);
+    public void Add(ContentItem contentItem) => db.ContentItems.Add(contentItem);
+    public void Update(ContentItem contentItem) => db.ContentItems.Update(contentItem);
+    public void Remove(ContentItem contentItem) => db.ContentItems.Remove(contentItem);
+
+    public Task<ContentItem?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => db.ContentItems.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
     public Task<List<ContentItem>> ListAsync(CancellationToken cancellationToken = default)
         => db.ContentItems.ToListAsync(cancellationToken);

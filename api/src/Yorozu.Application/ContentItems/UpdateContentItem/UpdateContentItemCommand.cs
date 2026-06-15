@@ -3,9 +3,10 @@ using MediatR;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Domain.ContentItems;
 
-namespace Yorozu.Application.ContentItems.CreateContentItem;
+namespace Yorozu.Application.ContentItems.UpdateContentItem;
 
-public record CreateContentItemCommand : IRequest<ErrorOr<ContentItem>> {
+public record UpdateContentItemCommand : IRequest<ErrorOr<ContentItem>> {
+    public required Guid Id { get; init; }
     public required string FullTitle { get; init; }
     public required ContentItemFormat Format { get; init; }
     public required string? NickName { get; init; }

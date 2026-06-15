@@ -64,6 +64,11 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
+    public void UpdateFormat(ContentItemFormat format) {
+        Format = format;
+        MarkUpdated();
+    }
+
     public void ChangeNickName(NotEmptyString? nickName) {
         NickName = nickName;
         MarkUpdated();
@@ -125,6 +130,11 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
             MarkUpdated();
     }
 
+    public void ClearTags() {
+        _tags.Clear();
+        MarkUpdated();
+    }
+
     public void AddGenre(Genre genre) {
         if (_genres.Contains(genre)) return;
         _genres.Add(genre);
@@ -134,6 +144,11 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public void RemoveGenre(Genre genre) {
         if (_genres.Remove(genre))
             MarkUpdated();
+    }
+
+    public void ClearGenres() {
+        _genres.Clear();
+        MarkUpdated();
     }
 
     public void SetCoverImageUrl(NotEmptyString img) {

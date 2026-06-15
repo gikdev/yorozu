@@ -1,4 +1,4 @@
-import type { CreateContentItemRequest } from "#/common/api/client"
+import type { CreateContentItemRequest, UpdateContentItemRequest } from "#/common/api/client"
 import type { ContentItemFormValues } from "./ContentItemForm"
 
 export const contentItemMapper = {
@@ -16,16 +16,42 @@ export const contentItemMapper = {
         isSecret: d.isSecret,
         location: d.hasLocation
           ? {
-              type: d.locationType!,
-              value: d.locationValue!,
-            }
+            type: d.locationType!,
+            value: d.locationValue!,
+          }
           : null,
         unitSpec: d.hasUnitSpec
           ? {
-              isOngoing: d.isOngoing,
-              unitType: d.unitType,
-              totalUnits: d.isOngoing ? null : d.totalUnits,
-            }
+            isOngoing: d.isOngoing,
+            unitType: d.unitType,
+            totalUnits: d.isOngoing ? null : d.totalUnits,
+          }
+          : null,
+      }
+    },
+    toUpdateRequest(d: ContentItemFormValues): UpdateContentItemRequest {
+      return {
+        format: d.format,
+        fullTitle: d.fullTitle,
+        coverImagePath: d.coverImagePath,
+        genres: d.genres,
+        nickName: d.nickName,
+        tags: d.tags,
+        isBookmarked: d.isBookmarked,
+        isFavorite: d.isFavorite,
+        isSecret: d.isSecret,
+        location: d.hasLocation
+          ? {
+            type: d.locationType!,
+            value: d.locationValue!,
+          }
+          : null,
+        unitSpec: d.hasUnitSpec
+          ? {
+            isOngoing: d.isOngoing,
+            unitType: d.unitType,
+            totalUnits: d.isOngoing ? null : d.totalUnits,
+          }
           : null,
       }
     },

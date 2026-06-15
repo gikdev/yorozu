@@ -1,4 +1,5 @@
 using Yorozu.Domain.ContentItems;
+using Yorozu.Presentation.ContentItems.Common;
 
 namespace Yorozu.Presentation.ContentItems.CreateContentItem;
 
@@ -15,6 +16,3 @@ internal record CreateContentItemRequest {
     public LocationRto? Location { get; init; }
     public ContentUnitSpecRto? UnitSpec { get; init; }
 }
-
-internal record LocationRto(LocationType Type, string Value);
-internal record ContentUnitSpecRto(bool IsOngoing, ContentUnitType UnitType, int? TotalUnits);

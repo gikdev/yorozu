@@ -4,36 +4,38 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Yorozu.Application.ContentItems.Common;
-using Yorozu.Application.ContentItems.CreateContentItem;
+using Yorozu.Application.ContentItems.UpdateContentItem;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
 using Yorozu.Presentation.ContentItems.Common;
 
-namespace Yorozu.Presentation.ContentItems.CreateContentItem;
+namespace Yorozu.Presentation.ContentItems.UpdateContentItem;
 
-internal class CreateContentItemEndpoint : IEndpoint {
+internal class UpdateContentItemEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
-            .MapPost("content-items", Handle)
-            .WithName(nameof(CreateContentItem))
-            .WithSummary("Create new content item")
+            .MapPut("content-items/{id:guid}", Handle)
+            .WithName(nameof(UpdateContentItem))
+            .WithSummary("Update a content item")
             .WithTags("Content Items")
-            .Accepts<CreateContentItemRequest>("application/json")
+            .Accepts<UpdateContentItemRequest>("application/json")
             .Produces<ContentItemResponse>();
     }
 
     private static async Task<IResult> Handle(
         [FromServices] ISender sender,
-        [FromBody] CreateContentItemRequest request
+        [FromRoute] Guid id,
+        [FromBody] UpdateContentItemRequest request
     ) {
-        var command = MapToCommand(request);
+        var command = MapToCommand(id, request);
         var result = await sender.Send(command);
 
         return result.MatchResponse(item => Results.Ok(Mapper.MapToResponse(item)));
     }
 
-    private static CreateContentItemCommand MapToCommand(CreateContentItemRequest request)
+    private static UpdateContentItemCommand MapToCommand(Guid id, UpdateContentItemRequest request)
         => new() {
+            Id = id,
             CoverImagePath = request.CoverImagePath,
             Format = request.Format,
             FullTitle = request.FullTitle,
