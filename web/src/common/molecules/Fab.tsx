@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants"
 
 export const styleFab = tv({
   base: `
-    fixed z-40
+    absolute z-40
     w-14 h-14 rounded-full
     bg-sky-500 text-white
     shadow-lg flex items-center
