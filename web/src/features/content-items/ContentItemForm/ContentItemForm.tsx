@@ -18,6 +18,8 @@ import {
   ContentUnitType,
   LocationType,
 } from "#/common/api/client"
+import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
+import { Activity } from "react"
 
 const formatTagOptions: Array<{ title: string; value: ContentItemFormat }> =
   Object.values(ContentItemFormat).map(format => ({
@@ -32,6 +34,7 @@ const unitTypeTagOptions: Array<{ title: string; value: ContentUnitType }> =
   Object.values(ContentUnitType).map(type => ({ title: type, value: type }))
 
 export function ContentItemForm(p: ContentItemFormProps) {
+  const isUnlocked = useIsUnlocked()
   const form = useAppForm({
     defaultValues:
       p.mode === "UPDATE" ? p.initialValues : contentItemFormEmptyValues,
@@ -80,15 +83,17 @@ export function ContentItemForm(p: ContentItemFormProps) {
             )}
           </form.AppField>
 
-          <form.AppField name="isSecret">
-            {field => (
-              <field.SvgToggleInput
-                Icon={LockSimpleIcon}
-                iconSelectedClass="text-purple-500"
-                title="Is Secret"
-              />
-            )}
-          </form.AppField>
+          <Activity mode={isUnlocked ? "visible" : "hidden"}>
+            <form.AppField name="isSecret">
+              {field => (
+                <field.SvgToggleInput
+                  Icon={LockSimpleIcon}
+                  iconSelectedClass="text-purple-500"
+                  title="Is Secret"
+                />
+              )}
+            </form.AppField>
+          </Activity>
 
           <form.AppField name="isOngoing">
             {field => (
