@@ -10,6 +10,7 @@ type ContentItemFormPropsEditMode = {
 }
 
 type ContentItemFormPropsBase = {
+  tags: string[]
   onSubmit: (
     values: ContentItemFormValues,
     resetForm: () => void,

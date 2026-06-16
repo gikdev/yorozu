@@ -2,7 +2,7 @@ import type { ChangeEvent } from "react"
 import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
-import { input } from "../atoms/input"
+import { styleInput } from "../atoms/input"
 
 interface SimpleWordListInputProps {
   title: string
@@ -31,7 +31,7 @@ export function SimpleWordListInput(p: SimpleWordListInputProps) {
         value={value}
         onBlur={field.handleBlur}
         onChange={handleChange}
-        className={input({ isMultiline: true })}
+        className={styleInput({ isMultiline: true })}
       />
 
       <FieldMeta meta={field.state.meta} />

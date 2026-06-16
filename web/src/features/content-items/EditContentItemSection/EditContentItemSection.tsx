@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { ContentItemForm } from "../ContentItemForm"
 import {
   getContentItemOptions,
+  listAllContentItemTagsOptions,
   updateContentItemMutation,
   type ContentItemResponse,
 } from "#/common/api/client"
@@ -20,6 +21,7 @@ interface EditContentItemSectionProps {
 export function EditContentItemSection(p: EditContentItemSectionProps) {
   const navigate = useNavigate()
   const updateContentMenuM = useMutation(updateContentItemMutation())
+  const listAllTagsQ = useQuery(listAllContentItemTagsOptions())
   const getContentItemQ = useQuery({
     ...getContentItemOptions({ path: { id: p.contentItemId } }),
     select: contentItemMapper.fromResponse.toForm,
@@ -72,6 +74,7 @@ export function EditContentItemSection(p: EditContentItemSectionProps) {
       mode="UPDATE"
       initialValues={getContentItemQ.data}
       onSubmit={handleSubmit}
+      tags={listAllTagsQ.data?.items ?? []}
     />
   )
 }

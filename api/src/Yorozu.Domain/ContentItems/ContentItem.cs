@@ -27,8 +27,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public NotEmptyString Title => NickName ?? FullTitle;
 
     public ContentItemFormat Format { get; private set; }
-    public IReadOnlyCollection<NotEmptyString> Tags =>
-        _tags.Select(t => NotEmptyString.Create(t).Value).ToList().AsReadOnly();
+    public IReadOnlyCollection<string> Tags => _tags.ToList().AsReadOnly();
 
     public bool IsSecret { get; private set; }
     public bool IsBookmarked { get; private set; }

@@ -96,6 +96,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentItemResponse"
+  /api/content-items/tags:
+    get:
+      tags:
+        - Tags
+        - Content Items
+      summary: List unique tags of content items
+      operationId: ListAllContentItemTags
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllContentItemTagsResponse"
   "/api/content-items/{id}/quick-actions":
     patch:
       tags:
@@ -124,6 +138,15 @@ paths:
                 $ref: "#/components/schemas/ContentItemResponse"
 components:
   schemas:
+    AllContentItemTagsResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
     ContentItemFormat:
       enum:
         - Readable
@@ -356,3 +379,4 @@ components:
             - $ref: "#/components/schemas/ContentUnitSpecRto"
 tags:
   - name: Content Items
+  - name: Tags

@@ -17,4 +17,13 @@ internal class ContentItemRepository(
 
     public Task<List<ContentItem>> ListAsync(CancellationToken cancellationToken = default)
         => db.ContentItems.ToListAsync(cancellationToken);
+
+    public Task<List<string>> GetAllTagsAsync(CancellationToken cancellationToken = default)
+        => db.ContentItems
+            .AsAsyncEnumerable()
+            .SelectMany(ci => ci.Tags)
+            .Distinct()
+            .OrderBy(t => t)
+            .ToListAsync(cancellationToken)
+            .AsTask();
 }

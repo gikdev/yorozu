@@ -1,7 +1,8 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { ContentItemForm } from "../ContentItemForm"
 import {
   createContentItemMutation,
+  listAllContentItemTagsOptions,
   type ContentItemResponse,
 } from "#/common/api/client"
 import type { ContentItemFormValues } from "../ContentItemForm/ContentItemFormSchema"
@@ -11,6 +12,7 @@ import toast from "react-hot-toast"
 
 export function NewContentItemSection() {
   const createContentMenuMutation = useMutation(createContentItemMutation())
+  const listAllTagsQ = useQuery(listAllContentItemTagsOptions())
 
   const handleSubmit = async (
     values: ContentItemFormValues,
@@ -32,5 +34,5 @@ export function NewContentItemSection() {
     })
   }
 
-  return <ContentItemForm mode="CREATE" onSubmit={handleSubmit} />
+  return <ContentItemForm mode="CREATE" onSubmit={handleSubmit} tags={listAllTagsQ.data?.items ?? []} />
 }

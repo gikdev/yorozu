@@ -3,7 +3,7 @@ import { useFieldContext } from "."
 import { btn } from "../atoms/btn"
 import { fieldContainer } from "../atoms/field-container"
 import { FieldMeta } from "./field-meta"
-import { input } from "../atoms/input"
+import { styleInput } from "../atoms/input"
 
 interface CounterNumberInputProps {
   title: string
@@ -27,7 +27,7 @@ export function CounterNumberInput({ title }: CounterNumberInputProps) {
 
         <input
           type="number"
-          className={input({ className: "text-center w-full flex-1" })}
+          className={styleInput({ className: "text-center w-full flex-1" })}
           id={field.name}
           name={field.name}
           value={field.state.value || 0}

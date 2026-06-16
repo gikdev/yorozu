@@ -18,7 +18,7 @@ internal static class Mapper {
             NickName = i.NickName?.Value,
             PlaceholderColor = i.PlaceholderColor,
             PlaceholderLetter = i.PlaceholderLetter,
-            Tags = i.Tags.ToList().ConvertAll(x => x.Value),
+            Tags = i.Tags.ToList(),
             Title = i.Title,
             UnitSpec = i.UnitSpec == null ? null : new ContentUnitSpecRto(
                 i.UnitSpec.IsOngoing,

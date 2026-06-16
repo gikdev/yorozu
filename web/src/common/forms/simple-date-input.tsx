@@ -7,7 +7,7 @@ import persian_fa from "react-date-object/locales/persian_fa"
 import gregorian from "react-date-object/calendars/gregorian"
 import { TrashIcon } from "@phosphor-icons/react"
 import { btn } from "../atoms/btn"
-import { input } from "../atoms/input"
+import { styleInput } from "../atoms/input"
 
 interface PersianUtcDateInputProps {
   title: string
@@ -54,7 +54,7 @@ export function PersianUtcDateInput(p: PersianUtcDateInputProps) {
           calendar={persian}
           locale={persian_fa}
           format="YYYY/MM/DD"
-          inputClass={input({ className: "w-full" })}
+          inputClass={styleInput({ className: "w-full" })}
           containerClassName="flex-1"
         />
 

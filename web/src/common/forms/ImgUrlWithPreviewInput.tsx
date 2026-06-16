@@ -1,6 +1,6 @@
 import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
-import { input } from "../atoms/input"
+import { styleInput } from "../atoms/input"
 import { FieldMeta } from "./field-meta"
 import { useState, type ChangeEvent } from "react"
 import { ImageBrokenIcon, ImageIcon } from "@phosphor-icons/react"
@@ -38,7 +38,7 @@ export function ImgUrlWithPreviewInput(p: ImgUrlWithPreviewInputProps) {
         value={url}
         onBlur={field.handleBlur}
         onChange={handleInputChange}
-        className={input()}
+        className={styleInput()}
         placeholder="https://_______.com/___.jpg"
       />
 

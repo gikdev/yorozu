@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants"
 
-export const input = tv({
+export const styleInput = tv({
   base: `
     rounded-md border-2 font-inherit cursor-text
     transition-all duration-100

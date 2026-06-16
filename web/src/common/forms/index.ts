@@ -9,6 +9,7 @@ import { TagOptionsInput } from "./tag-options-input"
 import { SimpleCheckboxInput } from "./simple-checkbox-input"
 import { ImgUrlWithPreviewInput } from "./ImgUrlWithPreviewInput"
 import { TagsPickerInput } from "./TagsPickerInput"
+import { SmartTagsInput } from "./SmartTagsInput"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
@@ -17,6 +18,7 @@ const { useAppForm } = createFormHook({
   fieldContext,
   fieldComponents: {
     SimpleTextInput,
+    SmartTagsInput,
     TagsPickerInput,
     ImgUrlWithPreviewInput,
     CounterNumberInput,

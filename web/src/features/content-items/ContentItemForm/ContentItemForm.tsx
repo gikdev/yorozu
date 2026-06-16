@@ -183,7 +183,7 @@ export function ContentItemForm(p: ContentItemFormProps) {
         </form.AppField>
 
         <form.AppField name="tags">
-          {field => <field.SimpleWordListInput title="Tags" />}
+          {field => <field.SmartTagsInput title="Tags" allTags={p.tags} />}
         </form.AppField>
 
         <form.SimpleSubmitBtn className={btn()} title="Submit" />
