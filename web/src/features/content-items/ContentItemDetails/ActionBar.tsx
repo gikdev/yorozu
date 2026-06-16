@@ -97,23 +97,23 @@ export function ActionBar(p: ActionBarProps) {
 
       <ActionBtn
         isLoading={doQuickActionsM.isPending}
-        onClick={handleSecretToggle}
-      >
-        <LockSimpleIcon
-          size={24}
-          weight={p.isSecret ? "fill" : "regular"}
-          className={p.isSecret ? "text-purple-500" : ""}
-        />
-      </ActionBtn>
-
-      <ActionBtn
-        isLoading={doQuickActionsM.isPending}
         onClick={handleFavoriteToggle}
       >
         <HeartIcon
           size={24}
           weight={p.isFavorite ? "fill" : "regular"}
           className={p.isFavorite ? "text-rose-500" : ""}
+        />
+      </ActionBtn>
+
+      <ActionBtn
+        isLoading={doQuickActionsM.isPending}
+        onClick={handleSecretToggle}
+      >
+        <LockSimpleIcon
+          size={24}
+          weight={p.isSecret ? "fill" : "regular"}
+          className={p.isSecret ? "text-purple-500" : ""}
         />
       </ActionBtn>
 

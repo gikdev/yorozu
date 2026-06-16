@@ -2,7 +2,6 @@ import {
   ContentItemFormat,
   zContentItemFormat,
   zContentUnitType,
-  zGenre,
   zLocationType,
 } from "#/common/api/client"
 import { z } from "zod"
@@ -29,7 +28,6 @@ export const ContentItemFormSchema = z
     totalUnits: z.number().int(),
 
     tags: z.array(z.string()),
-    genres: z.array(zGenre),
   })
   .superRefine((data, ctx) => {
     if (data.hasUnitSpec && data.unitType === undefined) {
@@ -76,5 +74,4 @@ export const contentItemFormEmptyValues: ContentItemFormValues = {
   isOngoing: false,
   totalUnits: 0,
   tags: [],
-  genres: [],
 }

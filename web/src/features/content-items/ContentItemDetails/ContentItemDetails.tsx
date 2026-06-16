@@ -24,7 +24,6 @@ export const ContentItemDetails = (p: ContentItemDetailsProps) => {
     coverImageUrl,
     format,
     fullTitle,
-    genres,
     isBookmarked,
     isSecret,
     isFavorite,
@@ -62,12 +61,7 @@ export const ContentItemDetails = (p: ContentItemDetailsProps) => {
         {nickName && <p className={styleSubtitle()}>{fullTitle}</p>}
       </div>
 
-      <ChipsSection
-        format={format}
-        genres={genres}
-        tags={tags}
-        unitSpec={unitSpec}
-      />
+      <ChipsSection format={format} tags={tags} unitSpec={unitSpec} />
     </div>
   )
 }

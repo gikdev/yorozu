@@ -140,7 +140,6 @@ components:
         - title
         - format
         - tags
-        - genres
         - isSecret
         - isBookmarked
         - isFavorite
@@ -177,10 +176,6 @@ components:
           type: array
           items:
             type: string
-        genres:
-          type: array
-          items:
-            $ref: "#/components/schemas/Genre"
         isSecret:
           type: boolean
         isBookmarked:
@@ -261,10 +256,6 @@ components:
           type: array
           items:
             type: string
-        genres:
-          type: array
-          items:
-            $ref: "#/components/schemas/Genre"
         isSecret:
           type: boolean
         isBookmarked:
@@ -298,58 +289,6 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/TriState"
-    Genre:
-      enum:
-        - Travel
-        - Shounen
-        - Cyberpunk
-        - Psychological
-        - Isekai
-        - Comedy
-        - Memoir
-        - Education
-        - SciFi
-        - Mystery
-        - MagicalGirl
-        - Action
-        - Josei
-        - Dystopian
-        - History
-        - Art
-        - NonFiction
-        - Kids
-        - Philosophy
-        - Historical
-        - Fantasy
-        - ReverseHarem
-        - Crime
-        - Sports
-        - SliceOfLife
-        - Music
-        - Shoujo
-        - Harem
-        - Tragedy
-        - TrueCrime
-        - Cooking
-        - Thriller
-        - Drama
-        - Adult
-        - Biography
-        - Business
-        - Technology
-        - Western
-        - Horror
-        - Mecha
-        - Politics
-        - Science
-        - Supernatural
-        - Health
-        - Romance
-        - CuteGirlsDoingCuteThings
-        - Seinen
-        - Adventure
-        - SelfHelp
-        - Reincarnation
     LocationRto:
       required:
         - type
@@ -377,7 +316,6 @@ components:
         - format
         - nickName
         - tags
-        - genres
         - isSecret
         - isBookmarked
         - isFavorite
@@ -398,10 +336,6 @@ components:
           type: array
           items:
             type: string
-        genres:
-          type: array
-          items:
-            $ref: "#/components/schemas/Genre"
         isSecret:
           type: boolean
         isBookmarked:

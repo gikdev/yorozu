@@ -16,13 +16,8 @@ import {
 import {
   ContentItemFormat,
   ContentUnitType,
-  Genre,
   LocationType,
 } from "#/common/api/client"
-
-const genreTagOptions: Array<{ title: string; value: Genre }> = Object.values(
-  Genre,
-).map(genre => ({ title: genre, value: genre }))
 
 const formatTagOptions: Array<{ title: string; value: ContentItemFormat }> =
   Object.values(ContentItemFormat).map(format => ({
@@ -184,12 +179,6 @@ export function ContentItemForm(p: ContentItemFormProps) {
 
         <form.AppField name="tags">
           {field => <field.SimpleWordListInput title="Tags" />}
-        </form.AppField>
-
-        <form.AppField name="genres">
-          {field => (
-            <field.TagsPickerInput title="Genres" options={genreTagOptions} />
-          )}
         </form.AppField>
 
         <form.SimpleSubmitBtn className={btn()} title="Submit" />
