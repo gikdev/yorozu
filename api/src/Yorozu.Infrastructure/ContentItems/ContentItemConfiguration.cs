@@ -31,10 +31,6 @@ internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> 
             .HasField("_tags")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-        builder.PrimitiveCollection(x => x.Genres)
-            .HasField("_genres")
-            .UsePropertyAccessMode(PropertyAccessMode.Field);
-
         builder.HasMany(x => x.ConsumptionTracks)
             .WithOne()
             .HasForeignKey("ContentItemId")

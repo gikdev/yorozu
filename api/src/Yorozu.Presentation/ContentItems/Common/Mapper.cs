@@ -1,5 +1,4 @@
 using Yorozu.Domain.ContentItems;
-using Yorozu.Presentation.ContentItems.CreateContentItem;
 
 namespace Yorozu.Presentation.ContentItems.Common;
 
@@ -10,7 +9,6 @@ internal static class Mapper {
             CreatedAt = i.CreatedAt,
             Format = i.Format,
             FullTitle = i.FullTitle.Value,
-            Genres = i.Genres.ToList(),
             HasAnyTracks = i.HasAnyTracks,
             Id = i.Id,
             IsBookmarked = i.IsBookmarked,

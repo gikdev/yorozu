@@ -36,10 +36,6 @@ internal class UpdateContentItemCommandHandler(
             contentItem.AddTag(tagResult.Value);
         }
 
-        contentItem.ClearGenres();
-        foreach (var genre in request.Genres)
-            contentItem.AddGenre(genre);
-
         if (request.IsBookmarked) contentItem.Bookmark(); else contentItem.Unbookmark();
         if (request.IsFavorite) contentItem.Favorite(); else contentItem.Unfavorite();
         if (request.IsSecret) contentItem.MarkSecret(); else contentItem.UnmarkSecret();

@@ -8,7 +8,6 @@ internal record CreateContentItemRequest {
     public required ContentItemFormat Format { get; init; }
     public string? NickName { get; init; }
     public List<string> Tags { get; init; } = [];
-    public List<Genre> Genres { get; init; } = [];
     public bool IsSecret { get; init; }
     public bool IsBookmarked { get; init; }
     public bool IsFavorite { get; init; }

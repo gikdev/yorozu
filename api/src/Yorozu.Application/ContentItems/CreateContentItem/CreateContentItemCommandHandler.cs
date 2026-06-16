@@ -36,9 +36,6 @@ internal class CreateContentItemCommandHandler(
             contentItem.AddTag(finalTag);
         }
 
-        foreach (var genre in request.Genres)
-            contentItem.AddGenre(genre);
-
         if (request.IsBookmarked) contentItem.Bookmark();
         if (request.IsFavorite) contentItem.Favorite();
         if (request.IsSecret) contentItem.MarkSecret();

@@ -39,7 +39,6 @@ internal class UpdateContentItemEndpoint : IEndpoint {
             CoverImagePath = request.CoverImagePath,
             Format = request.Format,
             FullTitle = request.FullTitle,
-            Genres = request.Genres,
             IsBookmarked = request.IsBookmarked,
             IsFavorite = request.IsFavorite,
             IsSecret = request.IsSecret,

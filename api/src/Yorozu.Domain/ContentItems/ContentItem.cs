@@ -16,7 +16,6 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     );
 
     private readonly List<string> _tags = [];
-    private readonly List<Genre> _genres = [];
     private readonly List<ConsumptionTrack> _consumptionTracks = [];
 
     public Guid Id { get; private init; } = Guid.NewGuid();
@@ -28,7 +27,6 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public NotEmptyString Title => NickName ?? FullTitle;
 
     public ContentItemFormat Format { get; private set; }
-    public IReadOnlyCollection<Genre> Genres => _genres.AsReadOnly();
     public IReadOnlyCollection<NotEmptyString> Tags =>
         _tags.Select(t => NotEmptyString.Create(t).Value).ToList().AsReadOnly();
 
@@ -132,22 +130,6 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
 
     public void ClearTags() {
         _tags.Clear();
-        MarkUpdated();
-    }
-
-    public void AddGenre(Genre genre) {
-        if (_genres.Contains(genre)) return;
-        _genres.Add(genre);
-        MarkUpdated();
-    }
-
-    public void RemoveGenre(Genre genre) {
-        if (_genres.Remove(genre))
-            MarkUpdated();
-    }
-
-    public void ClearGenres() {
-        _genres.Clear();
         MarkUpdated();
     }
 
