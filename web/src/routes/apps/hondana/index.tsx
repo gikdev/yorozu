@@ -1,5 +1,5 @@
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { BottomNav } from "../-common/BottomNav"
+import { BottomNav } from "./-common/BottomNav"
 import {
   PageHeader,
   PageHeaderBackButton,
@@ -7,7 +7,7 @@ import {
 import { AppShell } from "#/common/molecules/AppShell"
 import { ConsumptionTracksView } from "#/features/consumption-tracks/ConsumptionTracksView"
 
-export const Route = createFileRoute("/apps/hondana/(home)/")({
+export const Route = createFileRoute("/apps/hondana/")({
   component: RouteComponent,
 })
 

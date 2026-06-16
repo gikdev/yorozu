@@ -1,0 +1,1 @@
+export { ContentItemDetails } from "./ContentItemDetails"

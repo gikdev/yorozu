@@ -44,7 +44,8 @@ export function ContentItemForm(p: ContentItemFormProps) {
       onSubmit: ContentItemFormSchema,
     },
     async onSubmit({ value }) {
-      await p.onSubmit(value, form.reset)
+      const reset = () => form.reset(contentItemFormEmptyValues)
+      await p.onSubmit(value, reset)
     },
   })
 

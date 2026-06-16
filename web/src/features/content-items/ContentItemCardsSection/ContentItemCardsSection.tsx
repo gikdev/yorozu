@@ -15,9 +15,7 @@ interface ContentItemCardsSectionProps {
   onItemDetails?: (id: string) => void
 }
 
-export function ContentItemCardsSection({
-  onItemDetails,
-}: ContentItemCardsSectionProps) {
+export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
   const { data, status, error, refetch } = useQuery(listContentItemsOptions())
 
   let content: React.ReactNode
@@ -71,7 +69,7 @@ export function ContentItemCardsSection({
             isSecret={ci.isSecret}
             placeholderLetter={ci.placeholderLetter}
             title={ci.title}
-            onDetails={() => onItemDetails?.(ci.id)}
+            onDetails={() => p.onItemDetails?.(ci.id)}
           />
         ))}
       </main>

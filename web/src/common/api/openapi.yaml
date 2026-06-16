@@ -31,6 +31,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentItemResponse"
+    get:
+      tags:
+        - Content Items
+      summary: Get content item
+      operationId: GetContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentItemResponse"
     delete:
       tags:
         - Content Items
@@ -69,6 +88,32 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateContentItemRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentItemResponse"
+  "/api/content-items/{id}/quick-actions":
+    patch:
+      tags:
+        - Content Items
+      summary: Do quick actions
+      operationId: DoQuickActions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DoQuickActionsRequest"
         required: true
       responses:
         "200":
@@ -238,6 +283,21 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/ContentUnitSpecRto"
+    DoQuickActionsRequest:
+      type: object
+      properties:
+        isBookmarked:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/TriState"
+        isFavorite:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/TriState"
+        isSecret:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/TriState"
     Genre:
       enum:
         - Travel
@@ -305,6 +365,12 @@ components:
         - Physical
         - FilePath
         - Url
+    TriState:
+      enum:
+        - On
+        - Off
+        - Toggle
+        -
     UpdateContentItemRequest:
       required:
         - fullTitle
