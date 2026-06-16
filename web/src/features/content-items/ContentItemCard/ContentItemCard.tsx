@@ -9,6 +9,7 @@ import {
 import { ContentItemCardImage } from "./ContentItemCardImage"
 import { contentItemFormatIconMap } from "../contentItemFormatIconMap"
 import type { ContentItemFormat } from "#/common/api/client"
+import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 
 interface ContentItemCardProps {
   id: string
@@ -25,6 +26,7 @@ interface ContentItemCardProps {
 }
 
 export function ContentItemCard(p: ContentItemCardProps) {
+  const isUnlocked = useIsUnlocked()
   const FormatIcon = contentItemFormatIconMap[p.format]
 
   return (
@@ -65,11 +67,13 @@ export function ContentItemCard(p: ContentItemCardProps) {
           className={p.isFavorite ? "text-red-400" : ""}
         />
 
-        <LockKeyIcon
-          size={20}
-          weight={p.isSecret ? "fill" : "regular"}
-          className={p.isSecret ? "text-purple-400" : ""}
-        />
+        {isUnlocked && (
+          <LockKeyIcon
+            size={20}
+            weight={p.isSecret ? "fill" : "regular"}
+            className={p.isSecret ? "text-purple-400" : ""}
+          />
+        )}
 
         <QueueIcon
           size={20}

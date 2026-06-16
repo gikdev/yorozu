@@ -10,13 +10,23 @@ import { linkOptions } from "@tanstack/react-router"
 import { Fab } from "#/common/molecules/Fab"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { StateMessage } from "#/common/molecules/StateMessage"
+import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 
 interface ContentItemCardsSectionProps {
   onItemDetails?: (id: string) => void
 }
 
 export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
-  const { data, status, error, refetch } = useQuery(listContentItemsOptions())
+  const isUnlocked = useIsUnlocked()
+  const { data, status, error, refetch } = useQuery({
+    ...listContentItemsOptions(),
+    select: data =>
+      isUnlocked
+        ? data
+        : {
+            items: [...data.items].filter(i => !i.isSecret),
+          },
+  })
 
   let content: React.ReactNode
 

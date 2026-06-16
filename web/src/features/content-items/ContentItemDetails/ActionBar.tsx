@@ -9,6 +9,7 @@ import {
 } from "#/common/api/client"
 import { btn } from "#/common/atoms/btn"
 import { extractErrorMessage } from "#/common/helpers/errors"
+import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 import {
   BookmarkSimpleIcon,
   LockSimpleIcon,
@@ -36,6 +37,7 @@ interface ActionBarProps {
 }
 
 export function ActionBar(p: ActionBarProps) {
+  const isUnlocked = useIsUnlocked()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const doQuickActionsM = useMutation(doQuickActionsMutation())
@@ -66,6 +68,8 @@ export function ActionBar(p: ActionBarProps) {
   }
 
   const handleSecretToggle = () => {
+    if (!isUnlocked) return
+
     const body: DoQuickActionsRequest = {
       isSecret: p.isSecret ? "Off" : "On",
     }
@@ -106,16 +110,18 @@ export function ActionBar(p: ActionBarProps) {
         />
       </ActionBtn>
 
-      <ActionBtn
-        isLoading={doQuickActionsM.isPending}
-        onClick={handleSecretToggle}
-      >
-        <LockSimpleIcon
-          size={24}
-          weight={p.isSecret ? "fill" : "regular"}
-          className={p.isSecret ? "text-purple-500" : ""}
-        />
-      </ActionBtn>
+      {isUnlocked && (
+        <ActionBtn
+          isLoading={doQuickActionsM.isPending}
+          onClick={handleSecretToggle}
+        >
+          <LockSimpleIcon
+            size={24}
+            weight={p.isSecret ? "fill" : "regular"}
+            className={p.isSecret ? "text-purple-500" : ""}
+          />
+        </ActionBtn>
+      )}
 
       <Link
         to="/apps/hondana/library/$id/edit"

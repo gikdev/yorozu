@@ -33,7 +33,7 @@ export const bottomNavTabs: BottomNavItemShape[] = [
     id: "settings",
     icon: GearIcon,
     label: "Settings",
-    to: linkOptions({ to: "." }).to,
-    disabled: true,
+    to: linkOptions({ to: "/apps/hondana/settings" }).to,
+    disabled: false,
   },
 ]
