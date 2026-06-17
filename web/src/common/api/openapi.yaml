@@ -161,7 +161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
     get:
       tags:
         - Consumption Tracks
@@ -180,7 +180,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
     delete:
       tags:
         - Consumption Tracks
@@ -221,7 +221,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/tracks/{id}/start":
     post:
       tags:
@@ -241,7 +241,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/tracks/{id}/resume":
     post:
       tags:
@@ -261,7 +261,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/tracks/{id}/pause":
     post:
       tags:
@@ -281,7 +281,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/content-items/{id}/tracks":
     get:
       tags:
@@ -301,7 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummariesResponse"
+                $ref: "#/components/schemas/ConsumptionTracksResponse"
   /api/tracks:
     get:
       tags:
@@ -314,7 +314,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummariesResponse"
+                $ref: "#/components/schemas/ConsumptionTracksResponse"
   "/api/tracks/{id}/drop":
     post:
       tags:
@@ -334,7 +334,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/content-items/{contentItemId}/tracks":
     post:
       tags:
@@ -360,7 +360,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
   "/api/tracks/{id}/complete":
     post:
       tags:
@@ -380,7 +380,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+                $ref: "#/components/schemas/ConsumptionTrackResponse"
 components:
   schemas:
     AllContentItemTagsResponse:
@@ -393,29 +393,13 @@ components:
           items:
             type: string
     ConsumptionStatus:
-      type: object
-      properties:
-        isTerminal:
-          type: boolean
-        allowsProgress:
-          type: boolean
-        name:
-          type:
-            - "null"
-            - string
-        value:
-          type: integer
-          format: int32
-    ConsumptionTrackSummariesResponse:
-      required:
-        - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
-    ConsumptionTrackSummaryDto:
+      enum:
+        - Idle
+        - InProgress
+        - Completed
+        - OnHold
+        - Dropped
+    ConsumptionTrackResponse:
       required:
         - id
         - contentItemId
@@ -436,6 +420,7 @@ components:
         - completedAt
         - droppedAt
         - pausedAt
+        - isSecret
         - canStart
         - canPause
         - canResume
@@ -509,6 +494,8 @@ components:
             - "null"
             - string
           format: date-time
+        isSecret:
+          type: boolean
         canStart:
           type: boolean
         canPause:
@@ -523,6 +510,15 @@ components:
           type: boolean
         canDecrement:
           type: boolean
+    ConsumptionTracksResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsumptionTrackResponse"
     ContentItemFormat:
       enum:
         - Readable

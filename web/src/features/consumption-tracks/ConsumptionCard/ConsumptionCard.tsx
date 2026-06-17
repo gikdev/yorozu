@@ -1,46 +1,132 @@
-import { CircleNotchIcon, PlusIcon } from "@phosphor-icons/react"
+import {
+  CircleNotchIcon,
+  PlayIcon,
+  PlusIcon,
+  CheckCircleIcon,
+  SquareIcon,
+  CheckIcon,
+} from "@phosphor-icons/react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import toast from "react-hot-toast"
 import { ConsumptionCardImage } from "./ConsumptionCardImage"
 import { ConsumptionCardTitle } from "./ConsumptionCardTitle"
 import { ConsumptionCardProgress } from "./ConsumptionCardProgress"
 import { styleConsumptionCardBtn } from "./styleConsumptionCardBtn"
-import type { ContentItemFormat } from "#/common/api/client"
+import {
+  startTrackEndpointMutation,
+  updateTrackProgressEndpointMutation,
+  listAllTracksEndpointQueryKey, // adjust if needed
+  type ConsumptionTrackResponse,
+  completeTrackEndpointMutation,
+} from "#/common/api/client"
+import { extractErrorMessage } from "#/common/helpers/errors"
+
+const queryKey = listAllTracksEndpointQueryKey()
+const onError = (err: unknown) => toast.error(extractErrorMessage(err))
 
 interface ConsumptionCardProps {
-  imageSrc?: string | null
-  imageFallbackLetter: string
-  title: string
-  subtitle: string
-  formatType: ContentItemFormat
-  current: number
-  total: number | null
-  onAdd?: () => void
-  isAddLoading: boolean
+  track: ConsumptionTrackResponse
 }
 
 export function ConsumptionCard(p: ConsumptionCardProps) {
+  const queryClient = useQueryClient()
+  const {
+    id,
+    canStart,
+    isSecret,
+    canProgress,
+    canComplete,
+    status,
+    contentItemCoverImageUrl,
+    contentItemFormat,
+    contentItemTitle,
+    currentUnit,
+    title,
+    totalUnits,
+  } = p.track
+
+  const progressM = useMutation({
+    ...updateTrackProgressEndpointMutation(),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
+    onError,
+  })
+
+  const startM = useMutation({
+    ...startTrackEndpointMutation(),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
+    onError,
+  })
+
+  const completeM = useMutation({
+    ...completeTrackEndpointMutation(),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
+    onError,
+  })
+
+  const isLoading = progressM.isPending || startM.isPending
+  const isCompleted = status === "Completed"
+  const isDropped = status === "Dropped"
+
+  const handleClick = () => {
+    if (isLoading) return
+
+    if (canStart) {
+      startM.mutate({ path: { id } })
+
+      return
+    }
+
+    if (canProgress) {
+      progressM.mutate({
+        path: { id },
+        body: { amount: 1, action: "Increment" },
+      })
+
+      return
+    }
+
+    if (canComplete) {
+      completeM.mutate({ path: { id } })
+
+      return
+    }
+  }
+
   return (
     <div className="flex gap-2 rounded-lg bg-mist-900 border border-mist-800 overflow-hidden">
       <ConsumptionCardImage
-        src={p.imageSrc}
-        fallbackLetter={p.imageFallbackLetter}
-        alt={p.title}
+        src={contentItemCoverImageUrl}
+        fallbackLetter={contentItemTitle?.charAt(0) ?? "?"}
+        alt={title}
       />
 
       <div className="flex-1 flex flex-col justify-between py-2">
         <ConsumptionCardTitle
-          title={p.title}
-          subtitle={p.subtitle}
-          formatType={p.formatType}
+          title={title}
+          subtitle={contentItemTitle}
+          formatType={contentItemFormat}
+          isSecret={isSecret}
         />
 
-        <ConsumptionCardProgress current={p.current} total={p.total} />
+        <ConsumptionCardProgress current={currentUnit} total={totalUnits} />
       </div>
 
-      <button className={styleConsumptionCardBtn()} onClick={p.onAdd} disabled={p.isAddLoading}>
-        {p.isAddLoading ? (
-          <CircleNotchIcon size={24} className="animate-spin" />
-        ) : (
-          <PlusIcon size={24} />
+      <button
+        className={styleConsumptionCardBtn()}
+        onClick={handleClick}
+        disabled={isLoading || isCompleted || isDropped}
+      >
+        {isLoading && <CircleNotchIcon size={24} className="animate-spin" />}
+        {canStart && <PlayIcon size={24} />}
+        {isDropped && <SquareIcon size={24} />}
+        {canProgress && <PlusIcon size={24} />}
+        {canComplete && <CheckIcon size={24} />}
+        {isCompleted && (
+          <CheckCircleIcon
+            size={24}
+            weight="fill"
+            className="text-emerald-400"
+          />
         )}
       </button>
     </div>

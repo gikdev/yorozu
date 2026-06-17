@@ -58,7 +58,9 @@ export function ContentItemCard(p: ContentItemCardProps) {
 
       <div className="flex-1 flex flex-col gap-2 justify-center p-2">
         <p dir="auto" className="text-mist-100 line-clamp-3 font-bold">
-          <Link to="/apps/hondana/library/$id" params={{ id: p.id }}>{p.title}</Link>
+          <Link to="/apps/hondana/library/$id" params={{ id: p.id }}>
+            {p.title}
+          </Link>
         </p>
       </div>
 

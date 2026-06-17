@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { ConsumptionCard } from "../ConsumptionCard"
-import { listAllTracksEndpointOptions, ProgressAction, updateTrackProgressEndpointMutation, type ConsumptionStatus } from "#/common/api/client"
+import { listAllTracksEndpointOptions } from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import {
   SpinnerGapIcon,
@@ -8,19 +8,16 @@ import {
   QueueIcon,
 } from "@phosphor-icons/react"
 import { extractErrorMessage } from "#/common/helpers/errors"
-import toast from "react-hot-toast"
+import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 
 export function ConsumptionTracksView() {
-  const tracksQ = useQuery(listAllTracksEndpointOptions())
-  const progressM = useMutation(updateTrackProgressEndpointMutation())
-
-  const increaseUnit = (id: string, status: ConsumptionStatus) => {
-    const path = { id }
-    const body = { action: ProgressAction.INCREMENT, amount: 1 }
-    const onError = (err: unknown) => toast.error(extractErrorMessage(err))
-
-    progressM.mutate({ path, body }, { onError })
-  }
+  const isUnlocked = useIsUnlocked()
+  const tracksQ = useQuery({
+    ...listAllTracksEndpointOptions(),
+    select: isUnlocked
+      ? undefined
+      : data => ({ items: data.items.filter(i => !i.isSecret) }),
+  })
 
   if (tracksQ.status === "pending") {
     return (
@@ -57,19 +54,8 @@ export function ConsumptionTracksView() {
 
   return (
     <div className="flex flex-col gap-4">
-      {tracksQ.data.items.map(i => (
-        <ConsumptionCard
-          key={i.id}
-          imageSrc={i.contentItemCoverImageUrl}
-          imageFallbackLetter={i.contentItemPlaceholderLetter?.charAt(0) || "?"}
-          title={i.title}
-          subtitle={i.contentItemTitle}
-          formatType={i.contentItemFormat}
-          current={i.currentUnit}
-          total={i.totalUnits}
-          isAddLoading={progressM.isPending}
-          onAdd={() => increaseUnit(i.id, i.status)}
-        />
+      {tracksQ.data.items.map(track => (
+        <ConsumptionCard key={track.id} track={track} />
       ))}
     </div>
   )

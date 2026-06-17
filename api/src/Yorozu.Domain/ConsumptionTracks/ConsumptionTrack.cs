@@ -22,13 +22,25 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
     public DateTimeOffset? DroppedAt { get; private set; }
     public DateTimeOffset? PausedAt { get; private set; }
 
-    public bool CanStart => Status == ConsumptionStatus.Idle;
-    public bool CanPause => Status == ConsumptionStatus.InProgress;
-    public bool CanResume => Status == ConsumptionStatus.OnHold;
-    public bool CanComplete => Status == ConsumptionStatus.InProgress;
+    // ── Atomic state checks ──────────────────────────────
+    private bool IsIdle => Status == ConsumptionStatus.Idle;
+    private bool IsInProgress => Status == ConsumptionStatus.InProgress;
+    private bool IsOnHold => Status == ConsumptionStatus.OnHold;
+
+    private bool HasProgressCap => TotalUnits.HasValue;
+    private bool HasReachedCap => HasProgressCap && CurrentUnit >= TotalUnits!.Value;
+    private bool HasRemaining => HasProgressCap && CurrentUnit < TotalUnits!.Value;
+    private bool HasAnyProgress => CurrentUnit > 0;
+
+    // ── Public actions ────────────────────────────────────
+    public bool CanStart => IsIdle;
+    public bool CanPause => IsInProgress;
+    public bool CanResume => IsOnHold;
     public bool CanDrop => !Status.IsTerminal;
-    public bool CanProgress => Status.AllowsProgress;
-    public bool CanDecrement => Status.AllowsProgress && CurrentUnit > 0;
+
+    public bool CanComplete => IsInProgress && HasProgressCap && HasReachedCap;
+    public bool CanProgress => IsInProgress && (!HasProgressCap || HasRemaining);
+    public bool CanDecrement => IsInProgress && HasAnyProgress;
 
     private ConsumptionTrack() { }
 
@@ -152,6 +164,8 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
 
     public void SyncTotalUnits(int? totalUnits) {
         TotalUnits = totalUnits;
+        if (TotalUnits.HasValue && CurrentUnit > TotalUnits.Value)
+            CurrentUnit = TotalUnits.Value;
         MarkUpdated();
     }
 

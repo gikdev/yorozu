@@ -12,13 +12,13 @@ const storage = createJSONStorage(() => window.sessionStorage)
 
 export const useSecretModeStore = create<SecretModeStore>()(
   persist(
-    (set) => ({
+    set => ({
       isUnlocked: false,
       unlock: () => set({ isUnlocked: true }),
       lock: () => set({ isUnlocked: false }),
     }),
-    { name, storage }
-  )
+    { name, storage },
+  ),
 )
 
-export const useIsUnlocked = () => useSecretModeStore((s) => s.isUnlocked)
+export const useIsUnlocked = () => useSecretModeStore(s => s.isUnlocked)

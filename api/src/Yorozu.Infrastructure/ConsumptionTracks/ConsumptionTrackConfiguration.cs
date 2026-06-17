@@ -11,7 +11,7 @@ internal class ConsumptionTrackConfiguration : IEntityTypeConfiguration<Consumpt
         builder.Property(x => x.Status)
             .HasConversion(
                 s => s.Value,
-                s => ConsumptionStatus.FromValue(s)
+                s => Domain.ConsumptionTracks.ConsumptionStatus.FromValue(s)
             );
 
         builder.Ignore(x => x.CanStart);

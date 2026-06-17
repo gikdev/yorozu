@@ -12,6 +12,7 @@ internal static class Mapper {
         ContentItemPlaceholderColor = dto.ContentItemPlaceholderColor,
         ContentItemPlaceholderLetter = dto.ContentItemPlaceholderLetter,
         ContentItemFormat = dto.ContentItemFormat,
+        IsSecret = dto.IsSecret,
         Type = dto.Type,
         Status = MapConsumptionStatus(dto.Status),
         Title = dto.Title,

@@ -13,6 +13,7 @@ internal static class ConsumptionTrackMapper {
             ContentItemPlaceholderColor = contentItem.PlaceholderColor,
             ContentItemPlaceholderLetter = contentItem.PlaceholderLetter,
             ContentItemFormat = contentItem.Format,
+            IsSecret = contentItem.IsSecret,
             Type = track.Type,
             Status = track.Status,
             Title = track.Title,

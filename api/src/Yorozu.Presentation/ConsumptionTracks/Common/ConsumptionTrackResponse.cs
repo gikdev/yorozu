@@ -25,6 +25,7 @@ public record ConsumptionTrackResponse {
     public required DateTimeOffset? CompletedAt { get; init; }
     public required DateTimeOffset? DroppedAt { get; init; }
     public required DateTimeOffset? PausedAt { get; init; }
+    public required bool IsSecret { get; init; }
     public required bool CanStart { get; init; }
     public required bool CanPause { get; init; }
     public required bool CanResume { get; init; }
