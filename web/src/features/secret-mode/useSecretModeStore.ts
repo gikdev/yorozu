@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { createJSONStorage, persist } from "zustand/middleware"
 
 interface SecretModeStore {
   isUnlocked: boolean
@@ -6,10 +7,18 @@ interface SecretModeStore {
   lock: () => void
 }
 
-export const useSecretModeStore = create<SecretModeStore>(set => ({
-  isUnlocked: false,
-  unlock: () => set({ isUnlocked: true }),
-  lock: () => set({ isUnlocked: false }),
-}))
+const name = "YOROZU_SECRET_MODE"
+const storage = createJSONStorage(() => window.sessionStorage)
 
-export const useIsUnlocked = () => useSecretModeStore(s => s.isUnlocked)
+export const useSecretModeStore = create<SecretModeStore>()(
+  persist(
+    (set) => ({
+      isUnlocked: false,
+      unlock: () => set({ isUnlocked: true }),
+      lock: () => set({ isUnlocked: false }),
+    }),
+    { name, storage }
+  )
+)
+
+export const useIsUnlocked = () => useSecretModeStore((s) => s.isUnlocked)
