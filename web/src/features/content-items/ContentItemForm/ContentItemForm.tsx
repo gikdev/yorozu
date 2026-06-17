@@ -186,7 +186,10 @@ export function ContentItemForm(p: ContentItemFormProps) {
           {field => <field.SmartTagsInput title="Tags" allTags={p.tags} />}
         </form.AppField>
 
-        <form.SimpleSubmitBtn className={btn({ theme: "primary" })} title="Submit" />
+        <form.SimpleSubmitBtn
+          className={btn({ theme: "primary" })}
+          title="Submit"
+        />
       </form.AppForm>
     </div>
   )

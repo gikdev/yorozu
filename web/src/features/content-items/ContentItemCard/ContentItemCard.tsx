@@ -2,7 +2,6 @@ import {
   BookmarkSimpleIcon,
   HeartIcon,
   LockKeyIcon,
-  QueueIcon,
   ClockIcon,
   QuestionIcon,
 } from "@phosphor-icons/react"
@@ -18,7 +17,6 @@ interface ContentItemCardProps {
   isBookmarked: boolean
   isSecret: boolean
   isFavorite: boolean
-  hasAnyTracks: boolean
   isOngoing: boolean | null
   placeholderLetter: string
   format: ContentItemFormat
@@ -75,11 +73,12 @@ export function ContentItemCard(p: ContentItemCardProps) {
           />
         )}
 
-        <QueueIcon
+        {/* TODO: Don't forget to later re-add this */}
+        {/* <QueueIcon
           size={20}
           weight={p.hasAnyTracks ? "fill" : "regular"}
           className={p.hasAnyTracks ? "text-blue-400" : ""}
-        />
+        /> */}
       </div>
     </button>
   )

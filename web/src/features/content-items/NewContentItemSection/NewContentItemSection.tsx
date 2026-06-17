@@ -34,5 +34,11 @@ export function NewContentItemSection() {
     })
   }
 
-  return <ContentItemForm mode="CREATE" onSubmit={handleSubmit} tags={listAllTagsQ.data?.items ?? []} />
+  return (
+    <ContentItemForm
+      mode="CREATE"
+      onSubmit={handleSubmit}
+      tags={listAllTagsQ.data?.items ?? []}
+    />
+  )
 }

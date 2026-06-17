@@ -63,8 +63,8 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
-          description: OK
+        "204":
+          description: No Content
   /api/content-items:
     get:
       tags:
@@ -99,8 +99,8 @@ paths:
   /api/content-items/tags:
     get:
       tags:
-        - Tags
         - Content Items
+        - Tags
       summary: List unique tags of content items
       operationId: ListAllContentItemTags
       responses:
@@ -136,6 +136,251 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentItemResponse"
+  "/api/tracks/{id}":
+    put:
+      tags:
+        - Consumption Tracks
+      summary: Update track metadata
+      operationId: UpdateTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTrackRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+    get:
+      tags:
+        - Consumption Tracks
+      summary: Get a single track
+      operationId: GetTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+    delete:
+      tags:
+        - Consumption Tracks
+      summary: Delete a track
+      operationId: DeleteTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+  "/api/tracks/{id}/progress":
+    patch:
+      tags:
+        - Consumption Tracks
+      summary: Update track progress
+      operationId: UpdateTrackProgressEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProgressRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/tracks/{id}/start":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Start a track
+      operationId: StartTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/tracks/{id}/resume":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Resume a paused track
+      operationId: ResumeTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/tracks/{id}/pause":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Pause a track
+      operationId: PauseTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/content-items/{id}/tracks":
+    get:
+      tags:
+        - Consumption Tracks
+      summary: List tracks for a content item
+      operationId: ListTracksForContentItemEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummariesResponse"
+  /api/tracks:
+    get:
+      tags:
+        - Consumption Tracks
+      summary: List all tracks
+      operationId: ListAllTracksEndpoint
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummariesResponse"
+  "/api/tracks/{id}/drop":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Drop a track
+      operationId: DropTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/content-items/{contentItemId}/tracks":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Create a consumption track
+      operationId: CreateTrackEndpoint
+      parameters:
+        - name: contentItemId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTrackRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+  "/api/tracks/{id}/complete":
+    post:
+      tags:
+        - Consumption Tracks
+      summary: Mark a track as completed
+      operationId: CompleteTrackEndpoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
 components:
   schemas:
     AllContentItemTagsResponse:
@@ -147,6 +392,131 @@ components:
           type: array
           items:
             type: string
+    ConsumptionStatus:
+      type: object
+      properties:
+        isTerminal:
+          type: boolean
+        allowsProgress:
+          type: boolean
+        name:
+          type:
+            - "null"
+            - string
+        value:
+          type: integer
+          format: int32
+    ConsumptionTrackSummariesResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsumptionTrackSummaryDto"
+    ConsumptionTrackSummaryDto:
+      required:
+        - id
+        - contentItemId
+        - contentItemTitle
+        - contentItemCoverImageUrl
+        - contentItemPlaceholderColor
+        - type
+        - status
+        - title
+        - currentUnit
+        - totalUnits
+        - description
+        - createdAt
+        - updatedAt
+        - startedAt
+        - completedAt
+        - droppedAt
+        - pausedAt
+        - canStart
+        - canPause
+        - canResume
+        - canComplete
+        - canDrop
+        - canProgress
+        - canDecrement
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        contentItemId:
+          type: string
+          format: uuid
+        contentItemTitle:
+          type: string
+        contentItemCoverImageUrl:
+          type:
+            - "null"
+            - string
+        contentItemPlaceholderColor:
+          type: string
+        type:
+          $ref: "#/components/schemas/IntentionType"
+        status:
+          $ref: "#/components/schemas/ConsumptionStatus"
+        title:
+          type: string
+        currentUnit:
+          type: integer
+          format: int32
+        totalUnits:
+          type:
+            - "null"
+            - integer
+          format: int32
+        description:
+          type:
+            - "null"
+            - string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+            - "null"
+            - string
+          format: date-time
+        startedAt:
+          type:
+            - "null"
+            - string
+          format: date-time
+        completedAt:
+          type:
+            - "null"
+            - string
+          format: date-time
+        droppedAt:
+          type:
+            - "null"
+            - string
+          format: date-time
+        pausedAt:
+          type:
+            - "null"
+            - string
+          format: date-time
+        canStart:
+          type: boolean
+        canPause:
+          type: boolean
+        canResume:
+          type: boolean
+        canComplete:
+          type: boolean
+        canDrop:
+          type: boolean
+        canProgress:
+          type: boolean
+        canDecrement:
+          type: boolean
     ContentItemFormat:
       enum:
         - Readable
@@ -168,7 +538,6 @@ components:
         - isFavorite
         - location
         - unitSpec
-        - hasAnyTracks
         - coverImageUrl
         - placeholderColor
         - placeholderLetter
@@ -213,8 +582,6 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/ContentUnitSpecRto"
-        hasAnyTracks:
-          type: boolean
         coverImageUrl:
           type:
             - "null"
@@ -297,6 +664,20 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/ContentUnitSpecRto"
+    CreateTrackRequest:
+      required:
+        - title
+        - type
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type:
+            - "null"
+            - string
+        type:
+          $ref: "#/components/schemas/IntentionType"
     DoQuickActionsRequest:
       type: object
       properties:
@@ -312,6 +693,11 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/TriState"
+    IntentionType:
+      enum:
+        - Unknown
+        - Education
+        - Fun
     LocationRto:
       required:
         - type
@@ -327,6 +713,11 @@ components:
         - Physical
         - FilePath
         - Url
+    ProgressAction:
+      enum:
+        - Set
+        - Increment
+        - Decrement
     TriState:
       enum:
         - On
@@ -377,6 +768,32 @@ components:
           oneOf:
             - type: "null"
             - $ref: "#/components/schemas/ContentUnitSpecRto"
+    UpdateProgressRequest:
+      required:
+        - action
+        - amount
+      type: object
+      properties:
+        action:
+          $ref: "#/components/schemas/ProgressAction"
+        amount:
+          type: integer
+          format: int32
+    UpdateTrackRequest:
+      required:
+        - title
+        - type
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type:
+            - "null"
+            - string
+        type:
+          $ref: "#/components/schemas/IntentionType"
 tags:
   - name: Content Items
   - name: Tags
+  - name: Consumption Tracks

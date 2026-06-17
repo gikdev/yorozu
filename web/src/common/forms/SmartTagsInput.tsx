@@ -63,7 +63,6 @@ export function SmartTagsInput(p: SmartTagsInputProps) {
     field.handleBlur()
   }
 
-
   const suggestions = p.allTags.filter(
     t => !selected.includes(t) && t.toLowerCase().includes(query),
   )

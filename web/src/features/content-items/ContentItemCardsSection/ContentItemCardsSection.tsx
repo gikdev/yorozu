@@ -71,7 +71,6 @@ export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
             key={ci.id}
             coverImageUrl={ci.coverImageUrl}
             format={ci.format}
-            hasAnyTracks={ci.hasAnyTracks}
             id={ci.id}
             isBookmarked={ci.isBookmarked}
             isFavorite={ci.isFavorite}
