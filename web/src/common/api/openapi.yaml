@@ -422,6 +422,8 @@ components:
         - contentItemTitle
         - contentItemCoverImageUrl
         - contentItemPlaceholderColor
+        - contentItemPlaceholderLetter
+        - contentItemFormat
         - type
         - status
         - title
@@ -457,6 +459,10 @@ components:
             - string
         contentItemPlaceholderColor:
           type: string
+        contentItemPlaceholderLetter:
+          type: string
+        contentItemFormat:
+          $ref: "#/components/schemas/ContentItemFormat"
         type:
           $ref: "#/components/schemas/IntentionType"
         status:

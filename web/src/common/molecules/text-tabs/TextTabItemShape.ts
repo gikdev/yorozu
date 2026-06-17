@@ -1,4 +1,4 @@
 export interface TextTabItemShape {
-  id: string
+  id: string | null
   label: string
 }

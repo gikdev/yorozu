@@ -1,67 +1,67 @@
+import { useQuery } from "@tanstack/react-query"
 import { ConsumptionCard } from "../ConsumptionCard"
-import { IntentionTypesTextTab } from "./IntentionTypesTextTab"
+import { listAllTracksEndpointOptions } from "#/common/api/client"
+import { StateMessage } from "#/common/molecules/StateMessage"
+import {
+  SpinnerGapIcon,
+  WarningCircleIcon,
+  BooksIcon,
+  QueueIcon,
+} from "@phosphor-icons/react"
+import { extractErrorMessage } from "#/common/helpers/errors"
+import toast from "react-hot-toast"
 
 export function ConsumptionTracksView() {
+  const tracksQ = useQuery(listAllTracksEndpointOptions())
+
+  if (tracksQ.status === "pending") {
+    return (
+      <StateMessage
+        mode="LOADING"
+        icon={SpinnerGapIcon}
+        title="Loading your tracks..."
+      />
+    )
+  }
+
+  if (tracksQ.status === "error") {
+    return (
+      <StateMessage
+        mode="ERROR"
+        icon={WarningCircleIcon}
+        title="Failed to load tracks"
+        description={extractErrorMessage(tracksQ.error)}
+        retry={tracksQ.refetch}
+      />
+    )
+  }
+
+  if (tracksQ.data?.items.length === 0) {
+    return (
+      <StateMessage
+        mode="NORMAL"
+        icon={QueueIcon}
+        title="No tracks yet"
+        description="Start adding content to see your progress."
+      />
+    )
+  }
+
   return (
-    <>
-      <IntentionTypesTextTab />
-
-      <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-4">
+      {tracksQ.data.items.map(i => (
         <ConsumptionCard
-          imageSrc="https://animegate.ir/storage/anime/images/2024/10/1a69f7eb-c9a4-491a-98ad-3fc9882c77aa.webp"
-          imageFallbackLetter="本"
-          title="First watch"
-          subtitle="本好き S4"
-          formatType="Watchable"
-          current={9}
-          total={12}
-          onAdd={() => {}}
+          key={i.id}
+          imageSrc={i.contentItemCoverImageUrl}
+          imageFallbackLetter={i.contentItemPlaceholderLetter?.charAt(0) || "?"}
+          title={i.title}
+          subtitle={i.contentItemTitle}
+          formatType={i.contentItemFormat}
+          current={i.currentUnit}
+          total={i.totalUnits}
+          onAdd={() => toast("Not built yet.")}
         />
-
-        <ConsumptionCard
-          imageSrc={null}
-          imageFallbackLetter="S"
-          title="Currently watching"
-          subtitle="Solo Leveling S2"
-          formatType="Readable"
-          current={5}
-          total={null}
-          onAdd={() => {}}
-        />
-
-        <ConsumptionCard
-          imageSrc={null}
-          imageFallbackLetter="S"
-          title="Currently watching"
-          subtitle="Solo Leveling S2"
-          formatType="Readable"
-          current={5}
-          total={null}
-          onAdd={() => {}}
-        />
-
-        <ConsumptionCard
-          imageSrc={null}
-          imageFallbackLetter="S"
-          title="Currently watching"
-          subtitle="Solo Leveling S2"
-          formatType="Readable"
-          current={5}
-          total={null}
-          onAdd={() => {}}
-        />
-
-        <ConsumptionCard
-          imageSrc={null}
-          imageFallbackLetter="S"
-          title="Currently watching"
-          subtitle="Solo Leveling S2"
-          formatType="Readable"
-          current={5}
-          total={null}
-          onAdd={() => {}}
-        />
-      </div>
-    </>
+      ))}
+    </div>
   )
 }

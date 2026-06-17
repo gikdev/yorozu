@@ -4,7 +4,7 @@ import type { TextTabItemShape } from "./TextTabItemShape"
 interface TextTabsProps {
   items: TextTabItemShape[]
   activeTabId: string | null
-  onTabChange: (id: string) => void
+  onTabChange: (id: string | null) => void
 }
 
 export const TextTabs = (p: TextTabsProps) => (

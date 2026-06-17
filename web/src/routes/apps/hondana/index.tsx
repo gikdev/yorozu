@@ -5,7 +5,8 @@ import {
   PageHeaderBackButton,
 } from "#/common/molecules/page-header"
 import { AppShell } from "#/common/molecules/AppShell"
-import { ConsumptionTracksView } from "#/features/consumption-tracks/ConsumptionTracksView"
+import { StateMessage } from "#/common/molecules/StateMessage"
+import { HouseIcon } from "@phosphor-icons/react"
 
 export const Route = createFileRoute("/apps/hondana/")({
   component: RouteComponent,
@@ -20,7 +21,12 @@ function RouteComponent() {
       />
 
       <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">
-        <ConsumptionTracksView />
+        <StateMessage
+          icon={HouseIcon}
+          mode="NORMAL"
+          title="Welcome back!"
+          description="元気ですか?"
+        />
       </main>
 
       <BottomNav activeTabId="home" />

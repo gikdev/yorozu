@@ -2,6 +2,7 @@ import {
   GearIcon,
   HouseIcon,
   MagnifyingGlassIcon,
+  QueueIcon,
   SquaresFourIcon,
 } from "@phosphor-icons/react"
 import { linkOptions } from "@tanstack/react-router"
@@ -23,11 +24,11 @@ export const bottomNavTabs: BottomNavItemShape[] = [
     disabled: false,
   },
   {
-    id: "search",
-    icon: MagnifyingGlassIcon,
-    label: "Search",
-    to: linkOptions({ to: "." }).to,
-    disabled: true,
+    id: "tracks",
+    icon: QueueIcon,
+    label: "Tracks",
+    to: linkOptions({ to: "/apps/hondana/tracks" }).to,
+    disabled: false,
   },
   {
     id: "settings",

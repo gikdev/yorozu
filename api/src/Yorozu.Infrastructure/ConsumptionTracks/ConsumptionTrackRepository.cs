@@ -63,6 +63,8 @@ internal class ConsumptionTrackRepository(
             ContentItemTitle = contentItem.Title.Value,
             ContentItemCoverImageUrl = contentItem.CoverImageUrl?.Value,
             ContentItemPlaceholderColor = contentItem.PlaceholderColor,
+            ContentItemPlaceholderLetter = contentItem.PlaceholderLetter,
+            ContentItemFormat = contentItem.Format,
             Type = track.Type,
             Status = track.Status,
             Title = track.Title,
