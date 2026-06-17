@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.DropTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.DropTrack;
 
@@ -16,7 +16,7 @@ internal class DropTrackEndpoint : IEndpoint {
             .WithName(nameof(DropTrackEndpoint))
             .WithSummary("Drop a track")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -24,6 +24,6 @@ internal class DropTrackEndpoint : IEndpoint {
         [FromRoute] Guid id) {
         var command = new DropTrackCommand(id);
         var result = await sender.Send(command);
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }

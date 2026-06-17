@@ -16,7 +16,7 @@ internal class ListTracksForContentItemEndpoint : IEndpoint {
             .WithName(nameof(ListTracksForContentItemEndpoint))
             .WithSummary("List tracks for a content item")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummariesResponse>();
+            .Produces<ConsumptionTracksResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -25,6 +25,10 @@ internal class ListTracksForContentItemEndpoint : IEndpoint {
     ) {
         var query = new ListTracksForContentItemQuery(id);
         var result = await sender.Send(query);
-        return result.MatchResponse(tracks => Results.Ok(new ConsumptionTrackSummariesResponse { Items = tracks }));
+        return result.MatchResponse(tracks => Results.Ok(
+            new ConsumptionTracksResponse {
+                Items = tracks.ConvertAll(Mapper.MapToResponse)
+            }
+        ));
     }
 }

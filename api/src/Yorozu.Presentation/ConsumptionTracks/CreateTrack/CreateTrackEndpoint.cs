@@ -7,6 +7,7 @@ using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.CreateTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.CreateTrack;
 
@@ -17,7 +18,7 @@ internal class CreateTrackEndpoint : IEndpoint {
             .WithSummary("Create a consumption track")
             .WithTags(ApiTags.ConsumptionTracks)
             .Accepts<CreateTrackRequest>("application/json")
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -32,6 +33,6 @@ internal class CreateTrackEndpoint : IEndpoint {
             Type = request.Type
         };
         var result = await sender.Send(command);
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }

@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { ConsumptionCard } from "../ConsumptionCard"
-import { listAllTracksEndpointOptions } from "#/common/api/client"
+import { listAllTracksEndpointOptions, ProgressAction, updateTrackProgressEndpointMutation, type ConsumptionStatus } from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import {
   SpinnerGapIcon,
   WarningCircleIcon,
-  BooksIcon,
   QueueIcon,
 } from "@phosphor-icons/react"
 import { extractErrorMessage } from "#/common/helpers/errors"
@@ -13,6 +12,15 @@ import toast from "react-hot-toast"
 
 export function ConsumptionTracksView() {
   const tracksQ = useQuery(listAllTracksEndpointOptions())
+  const progressM = useMutation(updateTrackProgressEndpointMutation())
+
+  const increaseUnit = (id: string, status: ConsumptionStatus) => {
+    const path = { id }
+    const body = { action: ProgressAction.INCREMENT, amount: 1 }
+    const onError = (err: unknown) => toast.error(extractErrorMessage(err))
+
+    progressM.mutate({ path, body }, { onError })
+  }
 
   if (tracksQ.status === "pending") {
     return (
@@ -48,7 +56,7 @@ export function ConsumptionTracksView() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4">
       {tracksQ.data.items.map(i => (
         <ConsumptionCard
           key={i.id}
@@ -59,7 +67,8 @@ export function ConsumptionTracksView() {
           formatType={i.contentItemFormat}
           current={i.currentUnit}
           total={i.totalUnits}
-          onAdd={() => toast("Not built yet.")}
+          isAddLoading={progressM.isPending}
+          onAdd={() => increaseUnit(i.id, i.status)}
         />
       ))}
     </div>

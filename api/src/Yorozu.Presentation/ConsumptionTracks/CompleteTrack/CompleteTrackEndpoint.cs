@@ -7,6 +7,7 @@ using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.CompleteTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.CompleteTrack;
 
@@ -16,7 +17,7 @@ internal class CompleteTrackEndpoint : IEndpoint {
             .WithName(nameof(CompleteTrackEndpoint))
             .WithSummary("Mark a track as completed")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -25,6 +26,6 @@ internal class CompleteTrackEndpoint : IEndpoint {
     ) {
         var command = new CompleteTrackCommand(id);
         var result = await sender.Send(command);
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }

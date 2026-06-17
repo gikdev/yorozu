@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Infrastructure.ConsumptionTracks;
 

@@ -1,4 +1,4 @@
-import { PlusIcon } from "@phosphor-icons/react"
+import { CircleNotchIcon, PlusIcon } from "@phosphor-icons/react"
 import { ConsumptionCardImage } from "./ConsumptionCardImage"
 import { ConsumptionCardTitle } from "./ConsumptionCardTitle"
 import { ConsumptionCardProgress } from "./ConsumptionCardProgress"
@@ -14,6 +14,7 @@ interface ConsumptionCardProps {
   current: number
   total: number | null
   onAdd?: () => void
+  isAddLoading: boolean
 }
 
 export function ConsumptionCard(p: ConsumptionCardProps) {
@@ -35,8 +36,12 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
         <ConsumptionCardProgress current={p.current} total={p.total} />
       </div>
 
-      <button className={styleConsumptionCardBtn()} onClick={p.onAdd}>
-        <PlusIcon size={24} />
+      <button className={styleConsumptionCardBtn()} onClick={p.onAdd} disabled={p.isAddLoading}>
+        {p.isAddLoading ? (
+          <CircleNotchIcon size={24} className="animate-spin" />
+        ) : (
+          <PlusIcon size={24} />
+        )}
       </button>
     </div>
   )

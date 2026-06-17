@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.GetTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.GetTrack;
 
@@ -16,7 +16,7 @@ internal class GetTrackEndpoint : IEndpoint {
             .WithName(nameof(GetTrackEndpoint))
             .WithSummary("Get a single track")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -25,6 +25,6 @@ internal class GetTrackEndpoint : IEndpoint {
     ) {
         var query = new GetTrackQuery(id);
         var result = await sender.Send(query);
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }

@@ -16,12 +16,16 @@ internal class ListAllTracksEndpoint : IEndpoint {
             .WithName(nameof(ListAllTracksEndpoint))
             .WithSummary("List all tracks")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummariesResponse>();
+            .Produces<ConsumptionTracksResponse>();
     }
 
     private static async Task<IResult> Handle([FromServices] ISender sender) {
         var query = new ListAllTracksQuery();
         var result = await sender.Send(query);
-        return result.MatchResponse(tracks => Results.Ok(new ConsumptionTrackSummariesResponse { Items = tracks }));
+        return result.MatchResponse(tracks => Results.Ok(
+            new ConsumptionTracksResponse {
+                Items = tracks.ConvertAll(Mapper.MapToResponse)
+            }
+        ));
     }
 }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.UpdateTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.UpdateTrack;
 
@@ -17,7 +17,7 @@ internal class UpdateTrackEndpoint : IEndpoint {
             .WithSummary("Update track metadata")
             .WithTags(ApiTags.ConsumptionTracks)
             .Accepts<UpdateTrackRequest>("application/json")
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -34,6 +34,6 @@ internal class UpdateTrackEndpoint : IEndpoint {
 
         var result = await sender.Send(command);
 
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ConsumptionTracks.PauseTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
+using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Presentation.ConsumptionTracks.PauseTrack;
 
@@ -16,7 +16,7 @@ internal class PauseTrackEndpoint : IEndpoint {
             .WithName(nameof(PauseTrackEndpoint))
             .WithSummary("Pause a track")
             .WithTags(ApiTags.ConsumptionTracks)
-            .Produces<ConsumptionTrackSummaryDto>();
+            .Produces<ConsumptionTrackResponse>();
     }
 
     private static async Task<IResult> Handle(
@@ -25,6 +25,6 @@ internal class PauseTrackEndpoint : IEndpoint {
     ) {
         var command = new PauseTrackCommand(id);
         var result = await sender.Send(command);
-        return result.MatchResponse(dto => Results.Ok(dto));
+        return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));
     }
 }
