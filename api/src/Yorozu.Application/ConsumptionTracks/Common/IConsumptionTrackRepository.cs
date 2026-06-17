@@ -9,4 +9,9 @@ public interface IConsumptionTrackRepository {
     Task<List<ConsumptionTrack>> ListAsync(CancellationToken cancellationToken = default);
     Task<ConsumptionTrack?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<List<ConsumptionTrack>> GetByContentItemIdAsync(Guid contentItemId, CancellationToken cancellationToken = default);
+
+    // New — DTO projections (no filtering yet)
+    Task<ConsumptionTrackSummaryDto?> GetSummaryByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<List<ConsumptionTrackSummaryDto>> GetSummariesByContentItemIdAsync(Guid contentItemId, CancellationToken cancellationToken);
+    Task<List<ConsumptionTrackSummaryDto>> GetAllSummariesAsync(CancellationToken cancellationToken);
 }

@@ -1,5 +1,7 @@
 namespace Yorozu.Presentation;
 
 internal static class ApiTags {
-    // internal const string Todos = "Todos";
+    internal const string ConsumptionTracks = "Consumption Tracks";
+    internal const string Tags = "Tags";
+    internal const string ContentItems = "Content Items";
 }

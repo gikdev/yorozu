@@ -16,7 +16,7 @@ internal class DoQuickActionsEndpoint : IEndpoint {
             .MapPatch("content-items/{id:guid}/quick-actions", Handle)
             .WithName(nameof(DoQuickActions))
             .WithSummary("Do quick actions")
-            .WithTags("Content Items")
+            .WithTags(ApiTags.ContentItems)
             .Accepts<DoQuickActionsRequest>("application/json")
             .Produces<ContentItemResponse>();
     }

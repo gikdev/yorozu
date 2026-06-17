@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yorozu.Infrastructure.Database;
 
@@ -9,8 +10,10 @@ using Yorozu.Infrastructure.Database;
 
 namespace Yorozu.Infrastructure.Migrations {
     [DbContext(typeof(MainDbCtx))]
-    partial class MainDbCtxModelSnapshot : ModelSnapshot {
-        protected override void BuildModel(ModelBuilder modelBuilder) {
+    [Migration("20260617101823_RethinkTracks")]
+    partial class RethinkTracks {
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.3");
 

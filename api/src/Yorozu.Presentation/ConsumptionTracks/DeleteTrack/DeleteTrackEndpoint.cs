@@ -3,19 +3,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Yorozu.Application.ContentItems.DeleteContentItem;
+using Yorozu.Application.ConsumptionTracks.DeleteTrack;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
 
-namespace Yorozu.Presentation.ContentItems.DeleteContentItem;
+namespace Yorozu.Presentation.ConsumptionTracks.DeleteTrack;
 
-internal class DeleteContentItemEndpoint : IEndpoint {
+internal class DeleteTrackEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
-        app
-            .MapDelete("content-items/{id:guid}", Handle)
-            .WithName(nameof(DeleteContentItem))
-            .WithSummary("Delete a content item")
-            .WithTags(ApiTags.ContentItems)
+        app.MapDelete("tracks/{id:guid}", Handle)
+            .WithName(nameof(DeleteTrackEndpoint))
+            .WithSummary("Delete a track")
+            .WithTags(ApiTags.ConsumptionTracks)
             .Produces(StatusCodes.Status204NoContent);
     }
 
@@ -23,7 +22,8 @@ internal class DeleteContentItemEndpoint : IEndpoint {
         [FromServices] ISender sender,
         [FromRoute] Guid id
     ) {
-        var result = await sender.Send(new DeleteContentItemCommand(id));
+        var command = new DeleteTrackCommand(id);
+        var result = await sender.Send(command);
         return result.MatchResponse();
     }
 }

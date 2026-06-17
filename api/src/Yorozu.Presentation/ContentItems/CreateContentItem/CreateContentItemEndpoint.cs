@@ -17,7 +17,7 @@ internal class CreateContentItemEndpoint : IEndpoint {
             .MapPost("content-items", Handle)
             .WithName(nameof(CreateContentItem))
             .WithSummary("Create new content item")
-            .WithTags("Content Items")
+            .WithTags(ApiTags.ContentItems)
             .Accepts<CreateContentItemRequest>("application/json")
             .Produces<ContentItemResponse>();
     }

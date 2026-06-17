@@ -46,6 +46,21 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
         Description = description?.Value,
     };
 
+    public void ChangeTitle(NotEmptyString title) {
+        Title = title.Value;
+        MarkUpdated();
+    }
+
+    public void ChangeDescription(NotEmptyString? description) {
+        Description = description?.Value;
+        MarkUpdated();
+    }
+
+    public void ChangeType(IntentionType type) {
+        Type = type;
+        MarkUpdated();
+    }
+
     public ErrorOr<Success> Start() {
         if (Status != ConsumptionStatus.Idle)
             return ConsumptionTrackErrors.AlreadyStartedError;

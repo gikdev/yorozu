@@ -17,7 +17,7 @@ internal class UpdateContentItemEndpoint : IEndpoint {
             .MapPut("content-items/{id:guid}", Handle)
             .WithName(nameof(UpdateContentItem))
             .WithSummary("Update a content item")
-            .WithTags("Content Items")
+            .WithTags(ApiTags.ContentItems)
             .Accepts<UpdateContentItemRequest>("application/json")
             .Produces<ContentItemResponse>();
     }

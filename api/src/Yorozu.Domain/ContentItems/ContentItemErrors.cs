@@ -8,7 +8,7 @@ public static class ContentItemErrors {
         code: "ContentItem.MustHaveUnitSpec"
     );
 
-    public static Error CannotRemoveUnitSpecWithActiveTracks {get;}=Error.Conflict(
+    public static Error CannotRemoveUnitSpecWithActiveTracks { get; } = Error.Conflict(
         description: "Can not remove unit spec of a content item that has tracks already.",
         code: "ContentItem.CannotRemoveUnitSpecWithActiveTracks"
     );

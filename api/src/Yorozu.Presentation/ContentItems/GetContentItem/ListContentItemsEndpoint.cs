@@ -16,7 +16,7 @@ internal class ListContentItemsEndpoint : IEndpoint {
             .MapGet("content-items/{id:guid}", Handle)
             .WithName(nameof(GetContentItem))
             .WithSummary("Get content item")
-            .WithTags("Content Items")
+            .WithTags(ApiTags.ContentItems)
             .Produces<ContentItemResponse>();
     }
 

@@ -15,7 +15,7 @@ internal class ListAllContentItemTagsEndpoint : IEndpoint {
             .MapGet("content-items/tags", Handle)
             .WithName(nameof(ListAllContentItemTags))
             .WithSummary("List unique tags of content items")
-            .WithTags("Tags", "Content Items")
+            .WithTags(ApiTags.ContentItems, ApiTags.Tags)
             .Produces<AllContentItemTagsResponse>();
     }
 
