@@ -17,7 +17,7 @@ const styleCardContainer = tv({
   base: `
     flex rounded-lg overflow-clip border
     cursor-pointer transition-all duration-200
-    min-w-max h-24 w-full
+    h-24 w-full
   `,
   variants: {
     isSecret: {
@@ -56,8 +56,8 @@ export function ContentItemCard(p: ContentItemCardProps) {
         fallbackLetter={p.placeholderLetter}
       />
 
-      <div className="flex-1 flex flex-col gap-2 justify-center p-4">
-        <p dir="auto" className="text-mist-100 truncate font-bold">
+      <div className="flex-1 flex flex-col gap-2 justify-center p-2">
+        <p dir="auto" className="text-mist-100 line-clamp-3 font-bold">
           <Link to="/apps/hondana/library/$id" params={{ id: p.id }}>{p.title}</Link>
         </p>
       </div>
