@@ -61,6 +61,7 @@ const plugins: PluginOption[] = [
 ]
 
 const server: UserConfig["server"] = {
+  port: 5398,
   proxy: {
     "/api": {
       target: "http://localhost:5050",
