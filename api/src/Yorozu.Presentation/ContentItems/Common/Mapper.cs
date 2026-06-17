@@ -9,7 +9,6 @@ internal static class Mapper {
             CreatedAt = i.CreatedAt,
             Format = i.Format,
             FullTitle = i.FullTitle.Value,
-            HasAnyTracks = i.HasAnyTracks,
             Id = i.Id,
             IsBookmarked = i.IsBookmarked,
             IsFavorite = i.IsFavorite,

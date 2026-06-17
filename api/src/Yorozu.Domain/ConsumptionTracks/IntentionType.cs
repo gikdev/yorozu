@@ -1,4 +1,4 @@
-namespace Yorozu.Domain.ContentItems;
+namespace Yorozu.Domain.ConsumptionTracks;
 
 public enum IntentionType {
     Unknown = 0,

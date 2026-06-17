@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
@@ -9,17 +10,20 @@ namespace Yorozu.Application.ContentItems.UpdateContentItem;
 
 internal class UpdateContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
+    IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateContentItemCommand, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(UpdateContentItemCommand request, CancellationToken cancellationToken) {
         var contentItem = await contentItemRepository.GetByIdAsync(request.Id, cancellationToken);
         if (contentItem is null) return Error.NotFound();
 
+        var tracks = await consumptionTrackRepository.GetByContentItemIdAsync(contentItem.Id, cancellationToken);
+
         var fullTitleResult = NotEmptyString.Create(request.FullTitle);
         if (fullTitleResult.IsError) return fullTitleResult.Errors;
-        contentItem.UpdateFullTitle(fullTitleResult.Value);
+        contentItem.ChangeFullName(fullTitleResult.Value);
 
-        contentItem.UpdateFormat(request.Format);
+        contentItem.ChangeFormat(request.Format);
 
         if (request.NickName != null) {
             var nickNameResult = NotEmptyString.Create(request.NickName);
@@ -43,9 +47,9 @@ internal class UpdateContentItemCommandHandler(
         if (request.CoverImagePath != null) {
             var urlResult = NotEmptyString.Create(request.CoverImagePath);
             if (urlResult.IsError) return urlResult.Errors;
-            contentItem.SetCoverImageUrl(urlResult.Value);
+            contentItem.ChangeCoverImageUrl(urlResult.Value);
         } else {
-            contentItem.RemoveCoverImageUrl();
+            contentItem.ChangeCoverImageUrl(null);
         }
 
         contentItem.ChangeLocation(request.Location == null ? null : new Location {
@@ -60,9 +64,11 @@ internal class UpdateContentItemCommandHandler(
                 request.UnitSpec.TotalUnits
             );
             if (unitSpecResult.IsError) return unitSpecResult.Errors;
-            contentItem.SetUnitSpec(unitSpecResult.Value);
+            var result = contentItem.ChangeUnitSpec(unitSpecResult.Value, tracks.Count);
+            if (result.IsError) return result.Errors;
         } else {
-            contentItem.RemoveUnitSpec();
+            var result = contentItem.ChangeUnitSpec(null, tracks.Count);
+            if (result.IsError) return result.Errors;
         }
 
         contentItemRepository.Update(contentItem);

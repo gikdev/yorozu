@@ -21,7 +21,6 @@ internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> 
         builder.Ignore(x => x.Title);
         builder.Ignore(x => x.Tags);
         builder.Ignore(x => x.PlaceholderLetter);
-        builder.Ignore(x => x.HasAnyTracks);
         builder.Ignore(x => x.CanAddTracks);
 
         builder.OwnsOne(x => x.Location);
@@ -29,15 +28,6 @@ internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> 
 
         builder.PrimitiveCollection<List<string>>("_tags")
             .HasField("_tags")
-            .UsePropertyAccessMode(PropertyAccessMode.Field);
-
-        builder.HasMany(x => x.ConsumptionTracks)
-            .WithOne()
-            .HasForeignKey("ContentItemId")
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Navigation(x => x.ConsumptionTracks)
-            .HasField("_consumptionTracks")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

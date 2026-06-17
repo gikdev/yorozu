@@ -1,14 +1,17 @@
 using ErrorOr;
 using MediatR;
+using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
+using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Application.ContentItems.CreateContentItem;
 
 internal class CreateContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
+    IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateContentItemCommand, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(CreateContentItemCommand request, CancellationToken cancellationToken) {
@@ -45,7 +48,7 @@ internal class CreateContentItemCommandHandler(
             if (urlResult.IsError) return urlResult.Errors;
             var url = urlResult.Value;
 
-            contentItem.SetCoverImageUrl(url);
+            contentItem.ChangeCoverImageUrl(url);
         }
 
         if (request.Location != null) {
@@ -58,6 +61,8 @@ internal class CreateContentItemCommandHandler(
         }
 
         if (request.UnitSpec != null) {
+            List<ConsumptionTrack> tracks = await consumptionTrackRepository.GetByContentItemIdAsync(contentItem.Id, cancellationToken);
+
             var unitSpecResult = ContentUnitSpec.Create(
                 request.UnitSpec.IsOngoing,
                 request.UnitSpec.UnitType,
@@ -66,7 +71,8 @@ internal class CreateContentItemCommandHandler(
             if (unitSpecResult.IsError) return unitSpecResult.Errors;
             var unitSpec = unitSpecResult.Value;
 
-            contentItem.SetUnitSpec(unitSpec);
+            var result = contentItem.ChangeUnitSpec(unitSpec, tracks.Count);
+            if (result.IsError) return result.Errors;
         }
 
         contentItemRepository.Add(contentItem);

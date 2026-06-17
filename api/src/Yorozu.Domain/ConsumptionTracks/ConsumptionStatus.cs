@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace Yorozu.Domain.ContentItems;
+namespace Yorozu.Domain.ConsumptionTracks;
 
 public sealed class ConsumptionStatus : SmartEnum<ConsumptionStatus> {
     public bool IsTerminal { get; }

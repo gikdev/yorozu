@@ -2,10 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Endpoints;
+using Yorozu.Infrastructure.ConsumptionTracks;
 using Yorozu.Infrastructure.ContentItems;
 using Yorozu.Infrastructure.Database;
 
@@ -30,6 +32,7 @@ public static class YorozuInfrastructure {
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MainDbCtx>());
 
         services.AddScoped<IContentItemRepository, ContentItemRepository>();
+        services.AddScoped<IConsumptionTrackRepository, ConsumptionTrackRepository>();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 

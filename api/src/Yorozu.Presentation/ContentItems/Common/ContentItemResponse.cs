@@ -17,7 +17,6 @@ internal record ContentItemResponse {
     public required bool IsFavorite { get; init; }
     public required LocationRto? Location { get; init; }
     public required ContentUnitSpecRto? UnitSpec { get; init; }
-    public required bool HasAnyTracks { get; init; }
     public required string? CoverImageUrl { get; init; }
     public required string PlaceholderColor { get; init; }
     public required string PlaceholderLetter { get; init; }

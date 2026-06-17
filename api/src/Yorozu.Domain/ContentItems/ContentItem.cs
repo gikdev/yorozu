@@ -5,22 +5,17 @@ using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
-public class ContentItem : IAggregateRoot, IHasTimestamps {
-    public static Error MustHaveUnitSpecError { get; } = Error.Validation(
-        description: "A unit spec is required to track consumption.",
-        code: "ContentItem.MustHaveUnitSpec"
-    );
-    public static Error TrackNotFoundError(Guid id) => Error.NotFound(
-        description: $"Consumption track with id '{id}' was not found.",
-        code: "ContentItem.TrackNotFound"
-    );
-
+public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
     private readonly List<string> _tags = [];
-    private readonly List<ConsumptionTrack> _consumptionTracks = [];
 
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; private set; }
+
+    private readonly List<IDomainEvent> _domainEvents = [];
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public void ClearDomainEvents() => _domainEvents.Clear();
+    protected void RaiseDomainEvent(IDomainEvent e) => _domainEvents.Add(e);
 
     public NotEmptyString FullTitle { get; private set; }
     public NotEmptyString? NickName { get; private set; }
@@ -36,8 +31,6 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
     public Location? Location { get; private set; }
 
     public ContentUnitSpec? UnitSpec { get; private set; }
-    public IReadOnlyCollection<ConsumptionTrack> ConsumptionTracks => _consumptionTracks.AsReadOnly();
-    public bool HasAnyTracks => _consumptionTracks.Count > 0;
     public bool CanAddTracks => UnitSpec != null;
 
     public NotEmptyString? CoverImageUrl { get; private set; }
@@ -56,12 +49,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         Id = id ?? Guid.NewGuid(),
     };
 
-    public void UpdateFullTitle(NotEmptyString fullTitle) {
+    public void ChangeFullName(NotEmptyString fullTitle) {
         FullTitle = fullTitle;
         MarkUpdated();
     }
 
-    public void UpdateFormat(ContentItemFormat format) {
+    public void ChangeFormat(ContentItemFormat format) {
         Format = format;
         MarkUpdated();
     }
@@ -132,13 +125,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void SetCoverImageUrl(NotEmptyString img) {
+    public void ChangeCoverImageUrl(NotEmptyString? img) {
         CoverImageUrl = img;
-        MarkUpdated();
-    }
-
-    public void RemoveCoverImageUrl() {
-        CoverImageUrl = null;
         MarkUpdated();
     }
 
@@ -152,140 +140,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
-    public void SetUnitSpec(ContentUnitSpec spec) {
+    public ErrorOr<Success> ChangeUnitSpec(ContentUnitSpec? spec, int trackCount) {
+        if (spec is null && trackCount > 0)
+            return ContentItemErrors.CannotRemoveUnitSpecWithActiveTracks;
+
         UnitSpec = spec;
-
-        // Auto-cap & auto-complete tracks that exceed the new total
-        if (!spec.IsOngoing && spec.TotalUnits.HasValue) {
-            foreach (var track in _consumptionTracks) {
-                if (track.CurrentUnit > spec.TotalUnits.Value) {
-                    track.ForceProgress(spec.TotalUnits.Value);
-
-                    if (track.Status == ConsumptionStatus.InProgress) {
-                        track.ForceComplete();
-                    }
-                }
-            }
-        }
-
-        MarkUpdated();
-    }
-
-    public void RemoveUnitSpec() {
-        UnitSpec = null;
-        _consumptionTracks.Clear();
-        MarkUpdated();
-    }
-
-    public ErrorOr<Guid> AddConsumptionTrack(
-        IntentionType type,
-        NotEmptyString title,
-        NotEmptyString? description = null,
-        Guid? trackId = null
-    ) {
-        if (!CanAddTracks)
-            return MustHaveUnitSpecError;
-
-        var track = ConsumptionTrack.Create(type, title, description, trackId);
-        _consumptionTracks.Add(track);
-        MarkUpdated();
-        return track.Id;
-    }
-
-    public ErrorOr<Success> RemoveConsumptionTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(x => x.Id == trackId);
-        if (track is null)
-            return TrackNotFoundError(trackId);
-
-        _consumptionTracks.Remove(track);
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> StartTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.Start();
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> PauseTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.Pause();
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> ResumeTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.Resume();
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> CompleteTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.Complete();
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> DropTrack(Guid trackId) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.Drop();
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> SetTrackProgress(Guid trackId, int newValue) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.SetProgress(newValue, UnitSpec?.TotalUnits);
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> IncrementTrackProgress(Guid trackId, int amount = 1) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.IncrementProgress(amount, UnitSpec?.TotalUnits);
-        if (result.IsError) return result.Errors;
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public ErrorOr<Success> DecrementTrackProgress(Guid trackId, int amount = 1) {
-        var track = _consumptionTracks.FirstOrDefault(t => t.Id == trackId);
-        if (track is null) return TrackNotFoundError(trackId);
-
-        var result = track.DecrementProgress(amount);
-        if (result.IsError) return result.Errors;
-
+        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, spec?.TotalUnits));
         MarkUpdated();
         return Result.Success;
     }

@@ -1,4 +1,4 @@
-namespace Yorozu.Domain.ContentItems;
+namespace Yorozu.Common.Domain;
 
 public interface IHasTimestamps {
     DateTimeOffset CreatedAt { get; }
