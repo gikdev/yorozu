@@ -1,7 +1,6 @@
 import {
   GearIcon,
   HouseIcon,
-  MagnifyingGlassIcon,
   QueueIcon,
   SquaresFourIcon,
 } from "@phosphor-icons/react"
