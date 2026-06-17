@@ -14,11 +14,13 @@ function RouteComponent() {
   return (
     <AppShell>
       <PageHeader title="Library" />
-      <ContentItemCardsSection
-        onItemDetails={id =>
-          navigate({ to: "/apps/hondana/library/$id", params: { id } })
-        }
-      />
+      <div className="relative flex-1 flex flex-col min-h-0">
+        <ContentItemCardsSection
+          onItemDetails={id =>
+            navigate({ to: "/apps/hondana/library/$id", params: { id } })
+          }
+        />
+      </div>
       <BottomNav activeTabId="library" />
     </AppShell>
   )

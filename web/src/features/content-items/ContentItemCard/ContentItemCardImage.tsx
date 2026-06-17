@@ -11,7 +11,7 @@ export function ContentItemCardImage(p: ContentItemCardImageProps) {
 
   if (!p.src || hasError) {
     return (
-      <div className="aspect-square rounded-lg w-full flex items-center justify-center bg-mist-800 text-mist-400 text-3xl font-bold select-none">
+      <div className="aspect-square flex items-center justify-center bg-mist-800 text-mist-400 text-3xl">
         {p.fallbackLetter.charAt(0).toUpperCase()}
       </div>
     )
@@ -19,7 +19,7 @@ export function ContentItemCardImage(p: ContentItemCardImageProps) {
 
   return (
     <img
-      className="aspect-square w-full rounded-lg object-cover"
+      className="aspect-square object-cover"
       src={p.src}
       alt={p.alt ?? ""}
       onError={() => setHasError(true)}

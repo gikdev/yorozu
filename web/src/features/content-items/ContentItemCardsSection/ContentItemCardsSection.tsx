@@ -65,19 +65,19 @@ export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
 
   if (status === "success" && data.items.length !== 0) {
     content = (
-      <main className="flex-1 p-4 overflow-y-auto min-h-0 grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <main className="flex-1 p-4 overflow-y-auto min-h-0 flex flex-row gap-2 flex-wrap items-start justify-start content-start justify-items-start">
         {data.items.map(ci => (
           <ContentItemCard
+            id={ci.id}
             key={ci.id}
+            title={ci.title}
             coverImageUrl={ci.coverImageUrl}
             format={ci.format}
-            id={ci.id}
             isBookmarked={ci.isBookmarked}
             isFavorite={ci.isFavorite}
-            isOngoing={ci.unitSpec?.isOngoing ?? false}
+            isOngoing={ci.unitSpec?.isOngoing ?? null}
             isSecret={ci.isSecret}
             placeholderLetter={ci.placeholderLetter}
-            title={ci.title}
             onDetails={() => p.onItemDetails?.(ci.id)}
           />
         ))}
@@ -86,7 +86,7 @@ export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
   }
 
   return (
-    <div className="relative flex-1 flex flex-col min-h-0">
+    <>
       {content}
 
       <Fab
@@ -95,6 +95,6 @@ export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
         type="link"
         to={linkOptions({ to: "/apps/hondana/library/new" }).to}
       />
-    </div>
+    </>
   )
 }

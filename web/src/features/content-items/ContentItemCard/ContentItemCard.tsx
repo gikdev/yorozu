@@ -1,14 +1,34 @@
 import {
   BookmarkSimpleIcon,
   HeartIcon,
-  LockKeyIcon,
-  ClockIcon,
   QuestionIcon,
+  LockKeyIcon,
+  AirplayIcon,
+  CheckCircleIcon,
 } from "@phosphor-icons/react"
 import { ContentItemCardImage } from "./ContentItemCardImage"
 import { contentItemFormatIconMap } from "../contentItemFormatIconMap"
 import type { ContentItemFormat } from "#/common/api/client"
 import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
+import { tv } from "tailwind-variants"
+import { Link } from "@tanstack/react-router"
+
+const styleCardContainer = tv({
+  base: `
+    flex rounded-lg overflow-clip border
+    cursor-pointer transition-all duration-200
+    min-w-max h-24 w-full
+  `,
+  variants: {
+    isSecret: {
+      false: "bg-mist-900 hover:bg-mist-800 border-mist-800",
+      true: "bg-violet-950/20 hover:bg-violet-950/40 border-violet-800",
+    },
+  },
+  defaultVariants: {
+    isSecret: false,
+  },
+})
 
 interface ContentItemCardProps {
   id: string
@@ -25,60 +45,53 @@ interface ContentItemCardProps {
 
 export function ContentItemCard(p: ContentItemCardProps) {
   const isUnlocked = useIsUnlocked()
+  const isSecret = p.isSecret && isUnlocked
   const FormatIcon = contentItemFormatIconMap[p.format]
 
   return (
-    <button
-      onClick={p.onDetails}
-      className="flex flex-col rounded-lg bg-mist-900 border border-mist-800 cursor-pointer hover:-translate-y-1 transition-all duration-200 max-h-max"
-    >
+    <button onClick={p.onDetails} className={styleCardContainer({ isSecret })}>
       <ContentItemCardImage
         src={p.coverImageUrl}
         alt={p.title}
         fallbackLetter={p.placeholderLetter}
       />
 
-      <p className="font-bold text-mist-100 truncate px-4 py-2">{p.title}</p>
+      <div className="flex-1 flex flex-col gap-2 justify-center p-4">
+        <p dir="auto" className="text-mist-100 truncate font-bold">
+          <Link to="/apps/hondana/library/$id" params={{ id: p.id }}>{p.title}</Link>
+        </p>
+      </div>
 
-      <div className="flex items-center justify-center gap-1 text-mist-300 px-4 pt-2 pb-4">
-        <FormatIcon size={20} weight="fill" />
+      <div className="items-center justify-center justify-items-center aspect-square grid grid-cols-2 border-s border-mist-800 relative">
+        <FormatIcon size={24} weight="fill" className="text-mist-100" />
 
-        {p.isOngoing === null ? (
-          <QuestionIcon size={20} />
-        ) : (
-          <ClockIcon
-            size={20}
-            weight="fill"
-            className={p.isOngoing ? "text-cyan-400" : "text-green-400"}
-          />
+        {p.isOngoing === null && (
+          <QuestionIcon size={24} weight="regular" className="text-mist-400" />
+        )}
+        {p.isOngoing === true && (
+          <AirplayIcon size={24} weight="fill" className="text-cyan-400" />
+        )}
+        {p.isOngoing === false && (
+          <CheckCircleIcon size={24} weight="fill" className="text-green-400" />
         )}
 
         <BookmarkSimpleIcon
-          size={20}
+          size={24}
           weight={p.isBookmarked ? "fill" : "regular"}
           className={p.isBookmarked ? "text-yellow-400" : ""}
         />
 
         <HeartIcon
-          size={20}
+          size={24}
           weight={p.isFavorite ? "fill" : "regular"}
           className={p.isFavorite ? "text-red-400" : ""}
         />
 
-        {isUnlocked && (
-          <LockKeyIcon
-            size={20}
-            weight={p.isSecret ? "fill" : "regular"}
-            className={p.isSecret ? "text-purple-400" : ""}
-          />
-        )}
-
-        {/* TODO: Don't forget to later re-add this */}
-        {/* <QueueIcon
-          size={20}
-          weight={p.hasAnyTracks ? "fill" : "regular"}
-          className={p.hasAnyTracks ? "text-blue-400" : ""}
-        /> */}
+        <LockKeyIcon
+          size={24}
+          weight={isSecret ? "fill" : "regular"}
+          className={`absolute top-1/2 left-1/2 -translate-1/2 ${isSecret && "text-purple-400"} ${!isUnlocked && "hidden"}`}
+        />
       </div>
     </button>
   )
