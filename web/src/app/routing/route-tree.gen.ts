@@ -22,6 +22,7 @@ import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondan
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
 import { Route as AppsLyricsIdRouteImport } from "./../../routes/apps/lyrics/$id"
 import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
+import { Route as AppsHondanaCliRouteImport } from "./../../routes/apps/hondana/cli"
 import { Route as AppsHondanaTracksIndexRouteImport } from "./../../routes/apps/hondana/tracks.index"
 import { Route as AppsHondanaLibraryIndexRouteImport } from "./../../routes/apps/hondana/library.index"
 import { Route as AppsLyricsPrintIdRouteImport } from "./../../routes/apps/lyrics/print.$id"
@@ -94,6 +95,11 @@ const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
   path: "/apps/hondana/settings",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsHondanaCliRoute = AppsHondanaCliRouteImport.update({
+  id: "/apps/hondana/cli",
+  path: "/apps/hondana/cli",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsHondanaTracksIndexRoute = AppsHondanaTracksIndexRouteImport.update({
   id: "/apps/hondana/tracks/",
   path: "/apps/hondana/tracks/",
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
+  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps/": typeof AppshomeIndexRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
+  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps": typeof AppshomeIndexRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
+  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps/(home)/": typeof AppshomeIndexRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/"
+    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/lyrics/$id"
     | "/apps/"
@@ -223,6 +233,7 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/"
+    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/lyrics/$id"
     | "/apps"
@@ -244,6 +255,7 @@ export interface FileRouteTypes {
     | "/apps/single-focus"
     | "/apps/time-orbs"
     | "/(home)/"
+    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/lyrics/$id"
     | "/apps/(home)/"
@@ -266,6 +278,7 @@ export interface RootRouteChildren {
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
   AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
+  AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
   AppsLyricsIdRoute: typeof AppsLyricsIdRoute
   AppshomeIndexRoute: typeof AppshomeIndexRoute
@@ -372,6 +385,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsHondanaSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/hondana/cli": {
+      id: "/apps/hondana/cli"
+      path: "/apps/hondana/cli"
+      fullPath: "/apps/hondana/cli"
+      preLoaderRoute: typeof AppsHondanaCliRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/hondana/tracks/": {
       id: "/apps/hondana/tracks/"
       path: "/apps/hondana/tracks"
@@ -426,6 +446,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsSingleFocusRoute: AppsSingleFocusRoute,
   AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
+  AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
   AppsLyricsIdRoute: AppsLyricsIdRoute,
   AppshomeIndexRoute: AppshomeIndexRoute,
