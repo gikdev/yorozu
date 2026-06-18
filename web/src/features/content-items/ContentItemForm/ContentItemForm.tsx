@@ -95,6 +95,26 @@ export function ContentItemForm(p: ContentItemFormProps) {
             </form.AppField>
           </Activity>
 
+          <form.AppField name="hasUnitSpec">
+            {field => (
+              <field.SvgToggleInput
+                Icon={CalculatorIcon}
+                iconSelectedClass="text-sky-500"
+                title="Has Unit Spec"
+              />
+            )}
+          </form.AppField>
+
+          <form.AppField name="hasLocation">
+            {field => (
+              <field.SvgToggleInput
+                Icon={MapPinIcon}
+                iconSelectedClass="text-sky-500"
+                title="Has Location"
+              />
+            )}
+          </form.AppField>
+
           <form.Subscribe selector={state => state.values.hasUnitSpec}>
             {hasUnitSpec =>
               hasUnitSpec && (
@@ -110,26 +130,6 @@ export function ContentItemForm(p: ContentItemFormProps) {
               )
             }
           </form.Subscribe>
-
-          <form.AppField name="hasLocation">
-            {field => (
-              <field.SvgToggleInput
-                Icon={MapPinIcon}
-                iconSelectedClass="text-sky-500"
-                title="Has Location"
-              />
-            )}
-          </form.AppField>
-
-          <form.AppField name="hasUnitSpec">
-            {field => (
-              <field.SvgToggleInput
-                Icon={CalculatorIcon}
-                iconSelectedClass="text-sky-500"
-                title="Has Unit Spec"
-              />
-            )}
-          </form.AppField>
         </div>
 
         <form.Subscribe selector={state => state.values.hasLocation}>
