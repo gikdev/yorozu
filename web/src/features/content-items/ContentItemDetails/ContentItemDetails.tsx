@@ -3,8 +3,11 @@ import { tv } from "tailwind-variants"
 import { ChipsSection } from "./ChipsSection"
 import { CoverImage } from "./CoverImage"
 import { ActionBar } from "./ActionBar"
+import { TracksSection } from "#/features/consumption-tracks/TracksSection"
 
-const styleContentItemDetailsContainer = tv({ base: "flex flex-col gap-4" })
+const styleContentItemDetailsContainer = tv({
+  base: "flex flex-col gap-4 flex-1",
+})
 const styleCoverImageContainer = tv({
   base: "flex flex-row items-center gap-0 border border-mist-800 mx-auto rounded-lg overflow-clip",
 })
@@ -18,7 +21,7 @@ interface ContentItemDetailsProps {
   item: ContentItemResponse
 }
 
-export const ContentItemDetails = (p: ContentItemDetailsProps) => {
+export function ContentItemDetails(p: ContentItemDetailsProps) {
   const {
     id,
     coverImageUrl,
@@ -55,13 +58,14 @@ export const ContentItemDetails = (p: ContentItemDetailsProps) => {
         />
       </div>
 
-      {/* Title & full title */}
       <div className={styleTitleContainer()}>
         <h1 className={styleTitle()}>{title}</h1>
         {nickName && <p className={styleSubtitle()}>{fullTitle}</p>}
       </div>
 
       <ChipsSection format={format} tags={tags} unitSpec={unitSpec} />
+
+      <TracksSection id={id} />
     </div>
   )
 }

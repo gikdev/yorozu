@@ -9,20 +9,17 @@ interface ContentItemDetailsSectionProps {
   contentItemId: string
 }
 
-export function ContentItemDetailsSection({
-  contentItemId,
-}: ContentItemDetailsSectionProps) {
+export function ContentItemDetailsSection(p: ContentItemDetailsSectionProps) {
   const { data, status, error, refetch } = useQuery(
-    getContentItemOptions({ path: { id: contentItemId } }),
+    getContentItemOptions({ path: { id: p.contentItemId } }),
   )
 
-  if (status === "pending") {
+  if (status === "pending")
     return (
       <StateMessage mode="LOADING" icon={SpinnerGapIcon} title="Loading..." />
     )
-  }
 
-  if (status === "error") {
+  if (status === "error")
     return (
       <StateMessage
         icon={WarningCircleIcon}
@@ -32,7 +29,6 @@ export function ContentItemDetailsSection({
         retry={refetch}
       />
     )
-  }
 
   return <ContentItemDetails item={data} />
 }
