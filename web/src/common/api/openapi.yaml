@@ -412,6 +412,7 @@ components:
         - status
         - title
         - currentUnit
+        - unitType
         - totalUnits
         - description
         - createdAt
@@ -457,6 +458,10 @@ components:
         currentUnit:
           type: integer
           format: int32
+        unitType:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/ContentUnitType"
         totalUnits:
           type:
             - "null"
@@ -630,6 +635,7 @@ components:
         - Track
         - Episode
         - Percent
+        -
     CreateContentItemRequest:
       required:
         - fullTitle

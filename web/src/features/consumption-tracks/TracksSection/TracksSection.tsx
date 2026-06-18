@@ -5,12 +5,13 @@ import {
   SpinnerGapIcon,
   WarningCircleIcon,
   QueueIcon,
+  PlusIcon,
 } from "@phosphor-icons/react"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { TrackEntry } from "../TrackEntry"
 import { RenderQuery } from "#/common/helpers/render-query"
-import { Fab } from "#/common/molecules/Fab"
-import { linkOptions } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
+import { btn } from "#/common/atoms/btn"
 
 interface TracksSectionProps {
   id: string
@@ -22,7 +23,7 @@ export function TracksSection({ id }: TracksSectionProps) {
   )
 
   return (
-    <div className="relative flex flex-col flex-1">
+    <div className="relative flex flex-col flex-1 gap-4">
       <RenderQuery
         isList={true}
         status={tracksQ.status}
@@ -60,18 +61,14 @@ export function TracksSection({ id }: TracksSectionProps) {
         }
       />
 
-      <Fab
-        bottom={10}
-        type="link"
-        right={10}
-        to={
-          linkOptions({
-            to: "/apps/hondana/library/$id/tracks/new",
-            params: { id },
-          }).to
-        }
-        title="Create new track"
-      />
+      <Link
+        to="/apps/hondana/library/$id/tracks/new"
+        className={btn({ theme: "primary" })}
+        params={{ id }}
+      >
+        <PlusIcon size={24} />
+        <span> Create new track </span>
+      </Link>
     </div>
   )
 }

@@ -10,7 +10,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
 import { ConsumptionCardImage } from "./ConsumptionCardImage"
 import { ConsumptionCardTitle } from "./ConsumptionCardTitle"
-import { ConsumptionCardProgress } from "./ConsumptionCardProgress"
 import { styleConsumptionCardBtn } from "./styleConsumptionCardBtn"
 import {
   startTrackEndpointMutation,
@@ -20,6 +19,7 @@ import {
   completeTrackEndpointMutation,
 } from "#/common/api/client"
 import { extractErrorMessage } from "#/common/helpers/errors"
+import { TrackProgress } from "#/common/molecules/TrackProgress"
 
 const queryKey = listAllTracksEndpointQueryKey()
 const onError = (err: unknown) => toast.error(extractErrorMessage(err))
@@ -40,6 +40,7 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
     contentItemCoverImageUrl,
     contentItemFormat,
     contentItemTitle,
+    unitType,
     currentUnit,
     title,
     totalUnits,
@@ -108,7 +109,12 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
           isSecret={isSecret}
         />
 
-        <ConsumptionCardProgress current={currentUnit} total={totalUnits} />
+        <TrackProgress
+          current={currentUnit}
+          total={totalUnits}
+          unit={unitType || "Unit"}
+          units={unitType || "units"}
+        />
       </div>
 
       <button

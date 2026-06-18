@@ -141,6 +141,12 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
 
         CurrentUnit = newValue;
 
+        if (HasProgressCap && HasReachedCap) {
+            var completeResult = Complete();
+            if (completeResult.IsError)
+                return completeResult;
+        }
+
         MarkUpdated();
         return Result.Success;
     }
@@ -157,6 +163,12 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
             return ConsumptionTrackErrors.CannotExceedTotalUnitsError(TotalUnits.Value);
 
         CurrentUnit = newValue;
+
+        if (HasProgressCap && HasReachedCap) {
+            var completeResult = Complete();
+            if (completeResult.IsError)
+                return completeResult;
+        }
 
         MarkUpdated();
         return Result.Success;

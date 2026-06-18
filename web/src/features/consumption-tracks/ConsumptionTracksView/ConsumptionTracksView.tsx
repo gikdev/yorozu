@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { ConsumptionCard } from "../ConsumptionCard"
-import { listAllTracksEndpointOptions } from "#/common/api/client"
+import {
+  ConsumptionStatus,
+  listAllTracksEndpointOptions,
+} from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import {
   SpinnerGapIcon,
@@ -14,9 +17,21 @@ export function ConsumptionTracksView() {
   const isUnlocked = useIsUnlocked()
   const tracksQ = useQuery({
     ...listAllTracksEndpointOptions(),
-    select: isUnlocked
-      ? undefined
-      : data => ({ items: data.items.filter(i => !i.isSecret) }),
+    select: data => {
+      let items = [...data.items]
+
+      const visibleStatuses: ConsumptionStatus[] = [
+        ConsumptionStatus.IDLE,
+        ConsumptionStatus.IN_PROGRESS,
+        ConsumptionStatus.ON_HOLD,
+      ]
+
+      items = [...items].filter(i => visibleStatuses.includes(i.status))
+
+      if (isUnlocked) items = [...items].filter(i => !i.isSecret)
+
+      return { items }
+    },
   })
 
   if (tracksQ.status === "pending") {

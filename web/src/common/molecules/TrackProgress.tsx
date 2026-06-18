@@ -1,10 +1,18 @@
 interface ConsumptionCardProgressProps {
+  /** Current value */
   current: number
+
+  /** Total value, if null, it means it's ongoing */
   total: number | null
+
+  /** Name of a unit... e.g. `Episode`, or `Page` */
+  unit: string
+
+  /** Plural name of a unit... e.g. `episodes`, or `pages` */
+  units: string
 }
 
-// TODO: Not always episodes...
-export function ConsumptionCardProgress(p: ConsumptionCardProgressProps) {
+export function TrackProgress(p: ConsumptionCardProgressProps) {
   // Airing mode
   if (p.total == null) {
     return (
@@ -14,9 +22,11 @@ export function ConsumptionCardProgress(p: ConsumptionCardProgressProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
           </span>
-          <span className="text-sky-400 font-bold">Airing</span>
+          <span className="text-sky-400 font-bold">Ongoing</span>
         </div>
-        <p className="text-xs">Episode {p.current}</p>
+        <p className="text-xs">
+          {p.unit} {p.current}
+        </p>
       </div>
     )
   }
@@ -35,7 +45,7 @@ export function ConsumptionCardProgress(p: ConsumptionCardProgressProps) {
       </div>
       <p className="flex items-center justify-between text-xs">
         <span>
-          {p.current} / {p.total} episodes
+          {p.current} / {p.total} {p.units}
         </span>
         <span className="font-bold text-sky-500">{percent}%</span>
       </p>
