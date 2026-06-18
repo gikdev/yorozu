@@ -12,20 +12,14 @@ import { extractErrorMessage } from "#/common/helpers/errors"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 
-interface ContentItemCardsSectionProps {
-  onItemDetails?: (id: string) => void
-}
+interface ContentItemCardsSectionProps {}
 
-export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
+export function ContentItemCardsSection(_p: ContentItemCardsSectionProps) {
   const isUnlocked = useIsUnlocked()
   const { data, status, error, refetch } = useQuery({
     ...listContentItemsOptions(),
     select: data =>
-      isUnlocked
-        ? data
-        : {
-            items: [...data.items].filter(i => !i.isSecret),
-          },
+      isUnlocked ? data : { items: [...data.items].filter(i => !i.isSecret) },
   })
 
   let content: React.ReactNode
@@ -78,7 +72,6 @@ export function ContentItemCardsSection(p: ContentItemCardsSectionProps) {
             isOngoing={ci.unitSpec?.isOngoing ?? null}
             isSecret={ci.isSecret}
             placeholderLetter={ci.placeholderLetter}
-            onDetails={() => p.onItemDetails?.(ci.id)}
           />
         ))}
       </main>

@@ -28,7 +28,9 @@ export function ConsumptionTracksView() {
 
       items = [...items].filter(i => visibleStatuses.includes(i.status))
 
-      if (isUnlocked) items = [...items].filter(i => !i.isSecret)
+      if (!isUnlocked) {
+        items = [...items].filter(i => !i.isSecret)
+      }
 
       return { items }
     },

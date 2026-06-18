@@ -40,7 +40,6 @@ interface ContentItemCardProps {
   isOngoing: boolean | null
   placeholderLetter: string
   format: ContentItemFormat
-  onDetails: () => void
 }
 
 export function ContentItemCard(p: ContentItemCardProps) {
@@ -49,7 +48,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
   const FormatIcon = contentItemFormatIconMap[p.format]
 
   return (
-    <button onClick={p.onDetails} className={styleCardContainer({ isSecret })}>
+    <div className={styleCardContainer({ isSecret })}>
       <ContentItemCardImage
         src={p.coverImageUrl}
         alt={p.title}
@@ -57,11 +56,9 @@ export function ContentItemCard(p: ContentItemCardProps) {
       />
 
       <div className="flex-1 flex flex-col gap-2 justify-center p-2">
-        <p dir="auto" className="text-mist-100 line-clamp-3 font-bold">
-          <Link to="/apps/hondana/library/$id" params={{ id: p.id }}>
-            {p.title}
-          </Link>
-        </p>
+        <Link className="text-mist-100 hover:underline py-4 text-center hover:text-sky-400 line-clamp-3 font-bold" dir="auto" to="/apps/hondana/library/$id" params={{ id: p.id }}>
+          {p.title}
+        </Link>
       </div>
 
       <div className="items-center justify-center justify-items-center aspect-square grid grid-cols-2 border-s border-mist-800 relative">
@@ -95,6 +92,6 @@ export function ContentItemCard(p: ContentItemCardProps) {
           className={`absolute top-1/2 left-1/2 -translate-1/2 ${isSecret && "text-purple-400"} ${!isUnlocked && "hidden"}`}
         />
       </div>
-    </button>
+    </div>
   )
 }

@@ -2,7 +2,12 @@ import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
 import { btn } from "../atoms/btn"
 import { FieldMeta } from "./field-meta"
-import { CaretDownIcon, PlusIcon, XIcon } from "@phosphor-icons/react"
+import {
+  ArrowsDownUpIcon,
+  CaretDownIcon,
+  PlusIcon,
+  XIcon,
+} from "@phosphor-icons/react"
 import { useState, type ChangeEvent, type KeyboardEvent } from "react"
 import { tv } from "tailwind-variants"
 import { styleInput } from "../atoms/input"
@@ -30,7 +35,9 @@ export function SmartTagsInput(p: SmartTagsInputProps) {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState("")
 
-  const selected = field.state.value ?? []
+  const selected = [...(field.state.value ?? [])].sort((a, b) =>
+    a.localeCompare(b),
+  )
   const query = input.trim().toLowerCase()
 
   const addTag = (tag: string) => {
@@ -63,9 +70,16 @@ export function SmartTagsInput(p: SmartTagsInputProps) {
     field.handleBlur()
   }
 
-  const suggestions = p.allTags.filter(
-    t => !selected.includes(t) && t.toLowerCase().includes(query),
-  )
+  const sortTextarea = () => {
+    field.handleChange(
+      [...new Set(selected)].sort((a, b) => a.localeCompare(b)),
+    )
+    field.handleBlur()
+  }
+
+  const suggestions = p.allTags
+    .filter(t => !selected.includes(t) && t.toLowerCase().includes(query))
+    .sort((a, b) => a.localeCompare(b))
 
   return (
     <div className={fieldContainer()}>
@@ -128,11 +142,25 @@ export function SmartTagsInput(p: SmartTagsInputProps) {
           </div>
 
           {/* Raw Input */}
-          <textarea
-            className={styleInput({ isMultiline: true })}
-            value={selected.join(",")}
-            onChange={handleTextareaChange}
-          />
+          <div className="flex flex-col gap-1">
+            <textarea
+              className={styleInput({ isMultiline: true })}
+              value={selected.join(",")}
+              onChange={handleTextareaChange}
+            />
+            <button
+              type="button"
+              onClick={sortTextarea}
+              className={btn({
+                theme: "outline",
+                size: "sm",
+                className: "self-end",
+              })}
+            >
+              <ArrowsDownUpIcon size={14} />
+              <span>Sort</span>
+            </button>
+          </div>
         </div>
       )}
 

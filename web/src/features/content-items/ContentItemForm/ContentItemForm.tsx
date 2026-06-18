@@ -95,15 +95,21 @@ export function ContentItemForm(p: ContentItemFormProps) {
             </form.AppField>
           </Activity>
 
-          <form.AppField name="isOngoing">
-            {field => (
-              <field.SvgToggleInput
-                Icon={AirplayIcon}
-                iconSelectedClass="text-emerald-500"
-                title="Is Ongoing"
-              />
-            )}
-          </form.AppField>
+          <form.Subscribe selector={state => state.values.hasUnitSpec}>
+            {hasUnitSpec =>
+              hasUnitSpec && (
+                <form.AppField name="isOngoing">
+                  {field => (
+                    <field.SvgToggleInput
+                      Icon={AirplayIcon}
+                      iconSelectedClass="text-emerald-500"
+                      title="Is Ongoing"
+                    />
+                  )}
+                </form.AppField>
+              )
+            }
+          </form.Subscribe>
 
           <form.AppField name="hasLocation">
             {field => (
