@@ -11,10 +11,8 @@
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
-import { Route as AppsTimeOrbsRouteImport } from "./../../routes/apps/time-orbs"
 import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-focus"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
-import { Route as AppsExpensesRouteImport } from "./../../routes/apps/expenses"
 import { Route as AppsChronoTrackRouteImport } from "./../../routes/apps/chrono-track"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
@@ -40,11 +38,6 @@ const homeIndexRoute = homeIndexRouteImport.update({
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTimeOrbsRoute = AppsTimeOrbsRouteImport.update({
-  id: "/apps/time-orbs",
-  path: "/apps/time-orbs",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppsSingleFocusRoute = AppsSingleFocusRouteImport.update({
   id: "/apps/single-focus",
   path: "/apps/single-focus",
@@ -53,11 +46,6 @@ const AppsSingleFocusRoute = AppsSingleFocusRouteImport.update({
 const AppsKanbanRoute = AppsKanbanRouteImport.update({
   id: "/apps/kanban",
   path: "/apps/kanban",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsExpensesRoute = AppsExpensesRouteImport.update({
-  id: "/apps/expenses",
-  path: "/apps/expenses",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsChronoTrackRoute = AppsChronoTrackRouteImport.update({
@@ -137,10 +125,8 @@ export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/chrono-track": typeof AppsChronoTrackRoute
-  "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
-  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -159,10 +145,8 @@ export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/chrono-track": typeof AppsChronoTrackRoute
-  "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
-  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -182,10 +166,8 @@ export interface FileRoutesById {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/chrono-track": typeof AppsChronoTrackRoute
-  "/apps/expenses": typeof AppsExpensesRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
-  "/apps/time-orbs": typeof AppsTimeOrbsRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -206,10 +188,8 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/chrono-track"
-    | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
-    | "/apps/time-orbs"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -228,10 +208,8 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/chrono-track"
-    | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
-    | "/apps/time-orbs"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -250,10 +228,8 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/chrono-track"
-    | "/apps/expenses"
     | "/apps/kanban"
     | "/apps/single-focus"
-    | "/apps/time-orbs"
     | "/(home)/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -273,10 +249,8 @@ export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsChronoTrackRoute: typeof AppsChronoTrackRoute
-  AppsExpensesRoute: typeof AppsExpensesRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
-  AppsTimeOrbsRoute: typeof AppsTimeOrbsRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
@@ -308,13 +282,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof homeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/time-orbs": {
-      id: "/apps/time-orbs"
-      path: "/apps/time-orbs"
-      fullPath: "/apps/time-orbs"
-      preLoaderRoute: typeof AppsTimeOrbsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/single-focus": {
       id: "/apps/single-focus"
       path: "/apps/single-focus"
@@ -327,13 +294,6 @@ declare module "@tanstack/react-router" {
       path: "/apps/kanban"
       fullPath: "/apps/kanban"
       preLoaderRoute: typeof AppsKanbanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/expenses": {
-      id: "/apps/expenses"
-      path: "/apps/expenses"
-      fullPath: "/apps/expenses"
-      preLoaderRoute: typeof AppsExpensesRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/chrono-track": {
@@ -441,10 +401,8 @@ const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsChronoTrackRoute: AppsChronoTrackRoute,
-  AppsExpensesRoute: AppsExpensesRoute,
   AppsKanbanRoute: AppsKanbanRoute,
   AppsSingleFocusRoute: AppsSingleFocusRoute,
-  AppsTimeOrbsRoute: AppsTimeOrbsRoute,
   homeIndexRoute: homeIndexRoute,
   AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,

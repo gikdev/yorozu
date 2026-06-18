@@ -6,7 +6,6 @@ export const awa: LyricSong = {
   artist: "asmi",
   animeTitle: "Replica datte, Koi wo Suru",
   animeUrl: "https://animegate.ir/anime/replica-datte-koi-wo-suru-21533",
-  audioUrl: "/lyrics/あわ.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {

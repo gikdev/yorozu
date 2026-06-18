@@ -6,7 +6,6 @@ export const kyoriKan: LyricSong = {
   artist: "Hakoniwa Lily",
   animeTitle: "Aharen-san wa Hakarenai",
   animeUrl: "https://animegate.ir/anime/aharen-san-wa-hakarenai-13933",
-  audioUrl: "/lyrics/Kyori-kan.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {

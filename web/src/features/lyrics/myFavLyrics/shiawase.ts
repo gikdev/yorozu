@@ -6,7 +6,6 @@ export const shiawase: LyricSong = {
   artist: "Omoinotake",
   animeTitle: "Horimiya: Piece",
   animeUrl: "https://animegate.ir/anime/horimiya-piece-14152",
-  audioUrl: "/lyrics/幸せ.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {

@@ -1,8 +1,6 @@
 import {
   BooksIcon,
   BoundingBoxIcon,
-  CirclesFourIcon,
-  CurrencyDollarIcon,
   FileAudioIcon,
   KanbanIcon,
   ListChecksIcon,
@@ -12,6 +10,12 @@ import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
 
 export const appShortcuts: IAppShortcut[] = [
+  {
+    id: "hondana",
+    name: "本棚",
+    Icon: BooksIcon,
+    url: linkOptions({ to: "/apps/hondana" }).to,
+  },
   {
     id: "choice",
     name: "Choice",
@@ -29,24 +33,6 @@ export const appShortcuts: IAppShortcut[] = [
     name: "Kanban",
     Icon: KanbanIcon,
     url: linkOptions({ to: "/apps/kanban" }).to,
-  },
-  {
-    id: "time-orbs",
-    name: "Time Orbs",
-    Icon: CirclesFourIcon,
-    url: linkOptions({ to: "/apps/time-orbs" }).to,
-  },
-  {
-    id: "expenses",
-    name: "Expenses",
-    Icon: CurrencyDollarIcon,
-    url: linkOptions({ to: "/apps/expenses" }).to,
-  },
-  {
-    id: "hondana",
-    name: "本棚",
-    Icon: BooksIcon,
-    url: linkOptions({ to: "/apps/hondana" }).to,
   },
   {
     id: "lyrics",

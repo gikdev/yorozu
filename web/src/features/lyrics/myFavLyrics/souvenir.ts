@@ -6,7 +6,6 @@ export const souvenir: LyricSong = {
   artist: "BUMP OF CHICKEN",
   animeTitle: "Spy x Family Season 1 Part 2",
   animeUrl: "https://animegate.ir/anime/spy-x-family-part-2-13927",
-  audioUrl: "/lyrics/SOUVENIR.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {

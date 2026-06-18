@@ -10,6 +10,6 @@ export const AppShortcut = ({ shortcut }: { shortcut: IAppShortcut }) => (
       <shortcut.Icon weight="fill" size="32" />
     </div>
 
-    <p>{shortcut.name}</p>
+    <p className="text-xs">{shortcut.name}</p>
   </Link>
 )

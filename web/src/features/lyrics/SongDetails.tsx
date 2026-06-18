@@ -48,11 +48,6 @@ export const SongDetail = ({ song }: SongDetailProps) => {
         </p>
       </div>
 
-      {/* Audio player */}
-      {song.audioUrl && (
-        <audio src={song.audioUrl} controls className="w-full" />
-      )}
-
       {/* Language toggles */}
       <div className="flex flex-wrap gap-3">
         <LanguageToggle

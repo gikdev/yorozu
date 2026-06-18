@@ -6,7 +6,6 @@ export const futsuu: LyricSong = {
   artist: "Conton Candy",
   animeTitle: "Sakamoto Days",
   animeUrl: "https://animegate.ir/anime/sakamoto-days-20543",
-  audioUrl: "/lyrics/普通.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {

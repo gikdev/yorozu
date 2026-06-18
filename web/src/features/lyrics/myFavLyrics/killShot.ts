@@ -6,7 +6,6 @@ export const killShot: LyricSong = {
   artist: "RIIZE",
   animeTitle: "Kill Blue",
   animeUrl: "https://animegate.ir/anime/kill-ao-21440",
-  audioUrl: "/lyrics/Kill Shot.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     { en: "Kill shot" },

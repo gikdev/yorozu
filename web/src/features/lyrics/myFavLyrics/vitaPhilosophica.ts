@@ -6,7 +6,6 @@ export const vitaPhilosophica: LyricSong = {
   artist: "Kashitaro Ito",
   animeTitle: "Watashi no Shiawase na Kekkon",
   animeUrl: "https://animegate.ir/anime/watashi-no-shiawase-na-kekkon-14036",
-  audioUrl: "/lyrics/Vita Philosophica.mp3",
   defaultPrimaryLanguage: "ja",
   lines: [
     {
