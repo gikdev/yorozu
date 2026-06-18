@@ -1,7 +1,0 @@
-Notes App – The Hondana (本棚 / Bookshelf)
-
-Problem: Existing notes apps don't feel like your personal library; they're either too cluttered or too sterile.
-
-Dream: A virtual wooden bookshelf. You see a shelf of notebooks, each with a custom color or cover. Open a notebook → sections → pages. Write, draw, embed code, images, videos, links, live embeds. Organize with tags across notebooks, sections, and pages. Beautiful PDF export of any notebook or selection. Feels cozy, infinite, and yours.
-
-MVP: A simple hierarchical note structure (notebook > section > page) with basic text editing, dark theme, cyan accents, and PDF export. Rich media later.

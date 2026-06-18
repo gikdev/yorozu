@@ -1,0 +1,1 @@
+A categorized library of prompts. Select one, and a dynamic form appears where you fill in variables. The final prompt is generated and ready to copy. Prompts can be exported individually or as packs, optionally password-protected.

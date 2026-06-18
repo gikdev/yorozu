@@ -1,7 +1,0 @@
-Prompt Manager
-
-Problem: You craft thoughtful AI prompts, but they're scattered, hard to reuse, and not ready for sharing or selling.
-
-Dream: A categorized library of prompts. Select one, and a dynamic form appears where you fill in variables. The final prompt is generated and ready to copy. Prompts can be exported individually or as packs, optionally password-protected. A future marketplace could let you sell curated prompt packs. Favorites, version history, and a "prompt of the day" feature.
-
-MVP: A local collection of text templates with simple variable placeholders (e.g., {{name}}), a form to fill them, and a copy button. Single HTML file, localStorage.

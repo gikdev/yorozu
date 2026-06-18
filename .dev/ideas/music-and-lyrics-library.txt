@@ -1,0 +1,3 @@
+A library with moods, categories, genres, and types (OP, ED, insert song). Artists and albums have cover art. Hearts, bookmarks, playlists, folders. Track source (local file, YouTube link, streaming). Player for local files.
+
+Lyrics: multilingual, timestamped,

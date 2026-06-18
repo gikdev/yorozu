@@ -1,7 +1,0 @@
-Time Tracker – The Orb Altar
-
-Problem: You want to see where your time goes and have a beautiful visual anchor for focus.
-
-Dream: A dark room with a row of pillars. Each pillar holds a category orb (Work, Study, Fun, Maintenance, Stillness, etc.). Tap an orb – it rises, glows cyan, floats gently, and time tracking begins for that category. At the base of each pillar, total hours glow softly. A temple of attention. Monthly reports as beautiful PDFs. Orb becomes a living symbol of focus.
-
-MVP: A row of circles on a dark background. Click one – it gets a cyan glow, lifts slightly (CSS transform), and a timer starts. Total time displayed below each circle. Data saved in localStorage. Single HTML file.

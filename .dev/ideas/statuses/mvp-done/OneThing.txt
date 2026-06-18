@@ -1,7 +1,0 @@
-OneThing: Single Tasking Helper
-
-Problem: Too many tasks, too many mental tabs, paralysis at start of work.
-
-Dream: An intelligent focus companion that knows your task list. When you’re stuck, it asks about time, energy, mood, and context, then picks the single best task and shows it large on screen. Only two buttons: Done and Cancel. In advanced mode, it learns your rhythms and gently enforces one thing at a time.
-
-MVP: One input field, one displayed task, Done / Cancel buttons. No task list, no projects. Just pure focus for one session.

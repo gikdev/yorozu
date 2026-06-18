@@ -1,0 +1,5 @@
+tracks your:
+- presence in/out start & end
+- focus start & end
+and has:
+- exportable report

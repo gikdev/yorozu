@@ -1,0 +1,4 @@
+Simple kanban:
+A list of projects
+each project has todo[],
+each todo has status: idle/in-progress/on-hold/done

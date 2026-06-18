@@ -1,7 +1,0 @@
-Kemi: Choice Helper
-
-Problem: Decision paralysis when faced with a list of options (what to watch, eat, work on). Staring at the whole list freezes you.
-
-Dream: You input a list of items. Specify if you want one winner, top N, or full ranking. Tournament mode: two items appear side by side, you pick the preferred one. The winner faces the next candidate until one champion remains or a full ranked list emerges. Reduces choice overload to a series of tiny, satisfying pairwise decisions.
-
-MVP: Input textarea (one option per line). Click Start → two cards appear, click one → next round → final winner displayed. Single HTML file.

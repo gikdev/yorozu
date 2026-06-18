@@ -1,7 +1,3 @@
-Contacts Manager (Personal CRM)
-
-Problem: Contact info scattered across phone, social media, memory. No relationship context, and you forget to keep in touch.
-
 Dream: Each contact has a profile picture, first/middle/last names, nickname, display name (e.g., お母さん, آقاجون). Multiple phone numbers, emails, social links, relationship tag. Favorites and bookmarks. Stay-in-touch reminders: call, text, or visit. i18n-friendly, handles mixed-language names gracefully. Batch sharing via vCard or secure link.
 
 MVP: Local contact list with name, phone, email, relationship tag, favorite toggle, and periodic "catch up?" reminders.

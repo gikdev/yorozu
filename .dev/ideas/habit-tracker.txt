@@ -1,7 +1,3 @@
-Habit Tracker
-
-Problem: Standard habit trackers feel rigid and unforgiving. You need one that tolerates occasional misses but still values consistency.
+MVP: Daily checklist of 3-5 habits, skip button, simple streak counter, calendar heatmap view. localStorage.
 
 Dream: Habits with flexible frequencies (3x/day, 1x/day, 1x/week). Streak logic: one miss tolerated, two consecutive misses break streak. “Skip” button for planned days off. Analysis: “Estimated days until automatic.” Monthly PDF reports. Clean, minimal, non-judgmental.
-
-MVP: Daily checklist of 3-5 habits, skip button, simple streak counter, calendar heatmap view. localStorage.

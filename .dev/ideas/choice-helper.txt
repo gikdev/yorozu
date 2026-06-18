@@ -1,0 +1,1 @@
+You input a list of items. Specify if you want one winner, or full ranking. Tournament mode: two items appear side by side, you pick the preferred one. The winner faces the next candidate until one champion remains or a full ranked list emerges. Reduces choice overload to a series of tiny, satisfying pairwise decisions.
