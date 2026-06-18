@@ -2,9 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { version } from "#/app/data/version.json"
 import { appShortcuts } from "./-appShortcuts"
 import { AppShortcut } from "./-AppShortcut"
-import { header } from "#/common/atoms/header"
 import { fullPage } from "#/common/atoms/full-page"
-import { phonePage } from "#/common/atoms/phone-page"
 
 export const Route = createFileRoute("/apps/(home)/")({
   component: RouteComponent,
@@ -12,25 +10,20 @@ export const Route = createFileRoute("/apps/(home)/")({
 
 function RouteComponent() {
   return (
-    <div className={fullPage()}>
-      <div className={phonePage()}>
-        <header className={header()}>
-          <img src="/yorozu.png" className="size-10 rounded-md" />
+    <div
+      className={fullPage({
+        className: "items-center justify-center gap-8 p-2",
+      })}
+    >
+      <div className="flex flex-col items-center gap-1">
+        <img src="/yorozu.png" className="size-12 rounded-md" />
+        <code className="text-xs">v{version}</code>
+      </div>
 
-          <p className="gap-1 items-center flex">
-            <span className="text-lg sm:text-2xl font-bold text-sky-500 dark:text-sky-500">
-              Yorozu
-            </span>
-
-            <sup>v{version}</sup>
-          </p>
-        </header>
-
-        <main className="flex flex-wrap justify-center py-4 px-8">
-          {appShortcuts.map(shortcut => (
-            <AppShortcut shortcut={shortcut} key={shortcut.id} />
-          ))}
-        </main>
+      <div className="gap-2 max-w-5xl w-full flex items-center justify-center flex-wrap">
+        {appShortcuts.map(shortcut => (
+          <AppShortcut shortcut={shortcut} key={shortcut.id} />
+        ))}
       </div>
     </div>
   )

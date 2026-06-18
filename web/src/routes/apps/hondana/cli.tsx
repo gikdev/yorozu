@@ -50,26 +50,26 @@ function MiniCli() {
       }),
       {
         loading: `Adding "${result.title}"...`,
-        error: (err) => extractErrorMessage(err),
+        error: err => extractErrorMessage(err),
         success: () => {
-          setInput(""); // clear input on success
-          return `"${result.title}" added successfully!`;
+          setInput("") // clear input on success
+          return `"${result.title}" added successfully!`
         },
-      }
-    );
+      },
+    )
   }
 
   const handleClick = () => {
-    const command = commandRegistry.find(cmd => cmd.isItThisCommand(input));
-    if (!command) return void toast.error("Unknown command");
+    const command = commandRegistry.find(cmd => cmd.isItThisCommand(input))
+    if (!command) return void toast.error("Unknown command")
 
-    const result = command.parse(input);
-    if (!result.isSuccess) return void toast.error(result.errorMsg);
+    const result = command.parse(input)
+    if (!result.isSuccess) return void toast.error(result.errorMsg)
 
     if (command.code === addNewContentItemCommand.code) {
       handleAddNewContentItemCommand(result.result)
     }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-2 flex-1">
