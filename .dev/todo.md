@@ -7,6 +7,9 @@
   - o - Click on image -> anime
   - o - Click on middle -> track
   - o - Click on button -> increment
+  
+- o - Include search and format in library
+- o - Include search & intention type in tracks
 
 - o - Content Item Form actions... ('anime', 'book', 'course')
 - o - Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
@@ -15,4 +18,3 @@
 - o - Add tags to consumption tracks
 
 - o - track details page
-
