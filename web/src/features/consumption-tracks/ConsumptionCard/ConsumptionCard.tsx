@@ -20,6 +20,7 @@ import {
 } from "#/common/api/client"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { TrackProgress } from "#/common/molecules/TrackProgress"
+import { Link } from "@tanstack/react-router"
 
 const queryKey = listAllTracksEndpointQueryKey()
 const onError = (err: unknown) => toast.error(extractErrorMessage(err))
@@ -40,6 +41,7 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
     contentItemCoverImageUrl,
     contentItemFormat,
     contentItemTitle,
+    contentItemId,
     unitType,
     currentUnit,
     title,
@@ -95,13 +97,15 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
 
   return (
     <div className="flex gap-2 rounded-lg bg-mist-900 border border-mist-800 overflow-hidden">
-      <ConsumptionCardImage
-        src={contentItemCoverImageUrl}
-        fallbackLetter={contentItemTitle?.charAt(0) ?? "?"}
-        alt={title}
-      />
+      <Link to="/apps/hondana/library/$id" params={{ id: contentItemId }} className="contents">
+        <ConsumptionCardImage
+          src={contentItemCoverImageUrl}
+          fallbackLetter={contentItemTitle?.charAt(0) ?? "?"}
+          alt={title}
+        />
+      </Link>
 
-      <div className="flex-1 flex flex-col justify-between py-2">
+      <Link to="/apps/hondana/tracks/$id" params={{ id }} className="flex-1 flex flex-col justify-between py-2">
         <ConsumptionCardTitle
           title={title}
           subtitle={contentItemTitle}
@@ -115,7 +119,7 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
           unit={unitType || "Unit"}
           units={unitType || "units"}
         />
-      </div>
+      </Link>
 
       <button
         className={styleConsumptionCardBtn()}
