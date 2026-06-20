@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
+import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
@@ -39,6 +40,11 @@ const DevRoute = DevRouteImport.update({
 const homeIndexRoute = homeIndexRouteImport.update({
   id: "/(home)/",
   path: "/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsWritingAreaRoute = AppsWritingAreaRouteImport.update({
+  id: "/apps/writing-area",
+  path: "/apps/writing-area",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByTo {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/writing-area"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -242,6 +252,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/writing-area"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/writing-area"
     | "/(home)/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -289,6 +301,7 @@ export interface RootRouteChildren {
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
+  AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
@@ -321,6 +334,13 @@ declare module "@tanstack/react-router" {
       path: "/"
       fullPath: "/"
       preLoaderRoute: typeof homeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/writing-area": {
+      id: "/apps/writing-area"
+      path: "/apps/writing-area"
+      fullPath: "/apps/writing-area"
+      preLoaderRoute: typeof AppsWritingAreaRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/time-log": {
@@ -465,6 +485,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsKanbanRoute: AppsKanbanRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
+  AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
   AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,

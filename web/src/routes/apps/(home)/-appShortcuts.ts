@@ -63,6 +63,14 @@ export const appShortcuts: IAppShortcut[] = [
     url: linkOptions({ to: "/apps/lyrics" }).to,
     type: "MVP",
   },
+  {
+    id: "writing",
+    name: "Writing Area",
+    icon: PencilIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/writing-area" }).to,
+    // description: "Distraction-free writing with themes and font customisation.",
+  },
 
   {
     id: "bookmarks",
@@ -126,12 +134,5 @@ export const appShortcuts: IAppShortcut[] = [
     icon: ChatIcon,
     type: "IDEA",
     description: "Categorised library of dynamic prompts with variables.",
-  },
-  {
-    id: "writing",
-    name: "Writing Area",
-    icon: PencilIcon,
-    type: "IDEA",
-    description: "Distraction-free writing with themes and font customisation.",
   },
 ]
