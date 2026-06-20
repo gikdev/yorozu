@@ -1,7 +1,9 @@
 import { useRef } from "react"
 import { useContentT } from "../hooks/useContentT"
+import { useNavigate } from "@tanstack/react-router"
 
 export function CardHeader() {
+  const navigate = useNavigate()
   const fullName = useContentT("fullName")
   const nickname = useContentT("nickname")
   const tagline = useContentT("tagline")
@@ -22,7 +24,7 @@ export function CardHeader() {
 
     if (clickCountRef.current === 5) {
       clickCountRef.current = 0
-      window.open("/apps", "_blank")
+      navigate({ to: "/apps" })
     }
   }
 

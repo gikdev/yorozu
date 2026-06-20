@@ -18,6 +18,5 @@
 - Single Focus: activeItem+done+cancel
 
 - homepage... change design completely
-- entrance same page
 - entrance safe
 - apps fix layout
