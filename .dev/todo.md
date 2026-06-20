@@ -1,6 +1,5 @@
 - Include search and format in library
 - Include search & intention type in tracks
-- put the tags input in a modal or sth...
 
 - track details page
 
