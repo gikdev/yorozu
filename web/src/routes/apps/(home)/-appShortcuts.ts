@@ -15,6 +15,8 @@ import {
   NotebookIcon,
   ChatIcon,
   PencilIcon,
+  TimerIcon,
+  CubeFocusIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -25,6 +27,20 @@ export const appShortcuts: IAppShortcut[] = [
     name: "本棚",
     icon: BooksIcon,
     url: linkOptions({ to: "/apps/hondana" }).to,
+    type: "APP",
+  },
+  {
+    id: "time-log",
+    name: "Time Log",
+    icon: TimerIcon,
+    url: linkOptions({ to: "/apps/time-log" }).to,
+    type: "APP",
+  },
+  {
+    id: "spotlight",
+    name: "Spotlight",
+    icon: CubeFocusIcon,
+    url: linkOptions({ to: "/apps/spotlight" }).to,
     type: "APP",
   },
 

@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
+import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
+import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-focus"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChronoTrackRouteImport } from "./../../routes/apps/chrono-track"
@@ -39,6 +41,16 @@ const DevRoute = DevRouteImport.update({
 const homeIndexRoute = homeIndexRouteImport.update({
   id: "/(home)/",
   path: "/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
+  id: "/apps/time-log",
+  path: "/apps/time-log",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsSpotlightRoute = AppsSpotlightRouteImport.update({
+  id: "/apps/spotlight",
+  path: "/apps/spotlight",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsSingleFocusRoute = AppsSingleFocusRouteImport.update({
@@ -147,6 +159,8 @@ export interface FileRoutesByFullPath {
   "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/spotlight": typeof AppsSpotlightRoute
+  "/apps/time-log": typeof AppsTimeLogRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -170,6 +184,8 @@ export interface FileRoutesByTo {
   "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/spotlight": typeof AppsSpotlightRoute
+  "/apps/time-log": typeof AppsTimeLogRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -194,6 +210,8 @@ export interface FileRoutesById {
   "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/single-focus": typeof AppsSingleFocusRoute
+  "/apps/spotlight": typeof AppsSpotlightRoute
+  "/apps/time-log": typeof AppsTimeLogRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -219,6 +237,8 @@ export interface FileRouteTypes {
     | "/apps/chrono-track"
     | "/apps/kanban"
     | "/apps/single-focus"
+    | "/apps/spotlight"
+    | "/apps/time-log"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -242,6 +262,8 @@ export interface FileRouteTypes {
     | "/apps/chrono-track"
     | "/apps/kanban"
     | "/apps/single-focus"
+    | "/apps/spotlight"
+    | "/apps/time-log"
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -265,6 +287,8 @@ export interface FileRouteTypes {
     | "/apps/chrono-track"
     | "/apps/kanban"
     | "/apps/single-focus"
+    | "/apps/spotlight"
+    | "/apps/time-log"
     | "/(home)/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
@@ -289,6 +313,8 @@ export interface RootRouteChildren {
   AppsChronoTrackRoute: typeof AppsChronoTrackRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsSingleFocusRoute: typeof AppsSingleFocusRoute
+  AppsSpotlightRoute: typeof AppsSpotlightRoute
+  AppsTimeLogRoute: typeof AppsTimeLogRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
@@ -321,6 +347,20 @@ declare module "@tanstack/react-router" {
       path: "/"
       fullPath: "/"
       preLoaderRoute: typeof homeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/time-log": {
+      id: "/apps/time-log"
+      path: "/apps/time-log"
+      fullPath: "/apps/time-log"
+      preLoaderRoute: typeof AppsTimeLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/spotlight": {
+      id: "/apps/spotlight"
+      path: "/apps/spotlight"
+      fullPath: "/apps/spotlight"
+      preLoaderRoute: typeof AppsSpotlightRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/single-focus": {
@@ -465,6 +505,8 @@ const rootRouteChildren: RootRouteChildren = {
   AppsChronoTrackRoute: AppsChronoTrackRoute,
   AppsKanbanRoute: AppsKanbanRoute,
   AppsSingleFocusRoute: AppsSingleFocusRoute,
+  AppsSpotlightRoute: AppsSpotlightRoute,
+  AppsTimeLogRoute: AppsTimeLogRoute,
   homeIndexRoute: homeIndexRoute,
   AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
