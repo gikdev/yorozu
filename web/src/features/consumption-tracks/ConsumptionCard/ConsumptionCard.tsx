@@ -97,7 +97,11 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
 
   return (
     <div className="flex gap-2 rounded-lg bg-mist-900 border border-mist-800 overflow-hidden">
-      <Link to="/apps/hondana/library/$id" params={{ id: contentItemId }} className="contents">
+      <Link
+        to="/apps/hondana/library/$id"
+        params={{ id: contentItemId }}
+        className="contents"
+      >
         <ConsumptionCardImage
           src={contentItemCoverImageUrl}
           fallbackLetter={contentItemTitle?.charAt(0) ?? "?"}
@@ -105,7 +109,11 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
         />
       </Link>
 
-      <Link to="/apps/hondana/tracks/$id" params={{ id }} className="flex-1 flex flex-col justify-between py-2">
+      <Link
+        to="/apps/hondana/tracks/$id"
+        params={{ id }}
+        className="flex-1 flex flex-col justify-between py-2"
+      >
         <ConsumptionCardTitle
           title={title}
           subtitle={contentItemTitle}

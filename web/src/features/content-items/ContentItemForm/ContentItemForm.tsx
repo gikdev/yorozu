@@ -2,6 +2,7 @@ import { btn } from "#/common/atoms/btn"
 import { useAppForm } from "#/common/forms"
 import {
   AirplayIcon,
+  ArrowCounterClockwiseIcon,
   BookmarkSimpleIcon,
   CalculatorIcon,
   HeartIcon,
@@ -20,6 +21,8 @@ import {
 } from "#/common/api/client"
 import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 import { Activity } from "react"
+import { fieldContainer } from "#/common/atoms/field-container"
+import toast from "react-hot-toast"
 
 const formatTagOptions: Array<{ title: string; value: ContentItemFormat }> =
   Object.values(ContentItemFormat).map(format => ({
@@ -47,8 +50,65 @@ export function ContentItemForm(p: ContentItemFormProps) {
     },
   })
 
+  const handleReset = () => {
+    const isConfirmed = window.confirm("Sure you wanna reset the form?")
+    if (!isConfirmed) return
+    form.reset(contentItemFormEmptyValues)
+  }
+
+  const handleQuickActionAnime = () => {
+    const isConfirmed = window.confirm("Sure?")
+    if (!isConfirmed) return
+
+    form.setFieldValue("hasUnitSpec", true)
+    form.setFieldValue("hasLocation", true)
+    form.setFieldValue("locationType", "Url")
+    form.setFieldValue("unitType", "Episode")
+    form.setFieldValue("format", "Watchable")
+    form.setFieldValue("tags", ["anime"])
+
+    toast.success("Done!")
+  }
+
+  const handleQuickActionOnlineCourse = () => {
+    const isConfirmed = window.confirm("Sure?")
+    if (!isConfirmed) return
+
+    form.setFieldValue("hasUnitSpec", true)
+    form.setFieldValue("hasLocation", true)
+    form.setFieldValue("locationType", "Url")
+    form.setFieldValue("unitType", "Chapter")
+    form.setFieldValue("format", "Watchable")
+    form.setFieldValue("tags", ["course"])
+
+    toast.success("Done!")
+  }
+
+  const handleQuickActionBook = () => {
+    const isConfirmed = window.confirm("Sure?")
+    if (!isConfirmed) return
+
+    form.setFieldValue("hasUnitSpec", true)
+    form.setFieldValue("hasLocation", true)
+    form.setFieldValue("unitType", "Page")
+    form.setFieldValue("format", "Readable")
+    form.setFieldValue("tags", ["book"])
+
+    toast.success("Done!")
+  }
+
   return (
     <div className="flex flex-col gap-4">
+      <div className={fieldContainer()}>
+        <p>Quick Actions</p>
+
+        <div className="flex flex-wrap gap-2 items-center">
+          <button className={btn({ size: "sm" })} onClick={handleQuickActionAnime}>Anime</button>
+          <button className={btn({ size: "sm" })} onClick={handleQuickActionOnlineCourse}>Online Course</button>
+          <button className={btn({ size: "sm" })} onClick={handleQuickActionBook}>Book</button>
+        </div>
+      </div>
+
       <form.AppForm>
         <form.AppField name="coverImagePath">
           {field => <field.ImgUrlWithPreviewInput title="Cover Image" />}
@@ -197,6 +257,11 @@ export function ContentItemForm(p: ContentItemFormProps) {
           title="Submit"
         />
       </form.AppForm>
+
+      <button type="reset" onClick={handleReset} className={btn({ theme: "outline" })}>
+        <ArrowCounterClockwiseIcon size={20} />
+        <span>Reset</span>
+      </button>
     </div>
   )
 }

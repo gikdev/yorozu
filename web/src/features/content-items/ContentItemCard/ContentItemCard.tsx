@@ -56,7 +56,12 @@ export function ContentItemCard(p: ContentItemCardProps) {
       />
 
       <div className="flex-1 flex flex-col gap-2 justify-center p-2">
-        <Link className="text-mist-100 hover:underline py-4 text-center hover:text-sky-400 line-clamp-3 font-bold" dir="auto" to="/apps/hondana/library/$id" params={{ id: p.id }}>
+        <Link
+          className="text-mist-100 hover:underline py-4 text-center hover:text-sky-400 line-clamp-3 font-bold"
+          dir="auto"
+          to="/apps/hondana/library/$id"
+          params={{ id: p.id }}
+        >
           {p.title}
         </Link>
       </div>
