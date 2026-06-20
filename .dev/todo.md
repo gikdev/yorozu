@@ -11,7 +11,5 @@
 - Session tracker: start/stop+report+delete+back...
 - Single Focus: activeItem+done+cancel
 
-- apps fix layout
-
 - Add tags to consumption tracks
 - homepage... change design completely
