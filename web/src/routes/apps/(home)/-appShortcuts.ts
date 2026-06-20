@@ -1,10 +1,8 @@
 import {
   BooksIcon,
-  BoundingBoxIcon,
   FileAudioIcon,
   KanbanIcon,
   ListChecksIcon,
-  TargetIcon,
   BookmarkIcon,
   ClipboardIcon,
   UserIcon,
@@ -52,13 +50,6 @@ export const appShortcuts: IAppShortcut[] = [
     type: "MVP",
   },
   {
-    id: "chrono-track",
-    name: "Chrono Track",
-    icon: BoundingBoxIcon,
-    url: linkOptions({ to: "/apps/chrono-track" }).to,
-    type: "MVP",
-  },
-  {
     id: "kanban",
     name: "Kanban",
     icon: KanbanIcon,
@@ -70,13 +61,6 @@ export const appShortcuts: IAppShortcut[] = [
     name: "Lyrics",
     icon: FileAudioIcon,
     url: linkOptions({ to: "/apps/lyrics" }).to,
-    type: "MVP",
-  },
-  {
-    id: "single-focus",
-    name: "Single Focus",
-    icon: TargetIcon,
-    url: linkOptions({ to: "/apps/single-focus" }).to,
     type: "MVP",
   },
 

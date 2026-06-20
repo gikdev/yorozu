@@ -13,9 +13,7 @@ import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
-import { Route as AppsSingleFocusRouteImport } from "./../../routes/apps/single-focus"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
-import { Route as AppsChronoTrackRouteImport } from "./../../routes/apps/chrono-track"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
 import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondana/index"
@@ -53,19 +51,9 @@ const AppsSpotlightRoute = AppsSpotlightRouteImport.update({
   path: "/apps/spotlight",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsSingleFocusRoute = AppsSingleFocusRouteImport.update({
-  id: "/apps/single-focus",
-  path: "/apps/single-focus",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppsKanbanRoute = AppsKanbanRouteImport.update({
   id: "/apps/kanban",
   path: "/apps/kanban",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsChronoTrackRoute = AppsChronoTrackRouteImport.update({
-  id: "/apps/chrono-track",
-  path: "/apps/chrono-track",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsChoiceRoute = AppsChoiceRouteImport.update({
@@ -156,9 +144,7 @@ const AppsHondanaLibraryIdTracksNewRoute =
 export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
-  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
-  "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/": typeof homeIndexRoute
@@ -181,9 +167,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
-  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
-  "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/": typeof homeIndexRoute
@@ -207,9 +191,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
-  "/apps/chrono-track": typeof AppsChronoTrackRoute
   "/apps/kanban": typeof AppsKanbanRoute
-  "/apps/single-focus": typeof AppsSingleFocusRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/(home)/": typeof homeIndexRoute
@@ -234,9 +216,7 @@ export interface FileRouteTypes {
   fullPaths:
     | "/dev"
     | "/apps/choice"
-    | "/apps/chrono-track"
     | "/apps/kanban"
-    | "/apps/single-focus"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/"
@@ -259,9 +239,7 @@ export interface FileRouteTypes {
   to:
     | "/dev"
     | "/apps/choice"
-    | "/apps/chrono-track"
     | "/apps/kanban"
-    | "/apps/single-focus"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/"
@@ -284,9 +262,7 @@ export interface FileRouteTypes {
     | "__root__"
     | "/dev"
     | "/apps/choice"
-    | "/apps/chrono-track"
     | "/apps/kanban"
-    | "/apps/single-focus"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/(home)/"
@@ -310,9 +286,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
-  AppsChronoTrackRoute: typeof AppsChronoTrackRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
-  AppsSingleFocusRoute: typeof AppsSingleFocusRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
   homeIndexRoute: typeof homeIndexRoute
@@ -363,25 +337,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsSpotlightRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/single-focus": {
-      id: "/apps/single-focus"
-      path: "/apps/single-focus"
-      fullPath: "/apps/single-focus"
-      preLoaderRoute: typeof AppsSingleFocusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/kanban": {
       id: "/apps/kanban"
       path: "/apps/kanban"
       fullPath: "/apps/kanban"
       preLoaderRoute: typeof AppsKanbanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/chrono-track": {
-      id: "/apps/chrono-track"
-      path: "/apps/chrono-track"
-      fullPath: "/apps/chrono-track"
-      preLoaderRoute: typeof AppsChronoTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/choice": {
@@ -502,9 +462,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   AppsChoiceRoute: AppsChoiceRoute,
-  AppsChronoTrackRoute: AppsChronoTrackRoute,
   AppsKanbanRoute: AppsKanbanRoute,
-  AppsSingleFocusRoute: AppsSingleFocusRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
   homeIndexRoute: homeIndexRoute,
