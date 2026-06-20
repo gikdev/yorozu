@@ -1,10 +1,10 @@
 import type { ContentItemResponse } from "#/common/api/client"
 import { tv } from "tailwind-variants"
 import { ChipsSection } from "./ChipsSection"
-import { CoverImage } from "./CoverImage"
 import { ActionBar } from "./ActionBar"
 import { TracksSection } from "#/features/consumption-tracks/TracksSection"
 import { GoogleLogoIcon, ClipboardIcon } from "@phosphor-icons/react"
+import { CoverImage } from "#/common/molecules/CoverImage"
 
 const styleContentItemDetailsContainer = tv({
   base: "flex flex-col gap-4 flex-1",

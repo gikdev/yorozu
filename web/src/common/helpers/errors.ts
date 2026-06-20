@@ -1,3 +1,7 @@
+import toast from "react-hot-toast"
+
+export const onError = (err: unknown) => toast.error(extractErrorMessage(err))
+
 type ValidationProblem = {
   title?: string
   status?: number
