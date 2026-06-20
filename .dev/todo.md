@@ -1,20 +1,28 @@
-- x - Fix secret tracks
-- x - Is Ongoing only show if "Has Unit Spec" is on...
-- x - Add little copy & search title buttons
-- x - sort tags... in input...
+- x Fix secret tracks
+- x Is Ongoing only show if "Has Unit Spec" is on...
+- x Add little copy & search title buttons
+- x sort tags... in input...
 
-- o - In tracks page...
-  - o - Click on image -> anime
-  - o - Click on middle -> track
-  - o - Click on button -> increment
-  
-- o - Include search and format in library
-- o - Include search & intention type in tracks
+- In tracks page...
+  - Click on image -> anime
+  - Click on middle -> track
+  - Click on button -> increment
 
-- o - Content Item Form actions... ('anime', 'book', 'course')
-- o - Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
+- Include search and format in library
+- Include search & intention type in tracks
 
-- o - put the tags input in a modal or sth...
-- o - Add tags to consumption tracks
+- Content Item Form actions... ('anime', 'book', 'course')
+- Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
 
-- o - track details page
+- put the tags input in a modal or sth...
+- Add tags to consumption tracks
+
+- track details page
+
+- Session tracker: start/stop+report+delete+back...
+- Single Focus: activeItem+done+cancel
+
+- homepage... change design completely
+- entrance same page
+- entrance safe
+- apps fix layout
