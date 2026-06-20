@@ -5,13 +5,11 @@ import {
   SpinnerGapIcon,
   WarningCircleIcon,
   QueueIcon,
-  PlusIcon,
 } from "@phosphor-icons/react"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { TrackEntry } from "../TrackEntry"
 import { RenderQuery } from "#/common/helpers/render-query"
-import { Link } from "@tanstack/react-router"
-import { btn } from "#/common/atoms/btn"
+import { TracksActions } from "./TracksActions"
 
 interface TracksSectionProps {
   id: string
@@ -61,14 +59,7 @@ export function TracksSection({ id }: TracksSectionProps) {
         }
       />
 
-      <Link
-        to="/apps/hondana/library/$id/tracks/new"
-        className={btn({ theme: "primary" })}
-        params={{ id }}
-      >
-        <PlusIcon size={24} />
-        <span> Create new track </span>
-      </Link>
+      <TracksActions id={id} />
     </div>
   )
 }

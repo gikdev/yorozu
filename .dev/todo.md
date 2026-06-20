@@ -1,8 +1,6 @@
 - Include search and format in library
 - Include search & intention type in tracks
 
-- Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
-
 - put the tags input in a modal or sth...
 
 - track details page
