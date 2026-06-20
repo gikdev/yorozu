@@ -6,8 +6,6 @@
 - Include search and format in library
 - Include search & intention type in tracks
 
-- persist secret mode in localstorage instead of session storage
-
 - Content Item Form actions... ('anime', 'book', 'course')
 - Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
 

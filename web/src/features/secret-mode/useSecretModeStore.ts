@@ -8,7 +8,7 @@ interface SecretModeStore {
 }
 
 const name = "YOROZU_SECRET_MODE"
-const storage = createJSONStorage(() => window.sessionStorage)
+const storage = createJSONStorage(() => window.localStorage)
 
 export const useSecretModeStore = create<SecretModeStore>()(
   persist(
