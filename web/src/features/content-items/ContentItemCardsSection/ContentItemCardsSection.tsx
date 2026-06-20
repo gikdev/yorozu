@@ -101,7 +101,7 @@ export function ContentItemCardsSection() {
           onChange={e => setSearchQuery(e.target.value)}
         />
         <select
-          className={btn({ class: "*:bg-mist-900" })}
+          className={btn({ class: "*:bg-mist-900", theme: "outline" })}
           value={formatFilter}
           onChange={e =>
             setFormatFilter(e.target.value as ContentItemFormat | "")

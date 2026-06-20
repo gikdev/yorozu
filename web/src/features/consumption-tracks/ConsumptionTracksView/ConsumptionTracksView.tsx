@@ -105,12 +105,12 @@ export function ConsumptionTracksView() {
       <div className="flex gap-2 px-4 pt-4">
         <input
           className={styleInput({ className: "flex-1" })}
-          placeholder="Search tracks..."
+          placeholder="Search..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
         />
         <select
-          className={btn({ class: "*:bg-mist-900" })}
+          className={btn({ class: "*:bg-mist-900", theme: "outline" })}
           value={intentionFilter}
           onChange={e =>
             setIntentionFilter(e.target.value as IntentionType | "")
