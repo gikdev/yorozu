@@ -1,8 +1,3 @@
-- x Fix secret tracks
-- x Is Ongoing only show if "Has Unit Spec" is on...
-- x Add little copy & search title buttons
-- x sort tags... in input...
-
 - In tracks page...
   - Click on image -> anime
   - Click on middle -> track
@@ -10,6 +5,8 @@
 
 - Include search and format in library
 - Include search & intention type in tracks
+
+- persist secret mode in localstorage instead of session storage
 
 - Content Item Form actions... ('anime', 'book', 'course')
 - Add consumption track actions: finishedBook, readingBook, watchingAnime, watchedAnime
