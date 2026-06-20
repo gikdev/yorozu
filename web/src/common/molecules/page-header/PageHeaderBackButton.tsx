@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from "@phosphor-icons/react"
+import { ArrowUpIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 
 interface PageHeaderBackButtonProps {
@@ -13,7 +13,7 @@ export function PageHeaderBackButton(p: PageHeaderBackButtonProps) {
       title="Go back"
       className="min-h-12 aspect-square flex items-center justify-center transition-colors rounded-full hover:bg-mist-800 hover:text-mist-100"
     >
-      <ArrowLeftIcon size={24} weight="bold" />
+      <ArrowUpIcon size={24} weight="bold" />
     </Link>
   )
 }

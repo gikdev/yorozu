@@ -30,8 +30,7 @@ import {
   EqualsIcon,
 } from "@phosphor-icons/react"
 import { DateRow } from "./DateRow"
-import { StatusBadge } from "./StatusBadge"
-import { ProgressSection } from "./ProgressSection"
+import { TrackStatusCard } from "./TrackStatusCard"
 
 interface TrackDetailsProps {
   track: ConsumptionTrackResponse
@@ -136,30 +135,29 @@ export function TrackDetails({ track }: TrackDetailsProps) {
             title={track.contentItemTitle}
           />
         </Link>
-        <div className="text-center space-y-1">
+
+        <div className="flex flex-col items-center justify-center text-center gap-1 text-xs">
           <h1 className="text-2xl font-bold text-white">{track.title}</h1>
+
           <Link
             to="/apps/hondana/library/$id"
             params={{ id: track.contentItemId }}
-            className="text-sm text-mist-400 hover:text-mist-100 hover:underline"
+            className="text-xs hover:text-mist-100 hover:underline"
           >
             {track.contentItemTitle}
           </Link>
-          <div className="flex items-center justify-center gap-2 text-xs text-mist-400">
-            <span>{track.contentItemFormat}</span>
-            <span>•</span>
-            <span>{track.type}</span>
-          </div>
 
-          <div className="flex items-center justify-center gap-2 text-xs text-mist-400">
-            {track.description || "No description provided."}
-          </div>
+          <p className="">
+            <span>{track.contentItemFormat}</span>
+            <span> • </span>
+            <span>{track.type}</span>
+          </p>
+
+          <p className="">{track.description || "No description provided."}</p>
         </div>
       </div>
 
-      <StatusBadge status={track.status} />
-
-      <ProgressSection track={track} />
+      <TrackStatusCard track={track} />
 
       <div className="flex items-center gap-2">
         <input
@@ -241,19 +239,19 @@ export function TrackDetails({ track }: TrackDetailsProps) {
           <span>Drop</span>
         </button>
 
-        <Link
-          to="/apps/hondana/tracks/$id/edit"
-          params={{ id: track.id }}
-          className={btn({ theme: "outline" })}
-        >
-          <PencilSimpleIcon size={20} />
-          <span>Edit</span>
-        </Link>
+        <div className="inline-flex gap-1 *:flex-1">
+          <Link
+            to="/apps/hondana/tracks/$id/edit"
+            params={{ id: track.id }}
+            className={btn({ theme: "outline" })}
+          >
+            <PencilSimpleIcon size={20} />
+          </Link>
 
-        <button onClick={handleDelete} className={btn({ theme: "danger" })}>
-          <TrashIcon size={20} />
-          <span>Delete</span>
-        </button>
+          <button onClick={handleDelete} className={btn({ theme: "danger" })}>
+            <TrashIcon size={20} />
+          </button>
+        </div>
       </div>
 
       <div className="space-y-1 text-sm border-t border-mist-800 pt-4">

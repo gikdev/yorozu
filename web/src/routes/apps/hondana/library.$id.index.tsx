@@ -1,4 +1,3 @@
-// src/routes/apps/hondana/library/$id.tsx
 import { AppShell } from "#/common/molecules/AppShell"
 import {
   PageHeader,
