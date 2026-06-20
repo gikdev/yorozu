@@ -1,4 +1,3 @@
-- Include search and format in library
 - Include search & intention type in tracks
 
 - track details page
