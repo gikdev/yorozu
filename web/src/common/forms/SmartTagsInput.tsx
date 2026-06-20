@@ -2,11 +2,7 @@ import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
 import { btn } from "../atoms/btn"
 import { FieldMeta } from "./field-meta"
-import {
-  ArrowsDownUpIcon,
-  PlusIcon,
-  XIcon,
-} from "@phosphor-icons/react"
+import { ArrowsDownUpIcon, PlusIcon, XIcon } from "@phosphor-icons/react"
 import { useState, type ChangeEvent, type KeyboardEvent } from "react"
 import { styleInput } from "../atoms/input"
 import { BottomSheet } from "../organisms/BottomSheet"
@@ -22,7 +18,8 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
   const selected = [...(field.state.value ?? [])].sort((a, b) =>
     a.localeCompare(b),
   )
-  const hasError = field.state.meta.isTouched && field.state.meta.errors.length > 0
+  const hasError =
+    field.state.meta.isTouched && field.state.meta.errors.length > 0
 
   const addTag = (tag: string) => {
     const trimmed = tag.trim()
@@ -46,7 +43,9 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
   }
 
   const sortTags = () => {
-    field.handleChange([...new Set(selected)].sort((a, b) => a.localeCompare(b)))
+    field.handleChange(
+      [...new Set(selected)].sort((a, b) => a.localeCompare(b)),
+    )
     field.handleBlur()
   }
 
@@ -73,10 +72,7 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
 
           <BottomSheet.Content className="flex flex-col gap-3">
             {/* Selected chips */}
-            <TagChipList
-              tags={selected}
-              onRemove={removeTag}
-            />
+            <TagChipList tags={selected} onRemove={removeTag} />
 
             {/* Input + Add button */}
             <TagInput onAdd={addTag} />
@@ -180,7 +176,10 @@ function TagSuggestionList({
 }) {
   const [query, setQuery] = useState("")
   const suggestions = allTags
-    .filter(t => !selected.includes(t) && t.toLowerCase().includes(query.toLowerCase()))
+    .filter(
+      t =>
+        !selected.includes(t) && t.toLowerCase().includes(query.toLowerCase()),
+    )
     .sort((a, b) => a.localeCompare(b))
 
   return (

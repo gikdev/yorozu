@@ -22,8 +22,8 @@ export function ContentItemCardsSection() {
   // 1. Secret‑mode filtering (existing)
   const { data, status, error, refetch } = useQuery({
     ...listContentItemsOptions(),
-    select: (data) =>
-      isUnlocked ? data : { items: data.items.filter((i) => !i.isSecret) },
+    select: data =>
+      isUnlocked ? data : { items: data.items.filter(i => !i.isSecret) },
   })
 
   // 2. Client‑side filter states
@@ -34,13 +34,12 @@ export function ContentItemCardsSection() {
   const filteredItems = useMemo(() => {
     if (!data?.items) return null // not ready yet
 
-    return data.items.filter((item) => {
+    return data.items.filter(item => {
       const matchesSearch =
         !searchQuery ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase())
 
-      const matchesFormat =
-        !formatFilter || item.format === formatFilter
+      const matchesFormat = !formatFilter || item.format === formatFilter
 
       return matchesSearch && matchesFormat
     })
@@ -99,20 +98,28 @@ export function ContentItemCardsSection() {
           className={styleInput({ className: "flex-1" })}
           placeholder="Search..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={e => setSearchQuery(e.target.value)}
         />
         <select
           className={btn({ class: "*:bg-mist-900" })}
           value={formatFilter}
-          onChange={(e) =>
+          onChange={e =>
             setFormatFilter(e.target.value as ContentItemFormat | "")
           }
         >
           <option value="">All</option>
-          <option value={ContentItemFormat.READABLE}>{ContentItemFormat.READABLE}</option>
-          <option value={ContentItemFormat.LISTENABLE}>{ContentItemFormat.LISTENABLE}</option>
-          <option value={ContentItemFormat.WATCHABLE}>{ContentItemFormat.WATCHABLE}</option>
-          <option value={ContentItemFormat.MIXED}>{ContentItemFormat.MIXED}</option>
+          <option value={ContentItemFormat.READABLE}>
+            {ContentItemFormat.READABLE}
+          </option>
+          <option value={ContentItemFormat.LISTENABLE}>
+            {ContentItemFormat.LISTENABLE}
+          </option>
+          <option value={ContentItemFormat.WATCHABLE}>
+            {ContentItemFormat.WATCHABLE}
+          </option>
+          <option value={ContentItemFormat.MIXED}>
+            {ContentItemFormat.MIXED}
+          </option>
         </select>
       </div>
 

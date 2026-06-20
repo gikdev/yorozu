@@ -20,7 +20,10 @@ const BottomSheetContext = createContext<BottomSheetContextType | null>(null)
 
 function useBottomSheet() {
   const ctx = useContext(BottomSheetContext)
-  if (!ctx) throw new Error("BottomSheet components must be used inside <BottomSheet.Root>")
+  if (!ctx)
+    throw new Error(
+      "BottomSheet components must be used inside <BottomSheet.Root>",
+    )
   return ctx
 }
 
@@ -103,7 +106,7 @@ function Backdrop({ closable = false, className }: BackdropProps) {
       className={cn(
         "fixed inset-0 z-40 bg-black/60 transition-opacity duration-300",
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
-        className
+        className,
       )}
       onClick={closable ? close : undefined}
       aria-hidden="true"
@@ -132,7 +135,7 @@ function Container({ children, className, height = "h-1/2" }: ContainerProps) {
           "fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-mist-900 text-mist-100 shadow-2xl transition-transform duration-300 ease-out",
           height,
           isOpen ? "translate-y-0" : "translate-y-full",
-          className
+          className,
         )}
         role="dialog"
         aria-modal="true"
@@ -155,11 +158,21 @@ interface HeaderProps {
   children?: React.ReactNode
 }
 
-function Header({ title, showCloseButton = true, className, children }: HeaderProps) {
+function Header({
+  title,
+  showCloseButton = true,
+  className,
+  children,
+}: HeaderProps) {
   const { close } = useBottomSheet()
 
   return (
-    <div className={cn("flex items-center justify-between px-4 py-3 border-b border-mist-800", className)}>
+    <div
+      className={cn(
+        "flex items-center justify-between px-4 py-3 border-b border-mist-800",
+        className,
+      )}
+    >
       {title && <h2 className="text-lg font-semibold">{title}</h2>}
       {children}
       {showCloseButton && (
@@ -176,7 +189,13 @@ function Header({ title, showCloseButton = true, className, children }: HeaderPr
 }
 
 // ---------- Content (scrollable) ----------
-function Content({ children, className }: { children: React.ReactNode; className?: string }) {
+function Content({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <div className={cn("flex-1 overflow-y-auto p-4", className)}>
       {children}

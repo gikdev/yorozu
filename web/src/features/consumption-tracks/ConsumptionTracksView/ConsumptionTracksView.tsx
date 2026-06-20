@@ -51,7 +51,9 @@ export function ConsumptionTracksView() {
       const matchesSearch =
         !searchQuery ||
         track.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        track.contentItemTitle?.toLowerCase().includes(searchQuery.toLowerCase())
+        track.contentItemTitle
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase())
 
       const matchesIntention =
         !intentionFilter || track.type === intentionFilter
