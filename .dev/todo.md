@@ -1,5 +1,3 @@
-- Include search & intention type in tracks
-
 - track details page
 
 - Session tracker: start/stop+report+delete+back...

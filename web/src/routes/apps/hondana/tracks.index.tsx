@@ -13,7 +13,7 @@ function RouteComponent() {
     <AppShell>
       <PageHeader title="Tracks" />
 
-      <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">
+      <main className="flex-1 flex flex-col overflow-y-auto min-h-0">
         <ConsumptionTracksView />
       </main>
 
