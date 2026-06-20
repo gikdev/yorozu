@@ -77,7 +77,7 @@ export function TracksActions({ id }: TracksActionsProps) {
         // Doing: ask how many units already consumed and increment by that amount
         const amountInput = window.prompt(
           `How many ${track.unitType || "units"} already?`,
-          "0"
+          "0",
         )
         const amount = Number(amountInput)
         if (isNaN(amount) || amount < 0) {

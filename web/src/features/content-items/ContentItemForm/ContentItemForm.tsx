@@ -103,9 +103,24 @@ export function ContentItemForm(p: ContentItemFormProps) {
         <p>Quick Actions</p>
 
         <div className="flex flex-wrap gap-2 items-center">
-          <button className={btn({ size: "sm" })} onClick={handleQuickActionAnime}>Anime</button>
-          <button className={btn({ size: "sm" })} onClick={handleQuickActionOnlineCourse}>Online Course</button>
-          <button className={btn({ size: "sm" })} onClick={handleQuickActionBook}>Book</button>
+          <button
+            className={btn({ size: "sm" })}
+            onClick={handleQuickActionAnime}
+          >
+            Anime
+          </button>
+          <button
+            className={btn({ size: "sm" })}
+            onClick={handleQuickActionOnlineCourse}
+          >
+            Online Course
+          </button>
+          <button
+            className={btn({ size: "sm" })}
+            onClick={handleQuickActionBook}
+          >
+            Book
+          </button>
         </div>
       </div>
 
@@ -258,7 +273,11 @@ export function ContentItemForm(p: ContentItemFormProps) {
         />
       </form.AppForm>
 
-      <button type="reset" onClick={handleReset} className={btn({ theme: "outline" })}>
+      <button
+        type="reset"
+        onClick={handleReset}
+        className={btn({ theme: "outline" })}
+      >
         <ArrowCounterClockwiseIcon size={20} />
         <span>Reset</span>
       </button>
