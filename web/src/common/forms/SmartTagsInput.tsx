@@ -67,18 +67,15 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
         <BottomSheet.Backdrop closable />
 
         {/* The tag‑editing UI inside the bottom sheet */}
-        <BottomSheet.Container height="h-5/6">
+        <BottomSheet.Container height="h-[90vh]">
           <BottomSheet.Header title={`Edit ${title}`} />
 
           <BottomSheet.Content className="flex flex-col gap-3">
             {/* Selected chips */}
             <TagChipList tags={selected} onRemove={removeTag} />
 
-            {/* Input + Add button */}
-            <TagInput onAdd={addTag} />
-
-            {/* Suggestions */}
-            <TagSuggestionList
+            {/* Search + add + live-filtered suggestions, unified */}
+            <TagSearchAndSuggest
               allTags={allTags}
               selected={selected}
               onAdd={addTag}
@@ -111,7 +108,7 @@ function TagChipList({
   onRemove: (tag: string) => void
 }) {
   return (
-    <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 max-h-40 overflow-y-auto content-start">
+    <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start">
       {tags.map(tag => (
         <button
           key={tag}
@@ -127,13 +124,29 @@ function TagChipList({
   )
 }
 
-/** Input field with an "Add" button, supports Enter key */
-function TagInput({ onAdd }: { onAdd: (tag: string) => void }) {
-  const [input, setInput] = useState("")
+/** Single input that both filters existing tags live and adds a new tag on Enter/click */
+function TagSearchAndSuggest({
+  allTags,
+  selected,
+  onAdd,
+}: {
+  allTags: string[]
+  selected: string[]
+  onAdd: (tag: string) => void
+}) {
+  const [query, setQuery] = useState("")
+
+  const suggestions = allTags
+    .filter(
+      t =>
+        !selected.includes(t) &&
+        t.toLowerCase().includes(query.trim().toLowerCase()),
+    )
+    .sort((a, b) => a.localeCompare(b))
 
   const handleAdd = () => {
-    onAdd(input)
-    setInput("")
+    onAdd(query)
+    setQuery("")
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -144,59 +157,34 @@ function TagInput({ onAdd }: { onAdd: (tag: string) => void }) {
   }
 
   return (
-    <div className="flex gap-2">
-      <input
-        type="text"
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Type a tag..."
-        className={styleInput({ className: "flex-1" })}
-      />
-      <button
-        type="button"
-        onClick={handleAdd}
-        className={btn({ isIcon: true, theme: "outline" })}
-      >
-        <PlusIcon size={24} />
-      </button>
-    </div>
-  )
-}
-
-/** List of suggested tags that are not already selected */
-function TagSuggestionList({
-  allTags,
-  selected,
-  onAdd,
-}: {
-  allTags: string[]
-  selected: string[]
-  onAdd: (tag: string) => void
-}) {
-  const [query, setQuery] = useState("")
-  const suggestions = allTags
-    .filter(
-      t =>
-        !selected.includes(t) && t.toLowerCase().includes(query.toLowerCase()),
-    )
-    .sort((a, b) => a.localeCompare(b))
-
-  return (
     <div className="flex flex-col gap-1">
-      <input
-        type="text"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        placeholder="Filter suggestions..."
-        className={styleInput({ className: "w-full" })}
-      />
-      <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 max-h-40 overflow-y-auto">
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type or search a tag..."
+          className={styleInput({ className: "flex-1" })}
+        />
+        <button
+          type="button"
+          onClick={handleAdd}
+          className={btn({ isIcon: true, theme: "outline" })}
+        >
+          <PlusIcon size={24} />
+        </button>
+      </div>
+
+      <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start">
         {suggestions.map(tag => (
           <button
             key={tag}
             type="button"
-            onClick={() => onAdd(tag)}
+            onClick={() => {
+              onAdd(tag)
+              setQuery("")
+            }}
             className={btn({ size: "sm" })}
           >
             {tag}

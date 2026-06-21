@@ -25,6 +25,8 @@ public static class CommonService { // previously ConsumptionTrackService
     }
 
     public static void SyncTrackUnits(ConsumptionTrack track, ContentItem contentItem) {
+        if (track.Status.IsTerminal) return; // If terminated, no need to update the cap or the current progress or whatever really...
+
         track.SyncTotalUnits(contentItem.UnitSpec?.TotalUnits);
     }
 }

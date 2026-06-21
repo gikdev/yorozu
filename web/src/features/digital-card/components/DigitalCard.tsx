@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react"
+import { useNavigate } from "@tanstack/react-router"
 import { LangSwitch } from "./LangSwitch"
 import { CardHeader } from "./CardHeader"
 import { ContactModal } from "./ContactModal"
@@ -5,12 +7,40 @@ import { useContentT } from "../hooks/useContentT"
 import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
 import { useLang } from "../hooks/useLang"
 
+const SECRET_CODE = "leviosa"
+
+function useSecretRoute(code: string, path: string) {
+  const navigate = useNavigate()
+  const buffer = useRef("")
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return
+
+      buffer.current = (buffer.current + e.key.toLowerCase()).slice(
+        -code.length,
+      )
+
+      if (buffer.current === code) {
+        buffer.current = ""
+        navigate({ to: path })
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [code, path, navigate])
+}
+
 export function DigitalCard() {
   const lang = useLang()
   const open = useDigitalCardStore(s => s.open)
   const setOpen = useDigitalCardStore(s => s.setOpen)
   const contactMe = useContentT("contactMe")
   const isRtl = lang === "fa"
+
+  useSecretRoute(SECRET_CODE, "/apps")
 
   return (
     <div

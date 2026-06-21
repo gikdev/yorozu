@@ -14,20 +14,20 @@ import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
 import { ContentItemCards } from "./ContentItemCards"
 import { styleInput } from "#/common/atoms/input"
 import { btn } from "#/common/atoms/btn"
-import { useState, useMemo } from "react"
+import { useMemo } from "react"
 import { RenderQuery } from "#/common/helpers/render-query"
+import { Route } from "#/routes/apps/hondana/library.index"
 
 export function ContentItemCardsSection() {
   const isUnlocked = useIsUnlocked()
+  const { q: searchQuery, format: formatFilter } = Route.useSearch()
+  const navigate = Route.useNavigate()
 
   const { data, status, error, refetch } = useQuery({
     ...listContentItemsOptions(),
     select: data =>
       isUnlocked ? data : { items: data.items.filter(i => !i.isSecret) },
   })
-
-  const [searchQuery, setSearchQuery] = useState("")
-  const [formatFilter, setFormatFilter] = useState<"" | ContentItemFormat>("")
 
   const filteredItems = useMemo(() => {
     if (!data?.items) return null
@@ -74,16 +74,29 @@ export function ContentItemCardsSection() {
                   })}
                   placeholder="Search..."
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
+                  onChange={e =>
+                    navigate({
+                      search: prev => ({ ...prev, q: e.target.value }),
+                      replace: true,
+                    })
+                  }
                 />
                 <select
                   className={btn({
                     class: "*:bg-mist-900",
                     theme: "outline",
                   })}
-                  value={formatFilter}
+                  value={formatFilter ?? ""}
                   onChange={e =>
-                    setFormatFilter(e.target.value as ContentItemFormat | "")
+                    navigate({
+                      search: prev => ({
+                        ...prev,
+                        format: (e.target.value || undefined) as
+                          | ContentItemFormat
+                          | undefined,
+                      }),
+                      replace: true,
+                    })
                   }
                 >
                   <option value="">All</option>

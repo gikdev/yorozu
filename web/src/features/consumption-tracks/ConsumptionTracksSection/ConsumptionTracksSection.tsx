@@ -14,13 +14,16 @@ import {
 } from "@phosphor-icons/react"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { useIsUnlocked } from "#/features/secret-mode/useSecretModeStore"
-import { useState, useMemo } from "react"
+import { useMemo } from "react"
 import { styleInput } from "#/common/atoms/input"
 import { btn } from "#/common/atoms/btn"
 import { RenderQuery } from "#/common/helpers/render-query"
+import { Route } from "#/routes/apps/hondana/tracks.index"
 
 export function ConsumptionTracksSection() {
   const isUnlocked = useIsUnlocked()
+  const { q: searchQuery, intention: intentionFilter } = Route.useSearch()
+  const navigate = Route.useNavigate()
 
   const tracksQ = useQuery({
     ...listAllTracksEndpointOptions(),
@@ -41,9 +44,6 @@ export function ConsumptionTracksSection() {
       return { items }
     },
   })
-
-  const [searchQuery, setSearchQuery] = useState("")
-  const [intentionFilter, setIntentionFilter] = useState<IntentionType | "">("")
 
   const filteredItems = useMemo(() => {
     if (!tracksQ.data?.items) return null
@@ -94,16 +94,29 @@ export function ConsumptionTracksSection() {
                 className={styleInput({ className: "flex-1 min-h-0 w-full" })}
                 placeholder="Search..."
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={e =>
+                  navigate({
+                    search: prev => ({ ...prev, q: e.target.value }),
+                    replace: true,
+                  })
+                }
               />
               <select
                 className={btn({
                   class: "*:bg-mist-900 max-w-max",
                   theme: "outline",
                 })}
-                value={intentionFilter}
+                value={intentionFilter ?? ""}
                 onChange={e =>
-                  setIntentionFilter(e.target.value as IntentionType | "")
+                  navigate({
+                    search: prev => ({
+                      ...prev,
+                      intention: (e.target.value || undefined) as
+                        | IntentionType
+                        | undefined,
+                    }),
+                    replace: true,
+                  })
                 }
               >
                 <option value="">All</option>

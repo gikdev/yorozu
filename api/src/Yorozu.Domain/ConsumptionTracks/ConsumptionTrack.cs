@@ -1,6 +1,5 @@
 using ErrorOr;
 using Yorozu.Common.Domain;
-using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Domain.ConsumptionTracks;
 
@@ -38,7 +37,7 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
     public bool CanResume => IsOnHold;
     public bool CanDrop => !Status.IsTerminal;
 
-    public bool CanComplete => IsInProgress && HasProgressCap && HasReachedCap;
+    public bool CanComplete => IsInProgress;
     public bool CanProgress => IsInProgress && (!HasProgressCap || HasRemaining);
     public bool CanDecrement => IsInProgress && HasAnyProgress;
 
@@ -139,16 +138,7 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
         if (TotalUnits.HasValue && newValue > TotalUnits.Value)
             return ConsumptionTrackErrors.CannotExceedTotalUnitsError(TotalUnits.Value);
 
-        CurrentUnit = newValue;
-
-        if (HasProgressCap && HasReachedCap) {
-            var completeResult = Complete();
-            if (completeResult.IsError)
-                return completeResult;
-        }
-
-        MarkUpdated();
-        return Result.Success;
+        return ApplyProgress(newValue);
     }
 
     public ErrorOr<Success> IncrementProgress(int amount) {
@@ -162,23 +152,7 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
         if (TotalUnits.HasValue && newValue > TotalUnits.Value)
             return ConsumptionTrackErrors.CannotExceedTotalUnitsError(TotalUnits.Value);
 
-        CurrentUnit = newValue;
-
-        if (HasProgressCap && HasReachedCap) {
-            var completeResult = Complete();
-            if (completeResult.IsError)
-                return completeResult;
-        }
-
-        MarkUpdated();
-        return Result.Success;
-    }
-
-    public void SyncTotalUnits(int? totalUnits) {
-        TotalUnits = totalUnits;
-        if (TotalUnits.HasValue && CurrentUnit > TotalUnits.Value)
-            CurrentUnit = TotalUnits.Value;
-        MarkUpdated();
+        return ApplyProgress(newValue);
     }
 
     public ErrorOr<Success> DecrementProgress(int amount) {
@@ -193,6 +167,26 @@ public class ConsumptionTrack : IAggregateRoot, IHasTimestamps {
             return ConsumptionTrackErrors.CannotGoBelowZeroError;
 
         CurrentUnit = newValue;
+
+        MarkUpdated();
+        return Result.Success;
+    }
+
+    public void SyncTotalUnits(int? totalUnits) {
+        TotalUnits = totalUnits;
+        if (TotalUnits.HasValue && CurrentUnit > TotalUnits.Value)
+            CurrentUnit = TotalUnits.Value;
+        MarkUpdated();
+    }
+
+    private ErrorOr<Success> ApplyProgress(int newValue) {
+        CurrentUnit = newValue;
+
+        if (HasProgressCap && HasReachedCap) {
+            var completeResult = Complete();
+            if (completeResult.IsError)
+                return completeResult;
+        }
 
         MarkUpdated();
         return Result.Success;

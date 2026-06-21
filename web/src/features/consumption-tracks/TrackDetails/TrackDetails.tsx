@@ -165,7 +165,7 @@ export function TrackDetails({ track }: TrackDetailsProps) {
           min={1}
           value={changeAmount}
           onChange={e => setChangeAmount(Math.max(1, Number(e.target.value)))}
-          className={styleInput({ className: "flex-1" })}
+          className={styleInput({ className: "flex-1 min-h-0 w-full" })}
         />
 
         <button
