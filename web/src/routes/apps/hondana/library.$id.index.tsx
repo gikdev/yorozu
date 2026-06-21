@@ -19,7 +19,7 @@ function RouteComponent() {
         title="Details"
         left={
           <PageHeaderBackButton
-            to={linkOptions({ to: "/apps/hondana/library" }).to}
+            to={linkOptions({ to: "/apps/hondana/library", search: { q: "" } }).to}
           />
         }
       />

@@ -76,7 +76,7 @@ export function TrackDetails({ track }: TrackDetailsProps) {
     onError,
     onSuccess: () => {
       toast.success("Track deleted")
-      navigate({ to: "/apps/hondana/tracks" })
+      navigate({ to: "/apps/hondana/tracks", search: { q: "" } })
     },
   })
   const progressM = useMutation({

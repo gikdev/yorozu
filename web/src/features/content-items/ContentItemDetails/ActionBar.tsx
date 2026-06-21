@@ -81,7 +81,7 @@ export function ActionBar(p: ActionBarProps) {
     const isConfirmed = window.confirm("Are u sure?")
     if (!isConfirmed) return
 
-    const onSuccess = () => navigate({ to: "/apps/hondana/library" })
+    const onSuccess = () => navigate({ to: "/apps/hondana/library", search: { q: "" } })
 
     deleteContentItemM.mutate({ path }, { onError, onSuccess })
   }
