@@ -4,7 +4,6 @@ import {
   PlusIcon,
   CheckCircleIcon,
   SquareIcon,
-  CheckIcon,
 } from "@phosphor-icons/react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import toast from "react-hot-toast"
@@ -16,7 +15,6 @@ import {
   updateTrackProgressEndpointMutation,
   listAllTracksEndpointQueryKey, // adjust if needed
   type ConsumptionTrackResponse,
-  completeTrackEndpointMutation,
 } from "#/common/api/client"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import { TrackProgress } from "#/common/molecules/TrackProgress"
@@ -36,7 +34,6 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
     canStart,
     isSecret,
     canProgress,
-    canComplete,
     status,
     contentItemCoverImageUrl,
     contentItemFormat,
@@ -60,12 +57,6 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
     onError,
   })
 
-  const completeM = useMutation({
-    ...completeTrackEndpointMutation(),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
-    onError,
-  })
-
   const isLoading = progressM.isPending || startM.isPending
   const isCompleted = status === "Completed"
   const isDropped = status === "Dropped"
@@ -84,12 +75,6 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
         path: { id },
         body: { amount: 1, action: "Increment" },
       })
-
-      return
-    }
-
-    if (canComplete) {
-      completeM.mutate({ path: { id } })
 
       return
     }
@@ -138,7 +123,6 @@ export function ConsumptionCard(p: ConsumptionCardProps) {
         {canStart && <PlayIcon size={24} />}
         {isDropped && <SquareIcon size={24} />}
         {canProgress && <PlusIcon size={24} />}
-        {canComplete && <CheckIcon size={24} />}
         {isCompleted && (
           <CheckCircleIcon
             size={24}
