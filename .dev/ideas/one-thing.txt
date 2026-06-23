@@ -1,1 +1,0 @@
-One input field, one displayed task, Done / Cancel buttons. No task list, no projects. Just pure focus for one session.

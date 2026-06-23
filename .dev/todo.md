@@ -1,4 +1,2 @@
-- Session tracker: start/stop+report+delete+back...
-- Single Focus: activeItem+done+cancel
 - Add tags to consumption tracks
 - homepage... change design completely

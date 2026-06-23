@@ -1,0 +1,4 @@
+- What real-world friction or pain does this address?
+- Is it a surface symptom or a root cause?
+- What would happen if you didn’t build it? (i.e., the manual workaround)
+- (Optional) The “to-do app lesson”: Could the need be solved by changing your behavior instead of building a tool?
