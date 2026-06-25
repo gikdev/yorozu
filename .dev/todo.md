@@ -19,3 +19,15 @@
 - Code is actually not bad compared to colleagues', but my standards are higher
 - Changes are safe: no DB impact, front/back are integrated so nothing breaks easily
 - Goal: get structure to a point where I can build features without cringing
+
+## More
+- BFF
+- fav & bookmark as tags in domain
+- desktop UI and grid
+- library: icons clickable
+- tracks: isSynced
+- tracks: change total
+- content item: be airing & have known number of episodes... or vice versa...
+- tracks: consumption intention, with auto completion like tags...
+- secret login?
+- update ideas in apps page
