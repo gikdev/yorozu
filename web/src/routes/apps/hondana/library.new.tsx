@@ -17,7 +17,9 @@ function RouteComponent() {
         title="New Content Item"
         left={
           <PageHeaderBackButton
-            to={linkOptions({ to: "/apps/hondana/library", search: { q: "" } }).to}
+            to={
+              linkOptions({ to: "/apps/hondana/library", search: { q: "" } }).to
+            }
           />
         }
       />

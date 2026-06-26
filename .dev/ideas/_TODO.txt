@@ -1,0 +1,2 @@
+- Add: Code blocks collection.
+- Question: May we merge it with prompt manager?
