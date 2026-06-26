@@ -32,6 +32,8 @@ function RouteComponent() {
 
   return (
     <AppShell>
+      <title>Lyrics</title>
+
       <PageHeader
         right={
           <Link

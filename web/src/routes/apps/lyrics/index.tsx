@@ -14,6 +14,8 @@ export const Route = createFileRoute("/apps/lyrics/")({
 function RouteComponent() {
   return (
     <AppShell>
+      <title>Lyrics</title>
+
       <PageHeader
         title="Lyrics"
         left={<PageHeaderBackButton to={linkOptions({ to: "/apps" }).to} />}

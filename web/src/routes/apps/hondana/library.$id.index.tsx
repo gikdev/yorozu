@@ -15,6 +15,8 @@ function RouteComponent() {
 
   return (
     <AppShell>
+      <title>Details - 本棚</title>
+
       <PageHeader
         title="Details"
         left={

@@ -128,6 +128,7 @@ function WritingArea() {
   return (
     <div className={`flex flex-col h-dvh ${style.container}`}>
       {/* Google Fonts link – keep in index.html, not here; removed for correctness */}
+      <title>Writing Area</title>
 
       {/* Header Bar */}
       <div

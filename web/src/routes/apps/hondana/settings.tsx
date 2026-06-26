@@ -45,6 +45,8 @@ function RouteComponent() {
 
   return (
     <AppShell>
+      <title>Settings - 本棚</title>
+
       <PageHeader title="Settings" />
 
       <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">

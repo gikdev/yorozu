@@ -48,13 +48,16 @@ function RouteComponent() {
   }
 
   return (
-    <TimeLog
-      isRunning={isRunning}
-      sessions={sessions}
-      onToggle={toggle}
-      onBack={() => navigate({ to: "/apps" })}
-      onDelete={deleteAll}
-    />
+    <>
+      <title>Time Log</title>
+      <TimeLog
+        isRunning={isRunning}
+        sessions={sessions}
+        onToggle={toggle}
+        onBack={() => navigate({ to: "/apps" })}
+        onDelete={deleteAll}
+      />
+    </>
   )
 }
 

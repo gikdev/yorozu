@@ -15,6 +15,8 @@ function RouteComponent() {
 
   return (
     <AppShell>
+      <title>Edit Track - 本棚</title>
+
       <PageHeader
         title="Edit Track"
         left={

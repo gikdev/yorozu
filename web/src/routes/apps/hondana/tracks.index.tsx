@@ -19,6 +19,8 @@ export const Route = createFileRoute("/apps/hondana/tracks/")({
 function RouteComponent() {
   return (
     <AppShell>
+      <title>Tracks - 本棚</title>
+
       <PageHeader title="Tracks" />
 
       <main className="flex-1 flex flex-col overflow-y-auto min-h-0">

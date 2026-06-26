@@ -13,6 +13,8 @@ export const Route = createFileRoute("/apps/hondana/library/new")({
 function RouteComponent() {
   return (
     <AppShell>
+      <title>New Content Item - 本棚</title>
+
       <PageHeader
         title="New Content Item"
         left={

@@ -31,12 +31,15 @@ function RouteComponent() {
   }
 
   return (
-    <Spotlight
-      activeItem={activeItem}
-      onBack={handleBack}
-      onCancel={handleCancel}
-      onStart={handleStart}
-      onDone={handleDone}
-    />
+    <>
+      <title>Spotlight</title>
+      <Spotlight
+        activeItem={activeItem}
+        onBack={handleBack}
+        onCancel={handleCancel}
+        onStart={handleStart}
+        onDone={handleDone}
+      />
+    </>
   )
 }

@@ -22,6 +22,8 @@ export const Route = createFileRoute("/apps/hondana/cli")({
 function RouteComponent() {
   return (
     <AppShell>
+      <title>CLI - 本棚</title>
+
       <PageHeader
         title="CLI"
         left={

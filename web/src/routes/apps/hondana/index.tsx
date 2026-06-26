@@ -16,6 +16,8 @@ export const Route = createFileRoute("/apps/hondana/")({
 function RouteComponent() {
   return (
     <AppShell>
+      <title>本棚</title>
+
       <PageHeader
         title="本棚"
         left={<PageHeaderBackButton to={linkOptions({ to: "/apps" }).to} />}

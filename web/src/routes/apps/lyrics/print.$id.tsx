@@ -24,6 +24,8 @@ function RouteComponent() {
 
   return (
     <div className="min-h-screen bg-black text-white print:bg-white print:text-black">
+      <title>Print - Lyrics</title>
+
       <div className="container mx-auto px-4 py-12 max-w-4xl text-center">
         {/* Header */}
         <div className="mb-12 pb-6 border-b border-gray-700 print:border-gray-300">
