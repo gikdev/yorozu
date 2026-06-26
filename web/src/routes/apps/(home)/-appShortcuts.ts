@@ -18,6 +18,7 @@ import {
   CoinIcon,
   FolderIcon,
   ChalkboardTeacherIcon,
+  GearIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -169,5 +170,14 @@ export const appShortcuts: IAppShortcut[] = [
     type: "IDEA",
     description:
       "A learning platform that combines courses, an exercise/project library, and a linear roadmap that sequences everything into a clear path — eliminating the 'what do I learn next?' confusion that plagues self-taught developers.",
+  },
+
+  {
+    id: "settings",
+    name: "Settings",
+    icon: GearIcon,
+    type: "IDEA",
+    description:
+      "The global settings for Yorozu. Might include stuff like: account, data import/export, language, theme, preferences, etc.",
   },
 ]
