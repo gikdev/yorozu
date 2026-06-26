@@ -20,25 +20,25 @@ export function SpotlightActive(p: SpotlightActiveProps) {
         <button
           type="button"
           onClick={p.onBack}
-          className="flex-1 flex items-center justify-center gap-2 hover:bg-mist-800 hover:text-mist-100 cursor-pointer transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 hover:bg-mist-900 hover:text-mist-100 cursor-pointer transition-colors"
         >
           <ArrowLeftIcon size={36} weight="bold" />
         </button>
 
         <button
           type="button"
-          onClick={p.onCancel}
-          className="flex-1 flex items-center justify-center gap-2 bg-rose-950 hover:bg-rose-900 text-white cursor-pointer transition-colors"
+          onClick={p.onDone}
+          className="flex-1 flex items-center justify-center gap-2 hover:bg-emerald-950/50 hover:text-emerald-400 cursor-pointer transition-colors"
         >
-          <XIcon size={36} weight="bold" />
+          <CheckIcon size={36} weight="bold" />
         </button>
 
         <button
           type="button"
-          onClick={p.onDone}
-          className="flex-1 flex items-center justify-center gap-2 bg-emerald-950 hover:bg-emerald-900 text-white cursor-pointer transition-colors"
+          onClick={p.onCancel}
+          className="flex-1 flex items-center justify-center gap-2 hover:bg-red-950/50 hover:text-red-400 cursor-pointer transition-colors"
         >
-          <CheckIcon size={36} weight="bold" />
+          <XIcon size={36} weight="bold" />
         </button>
       </div>
     </div>
