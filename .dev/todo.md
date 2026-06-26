@@ -1,5 +1,4 @@
 - homepage... change design completely
-- give each page proper favicon & title... change with html tags...
 - Break down large components into smaller ones (list which ones come to mind)
 - Fix naming inconsistencies (frontend)
 - Clean up DTOs/naming on backend (safe, no DB changes)
@@ -17,9 +16,8 @@
 - fav & bookmark as tags in domain
 - desktop UI and grid
 - library: icons clickable
+- Dedicated page components... (title + backButton, Up button, home button, more options, blah blah blah...)
 - tracks: isSynced
 - tracks: change total
 - content item: be airing & have known number of episodes... or vice versa...
-- tracks: consumption intention, with auto completion like tags...
 - secret login?
-- update ideas in apps page
