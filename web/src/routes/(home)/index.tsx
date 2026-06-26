@@ -1,4 +1,4 @@
-import { DigitalCard } from "#/features/digital-card"
+import { TempWelcomeScreen } from "#/features/TempWelcomeScreen"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/(home)/")({
@@ -6,5 +6,7 @@ export const Route = createFileRoute("/(home)/")({
 })
 
 function RouteComponent() {
-  return <DigitalCard />
+  // TODO: Re-build the homepage... properly this time...
+  // return <DigitalCard />
+  return <TempWelcomeScreen />
 }
