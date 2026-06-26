@@ -32,6 +32,15 @@ export const appShortcuts: IAppShortcut[] = [
     type: "APP",
   },
   {
+    id: "shirabe",
+    name: "調べ",
+    icon: MusicNotesIcon,
+    // url: linkOptions({ to: "/apps/shirabe" }).to,
+    type: "IDEA",
+    description:
+      "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
+  },
+  {
     id: "spotlight",
     name: "Spotlight",
     icon: CubeFocusIcon,
@@ -130,14 +139,6 @@ export const appShortcuts: IAppShortcut[] = [
     type: "IDEA",
     description:
       "A granular mood tracker that goes far beyond happy/sad, capturing over 40 specific feelings along with detailed context (where, with whom, time, food) to uncover hidden emotional patterns for therapy and self-understanding.",
-  },
-  {
-    id: "music",
-    name: "Music Library",
-    icon: MusicNotesIcon,
-    type: "IDEA",
-    description:
-      "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
   },
   {
     id: "note-cards",

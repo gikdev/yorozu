@@ -26,7 +26,7 @@ export const AppShortcut = ({ shortcut: s }: AppShortcutProps) => {
 
   const showDescription = () => {
     if (s.type !== "IDEA") return
-    alert(`Soon to be made. Description: ${s.description}`)
+    alert(`${s.description}`)
   }
 
   const content = (
