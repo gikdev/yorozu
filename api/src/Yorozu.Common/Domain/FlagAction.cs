@@ -1,4 +1,4 @@
-namespace Yorozu.Domain.Common;
+namespace Yorozu.Common.Domain;
 
 public enum FlagAction {
     On,

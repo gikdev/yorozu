@@ -12,5 +12,3 @@ public interface IContentItemRepository {
 }
 
 public record LocationDto(LocationType Type, string Value);
-
-public record ContentUnitSpecDto(bool IsOngoing, ContentUnitType UnitType, int? TotalUnits);

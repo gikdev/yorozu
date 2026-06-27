@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
-using Yorozu.Presentation.ConsumptionTracks.Common;
 
 namespace Yorozu.Infrastructure.ConsumptionTracks;
 
@@ -21,6 +20,12 @@ internal class ConsumptionTrackConfiguration : IEntityTypeConfiguration<Consumpt
         builder.Ignore(x => x.CanDrop);
         builder.Ignore(x => x.CanProgress);
         builder.Ignore(x => x.CanDecrement);
+        builder.Ignore(x => x.IsSecret);
+        builder.Ignore(x => x.IsBookmarked);
+
+        builder.PrimitiveCollection<List<string>>("_tags")
+            .HasField("_tags")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
 
         builder.HasOne<ContentItem>()
             .WithMany()

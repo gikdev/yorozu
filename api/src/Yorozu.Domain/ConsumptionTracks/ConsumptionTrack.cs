@@ -1,6 +1,5 @@
 using ErrorOr;
 using Yorozu.Common.Domain;
-using Yorozu.Domain.Common;
 
 namespace Yorozu.Domain.ConsumptionTracks;
 

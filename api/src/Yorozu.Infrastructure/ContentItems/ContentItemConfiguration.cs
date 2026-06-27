@@ -1,30 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Yorozu.Domain.ContentItems;
-using Yorozu.Infrastructure.Common;
 
 namespace Yorozu.Infrastructure.ContentItems;
 
 internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> {
     public void Configure(EntityTypeBuilder<ContentItem> builder) {
-        builder.Property(x => x.FullTitle)
-            .HasConversion(NotEmptyStringConverters.Required);
-
-        builder.Property(x => x.NickName)
-            .HasConversion(NotEmptyStringConverters.Nullable);
-
-        builder.Property(x => x.Format);
-
-        builder.Property(x => x.CoverImageUrl)
-            .HasConversion(NotEmptyStringConverters.Nullable);
-
         builder.Ignore(x => x.Title);
         builder.Ignore(x => x.Tags);
         builder.Ignore(x => x.PlaceholderLetter);
-        builder.Ignore(x => x.CanAddTracks);
+        builder.Ignore(x => x.IsSecret);
+        builder.Ignore(x => x.IsFavorited);
+        builder.Ignore(x => x.IsBookmarked);
+        builder.Ignore(x => x.IsOngoing);
 
         builder.OwnsOne(x => x.Location);
-        builder.OwnsOne(x => x.UnitSpec);
 
         builder.PrimitiveCollection<List<string>>("_tags")
             .HasField("_tags")

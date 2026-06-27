@@ -1,8 +1,8 @@
+#pragma warning disable CA1056
 #pragma warning disable CA1030
 #pragma warning disable CS8618
 
 using Yorozu.Common.Domain;
-using Yorozu.Domain.Common;
 
 namespace Yorozu.Domain.ContentItems;
 
@@ -29,12 +29,12 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
 
     // Flags
     public bool IsSecret => _tags.Contains(BuiltInTags.Secret);
-    public bool IsFavorited => _tags.Contains(BuiltInTags.Favorited);
+    public bool IsFavorited => _tags.Contains(BuiltInTags.Favorite);
     public bool IsBookmarked => _tags.Contains(BuiltInTags.Bookmarked);
     public bool IsOngoing => _tags.Contains(BuiltInTags.Ongoing);
 
     // Cover
-    public NotEmptyString? CoverImageUrl { get; private set; }
+    public string? CoverImageUrl { get; private set; }
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
     public string PlaceholderLetter => Title[0].ToString();
 
@@ -70,7 +70,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
 
     // ── Flags ────────────────────────────────────────────
     public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
-    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorited);
+    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorite);
     public void ApplyOngoing(FlagAction action) => ApplyFlag(action, BuiltInTags.Ongoing);
     public void ApplySecret(FlagAction action) {
         var before = IsSecret;
@@ -110,7 +110,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
 
     // ── Cover ────────────────────────────────────────────
     public void ChangeCoverImageUrl(NotEmptyString? img) {
-        CoverImageUrl = img;
+        CoverImageUrl = img?.Value;
         MarkUpdated();
     }
 

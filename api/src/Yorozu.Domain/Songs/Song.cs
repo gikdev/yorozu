@@ -1,7 +1,6 @@
 #pragma warning disable CS8618
 
 using Yorozu.Common.Domain;
-using Yorozu.Domain.Common;
 
 namespace Yorozu.Domain.Songs;
 
@@ -21,7 +20,7 @@ public class Song : IAggregateRoot, IHasTimestamps {
 
     // Flags
     public bool IsSecret => _tags.Contains(BuiltInTags.Secret);
-    public bool IsFavorited => _tags.Contains(BuiltInTags.Favorited);
+    public bool IsFavorited => _tags.Contains(BuiltInTags.Favorite);
     public bool IsBookmarked => _tags.Contains(BuiltInTags.Bookmarked);
     public bool IsSpiritual => _tags.Contains(BuiltInTags.Spiritual);
 
@@ -45,7 +44,7 @@ public class Song : IAggregateRoot, IHasTimestamps {
     // ── Flags ────────────────────────────────────────────
     public void ApplySecret(FlagAction action) => ApplyFlag(action, BuiltInTags.Secret);
     public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
-    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorited);
+    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorite);
     public void ApplySpiritual(FlagAction action) => ApplyFlag(action, BuiltInTags.Spiritual);
 
     private void ApplyFlag(FlagAction action, string tag) {

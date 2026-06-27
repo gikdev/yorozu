@@ -9,12 +9,12 @@ namespace Yorozu.Application.ConsumptionTracks.Common;
 public record ConsumptionTrackSummaryDto {
     public required Guid Id { get; init; }
     public required Guid ContentItemId { get; init; }
+    public required Guid? ConsumptionTrackListId { get; init; }
     public required string ContentItemTitle { get; init; }
     public required string? ContentItemCoverImageUrl { get; init; }
     public required string ContentItemPlaceholderColor { get; init; }
     public required string ContentItemPlaceholderLetter { get; init; }
     public required ContentItemFormat ContentItemFormat { get; init; }
-    public required IntentionType Type { get; init; }
     public required ConsumptionStatus Status { get; init; }
     public required string Title { get; init; }
     public required int CurrentUnit { get; init; }
