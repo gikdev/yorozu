@@ -1,7 +1,9 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import { createFileRoute, Link, linkOptions } from "@tanstack/react-router"
 import { PageHeaderBackButton } from "#/common/molecules/page-header"
 import { stylePageHeader } from "#/common/molecules/page-header/stylePageHeader"
-import { TimestampSongPlayer } from "#/features/song/TimestampSongPlayer"
+import { SongLyricsPlayer } from "#/features/song/SongLyricsPlayer"
+import { PencilSimpleIcon } from "@phosphor-icons/react"
+import { btn } from "#/common/atoms/btn"
 
 export const Route = createFileRoute("/apps/shirabe/")({
   component: RouteComponent,
@@ -19,11 +21,15 @@ function RouteComponent() {
 
         <div className="text-mist-100 font-bold text-xl text-center">調べ</div>
 
-        <div className="flex justify-end items-center gap-1"></div>
+        <div className="flex justify-end items-center gap-1">
+          <Link to="/apps/shirabe/editor" className={btn({isIcon:true})}>
+            <PencilSimpleIcon size={24} />
+          </Link>
+        </div>
       </header>
 
-      <main className="flex-1 flex flex-col overflow-y-auto min-h-0">
-        <TimestampSongPlayer />
+      <main className="flex-1 flex flex-col overflow-y-auto min-h-0 gap-8 p-8">
+        <SongLyricsPlayer />
       </main>
     </div>
   )

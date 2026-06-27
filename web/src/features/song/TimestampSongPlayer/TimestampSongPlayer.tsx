@@ -96,7 +96,7 @@ export function TimestampSongPlayer() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-4 max-w-240 w-full mx-auto bg-mist-900 p-8 rounded-lg">
+    <div className="flex flex-col gap-4 w-full bg-mist-900 p-8 rounded-lg">
       <div className="flex items-center justify-center gap-2">
         <input
           disabled={songUrl == null}

@@ -19,6 +19,7 @@ import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsShirabeIndexRouteImport } from "./../../routes/apps/shirabe/index"
 import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondana/index"
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
+import { Route as AppsShirabeEditorRouteImport } from "./../../routes/apps/shirabe/editor"
 import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
 import { Route as AppsHondanaCliRouteImport } from "./../../routes/apps/hondana/cli"
 import { Route as AppsHondanaTracksIndexRouteImport } from "./../../routes/apps/hondana/tracks.index"
@@ -78,6 +79,11 @@ const AppsHondanaIndexRoute = AppsHondanaIndexRouteImport.update({
 const AppshomeIndexRoute = AppshomeIndexRouteImport.update({
   id: "/apps/(home)/",
   path: "/apps/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsShirabeEditorRoute = AppsShirabeEditorRouteImport.update({
+  id: "/apps/shirabe/editor",
+  path: "/apps/shirabe/editor",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
+  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/": typeof AppshomeIndexRoute
   "/apps/hondana/": typeof AppsHondanaIndexRoute
   "/apps/shirabe/": typeof AppsShirabeIndexRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
+  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps": typeof AppshomeIndexRoute
   "/apps/hondana": typeof AppsHondanaIndexRoute
   "/apps/shirabe": typeof AppsShirabeIndexRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
+  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/(home)/": typeof AppshomeIndexRoute
   "/apps/hondana/": typeof AppsHondanaIndexRoute
   "/apps/shirabe/": typeof AppsShirabeIndexRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
+    | "/apps/shirabe/editor"
     | "/apps/"
     | "/apps/hondana/"
     | "/apps/shirabe/"
@@ -236,6 +246,7 @@ export interface FileRouteTypes {
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
+    | "/apps/shirabe/editor"
     | "/apps"
     | "/apps/hondana"
     | "/apps/shirabe"
@@ -258,6 +269,7 @@ export interface FileRouteTypes {
     | "/(home)/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
+    | "/apps/shirabe/editor"
     | "/apps/(home)/"
     | "/apps/hondana/"
     | "/apps/shirabe/"
@@ -281,6 +293,7 @@ export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
+  AppsShirabeEditorRoute: typeof AppsShirabeEditorRoute
   AppshomeIndexRoute: typeof AppshomeIndexRoute
   AppsHondanaIndexRoute: typeof AppsHondanaIndexRoute
   AppsShirabeIndexRoute: typeof AppsShirabeIndexRoute
@@ -366,6 +379,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppshomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/shirabe/editor": {
+      id: "/apps/shirabe/editor"
+      path: "/apps/shirabe/editor"
+      fullPath: "/apps/shirabe/editor"
+      preLoaderRoute: typeof AppsShirabeEditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/hondana/settings": {
       id: "/apps/hondana/settings"
       path: "/apps/hondana/settings"
@@ -449,6 +469,7 @@ const rootRouteChildren: RootRouteChildren = {
   homeIndexRoute: homeIndexRoute,
   AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
+  AppsShirabeEditorRoute: AppsShirabeEditorRoute,
   AppshomeIndexRoute: AppshomeIndexRoute,
   AppsHondanaIndexRoute: AppsHondanaIndexRoute,
   AppsShirabeIndexRoute: AppsShirabeIndexRoute,

@@ -1,6 +1,5 @@
 import {
   BooksIcon,
-  FileAudioIcon,
   KanbanIcon,
   ListChecksIcon,
   BookmarkIcon,
@@ -36,7 +35,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: "調べ",
     icon: MusicNotesIcon,
     url: linkOptions({ to: "/apps/shirabe" }).to,
-    type: "APP",
+    type: "MVP",
     // description: "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
   },
   {

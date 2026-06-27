@@ -10,6 +10,7 @@ import { SimpleCheckboxInput } from "./simple-checkbox-input"
 import { ImgUrlWithPreviewInput } from "./ImgUrlWithPreviewInput"
 import { TagsPickerInput } from "./TagsPickerInput"
 import { SmartTagsInput } from "./SmartTagsInput"
+import { LyricLineField } from "#/features/lyric-lines/LyricLinesForm"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
@@ -27,6 +28,7 @@ const { useAppForm } = createFormHook({
     SimpleWordListInput,
     TagOptionsInput,
     SimpleCheckboxInput,
+    LyricLineField,
   },
   formComponents: {
     SimpleSubmitBtn,
