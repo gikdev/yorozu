@@ -44,3 +44,6 @@ dotnet_diagnostic.CA1034.severity = silent
 
 # CA2227: Collection properties should be read only
 dotnet_diagnostic.CA2227.severity = none
+
+# IDE0022: Use block body for method
+csharp_style_expression_bodied_methods = false

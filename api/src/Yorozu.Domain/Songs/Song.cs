@@ -1,4 +1,4 @@
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618
 
 using Yorozu.Common.Domain;
 using Yorozu.Domain.Common;
@@ -6,21 +6,26 @@ using Yorozu.Domain.Common;
 namespace Yorozu.Domain.Songs;
 
 public class Song : IAggregateRoot, IHasTimestamps {
+    // Identity
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; private set; }
 
+    // Tags
     private readonly List<string> _tags = [];
     public IReadOnlyCollection<string> Tags => _tags.ToList().AsReadOnly();
 
+    // Title
     public string Title { get; private set; }
     public string PlaceholderLetter => Title[0].ToString();
 
+    // Flags
     public bool IsSecret => _tags.Contains(BuiltInTags.Secret);
     public bool IsFavorited => _tags.Contains(BuiltInTags.Favorited);
     public bool IsBookmarked => _tags.Contains(BuiltInTags.Bookmarked);
     public bool IsSpiritual => _tags.Contains(BuiltInTags.Spiritual);
 
+    // EF ctor
     private Song() { }
 
     public static Song Create(
@@ -31,71 +36,31 @@ public class Song : IAggregateRoot, IHasTimestamps {
         Id = id ?? Guid.NewGuid(),
     };
 
+    // ── Title ────────────────────────────────────────────
     public void ChangeTitle(NotEmptyString title) {
         Title = title.Value;
         MarkUpdated();
     }
 
-    public void Bookmark() {
-        EnsureTagAdded(NotEmptyString.Create(BuiltInTags.Bookmarked).Value);
-        MarkUpdated();
-    }
+    // ── Flags ────────────────────────────────────────────
+    public void ApplySecret(FlagAction action) => ApplyFlag(action, BuiltInTags.Secret);
+    public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
+    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorited);
+    public void ApplySpiritual(FlagAction action) => ApplyFlag(action, BuiltInTags.Spiritual);
 
-    public void Unbookmark() {
-        EnsureTagRemoved(NotEmptyString.Create(BuiltInTags.Bookmarked).Value);
-        MarkUpdated();
-    }
-
-    public void ToggleBookmark() {
-        if (IsBookmarked) {
-            Bookmark();
-        } else {
-            Unbookmark();
+    private void ApplyFlag(FlagAction action, string tag) {
+        var nes = NotEmptyString.Create(tag).Value;
+        switch (action) {
+            case FlagAction.On: EnsureTagAdded(nes); break;
+            case FlagAction.Off: EnsureTagRemoved(nes); break;
+            case FlagAction.Toggle:
+                if (_tags.Contains(tag)) EnsureTagRemoved(nes);
+                else EnsureTagAdded(nes);
+                break;
         }
-
-        MarkUpdated();
     }
 
-    public void Favorite() {
-        EnsureTagAdded(NotEmptyString.Create(BuiltInTags.Favorited).Value);
-        MarkUpdated();
-    }
-
-    public void Unfavorite() {
-        EnsureTagRemoved(NotEmptyString.Create(BuiltInTags.Favorited).Value);
-        MarkUpdated();
-    }
-
-    public void ToggleFavorited() {
-        if (IsFavorited) {
-            Favorite();
-        } else {
-            Unfavorite();
-        }
-
-        MarkUpdated();
-    }
-
-    public void MarkSecret() {
-        EnsureTagAdded(NotEmptyString.Create(BuiltInTags.Secret).Value);
-        MarkUpdated();
-    }
-
-    public void UnmarkSecret() {
-        EnsureTagRemoved(NotEmptyString.Create(BuiltInTags.Secret).Value);
-        MarkUpdated();
-    }
-
-    public void ToggleSecret() {
-        if (IsSecret) {
-            MarkSecret();
-        } else {
-            UnmarkSecret();
-        }
-
-        MarkUpdated();
-    }
-
+    // ── Tags ─────────────────────────────────────────────
     public void EnsureTagAdded(NotEmptyString tag) {
         if (_tags.Contains(tag)) return;
         _tags.Add(tag.Value);
@@ -112,6 +77,7 @@ public class Song : IAggregateRoot, IHasTimestamps {
         MarkUpdated();
     }
 
+    // ── Private ──────────────────────────────────────────
     private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
 
     public override bool Equals(object? obj) => obj is Song other && Id.Equals(other.Id);

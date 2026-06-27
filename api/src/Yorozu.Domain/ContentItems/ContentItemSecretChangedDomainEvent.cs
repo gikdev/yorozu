@@ -2,8 +2,7 @@ using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
-public record ContentItemUnitSpecChangedDomainEvent(
+public record ContentItemSecretChangedDomainEvent(
     Guid ContentItemId,
-    ContentUnitType UnitType,
-    int? TotalUnits
+    bool IsSecret
 ) : IDomainEvent;
