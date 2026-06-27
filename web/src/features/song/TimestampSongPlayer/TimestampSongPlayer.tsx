@@ -68,6 +68,9 @@ export function TimestampSongPlayer() {
     setTotalTime(null)
     audioRef.current.pause()
     audioRef.current.src = ""
+    if (blobRef.current) {
+      URL.revokeObjectURL(blobRef.current)
+    }
   }
 
   const handleSetCurrentTime = (currentTime: number) => {
@@ -133,7 +136,6 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          title="-1s"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(1)}
@@ -194,7 +196,6 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          title="+5s"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(5)}
