@@ -40,7 +40,6 @@ export function LyricLineField(p: LyricLineFieldProps) {
 
   return (
     <div className="flex flex-col bg-mist-900 rounded-lg overflow-hidden">
-
       {/* Header / collapsed view */}
       <div className="flex items-center gap-2 p-3">
         <button
@@ -58,7 +57,6 @@ export function LyricLineField(p: LyricLineFieldProps) {
         <span className="text-xs truncate flex-1">
           {previewText ?? <span className="italic">empty</span>}
         </span>
-
 
         <button
           type="button"
@@ -92,7 +90,6 @@ export function LyricLineField(p: LyricLineFieldProps) {
       {/* Expanded content */}
       {isExpanded && (
         <div className="flex flex-col gap-3 px-4 pb-4 border-t border-mist-700 pt-3">
-
           {/* Timestamp */}
           <div className={fieldContainer()}>
             <p>Timestamp</p>

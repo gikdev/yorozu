@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react"
 import { PlayIcon, PauseIcon, FilePlusIcon } from "@phosphor-icons/react"
 import { btn } from "#/common/atoms/btn"
-import type { TextFieldKey } from "../lyric-lines/LyricLinesForm/LyricLinesFormSchema";
-import type { LyricLine } from "../lyric-lines/lyricLineSchema";
-import toast from "react-hot-toast";
-import { extractErrorMessage } from "#/common/helpers/errors";
+import type { TextFieldKey } from "../lyric-lines/LyricLinesForm/LyricLinesFormSchema"
+import type { LyricLine } from "../lyric-lines/lyricLineSchema"
+import toast from "react-hot-toast"
+import { extractErrorMessage } from "#/common/helpers/errors"
 
 const displayFields: { key: TextFieldKey; label: string }[] = [
   { key: "persian", label: "Persian" },
@@ -30,8 +30,11 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
   const [totalTime, setTotalTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const currentLine = lines.findIndex(l => l.timestamp != null && currentTime <= l.timestamp)
-  const activeLine = currentLine === -1 ? lines[lines.length - 1] : lines[currentLine]
+  const currentLine = lines.findIndex(
+    l => l.timestamp != null && currentTime <= l.timestamp,
+  )
+  const activeLine =
+    currentLine === -1 ? lines[lines.length - 1] : lines[currentLine]
 
   const handleAudioUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -50,7 +53,9 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
     reader.onload = ev => {
       try {
         const parsed = JSON.parse(ev.target?.result as string)
-        const linesData: LyricLine[] = Array.isArray(parsed) ? parsed : parsed.lines
+        const linesData: LyricLine[] = Array.isArray(parsed)
+          ? parsed
+          : parsed.lines
         linesData.sort((a, b) => {
           if (a.timestamp === null) return 1
           if (b.timestamp === null) return -1
@@ -82,7 +87,6 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
 
   return (
     <div className="flex flex-col gap-6 w-full mx-auto">
-
       {/* Cover image */}
       {imageUrl && (
         <img
@@ -135,7 +139,12 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
         <label className={btn({ theme: "outline" })}>
           <FilePlusIcon size={20} />
           <span>Audio</span>
-          <input className="hidden" type="file" accept="audio/*" onChange={handleAudioUpload} />
+          <input
+            className="hidden"
+            type="file"
+            accept="audio/*"
+            onChange={handleAudioUpload}
+          />
         </label>
 
         <button
@@ -143,16 +152,22 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
           className={btn({ theme: "primary", size: "lg" })}
           onClick={handlePlayPause}
         >
-          {isPlaying
-            ? <PauseIcon size={32} weight="fill" />
-            : <PlayIcon size={32} weight="fill" />
-          }
+          {isPlaying ? (
+            <PauseIcon size={32} weight="fill" />
+          ) : (
+            <PlayIcon size={32} weight="fill" />
+          )}
         </button>
 
         <label className={btn({ theme: "outline" })}>
           <FilePlusIcon size={20} />
           <span>Lyrics</span>
-          <input className="hidden" type="file" accept=".json" onChange={handleJsonUpload} />
+          <input
+            className="hidden"
+            type="file"
+            accept=".json"
+            onChange={handleJsonUpload}
+          />
         </label>
       </div>
 

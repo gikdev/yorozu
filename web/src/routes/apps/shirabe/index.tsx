@@ -22,7 +22,7 @@ function RouteComponent() {
         <div className="text-mist-100 font-bold text-xl text-center">調べ</div>
 
         <div className="flex justify-end items-center gap-1">
-          <Link to="/apps/shirabe/editor" className={btn({isIcon:true})}>
+          <Link to="/apps/shirabe/editor" className={btn({ isIcon: true })}>
             <PencilSimpleIcon size={24} />
           </Link>
         </div>

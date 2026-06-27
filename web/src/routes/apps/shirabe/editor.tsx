@@ -8,7 +8,10 @@ import { btn } from "#/common/atoms/btn"
 import { styleInput } from "#/common/atoms/input"
 import { FilePlusIcon, PlusIcon } from "@phosphor-icons/react"
 import type { LyricLinesFormValues } from "#/features/lyric-lines/LyricLinesForm/LyricLinesFormSchema"
-import { clearLyricLines, loadLyricLines } from "#/features/lyric-lines/LyricLinesForm/useLyricLinesFormStorage"
+import {
+  clearLyricLines,
+  loadLyricLines,
+} from "#/features/lyric-lines/LyricLinesForm/useLyricLinesFormStorage"
 import toast from "react-hot-toast"
 import { extractErrorMessage } from "#/common/helpers/errors"
 
@@ -22,7 +25,9 @@ type PageState =
   | { mode: "EDIT"; initialValues: LyricLinesFormValues }
 
 function downloadJson(values: LyricLinesFormValues, filename: string) {
-  const blob = new Blob([JSON.stringify(values, null, 2)], { type: "application/json" })
+  const blob = new Blob([JSON.stringify(values, null, 2)], {
+    type: "application/json",
+  })
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url
@@ -93,7 +98,6 @@ function RouteComponent() {
       </header>
 
       <main className="flex-1 flex flex-col overflow-y-auto min-h-0 gap-8 p-8">
-
         {pageState.mode === "LANDING" && (
           <div className="flex flex-col gap-4 items-center justify-center flex-1">
             <p className="text-mist-300 text-lg font-semibold">調べ Editor</p>
@@ -112,7 +116,12 @@ function RouteComponent() {
               <label className={btn({ theme: "outline" })}>
                 <FilePlusIcon size={20} />
                 <span>Load JSON</span>
-                <input className="hidden" type="file" accept=".json" onChange={handleImport} />
+                <input
+                  className="hidden"
+                  type="file"
+                  accept=".json"
+                  onChange={handleImport}
+                />
               </label>
             </div>
           </div>
@@ -120,7 +129,6 @@ function RouteComponent() {
 
         {pageState.mode !== "LANDING" && (
           <div className="flex gap-8 items-start">
-
             {/* Left column */}
             <div className="flex flex-col gap-4 flex-1 sticky top-0">
               <TimestampSongPlayer />
@@ -146,10 +154,7 @@ function RouteComponent() {
                   onSubmit={handleSubmit}
                 />
               ) : (
-                <LyricLinesForm
-                  mode="CREATE"
-                  onSubmit={handleSubmit}
-                />
+                <LyricLinesForm mode="CREATE" onSubmit={handleSubmit} />
               )}
             </div>
           </div>

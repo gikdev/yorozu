@@ -22,14 +22,22 @@ const sortByTimestamp = (lines: LyricLinesFormValues["lines"]) =>
   })
 
 type LyricLinesFormProps =
-  | { mode: "CREATE"; onSubmit: (values: LyricLinesFormValues) => Promise<void> }
-  | { mode: "EDIT"; initialValues: LyricLinesFormValues; onSubmit: (values: LyricLinesFormValues) => Promise<void> }
+  | {
+      mode: "CREATE"
+      onSubmit: (values: LyricLinesFormValues) => Promise<void>
+    }
+  | {
+      mode: "EDIT"
+      initialValues: LyricLinesFormValues
+      onSubmit: (values: LyricLinesFormValues) => Promise<void>
+    }
 
 export function LyricLinesForm(p: LyricLinesFormProps) {
   const [expandedNewId, setExpandedNewId] = useState<string | null>(null)
 
   const form = useAppForm({
-    defaultValues: p.mode === "EDIT" ? p.initialValues : emptyLyricLinesFormValues,
+    defaultValues:
+      p.mode === "EDIT" ? p.initialValues : emptyLyricLinesFormValues,
     validators: {
       onSubmit: lyricLinesFormSchema,
     },
@@ -50,7 +58,10 @@ export function LyricLinesForm(p: LyricLinesFormProps) {
 
   const handleRemoveLine = (index: number) => {
     const current = form.getFieldValue("lines")
-    form.setFieldValue("lines", current.filter((_, i) => i !== index))
+    form.setFieldValue(
+      "lines",
+      current.filter((_, i) => i !== index),
+    )
   }
 
   return (
