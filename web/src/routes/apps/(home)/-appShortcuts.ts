@@ -35,10 +35,9 @@ export const appShortcuts: IAppShortcut[] = [
     id: "shirabe",
     name: "調べ",
     icon: MusicNotesIcon,
-    // url: linkOptions({ to: "/apps/shirabe" }).to,
-    type: "IDEA",
-    description:
-      "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
+    url: linkOptions({ to: "/apps/shirabe" }).to,
+    type: "APP",
+    // description: "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
   },
   {
     id: "spotlight",
@@ -67,13 +66,6 @@ export const appShortcuts: IAppShortcut[] = [
     name: "Kanban",
     icon: KanbanIcon,
     url: linkOptions({ to: "/apps/kanban" }).to,
-    type: "MVP",
-  },
-  {
-    id: "lyrics",
-    name: "Lyrics",
-    icon: FileAudioIcon,
-    url: linkOptions({ to: "/apps/lyrics" }).to,
     type: "MVP",
   },
   {

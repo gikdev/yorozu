@@ -16,15 +16,13 @@ import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
-import { Route as AppsLyricsIndexRouteImport } from "./../../routes/apps/lyrics/index"
+import { Route as AppsShirabeIndexRouteImport } from "./../../routes/apps/shirabe/index"
 import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondana/index"
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
-import { Route as AppsLyricsIdRouteImport } from "./../../routes/apps/lyrics/$id"
 import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
 import { Route as AppsHondanaCliRouteImport } from "./../../routes/apps/hondana/cli"
 import { Route as AppsHondanaTracksIndexRouteImport } from "./../../routes/apps/hondana/tracks.index"
 import { Route as AppsHondanaLibraryIndexRouteImport } from "./../../routes/apps/hondana/library.index"
-import { Route as AppsLyricsPrintIdRouteImport } from "./../../routes/apps/lyrics/print.$id"
 import { Route as AppsHondanaLibraryNewRouteImport } from "./../../routes/apps/hondana/library.new"
 import { Route as AppsHondanaTracksIdIndexRouteImport } from "./../../routes/apps/hondana/tracks.$id.index"
 import { Route as AppsHondanaLibraryIdIndexRouteImport } from "./../../routes/apps/hondana/library.$id.index"
@@ -67,9 +65,9 @@ const AppsChoiceRoute = AppsChoiceRouteImport.update({
   path: "/apps/choice",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsLyricsIndexRoute = AppsLyricsIndexRouteImport.update({
-  id: "/apps/lyrics/",
-  path: "/apps/lyrics/",
+const AppsShirabeIndexRoute = AppsShirabeIndexRouteImport.update({
+  id: "/apps/shirabe/",
+  path: "/apps/shirabe/",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsHondanaIndexRoute = AppsHondanaIndexRouteImport.update({
@@ -80,11 +78,6 @@ const AppsHondanaIndexRoute = AppsHondanaIndexRouteImport.update({
 const AppshomeIndexRoute = AppshomeIndexRouteImport.update({
   id: "/apps/(home)/",
   path: "/apps/",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsLyricsIdRoute = AppsLyricsIdRouteImport.update({
-  id: "/apps/lyrics/$id",
-  path: "/apps/lyrics/$id",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
@@ -105,11 +98,6 @@ const AppsHondanaTracksIndexRoute = AppsHondanaTracksIndexRouteImport.update({
 const AppsHondanaLibraryIndexRoute = AppsHondanaLibraryIndexRouteImport.update({
   id: "/apps/hondana/library/",
   path: "/apps/hondana/library/",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsLyricsPrintIdRoute = AppsLyricsPrintIdRouteImport.update({
-  id: "/apps/lyrics/print/$id",
-  path: "/apps/lyrics/print/$id",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsHondanaLibraryNewRoute = AppsHondanaLibraryNewRouteImport.update({
@@ -157,12 +145,10 @@ export interface FileRoutesByFullPath {
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps/": typeof AppshomeIndexRoute
   "/apps/hondana/": typeof AppsHondanaIndexRoute
-  "/apps/lyrics/": typeof AppsLyricsIndexRoute
+  "/apps/shirabe/": typeof AppsShirabeIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
-  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana/library/": typeof AppsHondanaLibraryIndexRoute
   "/apps/hondana/tracks/": typeof AppsHondanaTracksIndexRoute
   "/apps/hondana/library/$id/edit": typeof AppsHondanaLibraryIdEditRoute
@@ -181,12 +167,10 @@ export interface FileRoutesByTo {
   "/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps": typeof AppshomeIndexRoute
   "/apps/hondana": typeof AppsHondanaIndexRoute
-  "/apps/lyrics": typeof AppsLyricsIndexRoute
+  "/apps/shirabe": typeof AppsShirabeIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
-  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana/library": typeof AppsHondanaLibraryIndexRoute
   "/apps/hondana/tracks": typeof AppsHondanaTracksIndexRoute
   "/apps/hondana/library/$id/edit": typeof AppsHondanaLibraryIdEditRoute
@@ -206,12 +190,10 @@ export interface FileRoutesById {
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/lyrics/$id": typeof AppsLyricsIdRoute
   "/apps/(home)/": typeof AppshomeIndexRoute
   "/apps/hondana/": typeof AppsHondanaIndexRoute
-  "/apps/lyrics/": typeof AppsLyricsIndexRoute
+  "/apps/shirabe/": typeof AppsShirabeIndexRoute
   "/apps/hondana/library/new": typeof AppsHondanaLibraryNewRoute
-  "/apps/lyrics/print/$id": typeof AppsLyricsPrintIdRoute
   "/apps/hondana/library/": typeof AppsHondanaLibraryIndexRoute
   "/apps/hondana/tracks/": typeof AppsHondanaTracksIndexRoute
   "/apps/hondana/library/$id/edit": typeof AppsHondanaLibraryIdEditRoute
@@ -232,12 +214,10 @@ export interface FileRouteTypes {
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
-    | "/apps/lyrics/$id"
     | "/apps/"
     | "/apps/hondana/"
-    | "/apps/lyrics/"
+    | "/apps/shirabe/"
     | "/apps/hondana/library/new"
-    | "/apps/lyrics/print/$id"
     | "/apps/hondana/library/"
     | "/apps/hondana/tracks/"
     | "/apps/hondana/library/$id/edit"
@@ -256,12 +236,10 @@ export interface FileRouteTypes {
     | "/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
-    | "/apps/lyrics/$id"
     | "/apps"
     | "/apps/hondana"
-    | "/apps/lyrics"
+    | "/apps/shirabe"
     | "/apps/hondana/library/new"
-    | "/apps/lyrics/print/$id"
     | "/apps/hondana/library"
     | "/apps/hondana/tracks"
     | "/apps/hondana/library/$id/edit"
@@ -280,12 +258,10 @@ export interface FileRouteTypes {
     | "/(home)/"
     | "/apps/hondana/cli"
     | "/apps/hondana/settings"
-    | "/apps/lyrics/$id"
     | "/apps/(home)/"
     | "/apps/hondana/"
-    | "/apps/lyrics/"
+    | "/apps/shirabe/"
     | "/apps/hondana/library/new"
-    | "/apps/lyrics/print/$id"
     | "/apps/hondana/library/"
     | "/apps/hondana/tracks/"
     | "/apps/hondana/library/$id/edit"
@@ -305,12 +281,10 @@ export interface RootRouteChildren {
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
-  AppsLyricsIdRoute: typeof AppsLyricsIdRoute
   AppshomeIndexRoute: typeof AppshomeIndexRoute
   AppsHondanaIndexRoute: typeof AppsHondanaIndexRoute
-  AppsLyricsIndexRoute: typeof AppsLyricsIndexRoute
+  AppsShirabeIndexRoute: typeof AppsShirabeIndexRoute
   AppsHondanaLibraryNewRoute: typeof AppsHondanaLibraryNewRoute
-  AppsLyricsPrintIdRoute: typeof AppsLyricsPrintIdRoute
   AppsHondanaLibraryIndexRoute: typeof AppsHondanaLibraryIndexRoute
   AppsHondanaTracksIndexRoute: typeof AppsHondanaTracksIndexRoute
   AppsHondanaLibraryIdEditRoute: typeof AppsHondanaLibraryIdEditRoute
@@ -371,11 +345,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsChoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/lyrics/": {
-      id: "/apps/lyrics/"
-      path: "/apps/lyrics"
-      fullPath: "/apps/lyrics/"
-      preLoaderRoute: typeof AppsLyricsIndexRouteImport
+    "/apps/shirabe/": {
+      id: "/apps/shirabe/"
+      path: "/apps/shirabe"
+      fullPath: "/apps/shirabe/"
+      preLoaderRoute: typeof AppsShirabeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/hondana/": {
@@ -390,13 +364,6 @@ declare module "@tanstack/react-router" {
       path: "/apps"
       fullPath: "/apps/"
       preLoaderRoute: typeof AppshomeIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/lyrics/$id": {
-      id: "/apps/lyrics/$id"
-      path: "/apps/lyrics/$id"
-      fullPath: "/apps/lyrics/$id"
-      preLoaderRoute: typeof AppsLyricsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/hondana/settings": {
@@ -425,13 +392,6 @@ declare module "@tanstack/react-router" {
       path: "/apps/hondana/library"
       fullPath: "/apps/hondana/library/"
       preLoaderRoute: typeof AppsHondanaLibraryIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/lyrics/print/$id": {
-      id: "/apps/lyrics/print/$id"
-      path: "/apps/lyrics/print/$id"
-      fullPath: "/apps/lyrics/print/$id"
-      preLoaderRoute: typeof AppsLyricsPrintIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/hondana/library/new": {
@@ -489,12 +449,10 @@ const rootRouteChildren: RootRouteChildren = {
   homeIndexRoute: homeIndexRoute,
   AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
-  AppsLyricsIdRoute: AppsLyricsIdRoute,
   AppshomeIndexRoute: AppshomeIndexRoute,
   AppsHondanaIndexRoute: AppsHondanaIndexRoute,
-  AppsLyricsIndexRoute: AppsLyricsIndexRoute,
+  AppsShirabeIndexRoute: AppsShirabeIndexRoute,
   AppsHondanaLibraryNewRoute: AppsHondanaLibraryNewRoute,
-  AppsLyricsPrintIdRoute: AppsLyricsPrintIdRoute,
   AppsHondanaLibraryIndexRoute: AppsHondanaLibraryIndexRoute,
   AppsHondanaTracksIndexRoute: AppsHondanaTracksIndexRoute,
   AppsHondanaLibraryIdEditRoute: AppsHondanaLibraryIdEditRoute,
