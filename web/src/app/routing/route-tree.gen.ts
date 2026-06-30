@@ -19,6 +19,7 @@ import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsQrReaderRouteImport } from "./../../routes/apps/qr-reader"
 import { Route as AppsQrGeneratorRouteImport } from "./../../routes/apps/qr-generator"
+import { Route as AppsPasswordGeneratorRouteImport } from "./../../routes/apps/password-generator"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsShirabeIndexRouteImport } from "./../../routes/apps/shirabe/index"
@@ -83,6 +84,11 @@ const AppsQrReaderRoute = AppsQrReaderRouteImport.update({
 const AppsQrGeneratorRoute = AppsQrGeneratorRouteImport.update({
   id: "/apps/qr-generator",
   path: "/apps/qr-generator",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsPasswordGeneratorRoute = AppsPasswordGeneratorRouteImport.update({
+  id: "/apps/password-generator",
+  path: "/apps/password-generator",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsKanbanRoute = AppsKanbanRouteImport.update({
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/password-generator"
     | "/apps/qr-generator"
     | "/apps/qr-reader"
     | "/apps/spotlight"
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/password-generator"
     | "/apps/qr-generator"
     | "/apps/qr-reader"
     | "/apps/spotlight"
@@ -307,6 +318,7 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/password-generator"
     | "/apps/qr-generator"
     | "/apps/qr-reader"
     | "/apps/spotlight"
@@ -335,6 +347,7 @@ export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
+  AppsPasswordGeneratorRoute: typeof AppsPasswordGeneratorRoute
   AppsQrGeneratorRoute: typeof AppsQrGeneratorRoute
   AppsQrReaderRoute: typeof AppsQrReaderRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
@@ -429,6 +442,13 @@ declare module "@tanstack/react-router" {
       path: "/apps/qr-generator"
       fullPath: "/apps/qr-generator"
       preLoaderRoute: typeof AppsQrGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/password-generator": {
+      id: "/apps/password-generator"
+      path: "/apps/password-generator"
+      fullPath: "/apps/password-generator"
+      preLoaderRoute: typeof AppsPasswordGeneratorRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/kanban": {
@@ -543,6 +563,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsKanbanRoute: AppsKanbanRoute,
+  AppsPasswordGeneratorRoute: AppsPasswordGeneratorRoute,
   AppsQrGeneratorRoute: AppsQrGeneratorRoute,
   AppsQrReaderRoute: AppsQrReaderRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,

@@ -23,6 +23,7 @@ import {
   ScanIcon,
   MicrophoneIcon,
   FileAudioIcon,
+  PasswordIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -73,18 +74,11 @@ export const appShortcuts: IAppShortcut[] = [
     type: "MVP",
   },
   {
-    id: "video-player",
-    name: "Video Player",
-    icon: VideoIcon,
+    id: "password-generator",
+    name: "Password Generator",
+    icon: PasswordIcon,
     type: "MVP",
-    url: linkOptions({ to: "/apps/video-player" }).to,
-  },
-  {
-    id: "writing",
-    name: "Writing Area",
-    icon: PencilIcon,
-    type: "MVP",
-    url: linkOptions({ to: "/apps/writing-area" }).to,
+    url: linkOptions({ to: "/apps/password-generator" }).to,
   },
   {
     id: "qr-generator",
@@ -101,6 +95,20 @@ export const appShortcuts: IAppShortcut[] = [
     url: linkOptions({ to: "/apps/qr-reader" }).to,
   },
   {
+    id: "tts",
+    name: "Text to Speech",
+    icon: FileAudioIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/tts" }).to,
+  },
+  {
+    id: "video-player",
+    name: "Video Player",
+    icon: VideoIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/video-player" }).to,
+  },
+  {
     id: "voice-notes",
     name: "Voice Notes",
     icon: MicrophoneIcon,
@@ -108,11 +116,11 @@ export const appShortcuts: IAppShortcut[] = [
     url: linkOptions({ to: "/apps/voice-notes" }).to,
   },
   {
-    id: "tts",
-    name: "Text to Speech",
-    icon: FileAudioIcon,
+    id: "writing",
+    name: "Writing Area",
+    icon: PencilIcon,
     type: "MVP",
-    url: linkOptions({ to: "/apps/tts" }).to,
+    url: linkOptions({ to: "/apps/writing-area" }).to,
   },
 
   {
