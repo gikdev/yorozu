@@ -19,6 +19,9 @@ import {
   ChalkboardTeacherIcon,
   GearIcon,
   VideoIcon,
+  QrCodeIcon,
+  ScanIcon,
+  MicrophoneIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -81,6 +84,27 @@ export const appShortcuts: IAppShortcut[] = [
     icon: PencilIcon,
     type: "MVP",
     url: linkOptions({ to: "/apps/writing-area" }).to,
+  },
+  {
+    id: "qr-generator",
+    name: "QR Generator",
+    icon: QrCodeIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/qr-generator" }).to,
+  },
+  {
+    id: "qr-reader",
+    name: "QR Reader",
+    icon: ScanIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/qr-reader" }).to,
+  },
+  {
+    id: "voice-notes",
+    name: "Voice Notes",
+    icon: MicrophoneIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/voice-notes" }).to,
   },
 
   {

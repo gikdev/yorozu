@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
+import { Route as AppsVoiceNotesRouteImport } from "./../../routes/apps/voice-notes"
 import { Route as AppsVideoPlayerRouteImport } from "./../../routes/apps/video-player"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
+import { Route as AppsQrReaderRouteImport } from "./../../routes/apps/qr-reader"
+import { Route as AppsQrGeneratorRouteImport } from "./../../routes/apps/qr-generator"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsShirabeIndexRouteImport } from "./../../routes/apps/shirabe/index"
@@ -46,6 +49,11 @@ const AppsWritingAreaRoute = AppsWritingAreaRouteImport.update({
   path: "/apps/writing-area",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsVoiceNotesRoute = AppsVoiceNotesRouteImport.update({
+  id: "/apps/voice-notes",
+  path: "/apps/voice-notes",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppsVideoPlayerRoute = AppsVideoPlayerRouteImport.update({
   id: "/apps/video-player",
   path: "/apps/video-player",
@@ -59,6 +67,16 @@ const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
 const AppsSpotlightRoute = AppsSpotlightRouteImport.update({
   id: "/apps/spotlight",
   path: "/apps/spotlight",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsQrReaderRoute = AppsQrReaderRouteImport.update({
+  id: "/apps/qr-reader",
+  path: "/apps/qr-reader",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsQrGeneratorRoute = AppsQrGeneratorRouteImport.update({
+  id: "/apps/qr-generator",
+  path: "/apps/qr-generator",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsKanbanRoute = AppsKanbanRouteImport.update({
@@ -145,9 +163,12 @@ export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/qr-generator": typeof AppsQrGeneratorRoute
+  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
+  "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -168,9 +189,12 @@ export interface FileRoutesByTo {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/qr-generator": typeof AppsQrGeneratorRoute
+  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
+  "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -192,9 +216,12 @@ export interface FileRoutesById {
   "/dev": typeof DevRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
+  "/apps/qr-generator": typeof AppsQrGeneratorRoute
+  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
+  "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -217,9 +244,12 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/qr-generator"
+    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/apps/video-player"
+    | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
     | "/apps/hondana/settings"
@@ -240,9 +270,12 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/qr-generator"
+    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/apps/video-player"
+    | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
     | "/apps/hondana/settings"
@@ -263,9 +296,12 @@ export interface FileRouteTypes {
     | "/dev"
     | "/apps/choice"
     | "/apps/kanban"
+    | "/apps/qr-generator"
+    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
     | "/apps/video-player"
+    | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/(home)/"
     | "/apps/hondana/settings"
@@ -287,9 +323,12 @@ export interface RootRouteChildren {
   DevRoute: typeof DevRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
+  AppsQrGeneratorRoute: typeof AppsQrGeneratorRoute
+  AppsQrReaderRoute: typeof AppsQrReaderRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
   AppsVideoPlayerRoute: typeof AppsVideoPlayerRoute
+  AppsVoiceNotesRoute: typeof AppsVoiceNotesRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
@@ -330,6 +369,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsWritingAreaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/apps/voice-notes": {
+      id: "/apps/voice-notes"
+      path: "/apps/voice-notes"
+      fullPath: "/apps/voice-notes"
+      preLoaderRoute: typeof AppsVoiceNotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/apps/video-player": {
       id: "/apps/video-player"
       path: "/apps/video-player"
@@ -349,6 +395,20 @@ declare module "@tanstack/react-router" {
       path: "/apps/spotlight"
       fullPath: "/apps/spotlight"
       preLoaderRoute: typeof AppsSpotlightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/qr-reader": {
+      id: "/apps/qr-reader"
+      path: "/apps/qr-reader"
+      fullPath: "/apps/qr-reader"
+      preLoaderRoute: typeof AppsQrReaderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/qr-generator": {
+      id: "/apps/qr-generator"
+      path: "/apps/qr-generator"
+      fullPath: "/apps/qr-generator"
+      preLoaderRoute: typeof AppsQrGeneratorRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/kanban": {
@@ -463,9 +523,12 @@ const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsKanbanRoute: AppsKanbanRoute,
+  AppsQrGeneratorRoute: AppsQrGeneratorRoute,
+  AppsQrReaderRoute: AppsQrReaderRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
   AppsVideoPlayerRoute: AppsVideoPlayerRoute,
+  AppsVoiceNotesRoute: AppsVoiceNotesRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
