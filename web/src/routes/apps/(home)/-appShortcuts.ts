@@ -22,6 +22,7 @@ import {
   QrCodeIcon,
   ScanIcon,
   MicrophoneIcon,
+  FileAudioIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -105,6 +106,13 @@ export const appShortcuts: IAppShortcut[] = [
     icon: MicrophoneIcon,
     type: "MVP",
     url: linkOptions({ to: "/apps/voice-notes" }).to,
+  },
+  {
+    id: "tts",
+    name: "Text to Speech",
+    icon: FileAudioIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/tts" }).to,
   },
 
   {

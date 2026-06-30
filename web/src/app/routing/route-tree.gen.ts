@@ -14,6 +14,7 @@ import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
 import { Route as AppsVoiceNotesRouteImport } from "./../../routes/apps/voice-notes"
 import { Route as AppsVideoPlayerRouteImport } from "./../../routes/apps/video-player"
+import { Route as AppsTtsRouteImport } from "./../../routes/apps/tts"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsQrReaderRouteImport } from "./../../routes/apps/qr-reader"
@@ -57,6 +58,11 @@ const AppsVoiceNotesRoute = AppsVoiceNotesRouteImport.update({
 const AppsVideoPlayerRoute = AppsVideoPlayerRouteImport.update({
   id: "/apps/video-player",
   path: "/apps/video-player",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsTtsRoute = AppsTtsRouteImport.update({
+  id: "/apps/tts",
+  path: "/apps/tts",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
@@ -248,6 +257,7 @@ export interface FileRouteTypes {
     | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
@@ -327,6 +339,7 @@ export interface RootRouteChildren {
   AppsQrReaderRoute: typeof AppsQrReaderRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
+  AppsTtsRoute: typeof AppsTtsRoute
   AppsVideoPlayerRoute: typeof AppsVideoPlayerRoute
   AppsVoiceNotesRoute: typeof AppsVoiceNotesRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
@@ -381,6 +394,13 @@ declare module "@tanstack/react-router" {
       path: "/apps/video-player"
       fullPath: "/apps/video-player"
       preLoaderRoute: typeof AppsVideoPlayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/tts": {
+      id: "/apps/tts"
+      path: "/apps/tts"
+      fullPath: "/apps/tts"
+      preLoaderRoute: typeof AppsTtsRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/time-log": {
@@ -527,6 +547,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsQrReaderRoute: AppsQrReaderRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
+  AppsTtsRoute: AppsTtsRoute,
   AppsVideoPlayerRoute: AppsVideoPlayerRoute,
   AppsVoiceNotesRoute: AppsVoiceNotesRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
