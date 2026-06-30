@@ -25,7 +25,6 @@ function RouteComponent() {
       <main className="flex-1 flex flex-col overflow-y-auto min-h-0">
         <ConsumptionTracksSection />
       </main>
-
     </AppShell>
   )
 }

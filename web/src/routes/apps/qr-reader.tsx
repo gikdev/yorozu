@@ -37,7 +37,7 @@ function RouteComponent() {
         <div className="rounded overflow-hidden">
           <Scanner
             paused={isPaused}
-            onScan={(codes) => {
+            onScan={codes => {
               const value = codes[0]?.rawValue
               if (value) {
                 setResult(value)
@@ -49,8 +49,16 @@ function RouteComponent() {
 
         {result && (
           <div className="flex flex-col gap-2">
-            <div className="rounded bg-mist-900 px-3 py-2 text-sm break-all">{result}</div>
-            <button className={btn()} onClick={() => { setResult(""); setIsPaused(false) }}>
+            <div className="rounded bg-mist-900 px-3 py-2 text-sm break-all">
+              {result}
+            </div>
+            <button
+              className={btn()}
+              onClick={() => {
+                setResult("")
+                setIsPaused(false)
+              }}
+            >
               Scan again
             </button>
           </div>

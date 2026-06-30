@@ -28,13 +28,19 @@ export function AppBar(p: AppBarProps) {
         )}
 
         {p.parentPath && (
-          <Link aria-label="Go to parent" {...p.parentPath} className={btn({ isIcon: true })}>
+          <Link
+            aria-label="Go to parent"
+            {...p.parentPath}
+            className={btn({ isIcon: true })}
+          >
             <ArrowUpIcon size={24} />
           </Link>
         )}
       </div>
 
-      <div className="text-mist-100 font-bold text-xl text-start">{p.title}</div>
+      <div className="text-mist-100 font-bold text-xl text-start">
+        {p.title}
+      </div>
 
       <div className="flex flex-1 justify-end">{p.children}</div>
     </header>

@@ -2,11 +2,7 @@ import { createFileRoute, linkOptions } from "@tanstack/react-router"
 import { AppBar } from "#/common/molecules/page-header"
 import { btn } from "#/common/atoms/btn"
 import { useState, useEffect, useRef } from "react"
-import {
-  ClipboardIcon,
-  SpeakerHighIcon,
-  StopIcon,
-} from "@phosphor-icons/react"
+import { ClipboardIcon, SpeakerHighIcon, StopIcon } from "@phosphor-icons/react"
 
 const TITLE = "Text to Speech"
 
@@ -32,7 +28,8 @@ function RouteComponent() {
   const [speaking, setSpeaking] = useState(false)
   const [paused, setPaused] = useState(false)
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
-  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null)
+  const [selectedVoice, setSelectedVoice] =
+    useState<SpeechSynthesisVoice | null>(null)
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
 
@@ -42,7 +39,10 @@ function RouteComponent() {
       const availableVoices = window.speechSynthesis.getVoices()
       setVoices(availableVoices)
       // Set default voice to first matching language or first available
-      const defaultVoice = availableVoices.find(v => v.lang.startsWith(selectedLang.code)) || availableVoices[0] || null
+      const defaultVoice =
+        availableVoices.find(v => v.lang.startsWith(selectedLang.code)) ||
+        availableVoices[0] ||
+        null
       setSelectedVoice(defaultVoice)
     }
 
@@ -58,11 +58,16 @@ function RouteComponent() {
   }, [selectedLang])
 
   // Filter voices by selected language
-  const filteredVoices = voices.filter(v => v.lang.startsWith(selectedLang.code))
+  const filteredVoices = voices.filter(v =>
+    v.lang.startsWith(selectedLang.code),
+  )
 
   // Update selected voice when language changes
   useEffect(() => {
-    const matching = filteredVoices.find(v => v.lang.startsWith(selectedLang.code)) || filteredVoices[0] || null
+    const matching =
+      filteredVoices.find(v => v.lang.startsWith(selectedLang.code)) ||
+      filteredVoices[0] ||
+      null
     setSelectedVoice(matching)
   }, [selectedLang, filteredVoices])
 
@@ -94,7 +99,7 @@ function RouteComponent() {
     }
     utterance.onpause = () => setPaused(true)
     utterance.onresume = () => setPaused(false)
-    utterance.onerror = (e) => {
+    utterance.onerror = e => {
       console.error("Speech error:", e)
       setSpeaking(false)
       setPaused(false)
@@ -131,7 +136,7 @@ function RouteComponent() {
         {/* Text input */}
         <textarea
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={e => setText(e.target.value)}
           placeholder="Enter text to speak..."
           className="flex-1 min-h-30 bg-mist-900 rounded px-3 py-2 text-sm outline-none resize-none"
         />
@@ -143,14 +148,18 @@ function RouteComponent() {
             <label className="block text-xs text-mist-500 mb-1">Language</label>
             <select
               value={selectedLang.code}
-              onChange={(e) => {
-                const found = LANGUAGE_OPTIONS.find(opt => opt.code === e.target.value)
+              onChange={e => {
+                const found = LANGUAGE_OPTIONS.find(
+                  opt => opt.code === e.target.value,
+                )
                 if (found) setSelectedLang(found)
               }}
               className="w-full bg-mist-900 rounded px-3 py-2 text-sm outline-none"
             >
               {LANGUAGE_OPTIONS.map(opt => (
-                <option key={opt.code} value={opt.code}>{opt.label}</option>
+                <option key={opt.code} value={opt.code}>
+                  {opt.label}
+                </option>
               ))}
             </select>
           </div>
@@ -160,7 +169,7 @@ function RouteComponent() {
             <label className="block text-xs text-mist-500 mb-1">Voice</label>
             <select
               value={selectedVoice?.name || ""}
-              onChange={(e) => {
+              onChange={e => {
                 const voice = voices.find(v => v.name === e.target.value)
                 if (voice) setSelectedVoice(voice)
               }}
@@ -182,38 +191,44 @@ function RouteComponent() {
         {/* Sliders */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs text-mist-500 mb-1">Rate: {rate.toFixed(1)}x</label>
+            <label className="block text-xs text-mist-500 mb-1">
+              Rate: {rate.toFixed(1)}x
+            </label>
             <input
               type="range"
               min="0.5"
               max="2"
               step="0.1"
               value={rate}
-              onChange={(e) => setRate(parseFloat(e.target.value))}
+              onChange={e => setRate(parseFloat(e.target.value))}
               className="w-full accent-deep-sky-500"
             />
           </div>
           <div>
-            <label className="block text-xs text-mist-500 mb-1">Pitch: {pitch.toFixed(1)}</label>
+            <label className="block text-xs text-mist-500 mb-1">
+              Pitch: {pitch.toFixed(1)}
+            </label>
             <input
               type="range"
               min="0.5"
               max="2"
               step="0.1"
               value={pitch}
-              onChange={(e) => setPitch(parseFloat(e.target.value))}
+              onChange={e => setPitch(parseFloat(e.target.value))}
               className="w-full accent-deep-sky-500"
             />
           </div>
           <div>
-            <label className="block text-xs text-mist-500 mb-1">Volume: {Math.round(volume * 100)}%</label>
+            <label className="block text-xs text-mist-500 mb-1">
+              Volume: {Math.round(volume * 100)}%
+            </label>
             <input
               type="range"
               min="0"
               max="1"
               step="0.05"
               value={volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
+              onChange={e => setVolume(parseFloat(e.target.value))}
               className="w-full accent-deep-sky-500"
             />
           </div>

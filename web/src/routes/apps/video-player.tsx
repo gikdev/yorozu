@@ -107,7 +107,7 @@ function RouteComponent() {
           type="file"
           accept="video/*,audio/*"
           className="hidden"
-          onChange={(e) => loadFile(e.target.files?.[0])}
+          onChange={e => loadFile(e.target.files?.[0])}
         />
 
         <button
@@ -122,7 +122,7 @@ function RouteComponent() {
       <main className="flex-1 flex flex-col gap-4 overflow-y-auto min-h-0">
         <div
           ref={containerRef}
-          onDragOver={(e) => {
+          onDragOver={e => {
             e.preventDefault()
             setIsDragging(true)
           }}

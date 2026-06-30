@@ -25,7 +25,11 @@ function RouteComponent() {
             <Link
               search={{ q: "" }}
               to="/apps/hondana/library"
-              className={btn({ theme: "ghost", size: "sm", class: "flex-1 justify-end" })}
+              className={btn({
+                theme: "ghost",
+                size: "sm",
+                class: "flex-1 justify-end",
+              })}
             >
               See all
               <ArrowRightIcon size={14} />
@@ -33,11 +37,8 @@ function RouteComponent() {
           </div>
 
           <div className="flex flex-wrap gap-4 *:flex-1">
-            {fakeListOfLists.map((list) => (
-              <ListCard
-                key={list.id}
-                title={list.title}
-              />
+            {fakeListOfLists.map(list => (
+              <ListCard key={list.id} title={list.title} />
             ))}
           </div>
         </section>

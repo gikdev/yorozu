@@ -1,8 +1,5 @@
 import { AppShell } from "#/common/molecules/AppShell"
-import {
-  AppBar,
-  PageHeaderBackButton,
-} from "#/common/molecules/page-header"
+import { AppBar, PageHeaderBackButton } from "#/common/molecules/page-header"
 import { TrackDetailsSection } from "#/features/consumption-tracks/TrackDetailsSection"
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
 

@@ -2,7 +2,12 @@ import { createFileRoute, linkOptions } from "@tanstack/react-router"
 import { AppBar } from "#/common/molecules/page-header"
 import { btn } from "#/common/atoms/btn"
 import { useRef, useState } from "react"
-import { FloppyDiskIcon, MicrophoneIcon, StopIcon, TrashIcon } from "@phosphor-icons/react"
+import {
+  FloppyDiskIcon,
+  MicrophoneIcon,
+  StopIcon,
+  TrashIcon,
+} from "@phosphor-icons/react"
 
 const TITLE = "Voice Notes"
 
@@ -29,7 +34,7 @@ function RouteComponent() {
       "audio/webm",
       "audio/ogg",
     ]
-    return candidates.find((type) => MediaRecorder.isTypeSupported(type)) || ""
+    return candidates.find(type => MediaRecorder.isTypeSupported(type)) || ""
   }
 
   async function startRecording() {
@@ -39,12 +44,12 @@ function RouteComponent() {
       const recorder = new MediaRecorder(stream, { mimeType })
       chunksRef.current = []
 
-      recorder.ondataavailable = (e) => {
+      recorder.ondataavailable = e => {
         if (e.data.size > 0) chunksRef.current.push(e.data)
       }
 
       recorder.onstop = () => {
-        stream.getTracks().forEach((t) => t.stop())
+        stream.getTracks().forEach(t => t.stop())
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType })
         setAudioBlob(blob)
         if (audioUrl) URL.revokeObjectURL(audioUrl)
@@ -56,7 +61,7 @@ function RouteComponent() {
       mediaRecorderRef.current = recorder
       setIsRecording(true)
       setAudioBlob(null)
-      setAudioUrl((prev) => {
+      setAudioUrl(prev => {
         if (prev) URL.revokeObjectURL(prev)
         return null
       })
@@ -110,7 +115,7 @@ function RouteComponent() {
         <input
           type="text"
           value={filename}
-          onChange={(e) => setFilename(e.target.value)}
+          onChange={e => setFilename(e.target.value)}
           placeholder="Recording name"
           className="bg-mist-900 rounded px-3 py-2 text-sm outline-none"
         />

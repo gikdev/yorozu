@@ -64,7 +64,7 @@ function RouteComponent() {
           <input
             type="text"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={e => setText(e.target.value)}
             placeholder="Text or URL..."
             className="flex-1 bg-mist-900 rounded px-3 py-2 text-sm outline-none"
           />

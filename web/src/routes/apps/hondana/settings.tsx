@@ -61,7 +61,6 @@ function RouteComponent() {
           </p>
         </div>
       </main>
-
     </AppShell>
   )
 }
