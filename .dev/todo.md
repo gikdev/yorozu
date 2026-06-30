@@ -21,3 +21,9 @@
 - tracks: change total
 - content item: be airing & have known number of episodes... or vice versa...
 - secret login?
+- idea: advanced audio player (https://artplayer.org/)
+- add and test TSRX a bit... [TSRX | Getting Started](https://tsrx.dev/getting-started#prettier)
+- Add https://react.doctor/
+- Add https://tanstack.com/hotkeys
+- Study https://auth.pilcrowonpaper.com/ & add it
+- Wrap the whole thing with https://docs.deno.com/runtime/desktop
