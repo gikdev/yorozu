@@ -18,6 +18,7 @@ import {
   FolderIcon,
   ChalkboardTeacherIcon,
   GearIcon,
+  VideoIcon,
 } from "@phosphor-icons/react"
 import type { IAppShortcut } from "./-IAppShortcut"
 import { linkOptions } from "@tanstack/react-router"
@@ -66,6 +67,13 @@ export const appShortcuts: IAppShortcut[] = [
     icon: KanbanIcon,
     url: linkOptions({ to: "/apps/kanban" }).to,
     type: "MVP",
+  },
+  {
+    id: "video-player",
+    name: "Video Player",
+    icon: VideoIcon,
+    type: "MVP",
+    url: linkOptions({ to: "/apps/video-player" }).to,
   },
   {
     id: "writing",

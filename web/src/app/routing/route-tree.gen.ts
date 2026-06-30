@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
+import { Route as AppsVideoPlayerRouteImport } from "./../../routes/apps/video-player"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
@@ -43,6 +44,11 @@ const homeIndexRoute = homeIndexRouteImport.update({
 const AppsWritingAreaRoute = AppsWritingAreaRouteImport.update({
   id: "/apps/writing-area",
   path: "/apps/writing-area",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsVideoPlayerRoute = AppsVideoPlayerRouteImport.update({
+  id: "/apps/video-player",
+  path: "/apps/video-player",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
+  "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/video-player"
     | "/apps/writing-area"
     | "/"
     | "/apps/hondana/settings"
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/video-player"
     | "/apps/writing-area"
     | "/"
     | "/apps/hondana/settings"
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | "/apps/kanban"
     | "/apps/spotlight"
     | "/apps/time-log"
+    | "/apps/video-player"
     | "/apps/writing-area"
     | "/(home)/"
     | "/apps/hondana/settings"
@@ -277,6 +289,7 @@ export interface RootRouteChildren {
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
+  AppsVideoPlayerRoute: typeof AppsVideoPlayerRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
@@ -315,6 +328,13 @@ declare module "@tanstack/react-router" {
       path: "/apps/writing-area"
       fullPath: "/apps/writing-area"
       preLoaderRoute: typeof AppsWritingAreaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/video-player": {
+      id: "/apps/video-player"
+      path: "/apps/video-player"
+      fullPath: "/apps/video-player"
+      preLoaderRoute: typeof AppsVideoPlayerRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/time-log": {
@@ -445,6 +465,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsKanbanRoute: AppsKanbanRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
+  AppsVideoPlayerRoute: AppsVideoPlayerRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
