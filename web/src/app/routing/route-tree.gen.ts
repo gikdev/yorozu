@@ -21,7 +21,6 @@ import { Route as AppsHondanaIndexRouteImport } from "./../../routes/apps/hondan
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
 import { Route as AppsShirabeEditorRouteImport } from "./../../routes/apps/shirabe/editor"
 import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
-import { Route as AppsHondanaCliRouteImport } from "./../../routes/apps/hondana/cli"
 import { Route as AppsHondanaTracksIndexRouteImport } from "./../../routes/apps/hondana/tracks.index"
 import { Route as AppsHondanaLibraryIndexRouteImport } from "./../../routes/apps/hondana/library.index"
 import { Route as AppsHondanaLibraryNewRouteImport } from "./../../routes/apps/hondana/library.new"
@@ -91,11 +90,6 @@ const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
   path: "/apps/hondana/settings",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsHondanaCliRoute = AppsHondanaCliRouteImport.update({
-  id: "/apps/hondana/cli",
-  path: "/apps/hondana/cli",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppsHondanaTracksIndexRoute = AppsHondanaTracksIndexRouteImport.update({
   id: "/apps/hondana/tracks/",
   path: "/apps/hondana/tracks/",
@@ -149,7 +143,6 @@ export interface FileRoutesByFullPath {
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/": typeof AppshomeIndexRoute
@@ -172,7 +165,6 @@ export interface FileRoutesByTo {
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps": typeof AppshomeIndexRoute
@@ -196,7 +188,6 @@ export interface FileRoutesById {
   "/apps/time-log": typeof AppsTimeLogRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
-  "/apps/hondana/cli": typeof AppsHondanaCliRoute
   "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
   "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/(home)/": typeof AppshomeIndexRoute
@@ -221,7 +212,6 @@ export interface FileRouteTypes {
     | "/apps/time-log"
     | "/apps/writing-area"
     | "/"
-    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/shirabe/editor"
     | "/apps/"
@@ -244,7 +234,6 @@ export interface FileRouteTypes {
     | "/apps/time-log"
     | "/apps/writing-area"
     | "/"
-    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/shirabe/editor"
     | "/apps"
@@ -267,7 +256,6 @@ export interface FileRouteTypes {
     | "/apps/time-log"
     | "/apps/writing-area"
     | "/(home)/"
-    | "/apps/hondana/cli"
     | "/apps/hondana/settings"
     | "/apps/shirabe/editor"
     | "/apps/(home)/"
@@ -291,7 +279,6 @@ export interface RootRouteChildren {
   AppsTimeLogRoute: typeof AppsTimeLogRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
-  AppsHondanaCliRoute: typeof AppsHondanaCliRoute
   AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
   AppsShirabeEditorRoute: typeof AppsShirabeEditorRoute
   AppshomeIndexRoute: typeof AppshomeIndexRoute
@@ -393,13 +380,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsHondanaSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/hondana/cli": {
-      id: "/apps/hondana/cli"
-      path: "/apps/hondana/cli"
-      fullPath: "/apps/hondana/cli"
-      preLoaderRoute: typeof AppsHondanaCliRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/hondana/tracks/": {
       id: "/apps/hondana/tracks/"
       path: "/apps/hondana/tracks"
@@ -467,7 +447,6 @@ const rootRouteChildren: RootRouteChildren = {
   AppsTimeLogRoute: AppsTimeLogRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
-  AppsHondanaCliRoute: AppsHondanaCliRoute,
   AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
   AppsShirabeEditorRoute: AppsShirabeEditorRoute,
   AppshomeIndexRoute: AppshomeIndexRoute,

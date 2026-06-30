@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { BottomNav } from "./-common/BottomNav"
-import { PageHeader } from "#/common/molecules/page-header"
+import { AppBar } from "#/common/molecules/page-header"
 import { AppShell } from "#/common/molecules/AppShell"
 import { GearIcon } from "@phosphor-icons/react"
 import toast from "react-hot-toast"
@@ -47,7 +46,7 @@ function RouteComponent() {
     <AppShell>
       <title>Settings - 本棚</title>
 
-      <PageHeader title="Settings" />
+      <AppBar title="Settings" />
 
       <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">
         <div className="flex-1 flex flex-col items-center justify-center py-16 text-mist-400">
@@ -63,7 +62,6 @@ function RouteComponent() {
         </div>
       </main>
 
-      <BottomNav activeTabId="settings" />
     </AppShell>
   )
 }

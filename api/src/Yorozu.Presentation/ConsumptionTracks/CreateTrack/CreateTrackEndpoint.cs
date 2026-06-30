@@ -30,7 +30,6 @@ internal class CreateTrackEndpoint : IEndpoint {
             ContentItemId = contentItemId,
             Title = request.Title,
             Description = request.Description,
-            Type = request.Type
         };
         var result = await sender.Send(command);
         return result.MatchResponse(dto => Results.Ok(Mapper.MapToResponse(dto)));

@@ -1,6 +1,5 @@
 #pragma warning disable CA1056 // URI-like properties should not be strings
 
-using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Presentation.ConsumptionTracks.Common;
@@ -13,7 +12,6 @@ public record ConsumptionTrackResponse {
     public required string ContentItemPlaceholderColor { get; init; }
     public required string ContentItemPlaceholderLetter { get; init; }
     public required ContentItemFormat ContentItemFormat { get; init; }
-    public required IntentionType Type { get; init; }
     public required ConsumptionStatus Status { get; init; }
     public required string Title { get; init; }
     public required int CurrentUnit { get; init; }

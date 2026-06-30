@@ -1,6 +1,6 @@
 import { AppShell } from "#/common/molecules/AppShell"
 import {
-  PageHeader,
+  AppBar,
   PageHeaderBackButton,
 } from "#/common/molecules/page-header"
 import { EditContentItemSection } from "#/features/content-items/EditContentItemSection"
@@ -17,7 +17,7 @@ function RouteComponent() {
     <AppShell>
       <title>Edit Content Item - 本棚</title>
 
-      <PageHeader
+      <AppBar
         title="Edit Content Item"
         left={
           <PageHeaderBackButton

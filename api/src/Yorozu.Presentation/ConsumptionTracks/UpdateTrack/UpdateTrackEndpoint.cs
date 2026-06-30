@@ -29,7 +29,6 @@ internal class UpdateTrackEndpoint : IEndpoint {
             TrackId = id,
             Title = request.Title,
             Description = request.Description,
-            Type = request.Type
         };
 
         var result = await sender.Send(command);

@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { BottomNav } from "./-common/BottomNav"
-import { PageHeader } from "#/common/molecules/page-header"
+import { AppBar } from "#/common/molecules/page-header"
 import { AppShell } from "#/common/molecules/AppShell"
 import { ContentItemCardsSection } from "#/features/content-items/ContentItemCardsSection"
 import { zContentItemFormat } from "#/common/api/client"
@@ -21,13 +20,12 @@ function RouteComponent() {
     <AppShell>
       <title>Library - 本棚</title>
 
-      <PageHeader title="Library" />
+      <AppBar title="Library" />
 
       <main className="flex-1 flex flex-col overflow-y-auto min-h-0">
         <ContentItemCardsSection />
       </main>
 
-      <BottomNav activeTabId="library" />
     </AppShell>
   )
 }

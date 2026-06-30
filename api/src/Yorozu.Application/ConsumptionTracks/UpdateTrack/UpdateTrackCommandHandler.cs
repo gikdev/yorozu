@@ -31,8 +31,6 @@ internal class UpdateTrackCommandHandler(
             track.ChangeDescription(null);
         }
 
-        track.ChangeType(request.Type);
-
         consumptionTrackRepository.Update(track);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

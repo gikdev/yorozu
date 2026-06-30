@@ -27,7 +27,7 @@ internal class CreateTrackCommandHandler(
             description = descResult.Value;
         }
 
-        var trackResult = CommonService.CreateTrack(contentItem, request.Type, titleResult.Value, description);
+        var trackResult = CommonService.CreateTrack(contentItem, titleResult.Value, description);
         if (trackResult.IsError) return trackResult.Errors;
 
         var track = trackResult.Value;

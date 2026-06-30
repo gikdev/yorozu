@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { BottomNav } from "./-common/BottomNav"
-import { PageHeader } from "#/common/molecules/page-header"
+import { AppBar } from "#/common/molecules/page-header"
 import { AppShell } from "#/common/molecules/AppShell"
 import { ConsumptionTracksSection } from "#/features/consumption-tracks/ConsumptionTracksSection"
 import { z } from "zod"
@@ -21,13 +20,12 @@ function RouteComponent() {
     <AppShell>
       <title>Tracks - 本棚</title>
 
-      <PageHeader title="Tracks" />
+      <AppBar title="Tracks" />
 
       <main className="flex-1 flex flex-col overflow-y-auto min-h-0">
         <ConsumptionTracksSection />
       </main>
 
-      <BottomNav activeTabId="tracks" />
     </AppShell>
   )
 }

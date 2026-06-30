@@ -43,6 +43,8 @@ internal class CreateContentItemEndpoint : IEndpoint {
             Location = request.Location == null ? null : new LocationDto(request.Location.Type, request.Location.Value),
             NickName = request.NickName,
             Tags = request.Tags,
-            UnitSpec = request.UnitSpec == null ? null : new ContentUnitSpecDto(request.UnitSpec.IsOngoing, request.UnitSpec.UnitType, request.UnitSpec.TotalUnits),
+            IsOngoing = false,
+            TotalUnits = 0,
+            UnitType =default,
         };
 }

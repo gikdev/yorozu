@@ -1,6 +1,6 @@
 import { AppShell } from "#/common/molecules/AppShell"
 import {
-  PageHeader,
+  AppBar,
   PageHeaderBackButton,
 } from "#/common/molecules/page-header"
 import { TrackDetailsSection } from "#/features/consumption-tracks/TrackDetailsSection"
@@ -17,7 +17,7 @@ function RouteComponent() {
     <AppShell>
       <title>Track Details - 本棚</title>
 
-      <PageHeader
+      <AppBar
         title="Track Details"
         left={
           <PageHeaderBackButton
