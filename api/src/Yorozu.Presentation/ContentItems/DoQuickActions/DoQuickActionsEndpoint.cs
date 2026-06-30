@@ -28,9 +28,9 @@ internal class DoQuickActionsEndpoint : IEndpoint {
     ) {
         var result = await sender.Send(new DoQuickActionsCommand {
             Id = id,
-            IsBookmarked = request.IsBookmarked,
-            IsFavorite = request.IsFavorite,
-            IsSecret = request.IsSecret,
+            BookmarkAction = request.IsBookmarked,
+            FavoriteAction = request.IsFavorite,
+            SecretAction = request.IsSecret,
         });
 
         return result.MatchResponse(item => Results.Ok(Mapper.MapToResponse(item)));

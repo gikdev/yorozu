@@ -1,42 +1,50 @@
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CA1056
+#pragma warning disable CA1030
+#pragma warning disable CS8618
 
-using ErrorOr;
 using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
 public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
-    private readonly List<string> _tags = [];
-
+    // Identity
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? UpdatedAt { get; private set; }
 
+    // Tags
+    private readonly List<string> _tags = [];
+    public IReadOnlyCollection<string> Tags => _tags.ToList().AsReadOnly();
+
+    // Domain events
     private readonly List<IDomainEvent> _domainEvents = [];
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
     public void ClearDomainEvents() => _domainEvents.Clear();
     protected void RaiseDomainEvent(IDomainEvent e) => _domainEvents.Add(e);
 
-    public NotEmptyString FullTitle { get; private set; }
-    public NotEmptyString? NickName { get; private set; }
-    public NotEmptyString Title => NickName ?? FullTitle;
+    // Title
+    public string FullTitle { get; private set; }
+    public string? NickName { get; private set; }
+    public string Title => NickName ?? FullTitle;
 
-    public ContentItemFormat Format { get; private set; }
-    public IReadOnlyCollection<string> Tags => _tags.ToList().AsReadOnly();
+    // Flags
+    public bool IsSecret => _tags.Contains(BuiltInTags.Secret);
+    public bool IsFavorited => _tags.Contains(BuiltInTags.Favorite);
+    public bool IsBookmarked => _tags.Contains(BuiltInTags.Bookmarked);
+    public bool IsOngoing => _tags.Contains(BuiltInTags.Ongoing);
 
-    public bool IsSecret { get; private set; }
-    public bool IsBookmarked { get; private set; }
-    public bool IsFavorite { get; private set; }
-
-    public Location? Location { get; private set; }
-
-    public ContentUnitSpec? UnitSpec { get; private set; }
-    public bool CanAddTracks => UnitSpec != null;
-
-    public NotEmptyString? CoverImageUrl { get; private set; }
+    // Cover
+    public string? CoverImageUrl { get; private set; }
     public string PlaceholderColor { get; private set; } = "#3A3A3A";
-    public string PlaceholderLetter => Title.Value[0].ToString();
+    public string PlaceholderLetter => Title[0].ToString();
 
+    // Other
+    public ContentItemFormat Format { get; private set; }
+    public Location? Location { get; private set; }
+    public ContentUnitType UnitType { get; private set; }
+    public int? TotalUnits { get; private set; }
+
+    // EF ctor
     private ContentItem() { }
 
     public static ContentItem Create(
@@ -44,78 +52,53 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
         ContentItemFormat format,
         Guid? id = null
     ) => new() {
-        FullTitle = fullTitle,
+        FullTitle = fullTitle.Value,
         Format = format,
         Id = id ?? Guid.NewGuid(),
     };
 
-    public void ChangeFullName(NotEmptyString fullTitle) {
-        FullTitle = fullTitle;
-        MarkUpdated();
-    }
-
-    public void ChangeFormat(ContentItemFormat format) {
-        Format = format;
+    // ── Title ────────────────────────────────────────────
+    public void ChangeFullTitle(NotEmptyString fullTitle) {
+        FullTitle = fullTitle.Value;
         MarkUpdated();
     }
 
     public void ChangeNickName(NotEmptyString? nickName) {
-        NickName = nickName;
+        NickName = nickName?.Value;
         MarkUpdated();
     }
 
-    public void Bookmark() {
-        IsBookmarked = true;
-        MarkUpdated();
+    // ── Flags ────────────────────────────────────────────
+    public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
+    public void ApplyFavorite(FlagAction action) => ApplyFlag(action, BuiltInTags.Favorite);
+    public void ApplyOngoing(FlagAction action) => ApplyFlag(action, BuiltInTags.Ongoing);
+    public void ApplySecret(FlagAction action) {
+        var before = IsSecret;
+        ApplyFlag(action, BuiltInTags.Secret);
+        if (IsSecret != before)
+            RaiseDomainEvent(new ContentItemSecretChangedDomainEvent(Id, IsSecret));
     }
 
-    public void Unbookmark() {
-        IsBookmarked = false;
-        MarkUpdated();
+    private void ApplyFlag(FlagAction action, string tag) {
+        var nes = NotEmptyString.Create(tag).Value;
+        switch (action) {
+            case FlagAction.On: EnsureTagAdded(nes); break;
+            case FlagAction.Off: EnsureTagRemoved(nes); break;
+            case FlagAction.Toggle:
+                if (_tags.Contains(tag)) EnsureTagRemoved(nes);
+                else EnsureTagAdded(nes);
+                break;
+        }
     }
 
-    public void ToggleBookmark() {
-        IsBookmarked = !IsBookmarked;
-        MarkUpdated();
-    }
-
-    public void Favorite() {
-        IsFavorite = true;
-        MarkUpdated();
-    }
-
-    public void Unfavorite() {
-        IsFavorite = false;
-        MarkUpdated();
-    }
-
-    public void ToggleFavorite() {
-        IsFavorite = !IsFavorite;
-        MarkUpdated();
-    }
-
-    public void MarkSecret() {
-        IsSecret = true;
-        MarkUpdated();
-    }
-
-    public void UnmarkSecret() {
-        IsSecret = false;
-        MarkUpdated();
-    }
-
-    public void ToggleSecret() {
-        IsSecret = !IsSecret;
-        MarkUpdated();
-    }
-
-    public void AddTag(NotEmptyString tag) {
+    // ── Tags ─────────────────────────────────────────────
+    public void EnsureTagAdded(NotEmptyString tag) {
         if (_tags.Contains(tag)) return;
         _tags.Add(tag.Value);
         MarkUpdated();
     }
 
-    public void RemoveTag(NotEmptyString tag) {
+    public void EnsureTagRemoved(NotEmptyString tag) {
         if (_tags.Remove(tag.Value))
             MarkUpdated();
     }
@@ -125,13 +108,9 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
         MarkUpdated();
     }
 
+    // ── Cover ────────────────────────────────────────────
     public void ChangeCoverImageUrl(NotEmptyString? img) {
-        CoverImageUrl = img;
-        MarkUpdated();
-    }
-
-    public void ChangeLocation(Location? location) {
-        Location = location;
+        CoverImageUrl = img?.Value;
         MarkUpdated();
     }
 
@@ -140,16 +119,25 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
         MarkUpdated();
     }
 
-    public ErrorOr<Success> ChangeUnitSpec(ContentUnitSpec? spec, int trackCount) {
-        if (spec is null && trackCount > 0)
-            return ContentItemErrors.CannotRemoveUnitSpecWithActiveTracks;
-
-        UnitSpec = spec;
-        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, spec?.TotalUnits));
+    // ── Other ────────────────────────────────────────────
+    public void ChangeFormat(ContentItemFormat format) {
+        Format = format;
         MarkUpdated();
-        return Result.Success;
     }
 
+    public void ChangeLocation(Location? location) {
+        Location = location;
+        MarkUpdated();
+    }
+
+    public void ChangeUnitSpec(ContentUnitType unitType, int? totalUnits) {
+        UnitType = unitType;
+        TotalUnits = totalUnits;
+        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, unitType, totalUnits));
+        MarkUpdated();
+    }
+
+    // ── Private ──────────────────────────────────────────
     private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
 
     public override bool Equals(object? obj) => obj is ContentItem other && Id.Equals(other.Id);

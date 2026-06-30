@@ -1,79 +1,53 @@
 using ErrorOr;
 using MediatR;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
-using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Application.ContentItems.CreateContentItem;
 
 internal class CreateContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
-    IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateContentItemCommand, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(CreateContentItemCommand request, CancellationToken cancellationToken) {
         var fullTitleResult = NotEmptyString.Create(request.FullTitle);
         if (fullTitleResult.IsError) return fullTitleResult.Errors;
-        var fullTitle = fullTitleResult.Value;
 
-        var contentItem = ContentItem.Create(
-            fullTitle,
-            request.Format
-        );
+        var contentItem = ContentItem.Create(fullTitleResult.Value, request.Format);
 
         if (request.NickName != null) {
             var nickNameResult = NotEmptyString.Create(request.NickName);
             if (nickNameResult.IsError) return nickNameResult.Errors;
-            var nickName = nickNameResult.Value;
-
-            contentItem.ChangeNickName(nickName);
+            contentItem.ChangeNickName(nickNameResult.Value);
         }
 
         foreach (var tag in request.Tags) {
             var tagResult = NotEmptyString.Create(tag);
             if (tagResult.IsError) return tagResult.Errors;
-            var finalTag = tagResult.Value;
-            contentItem.AddTag(finalTag);
+            contentItem.EnsureTagAdded(tagResult.Value);
         }
 
-        if (request.IsBookmarked) contentItem.Bookmark();
-        if (request.IsFavorite) contentItem.Favorite();
-        if (request.IsSecret) contentItem.MarkSecret();
+        if (request.IsBookmarked) contentItem.ApplyBookmark(FlagAction.On);
+        if (request.IsFavorite) contentItem.ApplyFavorite(FlagAction.On);
+        if (request.IsSecret) contentItem.ApplySecret(FlagAction.On);
+        if (request.IsOngoing) contentItem.ApplyOngoing(FlagAction.On);
 
         if (request.CoverImagePath != null) {
             var urlResult = NotEmptyString.Create(request.CoverImagePath);
             if (urlResult.IsError) return urlResult.Errors;
-            var url = urlResult.Value;
-
-            contentItem.ChangeCoverImageUrl(url);
+            contentItem.ChangeCoverImageUrl(urlResult.Value);
         }
 
         if (request.Location != null) {
-            var location = new Location {
+            contentItem.ChangeLocation(new Location {
                 Type = request.Location.Type,
                 Value = request.Location.Value,
-            };
-
-            contentItem.ChangeLocation(location);
+            });
         }
 
-        if (request.UnitSpec != null) {
-            List<ConsumptionTrack> tracks = await consumptionTrackRepository.GetByContentItemIdAsync(contentItem.Id, cancellationToken);
-
-            var unitSpecResult = ContentUnitSpec.Create(
-                request.UnitSpec.IsOngoing,
-                request.UnitSpec.UnitType,
-                request.UnitSpec.TotalUnits
-            );
-            if (unitSpecResult.IsError) return unitSpecResult.Errors;
-            var unitSpec = unitSpecResult.Value;
-
-            var result = contentItem.ChangeUnitSpec(unitSpec, tracks.Count);
-            if (result.IsError) return result.Errors;
-        }
+        contentItem.ChangeUnitSpec(request.UnitType, request.TotalUnits);
 
         contentItemRepository.Add(contentItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);

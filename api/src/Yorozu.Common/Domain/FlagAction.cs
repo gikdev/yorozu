@@ -1,7 +1,7 @@
 namespace Yorozu.Common.Domain;
 
-public enum TriState {
+public enum FlagAction {
     On,
     Off,
-    Toggle,
+    Toggle
 }

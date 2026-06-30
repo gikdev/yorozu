@@ -1,6 +1,5 @@
 using ErrorOr;
 using MediatR;
-using Yorozu.Application.ConsumptionTracks.Common;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
@@ -10,18 +9,15 @@ namespace Yorozu.Application.ContentItems.UpdateContentItem;
 
 internal class UpdateContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
-    IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateContentItemCommand, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(UpdateContentItemCommand request, CancellationToken cancellationToken) {
         var contentItem = await contentItemRepository.GetByIdAsync(request.Id, cancellationToken);
         if (contentItem is null) return Error.NotFound();
 
-        var tracks = await consumptionTrackRepository.GetByContentItemIdAsync(contentItem.Id, cancellationToken);
-
         var fullTitleResult = NotEmptyString.Create(request.FullTitle);
         if (fullTitleResult.IsError) return fullTitleResult.Errors;
-        contentItem.ChangeFullName(fullTitleResult.Value);
+        contentItem.ChangeFullTitle(fullTitleResult.Value);
 
         contentItem.ChangeFormat(request.Format);
 
@@ -37,12 +33,13 @@ internal class UpdateContentItemCommandHandler(
         foreach (var tag in request.Tags) {
             var tagResult = NotEmptyString.Create(tag);
             if (tagResult.IsError) return tagResult.Errors;
-            contentItem.AddTag(tagResult.Value);
+            contentItem.EnsureTagAdded(tagResult.Value);
         }
 
-        if (request.IsBookmarked) contentItem.Bookmark(); else contentItem.Unbookmark();
-        if (request.IsFavorite) contentItem.Favorite(); else contentItem.Unfavorite();
-        if (request.IsSecret) contentItem.MarkSecret(); else contentItem.UnmarkSecret();
+        contentItem.ApplyBookmark(request.IsBookmarked ? FlagAction.On : FlagAction.Off);
+        contentItem.ApplySecret(request.IsSecret ? FlagAction.On : FlagAction.Off);
+        contentItem.ApplyFavorite(request.IsFavorite ? FlagAction.On : FlagAction.Off);
+        contentItem.ApplyOngoing(request.IsOngoing ? FlagAction.On : FlagAction.Off);
 
         if (request.CoverImagePath != null) {
             var urlResult = NotEmptyString.Create(request.CoverImagePath);
@@ -57,19 +54,10 @@ internal class UpdateContentItemCommandHandler(
             Value = request.Location.Value,
         });
 
-        if (request.UnitSpec != null) {
-            var unitSpecResult = ContentUnitSpec.Create(
-                request.UnitSpec.IsOngoing,
-                request.UnitSpec.UnitType,
-                request.UnitSpec.TotalUnits
-            );
-            if (unitSpecResult.IsError) return unitSpecResult.Errors;
-            var result = contentItem.ChangeUnitSpec(unitSpecResult.Value, tracks.Count);
-            if (result.IsError) return result.Errors;
-        } else {
-            var result = contentItem.ChangeUnitSpec(null, tracks.Count);
-            if (result.IsError) return result.Errors;
-        }
+        contentItem.ChangeUnitSpec(
+            request.UnitType,
+            request.TotalUnits
+        );
 
         contentItemRepository.Update(contentItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);

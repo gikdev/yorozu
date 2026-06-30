@@ -7,7 +7,7 @@ namespace Yorozu.Application.ContentItems.DoQuickActions;
 
 public record DoQuickActionsCommand : IRequest<ErrorOr<ContentItem>> {
     public required Guid Id { get; init; }
-    public TriState? IsBookmarked { get; init; }
-    public TriState? IsFavorite { get; init; }
-    public TriState? IsSecret { get; init; }
+    public FlagAction? BookmarkAction { get; init; }
+    public FlagAction? FavoriteAction { get; init; }
+    public FlagAction? SecretAction { get; init; }
 }
