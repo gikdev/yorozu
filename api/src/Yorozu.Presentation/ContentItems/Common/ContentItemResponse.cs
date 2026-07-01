@@ -24,4 +24,4 @@ internal record ContentItemResponse {
 
 
 internal record LocationRto(LocationType Type, string Value);
-internal record ContentUnitSpecRto(bool IsOngoing, ContentUnitType UnitType, int? TotalUnits);
+internal record ContentUnitSpecRto(bool IsOngoing, string UnitType, int? TotalUnits);

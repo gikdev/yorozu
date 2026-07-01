@@ -4,7 +4,7 @@ using Yorozu.Application.ConsumptionTracks.Common;
 
 namespace Yorozu.Application.ConsumptionTracks.GetTrack;
 
-internal class GetTrackQueryHandler(
+internal sealed class GetTrackQueryHandler(
     IConsumptionTrackRepository consumptionTrackRepository
 ) : IRequestHandler<GetTrackQuery, ErrorOr<ConsumptionTrackSummaryDto>> {
     public async Task<ErrorOr<ConsumptionTrackSummaryDto>> Handle(GetTrackQuery request, CancellationToken cancellationToken) {

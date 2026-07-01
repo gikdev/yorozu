@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.CompleteTrack;
 
-internal class CompleteTrackCommandHandler(
+internal sealed class CompleteTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

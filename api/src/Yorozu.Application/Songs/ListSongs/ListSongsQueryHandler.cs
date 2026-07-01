@@ -5,7 +5,7 @@ using Yorozu.Domain.Songs;
 
 namespace Yorozu.Application.Songs.ListSongs;
 
-internal class ListSongsQueryHandler(
+internal sealed class ListSongsQueryHandler(
     ISongRepository songRepository
 ) : IRequestHandler<ListSongsQuery, ErrorOr<List<Song>>> {
     public async Task<ErrorOr<List<Song>>> Handle(ListSongsQuery request, CancellationToken cancellationToken) {

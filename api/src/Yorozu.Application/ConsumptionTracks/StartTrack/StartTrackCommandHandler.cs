@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.StartTrack;
 
-internal class StartTrackCommandHandler(
+internal sealed class StartTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

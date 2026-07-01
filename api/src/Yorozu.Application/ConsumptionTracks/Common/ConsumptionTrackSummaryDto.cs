@@ -18,7 +18,7 @@ public record ConsumptionTrackSummaryDto {
     public required ConsumptionStatus Status { get; init; }
     public required string Title { get; init; }
     public required int CurrentUnit { get; init; }
-    public required ContentUnitType? UnitType { get; init; }
+    public required string UnitType { get; init; }
     public required int? TotalUnits { get; init; }
     public required string? Description { get; init; }
     public required DateTimeOffset CreatedAt { get; init; }

@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.ResumeTrack;
 
-internal class ResumeTrackCommandHandler(
+internal sealed class ResumeTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

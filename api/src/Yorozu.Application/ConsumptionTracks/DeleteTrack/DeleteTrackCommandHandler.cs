@@ -5,7 +5,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.DeleteTrack;
 
-internal class DeleteTrackCommandHandler(
+internal sealed class DeleteTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<DeleteTrackCommand, ErrorOr<Success>> {

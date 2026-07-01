@@ -7,7 +7,7 @@ using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Application.ContentItems.UpdateContentItem;
 
-internal class UpdateContentItemCommandHandler(
+internal sealed class UpdateContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<UpdateContentItemCommand, ErrorOr<ContentItem>> {
@@ -54,10 +54,9 @@ internal class UpdateContentItemCommandHandler(
             Value = request.Location.Value,
         });
 
-        contentItem.ChangeUnitSpec(
-            request.UnitType,
-            request.TotalUnits
-        );
+        var unitTypeResult = NotEmptyString.Create(request.UnitType);
+        if (unitTypeResult.IsError) return unitTypeResult.Errors;
+        contentItem.ChangeUnitSpec(unitTypeResult.Value, request.TotalUnits);
 
         contentItemRepository.Update(contentItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);

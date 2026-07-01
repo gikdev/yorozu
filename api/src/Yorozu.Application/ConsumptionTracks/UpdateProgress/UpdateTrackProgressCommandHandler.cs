@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.UpdateProgress;
 
-internal class UpdateTrackProgressCommandHandler(
+internal sealed class UpdateTrackProgressCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

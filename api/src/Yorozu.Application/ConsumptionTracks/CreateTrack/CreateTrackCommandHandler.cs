@@ -8,7 +8,7 @@ using Yorozu.Domain;
 
 namespace Yorozu.Application.ConsumptionTracks.CreateTrack;
 
-internal class CreateTrackCommandHandler(
+internal sealed class CreateTrackCommandHandler(
     IContentItemRepository contentItemRepository,
     IConsumptionTrackRepository consumptionTrackRepository,
     IUnitOfWork unitOfWork

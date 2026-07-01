@@ -41,7 +41,7 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
     // Other
     public ContentItemFormat Format { get; private set; }
     public Location? Location { get; private set; }
-    public ContentUnitType UnitType { get; private set; }
+    public string UnitType { get; private set; } = "unit";
     public int? TotalUnits { get; private set; }
 
     // EF ctor
@@ -130,10 +130,10 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
         MarkUpdated();
     }
 
-    public void ChangeUnitSpec(ContentUnitType unitType, int? totalUnits) {
-        UnitType = unitType;
+    public void ChangeUnitSpec(NotEmptyString unitType, int? totalUnits) {
+        UnitType = unitType.Value;
         TotalUnits = totalUnits;
-        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, unitType, totalUnits));
+        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, unitType.Value, totalUnits));
         MarkUpdated();
     }
 

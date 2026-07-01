@@ -2,12 +2,11 @@ using ErrorOr;
 using MediatR;
 using Yorozu.Application.ContentItems.Common;
 using Yorozu.Common.Data;
-using Yorozu.Common.Domain;
 using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Application.ContentItems.DoQuickActions;
 
-internal class DoQuickActionsCommandHandler(
+internal sealed class DoQuickActionsCommandHandler(
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<DoQuickActionsCommand, ErrorOr<ContentItem>> {

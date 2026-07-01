@@ -4,6 +4,6 @@ namespace Yorozu.Domain.ContentItems;
 
 public record ContentItemUnitSpecChangedDomainEvent(
     Guid ContentItemId,
-    ContentUnitType UnitType,
+    string UnitType,
     int? TotalUnits
 ) : IDomainEvent;

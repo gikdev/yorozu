@@ -17,6 +17,6 @@ public record UpdateContentItemCommand : IRequest<ErrorOr<ContentItem>> {
     public required string? CoverImagePath { get; init; }
     public required LocationDto? Location { get; init; }
     public required bool IsOngoing { get; init; }
-    public required ContentUnitType UnitType { get; init; }
-    public required int? TotalUnits  { get; init; }
+    public required string UnitType { get; init; }
+    public required int? TotalUnits { get; init; }
 }

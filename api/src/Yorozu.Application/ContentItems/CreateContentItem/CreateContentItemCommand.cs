@@ -15,7 +15,7 @@ public record CreateContentItemCommand : IRequest<ErrorOr<ContentItem>> {
     public required bool IsFavorite { get; init; }
     public required string? CoverImagePath { get; init; }
     public required bool IsOngoing { get; init; }
-    public required ContentUnitType UnitType { get; init; }
+    public required string UnitType { get; init; }
     public required int? TotalUnits  { get; init; }
     public required LocationDto? Location { get; init; }
 }

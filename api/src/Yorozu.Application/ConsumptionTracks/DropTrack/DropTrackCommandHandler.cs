@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ConsumptionTracks.DropTrack;
 
-internal class DropTrackCommandHandler(
+internal sealed class DropTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

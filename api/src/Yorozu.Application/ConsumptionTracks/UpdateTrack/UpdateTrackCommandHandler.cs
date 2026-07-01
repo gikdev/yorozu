@@ -7,7 +7,7 @@ using Yorozu.Common.Domain;
 
 namespace Yorozu.Application.ConsumptionTracks.UpdateTrack;
 
-internal class UpdateTrackCommandHandler(
+internal sealed class UpdateTrackCommandHandler(
     IConsumptionTrackRepository consumptionTrackRepository,
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork

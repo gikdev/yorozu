@@ -5,7 +5,7 @@ using Yorozu.Common.Data;
 
 namespace Yorozu.Application.ContentItems.DeleteContentItem;
 
-internal class DeleteContentItemCommandHandler(
+internal sealed class DeleteContentItemCommandHandler(
     IContentItemRepository contentItemRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<DeleteContentItemCommand, ErrorOr<Deleted>> {

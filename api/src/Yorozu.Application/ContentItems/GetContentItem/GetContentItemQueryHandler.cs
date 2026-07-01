@@ -5,7 +5,7 @@ using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Application.ContentItems.GetContentItem;
 
-internal class GetContentItemQueryHandler(
+internal sealed class GetContentItemQueryHandler(
     IContentItemRepository contentItemRepository
 ) : IRequestHandler<GetContentItemQuery, ErrorOr<ContentItem>> {
     public async Task<ErrorOr<ContentItem>> Handle(GetContentItemQuery request, CancellationToken cancellationToken) {
