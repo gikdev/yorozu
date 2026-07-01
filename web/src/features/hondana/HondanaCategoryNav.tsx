@@ -1,26 +1,24 @@
 import { BookOpenIcon, ListChecksIcon } from "@phosphor-icons/react"
 import { CompactNavLink } from "#/common/molecules/CompactNavLink"
 
-export function HondanaCategoryNav() {
-  return (
-    <section className="flex flex-wrap gap-2">
-      <CompactNavLink
-        to="/apps/hondana/library"
-        search={{ q: "" }}
-        label="Items"
-        icon={BookOpenIcon}
-        borderHoverClassName="hover:border-sky-400/40"
-        iconClassName="group-hover:text-sky-400"
-      />
+export const HondanaCategoryNav = () => (
+  <section className="flex flex-wrap gap-2">
+    <CompactNavLink
+      to="/apps/hondana/library"
+      search={{ q: "" }}
+      label="Items"
+      icon={BookOpenIcon}
+      borderHoverClassName="hover:border-sky-400/40"
+      iconClassName="group-hover:text-sky-400"
+    />
 
-      <CompactNavLink
-        to="/apps/hondana/library"
-        search={{ q: "" }}
-        label="Tracks"
-        icon={ListChecksIcon}
-        borderHoverClassName="hover:border-emerald-400/40"
-        iconClassName="group-hover:text-emerald-400"
-      />
-    </section>
-  )
-}
+    <CompactNavLink
+      to="/apps/hondana/library"
+      search={{ q: "" }}
+      label="Tracks"
+      icon={ListChecksIcon}
+      borderHoverClassName="hover:border-emerald-400/40"
+      iconClassName="group-hover:text-emerald-400"
+    />
+  </section>
+)
