@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Yorozu.Application\Yorozu.Application.csproj" />
     <ProjectReference Include="..\Yorozu.Common\Yorozu.Common.csproj" />
+    <ProjectReference Include="..\Yorozu.Contracts\Yorozu.Contracts.csproj" />
   </ItemGroup>
 </Project>

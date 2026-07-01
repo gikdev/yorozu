@@ -12,6 +12,7 @@
   <Project Path="src/Yorozu.Api/Yorozu.Api.csproj" />
   <Project Path="src/Yorozu.Application/Yorozu.Application.csproj" />
   <Project Path="src/Yorozu.Common/Yorozu.Common.csproj" />
+  <Project Path="src/Yorozu.Contracts/Yorozu.Contracts.csproj" />
   <Project Path="src/Yorozu.Domain/Yorozu.Domain.csproj" />
   <Project Path="src/Yorozu.Infrastructure/Yorozu.Infrastructure.csproj" />
   <Project Path="src/Yorozu.Presentation/Yorozu.Presentation.csproj" />
