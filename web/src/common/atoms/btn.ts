@@ -27,9 +27,10 @@ export const btn = tv({
     theme: {
       glass: `
         rounded-md border-none
-        text-mist-900 dark:text-mist-100
+        text-mist-900 dark:text-mist-400
+        hover:text-mist-600 dark:hover:text-mist-100
         bg-transparent
-        hover:bg-black/10 dark:hover:bg-white/10
+        hover:bg-black/5 dark:hover:bg-white/5
       `,
       primary: `
         rounded-md border-none
