@@ -7,164 +7,178 @@ using Yorozu.Infrastructure.Database;
 
 #nullable disable
 
-namespace Yorozu.Infrastructure.Migrations {
+namespace Yorozu.Infrastructure.Migrations
+{
     [DbContext(typeof(MainDbCtx))]
-    partial class MainDbCtxModelSnapshot : ModelSnapshot {
-        protected override void BuildModel(ModelBuilder modelBuilder) {
+    partial class MainDbCtxModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.3");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.9");
 
-            modelBuilder.Entity("Yorozu.Domain.ConsumptionTracks.ConsumptionTrack", b => {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset?>("CompletedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<Guid>("ContentItemId")
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset>("CreatedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<int>("CurrentUnit")
-                    .HasColumnType("INTEGER");
-
-                b.Property<string>("Description")
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset?>("DroppedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset?>("PausedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset?>("StartedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<int>("Status")
-                    .HasColumnType("INTEGER");
-
-                b.Property<string>("Title")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
-
-                b.Property<int?>("TotalUnits")
-                    .HasColumnType("INTEGER");
-
-                b.Property<int>("Type")
-                    .HasColumnType("INTEGER");
-
-                b.Property<DateTimeOffset?>("UpdatedAt")
-                    .HasColumnType("TEXT");
-
-                b.HasKey("Id");
-
-                b.HasIndex("ContentItemId");
-
-                b.ToTable("ConsumptionTracks");
-            });
-
-            modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b => {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("TEXT");
-
-                b.Property<string>("CoverImageUrl")
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset>("CreatedAt")
-                    .HasColumnType("TEXT");
-
-                b.Property<int>("Format")
-                    .HasColumnType("INTEGER");
-
-                b.Property<string>("FullTitle")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
-
-                b.Property<bool>("IsBookmarked")
-                    .HasColumnType("INTEGER");
-
-                b.Property<bool>("IsFavorite")
-                    .HasColumnType("INTEGER");
-
-                b.Property<bool>("IsSecret")
-                    .HasColumnType("INTEGER");
-
-                b.Property<string>("NickName")
-                    .HasColumnType("TEXT");
-
-                b.Property<string>("PlaceholderColor")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
-
-                b.Property<DateTimeOffset?>("UpdatedAt")
-                    .HasColumnType("TEXT");
-
-                b.PrimitiveCollection<string>("_tags")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
-
-                b.HasKey("Id");
-
-                b.ToTable("ContentItems");
-            });
-
-            modelBuilder.Entity("Yorozu.Domain.ConsumptionTracks.ConsumptionTrack", b => {
-                b.HasOne("Yorozu.Domain.ContentItems.ContentItem", null)
-                    .WithMany()
-                    .HasForeignKey("ContentItemId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-            });
-
-            modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b => {
-                b.OwnsOne("Yorozu.Domain.ContentItems.ContentUnitSpec", "UnitSpec", b1 => {
-                    b1.Property<Guid>("ContentItemId")
+            modelBuilder.Entity("Yorozu.Domain.ConsumptionTrackLists.ConsumptionTrackList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b1.Property<bool>("IsOngoing")
-                        .HasColumnType("INTEGER");
-
-                    b1.Property<int?>("TotalUnits")
-                        .HasColumnType("INTEGER");
-
-                    b1.Property<int>("UnitType")
-                        .HasColumnType("INTEGER");
-
-                    b1.HasKey("ContentItemId");
-
-                    b1.ToTable("ContentItems");
-
-                    b1.WithOwner()
-                        .HasForeignKey("ContentItemId");
-                });
-
-                b.OwnsOne("Yorozu.Domain.ContentItems.Location", "Location", b1 => {
-                    b1.Property<Guid>("ContentItemId")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b1.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
 
-                    b1.Property<string>("Value")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b1.HasKey("ContentItemId");
+                    b.HasKey("Id");
 
-                    b1.ToTable("ContentItems");
-
-                    b1.WithOwner()
-                        .HasForeignKey("ContentItemId");
+                    b.ToTable("ConsumptionTrackLists");
                 });
 
-                b.Navigation("Location");
+            modelBuilder.Entity("Yorozu.Domain.ConsumptionTracks.ConsumptionTrack", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                b.Navigation("UnitSpec");
-            });
+                    b.Property<DateTimeOffset?>("CompletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ConsumptionTrackListId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ContentItemId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CurrentUnit")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("DoSyncSecret")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("DoSyncTotalUnits")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("DroppedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset?>("PausedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset?>("StartedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TotalUnits")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("_tags")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentItemId");
+
+                    b.ToTable("ConsumptionTracks");
+                });
+
+            modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Format")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FullTitle")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NickName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PlaceholderColor")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TotalUnits")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UnitType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.PrimitiveCollection<string>("_tags")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ContentItems");
+                });
+
+            modelBuilder.Entity("Yorozu.Domain.ConsumptionTracks.ConsumptionTrack", b =>
+                {
+                    b.HasOne("Yorozu.Domain.ContentItems.ContentItem", null)
+                        .WithMany()
+                        .HasForeignKey("ContentItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Yorozu.Domain.ContentItems.ContentItem", b =>
+                {
+                    b.OwnsOne("Yorozu.Domain.ContentItems.Location", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("ContentItemId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("ContentItemId");
+
+                            b1.ToTable("ContentItems");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ContentItemId");
+                        });
+
+                    b.Navigation("Location");
+                });
 #pragma warning restore 612, 618
         }
     }
