@@ -4,7 +4,7 @@ using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Infrastructure.ContentItems;
 
-internal class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> {
+internal sealed class ContentItemConfiguration : IEntityTypeConfiguration<ContentItem> {
     public void Configure(EntityTypeBuilder<ContentItem> builder) {
         builder.Ignore(x => x.Title);
         builder.Ignore(x => x.Tags);

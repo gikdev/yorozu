@@ -5,12 +5,12 @@ using Yorozu.Domain.ContentItems;
 
 namespace Yorozu.Infrastructure.ConsumptionTracks;
 
-internal class ConsumptionTrackConfiguration : IEntityTypeConfiguration<ConsumptionTrack> {
+internal sealed class ConsumptionTrackConfiguration : IEntityTypeConfiguration<ConsumptionTrack> {
     public void Configure(EntityTypeBuilder<ConsumptionTrack> builder) {
         builder.Property(x => x.Status)
             .HasConversion(
                 s => s.Value,
-                s => Domain.ConsumptionTracks.ConsumptionStatus.FromValue(s)
+                s => ConsumptionStatus.FromValue(s)
             );
 
         builder.Ignore(x => x.CanStart);
