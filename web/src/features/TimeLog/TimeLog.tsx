@@ -1,9 +1,9 @@
 import {
-  ArrowLeftIcon,
   PlayIcon,
   PauseIcon,
   TrashIcon,
   ChartBarIcon,
+  HouseIcon,
 } from "@phosphor-icons/react"
 import type { Session } from "./Session"
 
@@ -51,7 +51,7 @@ export function TimeLog(p: TimeLogProps) {
           onClick={p.onBack}
           className="flex-1 flex items-center justify-center gap-2 hover:bg-mist-900 hover:text-mist-100 cursor-pointer transition-colors"
         >
-          <ArrowLeftIcon size={36} weight="bold" />
+          <HouseIcon size={36} weight="bold" />
         </button>
 
         <button

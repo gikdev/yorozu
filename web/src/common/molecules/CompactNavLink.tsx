@@ -14,15 +14,27 @@ interface CompactNavLinkProps extends LinkOptions {
   iconClassName: string
 }
 
-export function CompactNavLink({ label, icon: Icon, borderHoverClassName, iconClassName, ...linkOptions }: CompactNavLinkProps) {
+export function CompactNavLink({
+  label,
+  icon: Icon,
+  borderHoverClassName,
+  iconClassName,
+  ...linkOptions
+}: CompactNavLinkProps) {
   return (
     <Link
       {...linkOptions}
       className={`group flex-1 flex items-center gap-2 rounded-lg px-4 py-3 border border-mist-800 transition-colors ${borderHoverClassName}`}
     >
-      <Icon size={20} className={`text-mist-500 transition-colors ${iconClassName}`} />
+      <Icon
+        size={20}
+        className={`text-mist-500 transition-colors ${iconClassName}`}
+      />
       <span className="text-mist-100 flex-1">{label}</span>
-      <ArrowRightIcon size={20} className={`text-mist-500 transition-colors ${iconClassName}`} />
+      <ArrowRightIcon
+        size={20}
+        className={`text-mist-500 transition-colors ${iconClassName}`}
+      />
     </Link>
   )
 }

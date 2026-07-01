@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, PlayIcon } from "@phosphor-icons/react"
+import { HouseIcon, PlayIcon } from "@phosphor-icons/react"
 import { useRef } from "react"
 
 interface SpotlightEmptyProps {
@@ -34,7 +34,7 @@ export function SpotlightEmpty({ onStart, onBack }: SpotlightEmptyProps) {
           type="button"
           className="flex-1 flex items-center justify-center gap-2 hover:bg-mist-900 hover:text-mist-100 cursor-pointer"
         >
-          <ArrowLeftIcon size={36} weight="bold" />
+          <HouseIcon size={36} weight="bold" />
         </button>
 
         <button

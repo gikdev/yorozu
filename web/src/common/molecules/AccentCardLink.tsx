@@ -13,7 +13,13 @@ interface AccentCardLinkProps extends LinkOptions {
   iconClassName: string
 }
 
-export function AccentCardLink({ title, icon: Icon, cardClassName, iconClassName, ...linkOptions }: AccentCardLinkProps) {
+export function AccentCardLink({
+  title,
+  icon: Icon,
+  cardClassName,
+  iconClassName,
+  ...linkOptions
+}: AccentCardLinkProps) {
   return (
     <Link
       {...linkOptions}

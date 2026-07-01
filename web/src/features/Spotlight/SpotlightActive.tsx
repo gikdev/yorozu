@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, XIcon, CheckIcon } from "@phosphor-icons/react"
+import { XIcon, CheckIcon, HouseIcon } from "@phosphor-icons/react"
 
 interface SpotlightActiveProps {
   activeItem: string
@@ -22,7 +22,7 @@ export function SpotlightActive(p: SpotlightActiveProps) {
           onClick={p.onBack}
           className="flex-1 flex items-center justify-center gap-2 hover:bg-mist-900 hover:text-mist-100 cursor-pointer transition-colors"
         >
-          <ArrowLeftIcon size={36} weight="bold" />
+          <HouseIcon size={36} weight="bold" />
         </button>
 
         <button
