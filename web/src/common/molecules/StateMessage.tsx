@@ -1,6 +1,7 @@
 import type { Icon } from "@phosphor-icons/react"
 import { cn } from "tailwind-variants"
 import { btn } from "../atoms/btn"
+import type { ReactNode } from "react"
 
 interface StateMessageProps {
   mode: "LOADING" | "ERROR" | "NORMAL"
@@ -9,24 +10,25 @@ interface StateMessageProps {
   description?: string
   retry?: () => void
   className?: string
+  children?: ReactNode
 }
 
 export function StateMessage(p: StateMessageProps) {
   return (
     <div
       className={cn(
-        "flex-1 flex flex-col items-center justify-center py-16 text-mist-400",
+        "flex-1 gap-1 flex flex-col items-center justify-center py-16 text-mist-400",
         p.className,
       )}
     >
       <p.icon
         size={48}
-        className={cn("mb-4", p.mode === "LOADING" && "animate-spin")}
+        className={cn("", p.mode === "LOADING" && "animate-spin")}
       />
 
       <p className="font-bold">{p.title}</p>
 
-      {p.description && <p className="text-sm mt-1">{p.description}</p>}
+      {p.description && <p className="text-sm">{p.description}</p>}
 
       {p.mode === "ERROR" && p.retry && (
         <button
@@ -36,6 +38,8 @@ export function StateMessage(p: StateMessageProps) {
           Try again
         </button>
       )}
+
+      {p.children}
     </div>
   )
 }

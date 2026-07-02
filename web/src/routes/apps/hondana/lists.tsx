@@ -1,0 +1,54 @@
+import {
+  createFileRoute,
+  linkOptions,
+  Outlet,
+  useNavigate,
+} from "@tanstack/react-router"
+import { AppBar } from "#/common/molecules/page-header"
+import { ListPlusIcon, XIcon } from "@phosphor-icons/react"
+import { btn } from "#/common/atoms/btn"
+import { ListsSidebar } from "./-ListsSidebar"
+
+const TITLE = "Lists"
+
+export const Route = createFileRoute("/apps/hondana/lists")({
+  head: () => ({ meta: [{ title: TITLE }] }),
+  component: LayoutComponent,
+})
+
+function LayoutComponent() {
+  const navigate = useNavigate({ from: "/apps/hondana/lists" })
+
+  return (
+    <div className="h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-360 mx-auto w-full border-x border-mist-900">
+      <title>{TITLE}</title>
+
+      <AppBar title={TITLE} parentPath={linkOptions({ to: "/apps/hondana" })}>
+        <button
+          type="button"
+          onClick={() => navigate({ to: "/apps/hondana/lists" })}
+          className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+        >
+          <XIcon size={20} />
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate({ to: "/apps/hondana/lists/new" })}
+          className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+        >
+          <ListPlusIcon size={20} />
+        </button>
+      </AppBar>
+
+      <main className="flex-1 flex min-h-0 overflow-hidden lg:flex-row flex-col">
+        <aside className="flex-1 border-b lg:border-r border-mist-900 overflow-y-auto [scrollbar-width:none] hover:[scrollbar-width:thin]">
+          <ListsSidebar />
+        </aside>
+
+        <section className="flex-3 lg:flex-2 overflow-y-auto p-4">
+          <Outlet />
+        </section>
+      </main>
+    </div>
+  )
+}

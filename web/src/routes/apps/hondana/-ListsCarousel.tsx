@@ -10,35 +10,38 @@ import { AccentCardLink } from "#/common/molecules/AccentCardLink"
 import { CardCarousel } from "#/common/molecules/CardCarousel"
 import { RenderQuery } from "#/common/helpers/render-query"
 import { useQuery } from "@tanstack/react-query"
-import { getHondanaHomeOptions } from "#/common/api/client"
+import { listConsumptionTrackListsOptions } from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import { extractErrorMessage } from "#/common/helpers/errors"
 
 const MAX_LISTS_TO_SHOW = 3
 
 export function ListsCarousel() {
-  const homeQ = useQuery(getHondanaHomeOptions())
+  const listsQ = useQuery(listConsumptionTrackListsOptions())
 
   return (
     <section className="flex flex-col gap-2">
       <p className="flex items-center justify-between">
         <span className="text-mist-100 font-bold text-xl">Lists</span>
-        <Link to="/" className="hover:underline hover:text-sky-400">
+        <Link
+          to="/apps/hondana/lists"
+          className="hover:underline hover:text-sky-400"
+        >
           see all →
         </Link>
       </p>
 
       <RenderQuery
         isList={true}
-        status={homeQ.status}
-        listCount={homeQ.data?.consumptionTrackLists.length!}
+        status={listsQ.status}
+        listCount={listsQ.data?.items.length!}
         errorView={
           <StateMessage
             icon={WarningCircleIcon}
             title="Failed to load content"
-            description={extractErrorMessage(homeQ.error)}
+            description={extractErrorMessage(listsQ.error)}
             mode="ERROR"
-            retry={homeQ.refetch}
+            retry={listsQ.refetch}
           />
         }
         loadingView={
@@ -58,13 +61,13 @@ export function ListsCarousel() {
         }
         fullView={() => (
           <CardCarousel>
-            {homeQ.data?.consumptionTrackLists
+            {listsQ.data?.items
               .slice(0, MAX_LISTS_TO_SHOW)
               .map(list => (
                 <AccentCardLink
                   key={list.id}
                   to="/"
-                  search={{ q: "" }}
+                  search={{}}
                   title={list.title}
                   icon={ListBulletsIcon}
                   iconClassName="text-sky-400"
@@ -73,8 +76,7 @@ export function ListsCarousel() {
               ))}
 
             <Link
-              to="/"
-              search={{ q: "" }}
+              to="/apps/hondana/lists"
               className="snap-start shrink-0 w-40 grow group flex flex-col items-center justify-center gap-1 rounded-xl p-4 h-24 border border-mist-800 hover:border-sky-400/50 transition-colors text-mist-500 hover:text-sky-400"
             >
               <ArrowRightIcon

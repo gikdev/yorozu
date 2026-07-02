@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router"
-import {ApiReferenceReact, type AnyApiReferenceConfiguration} from "@scalar/api-reference-react"
-import '@scalar/api-reference-react/style.css'
+import {
+  ApiReferenceReact,
+  type AnyApiReferenceConfiguration,
+} from "@scalar/api-reference-react"
+import "@scalar/api-reference-react/style.css"
 import openApiSpec from "../common/api/openapi.yaml?raw"
 
 export const Route = createFileRoute("/openapi")({
@@ -12,5 +15,5 @@ const config: AnyApiReferenceConfiguration = {
 }
 
 function RouteComponent() {
-  return <ApiReferenceReact configuration={config} />;
+  return <ApiReferenceReact configuration={config} />
 }

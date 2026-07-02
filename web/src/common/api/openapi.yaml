@@ -5,19 +5,19 @@ info:
 servers:
   - url: http://localhost:5050/
 paths:
-  /api/apps/hondana/home:
+  /api/consumption-track-lists:
     get:
       tags:
-        - Hondana (app)
-      summary: Get Hondana Home
-      operationId: GetHondanaHome
+        - Consumption Track Lists
+      summary: Get Consumption Track Lists
+      operationId: ListConsumptionTrackLists
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/HondanaHomeResponse"
+                $ref: "#/components/schemas/ConsumptionTrackListsResponse"
 components:
   schemas:
     ConsumptionTrackListMiniResponse:
@@ -40,14 +40,14 @@ components:
           type:
             - "null"
             - string
-    HondanaHomeResponse:
+    ConsumptionTrackListsResponse:
       required:
-        - consumptionTrackLists
+        - items
       type: object
       properties:
-        consumptionTrackLists:
+        items:
           type: array
           items:
             $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
 tags:
-  - name: Hondana (app)
+  - name: Consumption Track Lists
