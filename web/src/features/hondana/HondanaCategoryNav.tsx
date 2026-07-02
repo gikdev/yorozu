@@ -4,7 +4,7 @@ import { CompactNavLink } from "#/common/molecules/CompactNavLink"
 export const HondanaCategoryNav = () => (
   <section className="flex flex-wrap gap-2">
     <CompactNavLink
-      to="/apps/hondana/library"
+      to="/"
       search={{ q: "" }}
       label="Items"
       icon={BookOpenIcon}
@@ -13,7 +13,7 @@ export const HondanaCategoryNav = () => (
     />
 
     <CompactNavLink
-      to="/apps/hondana/library"
+      to="/"
       search={{ q: "" }}
       label="Tracks"
       icon={ListChecksIcon}

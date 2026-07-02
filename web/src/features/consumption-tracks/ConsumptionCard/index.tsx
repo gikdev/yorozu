@@ -1,1 +1,0 @@
-export { ConsumptionCard } from "./ConsumptionCard"

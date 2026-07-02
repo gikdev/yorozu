@@ -16,7 +16,7 @@ internal class GetHondanaHomeEndpoint : IEndpoint {
             .MapGet("apps/hondana/home", Handle)
             .WithName(nameof(GetHondanaHome))
             .WithSummary("Get Hondana Home")
-            .WithTags(ApiTags.ContentItems)
+            .WithTags(ApiTags.Hondana)
             .Produces<HondanaHomeResponse>();
     }
 

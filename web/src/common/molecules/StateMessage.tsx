@@ -8,11 +8,12 @@ interface StateMessageProps {
   title: string
   description?: string
   retry?: () => void
+  className?: string
 }
 
 export function StateMessage(p: StateMessageProps) {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center py-16 text-mist-400">
+    <div className={cn("flex-1 flex flex-col items-center justify-center py-16 text-mist-400", p.className)}>
       <p.icon
         size={48}
         className={cn("mb-4", p.mode === "LOADING" && "animate-spin")}
