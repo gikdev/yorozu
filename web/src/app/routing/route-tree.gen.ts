@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./../../routes/__root"
+import { Route as OpenapiRouteImport } from "./../../routes/openapi"
 import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
@@ -28,6 +29,11 @@ import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/in
 import { Route as AppsShirabeEditorRouteImport } from "./../../routes/apps/shirabe/editor"
 import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
 
+const OpenapiRoute = OpenapiRouteImport.update({
+  id: "/openapi",
+  path: "/openapi",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevRoute = DevRouteImport.update({
   id: "/dev",
   path: "/dev",
@@ -121,6 +127,7 @@ const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   "/dev": typeof DevRoute
+  "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   "/dev": typeof DevRoute
+  "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
@@ -162,6 +170,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/dev": typeof DevRoute
+  "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | "/dev"
+    | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | "/dev"
+    | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/dev"
+    | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
@@ -245,6 +257,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   DevRoute: typeof DevRoute
+  OpenapiRoute: typeof OpenapiRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsPasswordGeneratorRoute: typeof AppsPasswordGeneratorRoute
@@ -266,6 +279,13 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/openapi": {
+      id: "/openapi"
+      path: "/openapi"
+      fullPath: "/openapi"
+      preLoaderRoute: typeof OpenapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/dev": {
       id: "/dev"
       path: "/dev"
@@ -397,6 +417,7 @@ declare module "@tanstack/react-router" {
 
 const rootRouteChildren: RootRouteChildren = {
   DevRoute: DevRoute,
+  OpenapiRoute: OpenapiRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsKanbanRoute: AppsKanbanRoute,
   AppsPasswordGeneratorRoute: AppsPasswordGeneratorRoute,
