@@ -8,9 +8,7 @@ paths:
   /api/apps/hondana/home:
     get:
       tags:
-        - Apps
-        - Hondana
-        - Pages
+        - Hondana (app)
       summary: Get Hondana Home
       operationId: GetHondanaHome
       responses:
@@ -52,6 +50,4 @@ components:
           items:
             $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
 tags:
-  - name: Apps
-  - name: Hondana
-  - name: Pages
+  - name: Hondana (app)

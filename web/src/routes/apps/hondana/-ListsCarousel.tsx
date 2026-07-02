@@ -1,4 +1,10 @@
-import { ArrowRightIcon, ListBulletsIcon, ListPlusIcon, SpinnerGapIcon, WarningCircleIcon } from "@phosphor-icons/react"
+import {
+  ArrowRightIcon,
+  ListBulletsIcon,
+  ListPlusIcon,
+  SpinnerGapIcon,
+  WarningCircleIcon,
+} from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 import { AccentCardLink } from "#/common/molecules/AccentCardLink"
 import { CardCarousel } from "#/common/molecules/CardCarousel"
@@ -17,7 +23,9 @@ export function ListsCarousel() {
     <section className="flex flex-col gap-2">
       <p className="flex items-center justify-between">
         <span className="text-mist-100 font-bold text-xl">Lists</span>
-        <Link to="/" className="hover:underline hover:text-sky-400">see all →</Link>
+        <Link to="/" className="hover:underline hover:text-sky-400">
+          see all →
+        </Link>
       </p>
 
       <RenderQuery
@@ -50,17 +58,19 @@ export function ListsCarousel() {
         }
         fullView={() => (
           <CardCarousel>
-            {homeQ.data?.consumptionTrackLists.slice(0, MAX_LISTS_TO_SHOW).map(list => (
-              <AccentCardLink
-                key={list.id}
-                to="/"
-                search={{ q: "" }}
-                title={list.title}
-                icon={ListBulletsIcon}
-                iconClassName="text-sky-400"
-                cardClassName="bg-linear-to-br from-sky-500/20 to-mist-900 border-sky-500/30 hover:border-sky-400/50"
-              />
-            ))}
+            {homeQ.data?.consumptionTrackLists
+              .slice(0, MAX_LISTS_TO_SHOW)
+              .map(list => (
+                <AccentCardLink
+                  key={list.id}
+                  to="/"
+                  search={{ q: "" }}
+                  title={list.title}
+                  icon={ListBulletsIcon}
+                  iconClassName="text-sky-400"
+                  cardClassName="bg-linear-to-br from-sky-500/20 to-mist-900 border-sky-500/30 hover:border-sky-400/50"
+                />
+              ))}
 
             <Link
               to="/"
@@ -77,7 +87,6 @@ export function ListsCarousel() {
           </CardCarousel>
         )}
       />
-
     </section>
   )
 }
