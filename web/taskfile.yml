@@ -14,17 +14,17 @@ tasks:
     aliases: [dev, d]
     desc: Start Vite dev server
     cmds:
-      - npm run vite -- --host
+      - bun run vite -- --host
 
   app:preview:
     desc: Preview production build
     cmds:
-      - npm run vite -- preview --host
+      - bun run vite -- preview --host
 
   app:build:only:
     desc: Build project without type checking
     cmds:
-      - npm run vite -- build
+      - bun run vite -- build
 
   app:build:full:
     aliases: [publish]
@@ -44,7 +44,7 @@ tasks:
     aliases: [acg]
     desc: Generate API client
     cmds:
-      - npm run openapi-ts
+      - bun run openapi-ts
 
   api:all:
     desc: Refresh API client (definition + generate)
@@ -57,16 +57,16 @@ tasks:
     aliases: [t]
     desc: Run TypeScript type checking
     cmds:
-      - npm run tsc -- -b
+      - bun run tsc -- -b
 
   quality:format:
     aliases: [f]
     desc: Run Prettier to format code
     cmds:
-      - npm run prettier -- . --write
+      - bun run prettier -- . --write
 
   # ---- test ----
   test:unit:
     desc: Run unit tests with Vitest
     cmds:
-      - npm run vitest
+      - bun run vitest
