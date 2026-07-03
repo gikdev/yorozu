@@ -7,6 +7,7 @@ using Yorozu.Common;
 using Yorozu.Common.Data;
 using Yorozu.Common.Endpoints;
 using Yorozu.Infrastructure.ConsumptionTrackLists;
+using Yorozu.Infrastructure.ContentItems;
 using Yorozu.Infrastructure.Database;
 
 namespace Yorozu.Infrastructure;
@@ -30,6 +31,7 @@ public static class YorozuInfrastructure {
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MainDbCtx>());
 
         services.AddScoped<IConsumptionTrackListRepository, ConsumptionTrackListRepository>();
+        services.AddScoped<IContentItemRepository, ContentItemRepository>();
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 
