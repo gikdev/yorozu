@@ -5,7 +5,6 @@ export const HondanaCategoryNav = () => (
   <section className="flex flex-wrap gap-2">
     <CompactNavLink
       to="/"
-      search={{ q: "" }}
       label="Items"
       icon={BookOpenIcon}
       borderHoverClassName="hover:border-sky-400/40"
@@ -14,7 +13,6 @@ export const HondanaCategoryNav = () => (
 
     <CompactNavLink
       to="/"
-      search={{ q: "" }}
       label="Tracks"
       icon={ListChecksIcon}
       borderHoverClassName="hover:border-emerald-400/40"

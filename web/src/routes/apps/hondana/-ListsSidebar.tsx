@@ -48,8 +48,8 @@ export function ListsSidebar() {
           description="Create your first list!"
         />
       }
-      fullView={() => (
-        listsQ.data!.items.map((list) => (
+      fullView={() =>
+        listsQ.data!.items.map(list => (
           <ListItemCard
             key={list.id}
             title={list.title}
@@ -67,13 +67,13 @@ export function ListsSidebar() {
             }
             onDelete={() => {
               const confirmed = window.confirm(
-                `Delete "${list.title}"? (Not implemented)`
+                `Delete "${list.title}"? (Not implemented)`,
               )
               if (confirmed) window.alert("Not implemented yet.")
             }}
           />
         ))
-      )}
+      }
     />
   )
 }
