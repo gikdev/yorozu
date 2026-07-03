@@ -5,6 +5,46 @@ info:
 servers:
   - url: http://localhost:5050/
 paths:
+  /api/content-items:
+    get:
+      tags:
+        - Content Items
+      summary: List Content Items
+      operationId: ListContentItems
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentItemsResponse"
+    post:
+      tags:
+        - Content Items
+      summary: Create Content Item
+      operationId: CreateContentItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateContentItemRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+  /api/content-items/tags:
+    get:
+      tags:
+        - Content Items
+      summary: List unique tags of content items
+      operationId: ListAllContentItemTags
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListAllContentItemTagsResponse"
   "/api/consumption-track-lists/{id}":
     put:
       tags:
@@ -151,9 +191,70 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+    ContentItemFormat:
+      enum:
+        - Readable
+        - Listenable
+        - Mixed
+        - Watchable
+        - Interactive
+    ContentItemResponse:
+      required:
+        - id
+        - title
+        - placeholderLetter
+        - isSecret
+        - isFavorited
+        - isBookmarked
+        - isOngoing
+        - coverImageUrl
+        - format
+        - locationType
+        - locationValue
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        placeholderLetter:
+          type: string
+        isSecret:
+          type: boolean
+        isFavorited:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isOngoing:
+          type: boolean
+        coverImageUrl:
+          type:
+            - "null"
+            - string
+        format:
+          $ref: "#/components/schemas/ContentItemFormat"
+        locationType:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/LocationType"
+        locationValue:
+          type:
+            - "null"
+            - string
+    ContentItemsResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentItemResponse"
     CreateConsumptionTrackListRequest:
       required:
         - title
+        - description
       type: object
       properties:
         title:
@@ -162,6 +263,82 @@ components:
           type:
             - "null"
             - string
+    CreateContentItemRequest:
+      required:
+        - fullTitle
+        - nickName
+        - tags
+        - isSecret
+        - isFavorited
+        - isBookmarked
+        - isOngoing
+        - coverImageUrl
+        - placeholderColor
+        - format
+        - locationType
+        - locationValue
+        - unitType
+        - totalUnits
+      type: object
+      properties:
+        fullTitle:
+          type: string
+        nickName:
+          type:
+            - "null"
+            - string
+        tags:
+          type: array
+          items:
+            type: string
+        isSecret:
+          type: boolean
+        isFavorited:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isOngoing:
+          type: boolean
+        coverImageUrl:
+          type:
+            - "null"
+            - string
+        placeholderColor:
+          type:
+            - "null"
+            - string
+        format:
+          $ref: "#/components/schemas/ContentItemFormat"
+        locationType:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/LocationType"
+        locationValue:
+          type:
+            - "null"
+            - string
+        unitType:
+          type: string
+        totalUnits:
+          type:
+            - "null"
+            - integer
+          format: int32
+    ListAllContentItemTagsResponse:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+    LocationType:
+      enum:
+        - Physical
+        - FilePath
+        - Url
+        -
     ProblemDetails:
       type: object
       properties:
@@ -199,4 +376,5 @@ components:
             - "null"
             - string
 tags:
+  - name: Content Items
   - name: Consumption Track Lists

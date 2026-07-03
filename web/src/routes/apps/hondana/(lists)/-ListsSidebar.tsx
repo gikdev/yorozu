@@ -37,14 +37,11 @@ export function ListsSidebar() {
       return `Deleted "${list.title}"!`
     }
 
-    await toast.promise(
-      promise,
-      {
-        loading: `Deleting "${list.title}"...`,
-        error: extractErrorMessage,
-        success,
-      }
-    )
+    await toast.promise(promise, {
+      loading: `Deleting "${list.title}"...`,
+      error: extractErrorMessage,
+      success,
+    })
   }
 
   return (
@@ -81,7 +78,7 @@ export function ListsSidebar() {
         />
       }
       fullView={() =>
-        listsQ.data!.items.map((list) => (
+        listsQ.data!.items.map(list => (
           <ListItemCard
             disabled={false}
             key={list.id}

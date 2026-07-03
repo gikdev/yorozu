@@ -6,7 +6,7 @@ import { HouseIcon } from "@phosphor-icons/react"
 
 const TITLE = "本棚"
 
-export const Route = createFileRoute("/apps/hondana/")({
+export const Route = createFileRoute("/apps/hondana/(home)/")({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: RouteComponent,
 })

@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import toast from "react-hot-toast"
 
-export const Route = createFileRoute("/apps/hondana/lists/new")({
+export const Route = createFileRoute("/apps/hondana/(lists)/lists/new")({
   component: RouteComponent,
 })
 

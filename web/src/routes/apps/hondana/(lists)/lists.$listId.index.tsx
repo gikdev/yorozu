@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/apps/hondana/lists/$listId/")({
+export const Route = createFileRoute("/apps/hondana/(lists)/lists/$listId/")({
   component: ListDetailComponent,
 })
 

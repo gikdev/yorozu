@@ -15,10 +15,10 @@ public sealed record CreateContentItemCommand : IRequest<ErrorOr<Created>> {
     public required bool IsBookmarked { get; init; }
     public required bool IsOngoing { get; init; }
     public required string? CoverImageUrl { get; init; }
-    public required string PlaceholderColor { get; init; }
+    public required string? PlaceholderColor { get; init; }
     public required ContentItemFormat Format { get; init; }
-    public required LocationType LocationType { get; init; }
-    public required string LocationValue { get; init; }
+    public required LocationType? LocationType { get; init; }
+    public required string? LocationValue { get; init; }
     public required string UnitType { get; init; }
     public required int? TotalUnits { get; init; }
 }

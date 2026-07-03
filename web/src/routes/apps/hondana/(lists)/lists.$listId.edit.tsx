@@ -2,7 +2,8 @@ import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import {
   getConsumptionTrackListOptions,
-  updateConsumptionTrackListMutation, listConsumptionTrackListsOptions
+  updateConsumptionTrackListMutation,
+  listConsumptionTrackListsOptions,
 } from "#/common/api/client"
 import { extractErrorMessage } from "#/common/helpers/errors"
 import {
@@ -15,7 +16,9 @@ import { RenderQuery } from "#/common/helpers/render-query"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import { SpinnerGapIcon, WarningCircleIcon } from "@phosphor-icons/react"
 
-export const Route = createFileRoute("/apps/hondana/lists/$listId/edit")({
+export const Route = createFileRoute(
+  "/apps/hondana/(lists)/lists/$listId/edit",
+)({
   component: RouteComponent,
 })
 
@@ -57,7 +60,7 @@ function RouteComponent() {
           context.client.invalidateQueries(
             getConsumptionTrackListOptions({
               path: { id: listId },
-            })
+            }),
           )
           goToDetail()
         },

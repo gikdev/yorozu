@@ -11,6 +11,7 @@ import { ImgUrlWithPreviewInput } from "./ImgUrlWithPreviewInput"
 import { TagsPickerInput } from "./TagsPickerInput"
 import { SmartTagsInput } from "./SmartTagsInput"
 import { LyricLineField } from "#/features/lyric-lines/LyricLinesForm"
+import { SimpleSelectInput } from "./SimpleSelectInput"
 
 const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()
@@ -25,6 +26,7 @@ const { useAppForm } = createFormHook({
     CounterNumberInput,
     SvgToggleInput,
     PersianUtcDateInput,
+    SimpleSelectInput,
     SimpleWordListInput,
     TagOptionsInput,
     SimpleCheckboxInput,

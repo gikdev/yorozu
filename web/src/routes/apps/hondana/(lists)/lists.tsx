@@ -13,7 +13,7 @@ import { cn } from "tailwind-variants"
 
 const TITLE = "Lists"
 
-export const Route = createFileRoute("/apps/hondana/lists")({
+export const Route = createFileRoute("/apps/hondana/(lists)/lists")({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: LayoutComponent,
 })
@@ -48,7 +48,7 @@ function LayoutComponent() {
         <aside
           className={cn(
             "flex-1 border-b lg:border-r border-mist-900",
-            "overflow-y-auto [scrollbar-width:none] hover:[scrollbar-width:thin]",
+            "overflow-y-auto scrollbar-none hover:scrollbar-thin",
             { "hidden lg:block": !inEmptyPage },
           )}
         >

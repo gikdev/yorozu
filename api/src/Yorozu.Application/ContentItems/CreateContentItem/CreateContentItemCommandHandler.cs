@@ -54,10 +54,10 @@ internal sealed class CreateContentItemCommandHandler(
         item.SetPlaceholderColor(request.PlaceholderColor);
 
         // 7. Apply location (if provided)
-        if (!string.IsNullOrEmpty(request.LocationValue)) {
+        if (request.LocationType.HasValue && !string.IsNullOrEmpty(request.LocationValue)) {
             var locationValueResult = NotEmptyString.Create(request.LocationValue);
             if (locationValueResult.IsError) return locationValueResult.Errors;
-            item.ChangeLocation(new Location(request.LocationType, locationValueResult.Value));
+            item.ChangeLocation(new Location(request.LocationType.Value, locationValueResult.Value));
         }
 
         // 8. Apply tags

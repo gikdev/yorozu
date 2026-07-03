@@ -28,4 +28,16 @@ internal sealed class ContentItemRepository(
 
     public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
         => await db.ContentItems.AnyAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<List<string>> GetAllTagsAsync(CancellationToken cancellationToken = default) {
+        var allItems = await db.ContentItems
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return allItems
+            .SelectMany(item => item.Tags)
+            .Distinct()
+            .OrderBy(tag => tag)
+            .ToList();
+    }
 }
