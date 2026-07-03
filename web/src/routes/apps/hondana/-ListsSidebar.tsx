@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import {
   InfoIcon,
@@ -10,13 +10,42 @@ import {
 } from "@phosphor-icons/react"
 import { btn } from "#/common/atoms/btn"
 import { RenderQuery } from "#/common/helpers/render-query"
-import { listConsumptionTrackListsOptions } from "#/common/api/client"
+import {
+  ConsumptionTrackLists,
+  listConsumptionTrackListsOptions,
+  type ConsumptionTrackListMiniResponse,
+} from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
 import { extractErrorMessage } from "#/common/helpers/errors"
+import toast from "react-hot-toast"
 
 export function ListsSidebar() {
   const navigate = useNavigate({ from: "/apps/hondana/lists" })
   const listsQ = useQuery(listConsumptionTrackListsOptions())
+  const queryClient = useQueryClient()
+
+  const handleDelete = async (list: ConsumptionTrackListMiniResponse) => {
+    const confirmed = window.confirm(`Delete "${list.title}"?`)
+    if (!confirmed) return
+
+    const promise = ConsumptionTrackLists.deleteConsumptionTrackList({
+      path: { id: list.id },
+    })
+    const success = () => {
+      queryClient.invalidateQueries(listConsumptionTrackListsOptions())
+
+      return `Deleted "${list.title}"!`
+    }
+
+    await toast.promise(
+      promise,
+      {
+        loading: `Deleting "${list.title}"...`,
+        error: extractErrorMessage,
+        success,
+      }
+    )
+  }
 
   return (
     <RenderQuery
@@ -27,6 +56,7 @@ export function ListsSidebar() {
         <StateMessage
           icon={WarningCircleIcon}
           title="Failed to load lists"
+          className="h-full"
           description={extractErrorMessage(listsQ.error)}
           mode="ERROR"
           retry={listsQ.refetch}
@@ -35,8 +65,10 @@ export function ListsSidebar() {
       loadingView={
         <StateMessage
           mode="LOADING"
+          className="h-full"
           icon={SpinnerGapIcon}
-          title="Loading lists..."
+          title="Please wait."
+          description="Loading lists..."
         />
       }
       emptyView={
@@ -49,8 +81,9 @@ export function ListsSidebar() {
         />
       }
       fullView={() =>
-        listsQ.data!.items.map(list => (
+        listsQ.data!.items.map((list) => (
           <ListItemCard
+            disabled={false}
             key={list.id}
             title={list.title}
             onDetails={() =>
@@ -65,12 +98,7 @@ export function ListsSidebar() {
                 params: { listId: list.id },
               })
             }
-            onDelete={() => {
-              const confirmed = window.confirm(
-                `Delete "${list.title}"? (Not implemented)`,
-              )
-              if (confirmed) window.alert("Not implemented yet.")
-            }}
+            onDelete={() => handleDelete(list)}
           />
         ))
       }
@@ -83,9 +111,11 @@ const ListItemCard = (p: {
   onDetails: () => void
   onEdit: () => void
   onDelete: () => void
+  disabled: boolean
 }) => (
   <div className="flex items-center">
     <button
+      disabled={p.disabled}
       type="button"
       className={btn({ class: "rounded-none w-full justify-start" })}
     >
@@ -94,6 +124,7 @@ const ListItemCard = (p: {
 
     <button
       type="button"
+      disabled={p.disabled}
       onClick={p.onDetails}
       className={btn({ class: "rounded-none shrink-0", isIcon: true })}
     >
@@ -102,6 +133,7 @@ const ListItemCard = (p: {
 
     <button
       type="button"
+      disabled={p.disabled}
       onClick={p.onEdit}
       className={btn({ class: "rounded-none shrink-0", isIcon: true })}
     >
@@ -110,6 +142,7 @@ const ListItemCard = (p: {
 
     <button
       type="button"
+      disabled={p.disabled}
       onClick={p.onDelete}
       className={btn({ class: "rounded-none shrink-0", isIcon: true })}
     >

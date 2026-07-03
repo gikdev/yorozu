@@ -43,6 +43,31 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/ProblemDetails"
+    get:
+      tags:
+        - Consumption Track Lists
+      summary: Get Consumption Track List
+      operationId: GetConsumptionTrackList
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
     delete:
       tags:
         - Consumption Track Lists

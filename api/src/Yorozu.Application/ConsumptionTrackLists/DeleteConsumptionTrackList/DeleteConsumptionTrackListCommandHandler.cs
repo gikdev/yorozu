@@ -1,10 +1,9 @@
 using ErrorOr;
 using MediatR;
 using Yorozu.Application.Common;
-using Yorozu.Application.ConsumptionTrackLists.DeleteConsumptionTrackList;
 using Yorozu.Common.Data;
 
-namespace Yorozu.Application.Yorozu.Application.ConsumptionTrackLists.DeleteConsumptionTrackList;
+namespace Yorozu.Application.ConsumptionTrackLists.DeleteConsumptionTrackList;
 
 internal sealed class DeleteConsumptionTrackListCommandHandler(
     IConsumptionTrackListRepository consumptionTrackListRepository,
