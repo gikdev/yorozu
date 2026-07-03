@@ -23,7 +23,7 @@ export const Route = createFileRoute(
 })
 
 function RouteComponent() {
-  const { listId } = useParams({ from: "/apps/hondana/lists/$listId/edit" })
+  const { listId } = Route.useParams()
   const navigate = useNavigate()
 
   const listQ = useQuery(
