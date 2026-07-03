@@ -12,7 +12,7 @@ using Yorozu.Presentation.Common.Mappers;
 
 namespace Yorozu.Presentation.ConsumptionTrackLists.ListConsumptionTrackLists;
 
-internal class GetHondanaHomeEndpoint : IEndpoint {
+internal class ListConsumptionTrackListsEndpoint : IEndpoint {
     public void MapEndpoint(IEndpointRouteBuilder app) {
         app
             .MapGet("consumption-track-lists", Handle)

@@ -5,6 +5,65 @@ info:
 servers:
   - url: http://localhost:5050/
 paths:
+  "/api/consumption-track-lists/{id}":
+    put:
+      tags:
+        - Consumption Track Lists
+      summary: Update Consumption Track List
+      operationId: UpdateConsumptionTrackList
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateConsumptionTrackListRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "400":
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+    delete:
+      tags:
+        - Consumption Track Lists
+      summary: Delete Consumption Track List
+      operationId: DeleteConsumptionTrackList
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
   /api/consumption-track-lists:
     get:
       tags:
@@ -18,6 +77,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConsumptionTrackListsResponse"
+    post:
+      tags:
+        - Consumption Track Lists
+      summary: Create Consumption Track List
+      operationId: CreateConsumptionTrackList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateConsumptionTrackListRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
 components:
   schemas:
     ConsumptionTrackListMiniResponse:
@@ -49,5 +126,52 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+    CreateConsumptionTrackListRequest:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type:
+            - "null"
+            - string
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+            - "null"
+            - string
+        title:
+          type:
+            - "null"
+            - string
+        status:
+          type:
+            - "null"
+            - integer
+          format: int32
+        detail:
+          type:
+            - "null"
+            - string
+        instance:
+          type:
+            - "null"
+            - string
+    UpdateConsumptionTrackListRequest:
+      required:
+        - title
+        - description
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type:
+            - "null"
+            - string
 tags:
   - name: Consumption Track Lists

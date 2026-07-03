@@ -16,9 +16,7 @@ type IAppShortcutTypeApp = {
 }
 
 type IAppShortcutTypes =
-  | IAppShortcutTypeApp
-  | IAppShortcutTypeIdea
-  | IAppShortcutTypeMvp
+  IAppShortcutTypeApp | IAppShortcutTypeIdea | IAppShortcutTypeMvp
 
 type IAppShortcutBase = {
   id: string
