@@ -1,6 +1,5 @@
 namespace Yorozu.Common.Domain;
 
-public interface IHasCreationTimestamp
-{
+public interface IHasCreationTimestamp {
     DateTimeOffset CreatedAt { get; }
 }

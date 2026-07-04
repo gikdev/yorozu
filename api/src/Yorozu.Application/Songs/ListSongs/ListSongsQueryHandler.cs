@@ -6,10 +6,10 @@ using Yorozu.Domain.Songs;
 namespace Yorozu.Application.Songs.ListSongs;
 
 internal sealed class ListSongsQueryHandler(
-    // ISongRepository songRepository
+// ISongRepository songRepository
 ) : IRequestHandler<ListSongsQuery, ErrorOr<List<Song>>> {
     public async Task<ErrorOr<List<Song>>> Handle(ListSongsQuery request, CancellationToken cancellationToken) {
         // List<Song> songs = await songRepository.ListAsync(cancellationToken);
-        return new List<Song> {};
+        return new List<Song> { };
     }
 }

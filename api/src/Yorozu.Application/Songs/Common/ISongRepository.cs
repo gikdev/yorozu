@@ -1,6 +1,6 @@
 using Yorozu.Domain.Songs;
 
-namespace Yorozu.Application.Songs.Common; 
+namespace Yorozu.Application.Songs.Common;
 
 public interface ISongRepository {
     void Add(Song song);

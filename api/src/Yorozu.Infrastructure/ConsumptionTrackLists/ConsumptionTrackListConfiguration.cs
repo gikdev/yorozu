@@ -5,5 +5,5 @@ using Yorozu.Domain.ConsumptionTrackLists;
 namespace Yorozu.Infrastructure.ConsumptionTrackLists;
 
 internal sealed class ConsumptionTrackListConfiguration : IEntityTypeConfiguration<ConsumptionTrackList> {
-    public void Configure(EntityTypeBuilder<ConsumptionTrackList> builder) {}
+    public void Configure(EntityTypeBuilder<ConsumptionTrackList> builder) { }
 }

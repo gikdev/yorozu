@@ -1,6 +1,5 @@
 namespace Yorozu.Common.Domain;
 
-public interface IHasUpdateTimestamp
-{
+public interface IHasUpdateTimestamp {
     DateTimeOffset? UpdatedAt { get; }
 }
