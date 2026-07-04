@@ -64,8 +64,8 @@ export function ListsCarousel() {
             {listsQ.data?.items.slice(0, MAX_LISTS_TO_SHOW).map(list => (
               <AccentCardLink
                 key={list.id}
-                to="/"
-                search={{}}
+                to="/apps/hondana/lists/$listId"
+                params={{ listId: list.id }}
                 title={list.title}
                 icon={ListBulletsIcon}
                 iconClassName="text-sky-400"
