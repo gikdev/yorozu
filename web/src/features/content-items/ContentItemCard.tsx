@@ -13,7 +13,12 @@ import {
   SquaresFourIcon,
 } from "@phosphor-icons/react"
 import { btn } from "#/common/atoms/btn"
-import { changeContentItemMutation, listContentItemsOptions, type ContentItemFormat, type LocationType } from "#/common/api/client"
+import {
+  changeContentItemMutation,
+  listContentItemsOptions,
+  type ContentItemFormat,
+  type LocationType,
+} from "#/common/api/client"
 import toast from "react-hot-toast"
 import type { SyntheticEvent } from "react"
 import { extractErrorMessage } from "#/common/helpers/errors"
