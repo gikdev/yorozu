@@ -45,6 +45,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListAllContentItemTagsResponse"
+  "/api/content-items/{id}":
+    patch:
+      tags:
+        - Content Items
+      summary: Change Content Item
+      operationId: ChangeContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeContentItemRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "400":
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
   "/api/consumption-track-lists/{id}":
     put:
       tags:
@@ -162,6 +196,25 @@ paths:
                 $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
 components:
   schemas:
+    ChangeContentItemRequest:
+      required:
+        - isSecret
+        - isFavorited
+        - isBookmarked
+      type: object
+      properties:
+        isSecret:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/FlagAction"
+        isFavorited:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/FlagAction"
+        isBookmarked:
+          oneOf:
+            - type: "null"
+            - $ref: "#/components/schemas/FlagAction"
     ConsumptionTrackListMiniResponse:
       required:
         - id
@@ -324,6 +377,12 @@ components:
             - "null"
             - integer
           format: int32
+    FlagAction:
+      enum:
+        - On
+        - Off
+        - Toggle
+        -
     ListAllContentItemTagsResponse:
       required:
         - items

@@ -13,10 +13,11 @@ import {
   SquaresFourIcon,
 } from "@phosphor-icons/react"
 import { btn } from "#/common/atoms/btn"
-import type { ContentItemFormat, LocationType } from "#/common/api/client"
+import { changeContentItemMutation, listContentItemsOptions, type ContentItemFormat, type LocationType } from "#/common/api/client"
 import toast from "react-hot-toast"
 import type { SyntheticEvent } from "react"
 import { extractErrorMessage } from "#/common/helpers/errors"
+import { useMutation } from "@tanstack/react-query"
 
 // ── Types ──────────────────────────────────────────────
 interface ContentItemCardProps {
@@ -65,6 +66,13 @@ const iconBtnStyles = btn({
 export function ContentItemCard(p: ContentItemCardProps) {
   const FormatIcon = getFormatIcon(p.format)
   const formatColor = getFormatColor(p.format)
+  const changeM = useMutation({
+    ...changeContentItemMutation(),
+    onError: err => toast.error(extractErrorMessage(err)),
+    onSuccess(_data, _variables, _onMutateResult, context) {
+      context.client.invalidateQueries(listContentItemsOptions())
+    },
+  })
 
   const handleImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget
@@ -82,15 +90,36 @@ export function ContentItemCard(p: ContentItemCardProps) {
   }
 
   const handleToggleFavorite = () => {
-    // TODO: Implement mutation
+    changeM.mutate({
+      path: { id: p.id },
+      body: {
+        isBookmarked: null,
+        isFavorited: "Toggle",
+        isSecret: null,
+      },
+    })
   }
 
   const handleToggleBookmark = () => {
-    // TODO: Implement mutation
+    changeM.mutate({
+      path: { id: p.id },
+      body: {
+        isBookmarked: "Toggle",
+        isFavorited: null,
+        isSecret: null,
+      },
+    })
   }
 
   const handleToggleSecret = () => {
-    // TODO: Implement mutation
+    changeM.mutate({
+      path: { id: p.id },
+      body: {
+        isBookmarked: null,
+        isFavorited: null,
+        isSecret: "Toggle",
+      },
+    })
   }
 
   const handleLocation = () => {
@@ -152,6 +181,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
             <button
               type="button"
               onClick={handleToggleFavorite}
+              disabled={changeM.isPending}
               className={iconBtnStyles}
               title={
                 p.isFavorited ? "Remove from favorites" : "Add to favorites"
@@ -167,18 +197,20 @@ export function ContentItemCard(p: ContentItemCardProps) {
             <button
               type="button"
               onClick={handleToggleBookmark}
+              disabled={changeM.isPending}
               className={iconBtnStyles}
               title={p.isBookmarked ? "Remove bookmark" : "Add bookmark"}
             >
               <BookmarkSimpleIcon
                 size={20}
                 weight={p.isBookmarked ? "fill" : "regular"}
-                className={p.isBookmarked ? "text-sky-400" : ""}
+                className={p.isBookmarked ? "text-yellow-400" : ""}
               />
             </button>
 
             <button
               type="button"
+              disabled={changeM.isPending}
               onClick={handleToggleSecret}
               className={iconBtnStyles}
               title={p.isSecret ? "Make public" : "Make secret"}
@@ -186,7 +218,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
               <LockKeyIcon
                 size={20}
                 weight={p.isSecret ? "fill" : "regular"}
-                className={p.isSecret ? "text-yellow-400" : ""}
+                className={p.isSecret ? "text-violet-400" : ""}
               />
             </button>
           </div>
