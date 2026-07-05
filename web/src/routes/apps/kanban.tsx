@@ -1,6 +1,6 @@
+import { DownloadIcon, TrashIcon, UploadIcon } from "@phosphor-icons/react"
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useState, useEffect } from "react"
-import { DownloadIcon, UploadIcon, TrashIcon } from "@phosphor-icons/react"
+import { useEffect, useState } from "react"
 
 export const Route = createFileRoute("/apps/kanban")({
   component: KanbanBoard,
@@ -268,6 +268,7 @@ function KanbanBoard() {
           />
           <button
             onClick={addProject}
+            type="button"
             className="px-2 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm font-medium transition"
           >
             +
@@ -292,6 +293,7 @@ function KanbanBoard() {
                   deleteProject(p.id)
                 }}
                 className="text-gray-400 hover:text-red-400 ml-1 text-xs"
+                type="button"
               >
                 ✕
               </button>
@@ -304,6 +306,7 @@ function KanbanBoard() {
           <button
             onClick={exportData}
             className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 rounded text-sm font-medium transition"
+            type="button"
             title="Export all data"
           >
             <DownloadIcon size={18} />
@@ -324,6 +327,7 @@ function KanbanBoard() {
                   ?.click()
               }
               className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm font-medium transition"
+              type="button"
               title="Import data from file"
             >
               <UploadIcon size={18} />
@@ -334,6 +338,7 @@ function KanbanBoard() {
           <button
             onClick={resetAll}
             className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm font-medium transition"
+            type="button"
             title="Reset everything"
           >
             <TrashIcon size={18} />
@@ -365,6 +370,7 @@ function KanbanBoard() {
                 />
                 <button
                   onClick={addTask}
+                  type="button"
                   className="px-4 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm font-medium transition"
                 >
                   Add
@@ -398,6 +404,7 @@ function KanbanBoard() {
                             </span>
                             <button
                               onClick={() => deleteTask(task.id)}
+                              type="button"
                               className="text-gray-400 hover:text-red-400 ml-1 text-xs shrink-0"
                             >
                               ✕
@@ -407,6 +414,7 @@ function KanbanBoard() {
                           <div className="flex justify-between mt-1">
                             <button
                               onClick={() => moveTask(task.id, "left")}
+                              type="button"
                               disabled={STATUSES.indexOf(task.status) === 0}
                               className="px-2 py-0.5 text-xs rounded bg-gray-600 hover:bg-gray-500 disabled:opacity-30 disabled:cursor-not-allowed transition"
                             >
@@ -414,6 +422,7 @@ function KanbanBoard() {
                             </button>
                             <button
                               onClick={() => moveTask(task.id, "right")}
+                              type="button"
                               disabled={
                                 STATUSES.indexOf(task.status) ===
                                 STATUSES.length - 1

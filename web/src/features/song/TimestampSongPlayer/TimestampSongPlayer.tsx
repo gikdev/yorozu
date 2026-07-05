@@ -1,11 +1,11 @@
-import { useEffect, useRef, type ChangeEvent, type SyntheticEvent } from "react"
-import toast from "react-hot-toast"
 import {
   FilePlusIcon,
   PauseIcon,
   PlayIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
+import { type ChangeEvent, type SyntheticEvent, useEffect, useRef } from "react"
+import toast from "react-hot-toast"
 import { btn } from "#/common/atoms/btn"
 import { styleInput } from "#/common/atoms/input"
 import { useSongPlayerStore } from "../useSongPlayerStore"
@@ -128,6 +128,7 @@ export function TimestampSongPlayer() {
         </label>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(5)}
@@ -136,6 +137,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(1)}
@@ -144,6 +146,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(0.5)}
@@ -152,6 +155,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(0.1)}
@@ -160,6 +164,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn({ size: "lg", theme: "primary" })}
           onClick={handlePlayPause}
@@ -172,6 +177,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(0.1)}
@@ -180,6 +186,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(0.5)}
@@ -188,6 +195,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(1)}
@@ -196,6 +204,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
+          type="button"
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(5)}
@@ -215,10 +224,12 @@ export function TimestampSongPlayer() {
 
       <TimestampCards />
 
+      {/** biome-ignore lint/a11y/useMediaCaption: いいんだよ！ */}
       <audio
         controls
         ref={audioRef}
         className="w-full hidden"
+        // biome-ignore lint/correctness/noChildrenProp: いいんだよ！
         children="Audio not supported."
         onLoadedMetadata={e => setTotalTime(e.currentTarget.duration)}
         onPause={() => pause()}

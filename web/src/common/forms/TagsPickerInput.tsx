@@ -1,10 +1,10 @@
-import { useFieldContext } from "."
-import { fieldContainer } from "../atoms/field-container"
-import { btn } from "../atoms/btn"
-import { FieldMeta } from "./field-meta"
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { useState } from "react"
 import { tv } from "tailwind-variants"
+import { btn } from "../atoms/btn"
+import { fieldContainer } from "../atoms/field-container"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 export type TagOption = {
   title: string

@@ -1,11 +1,11 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { useEffect, useRef, useState } from "react"
-import Artplayer from "artplayer"
-import artplayerPluginAutoThumbnail from "artplayer-plugin-auto-thumbnail"
-import artplayerPluginAmbilight from "artplayer-plugin-ambilight"
-import { btn } from "#/common/atoms/btn"
 import { LinkIcon, UploadSimpleIcon } from "@phosphor-icons/react"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import Artplayer from "artplayer"
+import artplayerPluginAmbilight from "artplayer-plugin-ambilight"
+import artplayerPluginAutoThumbnail from "artplayer-plugin-auto-thumbnail"
+import { useEffect, useRef, useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "Video Player"
 
@@ -97,6 +97,7 @@ function RouteComponent() {
       <AppBar title={TITLE} parentPath={linkOptions({ to: "/apps" })}>
         <button
           className={btn({ isIcon: true })}
+          type="button"
           onClick={() => fileInputRef.current?.click()}
           aria-label="Upload video"
         >
@@ -112,6 +113,7 @@ function RouteComponent() {
 
         <button
           className={btn({ isIcon: true })}
+          type="button"
           onClick={promptForUrl}
           aria-label="Load video from URL"
         >

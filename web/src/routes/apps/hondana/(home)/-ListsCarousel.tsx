@@ -5,14 +5,14 @@ import {
   SpinnerGapIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react"
+import { useQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
+import { listConsumptionTrackListsOptions } from "#/common/api/client"
+import { extractErrorMessage } from "#/common/helpers/errors"
+import { RenderQuery } from "#/common/helpers/render-query"
 import { AccentCardLink } from "#/common/molecules/AccentCardLink"
 import { CardCarousel } from "#/common/molecules/CardCarousel"
-import { RenderQuery } from "#/common/helpers/render-query"
-import { useQuery } from "@tanstack/react-query"
-import { listConsumptionTrackListsOptions } from "#/common/api/client"
 import { StateMessage } from "#/common/molecules/StateMessage"
-import { extractErrorMessage } from "#/common/helpers/errors"
 
 const MAX_LISTS_TO_SHOW = 3
 
@@ -34,6 +34,8 @@ export function ListsCarousel() {
       <RenderQuery
         isList={true}
         status={listsQ.status}
+        // biome-ignore lint/style/noNonNullAssertion: 大丈夫
+        // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: 大丈夫
         listCount={listsQ.data?.items.length!}
         errorView={
           <StateMessage

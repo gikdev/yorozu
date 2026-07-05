@@ -1,3 +1,4 @@
+import { ListPlusIcon, XIcon } from "@phosphor-icons/react"
 import {
   createFileRoute,
   linkOptions,
@@ -5,11 +6,10 @@ import {
   useLocation,
   useNavigate,
 } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { ListPlusIcon, XIcon } from "@phosphor-icons/react"
-import { btn } from "#/common/atoms/btn"
-import { ListsSidebar } from "./-ListsSidebar"
 import { cn } from "tailwind-variants"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
+import { ListsSidebar } from "./-ListsSidebar"
 
 const TITLE = "Lists"
 

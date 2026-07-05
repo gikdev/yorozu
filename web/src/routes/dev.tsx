@@ -1,11 +1,11 @@
+import { CheckIcon, EyeIcon } from "@phosphor-icons/react"
+import { createFileRoute } from "@tanstack/react-router"
+import { useMemo, useState } from "react"
 import { btn } from "#/common/atoms/btn"
 import {
   TitledOptionsBottomSheet,
   type TitledOptionsBottomSheetProps,
 } from "#/common/organisms/titled-options-bottom-sheet"
-import { CheckIcon, EyeIcon } from "@phosphor-icons/react"
-import { createFileRoute } from "@tanstack/react-router"
-import { useMemo, useState } from "react"
 
 export const Route = createFileRoute("/dev")({
   component: RouteComponent,
@@ -44,7 +44,7 @@ function RouteComponent() {
     <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
       <p>hello world!</p>
 
-      <button className={btn()} onClick={() => setOpen(true)}>
+      <button className={btn()} onClick={() => setOpen(true)} type="button">
         open!
       </button>
 

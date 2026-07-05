@@ -1,9 +1,7 @@
-import { Link } from "@tanstack/react-router"
 import {
   AirplayIcon,
   BookIcon,
   BookmarkSimpleIcon,
-  VideoIcon,
   HeadphonesIcon,
   HeartIcon,
   LinkIcon,
@@ -11,18 +9,20 @@ import {
   MapPinIcon,
   PuzzlePieceIcon,
   SquaresFourIcon,
+  VideoIcon,
 } from "@phosphor-icons/react"
-import { btn } from "#/common/atoms/btn"
-import {
-  changeContentItemMutation,
-  listContentItemsOptions,
-  type ContentItemFormat,
-  type LocationType,
-} from "#/common/api/client"
-import toast from "react-hot-toast"
-import type { SyntheticEvent } from "react"
-import { extractErrorMessage } from "#/common/helpers/errors"
 import { useMutation } from "@tanstack/react-query"
+import { Link } from "@tanstack/react-router"
+import type { SyntheticEvent } from "react"
+import toast from "react-hot-toast"
+import {
+  type ContentItemFormat,
+  changeContentItemMutation,
+  type LocationType,
+  listContentItemsOptions,
+} from "#/common/api/client"
+import { btn } from "#/common/atoms/btn"
+import { extractErrorMessage } from "#/common/helpers/errors"
 
 // ── Types ──────────────────────────────────────────────
 interface ContentItemCardProps {

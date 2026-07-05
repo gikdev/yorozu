@@ -59,11 +59,35 @@ tasks:
     cmds:
       - bun run tsc -- -b
 
+  quality:type-check:
+    aliases: [t]
+    desc: Run TypeScript type checking
+    cmds:
+      - npm run tsc -- -b
+
   quality:format:
     aliases: [f]
-    desc: Run Prettier to format code
+    desc: Run Biome to format code
     cmds:
-      - bun run prettier -- . --write
+      - npm run biome -- format --write .
+
+  quality:lint:
+    aliases: [l]
+    desc: Run Biome linter (shows errors)
+    cmds:
+      - npm run biome -- lint .
+
+  quality:lint:fix:
+    aliases: [lf]
+    desc: Run Biome linter and auto-fix issues
+    cmds:
+      - npm run biome -- lint --write .
+
+  quality:check:
+    aliases: [c]
+    desc: Format + lint + organise imports + apply safe fixes
+    cmds:
+      - npm run biome -- check --write .
 
   # ---- test ----
   test:unit:

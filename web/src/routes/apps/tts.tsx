@@ -1,8 +1,8 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { btn } from "#/common/atoms/btn"
-import { useState, useEffect, useRef } from "react"
 import { ClipboardIcon, SpeakerHighIcon, StopIcon } from "@phosphor-icons/react"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import { useEffect, useRef, useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "Text to Speech"
 
@@ -125,6 +125,7 @@ function RouteComponent() {
         <button
           className={btn({ isIcon: true })}
           onClick={copyText}
+          type="button"
           disabled={!text}
           aria-label="Copy text"
         >
@@ -145,6 +146,7 @@ function RouteComponent() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Language */}
           <div>
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫! */}
             <label className="block text-xs text-mist-500 mb-1">Language</label>
             <select
               value={selectedLang.code}
@@ -166,6 +168,7 @@ function RouteComponent() {
 
           {/* Voice */}
           <div>
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫! */}
             <label className="block text-xs text-mist-500 mb-1">Voice</label>
             <select
               value={selectedVoice?.name || ""}
@@ -191,6 +194,7 @@ function RouteComponent() {
         {/* Sliders */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫! */}
             <label className="block text-xs text-mist-500 mb-1">
               Rate: {rate.toFixed(1)}x
             </label>
@@ -205,6 +209,7 @@ function RouteComponent() {
             />
           </div>
           <div>
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫! */}
             <label className="block text-xs text-mist-500 mb-1">
               Pitch: {pitch.toFixed(1)}
             </label>
@@ -219,6 +224,7 @@ function RouteComponent() {
             />
           </div>
           <div>
+            {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫! */}
             <label className="block text-xs text-mist-500 mb-1">
               Volume: {Math.round(volume * 100)}%
             </label>
@@ -239,6 +245,7 @@ function RouteComponent() {
           className={btn({ theme: speaking ? "primary" : "glass" })}
           onClick={speaking ? stopSpeech : speak}
           disabled={!text.trim()}
+          type="button"
         >
           {speaking ? (
             <>

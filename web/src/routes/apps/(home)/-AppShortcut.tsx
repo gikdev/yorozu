@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
-import type { IAppShortcut } from "./-IAppShortcut"
 import { tv } from "tailwind-variants"
+import type { IAppShortcut } from "./-IAppShortcut"
 
 const styleApp = tv({
   base: "flex flex-col items-center gap-1 p-4 rounded-md text-center min-w-max cursor-pointer min-w-24 w-full max-w-36",
@@ -38,7 +38,7 @@ export const AppShortcut = ({ shortcut: s }: AppShortcutProps) => {
 
   if (s.type === "IDEA")
     return (
-      <button onClick={showDescription} className={styles}>
+      <button onClick={showDescription} className={styles} type="button">
         {content}
       </button>
     )

@@ -1,9 +1,9 @@
 import {
-  PlayIcon,
-  PauseIcon,
-  TrashIcon,
   ChartBarIcon,
   HouseIcon,
+  PauseIcon,
+  PlayIcon,
+  TrashIcon,
 } from "@phosphor-icons/react"
 import type { Session } from "./Session"
 
@@ -39,6 +39,7 @@ export function TimeLog(p: TimeLogProps) {
     <div className="flex flex-col h-dvh bg-mist-950 text-mist-400">
       <button
         className="flex-1 h-3/4 flex items-center justify-center cursor-pointer hover:bg-sky-950/50"
+        type="button"
         onClick={p.onToggle}
       >
         <BtnIcon size={64} weight="fill" className="text-sky-400" />

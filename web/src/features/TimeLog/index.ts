@@ -1,2 +1,2 @@
-export { TimeLog } from "./TimeLog"
 export type { Session } from "./Session"
+export { TimeLog } from "./TimeLog"

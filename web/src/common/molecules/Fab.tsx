@@ -47,6 +47,7 @@ export function Fab(p: FabProps) {
     return (
       <button
         onClick={p.onClick}
+        type="button"
         title={p.title}
         style={{ right: p.right, bottom: p.bottom }}
         className={p.className ?? styleFab()}

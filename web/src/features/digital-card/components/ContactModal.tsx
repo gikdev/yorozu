@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { IntentTabs } from "./IntentTabs"
-import { LinkList } from "./LinkList"
 import { useContentT } from "../hooks/useContentT"
 import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
 import type { Intent } from "../types/Intent"
+import { IntentTabs } from "./IntentTabs"
+import { LinkList } from "./LinkList"
 
 export function ContactModal() {
   const [intent, setIntent] = useState<Intent>("message")
@@ -28,6 +28,7 @@ export function ContactModal() {
         <div className="px-4 pb-4">
           <button
             onClick={() => setOpen(false)}
+            type="button"
             className="w-full py-2 rounded-xl border border-mist-700 text-mist-400 text-sm hover:bg-mist-800 transition-colors"
           >
             {closeLabel}

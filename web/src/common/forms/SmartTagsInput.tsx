@@ -1,11 +1,11 @@
-import { useFieldContext } from "."
-import { fieldContainer } from "../atoms/field-container"
-import { btn } from "../atoms/btn"
-import { FieldMeta } from "./field-meta"
 import { ArrowsDownUpIcon, PlusIcon, XIcon } from "@phosphor-icons/react"
-import { useState, type ChangeEvent, type KeyboardEvent } from "react"
+import { type ChangeEvent, type KeyboardEvent, useState } from "react"
+import { btn } from "../atoms/btn"
+import { fieldContainer } from "../atoms/field-container"
 import { styleInput } from "../atoms/input"
 import { BottomSheet } from "../organisms/BottomSheet"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 interface SmartTagsInputProps {
   title: string

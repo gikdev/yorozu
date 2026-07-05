@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react"
 import { useNavigate } from "@tanstack/react-router"
-import { LangSwitch } from "./LangSwitch"
-import { CardHeader } from "./CardHeader"
-import { ContactModal } from "./ContactModal"
+import { useEffect, useRef } from "react"
 import { useContentT } from "../hooks/useContentT"
 import { useDigitalCardStore } from "../hooks/useDigitalCardStore"
 import { useLang } from "../hooks/useLang"
+import { CardHeader } from "./CardHeader"
+import { ContactModal } from "./ContactModal"
+import { LangSwitch } from "./LangSwitch"
 
 const SECRET_CODE = "leviosa"
 
@@ -56,6 +56,7 @@ export function DigitalCard() {
 
         <div className="px-4 pb-5">
           <button
+            type="button"
             onClick={() => setOpen(true)}
             className="w-full py-2.5 rounded-xl bg-sky-500 text-mist-950 text-sm font-medium hover:bg-sky-400 transition-colors"
           >

@@ -1,7 +1,7 @@
-import { useFieldContext } from "."
 import { btn } from "../atoms/btn"
 import { fieldContainer } from "../atoms/field-container"
 import { styleInput } from "../atoms/input"
+import { useFieldContext } from "."
 import { FieldMeta } from "./field-meta"
 
 interface SimpleTextInputProps {
@@ -33,8 +33,11 @@ export function SimpleTextInput({
 
       {suggestions && suggestions.length > 0 ? (
         <div className="flex flex-wrap items-center gap-1">
-          {suggestions.map(s => (
+          {suggestions.map((s, i) => (
             <button
+              type="button"
+              // biome-ignore lint/suspicious/noArrayIndexKey: 大丈夫
+              key={i}
               className={btn({ size: "sm" })}
               onClick={() => field.handleChange(s)}
             >

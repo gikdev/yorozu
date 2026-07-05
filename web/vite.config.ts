@@ -1,10 +1,10 @@
-import { defineConfig, type PluginOption, type UserConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import { tanstackRouter } from "@tanstack/router-plugin/vite"
+import path from "node:path"
 import tailwindcss from "@tailwindcss/vite"
+import { tanstackRouter } from "@tanstack/router-plugin/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig, type PluginOption, type UserConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
 import tsconfigPaths from "vite-tsconfig-paths"
-import path from "node:path"
 
 const vitePwaPlugin = VitePWA({
   registerType: "prompt",

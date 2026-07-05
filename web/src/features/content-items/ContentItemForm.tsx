@@ -1,12 +1,3 @@
-import { z } from "zod"
-import { btn } from "#/common/atoms/btn"
-import { useAppForm } from "#/common/forms"
-import {
-  ContentItemFormat,
-  LocationType,
-  zContentItemFormat,
-  zLocationType,
-} from "#/common/api/client"
 import {
   AirplayIcon,
   ArrowClockwiseIcon,
@@ -15,6 +6,15 @@ import {
   LockKeyIcon,
   XIcon,
 } from "@phosphor-icons/react"
+import { z } from "zod"
+import {
+  type ContentItemFormat,
+  type LocationType,
+  zContentItemFormat,
+  zLocationType,
+} from "#/common/api/client"
+import { btn } from "#/common/atoms/btn"
+import { useAppForm } from "#/common/forms"
 
 const zContentItemFormValues = z.object({
   fullTitle: z.string().min(1, "Required"),
@@ -61,7 +61,8 @@ type ContentItemFormProps = {
   onCancel: () => void
   onSubmit: ContentItemFormSubmitHandler
 } & (
-  { mode: "CREATE" } | { mode: "EDIT"; initialValues: ContentItemFormValues }
+  | { mode: "CREATE" }
+  | { mode: "EDIT"; initialValues: ContentItemFormValues }
 )
 
 export function ContentItemForm(p: ContentItemFormProps) {

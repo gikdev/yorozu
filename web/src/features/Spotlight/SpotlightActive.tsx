@@ -1,4 +1,4 @@
-import { XIcon, CheckIcon, HouseIcon } from "@phosphor-icons/react"
+import { CheckIcon, HouseIcon, XIcon } from "@phosphor-icons/react"
 
 interface SpotlightActiveProps {
   activeItem: string

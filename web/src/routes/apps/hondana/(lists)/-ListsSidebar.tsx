@@ -1,5 +1,3 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
 import {
   InfoIcon,
   ListPlusIcon,
@@ -8,16 +6,18 @@ import {
   TrashSimpleIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react"
-import { btn } from "#/common/atoms/btn"
-import { RenderQuery } from "#/common/helpers/render-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
+import toast from "react-hot-toast"
 import {
+  type ConsumptionTrackListMiniResponse,
   ConsumptionTrackLists,
   listConsumptionTrackListsOptions,
-  type ConsumptionTrackListMiniResponse,
 } from "#/common/api/client"
-import { StateMessage } from "#/common/molecules/StateMessage"
+import { btn } from "#/common/atoms/btn"
 import { extractErrorMessage } from "#/common/helpers/errors"
-import toast from "react-hot-toast"
+import { RenderQuery } from "#/common/helpers/render-query"
+import { StateMessage } from "#/common/molecules/StateMessage"
 
 export function ListsSidebar() {
   const navigate = useNavigate({ from: "/apps/hondana/lists" })
@@ -78,7 +78,7 @@ export function ListsSidebar() {
         />
       }
       fullView={() =>
-        listsQ.data!.items.map(list => (
+        listsQ.data?.items.map(list => (
           <ListItemCard
             disabled={false}
             key={list.id}

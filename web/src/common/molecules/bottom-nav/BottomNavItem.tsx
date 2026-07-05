@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
-import { styleBottomNavItem } from "./styleBottomNavItem"
 import type { BottomNavItemShape } from "./BottomNavItemShape"
+import { styleBottomNavItem } from "./styleBottomNavItem"
 
 interface BottomNavItemProps extends BottomNavItemShape {
   isActive?: boolean
@@ -22,7 +22,7 @@ export function BottomNavItem(p: BottomNavItemProps) {
 
   if (p.disabled) {
     return (
-      <button disabled className={styles}>
+      <button disabled className={styles} type="button">
         {content}
       </button>
     )

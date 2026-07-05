@@ -1,5 +1,5 @@
-import type { ComponentType } from "react"
 import { Link, type LinkOptions } from "@tanstack/react-router"
+import type { ComponentType } from "react"
 
 interface IconProps {
   size?: number

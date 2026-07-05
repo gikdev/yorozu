@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react"
-import { PlayIcon, PauseIcon, FilePlusIcon } from "@phosphor-icons/react"
+import { FilePlusIcon, PauseIcon, PlayIcon } from "@phosphor-icons/react"
+import { type ChangeEvent, useEffect, useRef, useState } from "react"
+import toast from "react-hot-toast"
 import { btn } from "#/common/atoms/btn"
+import { extractErrorMessage } from "#/common/helpers/errors"
 import type { TextFieldKey } from "../lyric-lines/LyricLinesForm/LyricLinesFormSchema"
 import type { LyricLine } from "../lyric-lines/lyricLineSchema"
-import toast from "react-hot-toast"
-import { extractErrorMessage } from "#/common/helpers/errors"
 
 const displayFields: { key: TextFieldKey; label: string }[] = [
   { key: "persian", label: "Persian" },
@@ -151,6 +151,7 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
           disabled={!audioUrl}
           className={btn({ theme: "primary", size: "lg" })}
           onClick={handlePlayPause}
+          type="button"
         >
           {isPlaying ? (
             <PauseIcon size={32} weight="fill" />
@@ -171,6 +172,7 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
         </label>
       </div>
 
+      {/** biome-ignore lint/a11y/useMediaCaption: いいんだよ！ */}
       <audio
         ref={audioRef}
         onLoadedMetadata={e => setTotalTime(e.currentTarget.duration)}

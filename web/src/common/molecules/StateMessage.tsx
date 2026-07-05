@@ -1,7 +1,7 @@
 import type { Icon } from "@phosphor-icons/react"
+import type { ReactNode } from "react"
 import { cn } from "tailwind-variants"
 import { btn } from "../atoms/btn"
-import type { ReactNode } from "react"
 
 interface StateMessageProps {
   mode: "LOADING" | "ERROR" | "NORMAL"
@@ -32,6 +32,7 @@ export function StateMessage(p: StateMessageProps) {
 
       {p.mode === "ERROR" && p.retry && (
         <button
+          type="button"
           onClick={p.retry}
           className={btn({ theme: "primary", className: "mt-6" })}
         >

@@ -1,5 +1,5 @@
-import { btn } from "#/common/atoms/btn"
 import { ArrowsClockwiseIcon } from "@phosphor-icons/react"
+import { btn } from "#/common/atoms/btn"
 import { en } from "../i18n/en"
 
 interface ErrorCardProps {
@@ -17,6 +17,7 @@ export function ErrorCard({ message, onRetry }: ErrorCardProps) {
           className={btn({
             className: "flex w-full justify-between",
           })}
+          type="button"
           onClick={onRetry}
         >
           <span>{en.common.retry}</span>

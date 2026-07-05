@@ -1,9 +1,9 @@
+import { PencilSimpleIcon } from "@phosphor-icons/react"
 import { createFileRoute, Link, linkOptions } from "@tanstack/react-router"
+import { btn } from "#/common/atoms/btn"
 import { PageHeaderBackButton } from "#/common/molecules/page-header"
 import { stylePageHeader } from "#/common/molecules/page-header/stylePageHeader"
 import { SongLyricsPlayer } from "#/features/song/SongLyricsPlayer"
-import { PencilSimpleIcon } from "@phosphor-icons/react"
-import { btn } from "#/common/atoms/btn"
 
 export const Route = createFileRoute("/apps/shirabe/")({
   component: RouteComponent,

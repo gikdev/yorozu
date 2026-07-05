@@ -1,12 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { create } from "zustand"
-import { persist } from "zustand/middleware"
 import {
-  UploadSimpleIcon,
   DownloadSimpleIcon,
   TrashSimpleIcon,
+  UploadSimpleIcon,
 } from "@phosphor-icons/react"
+import { createFileRoute } from "@tanstack/react-router"
 import { useRef } from "react"
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 export const Route = createFileRoute("/apps/writing-area")({
   component: RouteComponent,
@@ -141,6 +141,7 @@ function WritingArea() {
           <button
             onClick={() => fileInputRef.current?.click()}
             title="Upload .txt file"
+            type="button"
             className="p-1.5 rounded hover:bg-white/10 transition-colors"
           >
             <UploadSimpleIcon size={18} />
@@ -156,6 +157,7 @@ function WritingArea() {
           <button
             onClick={handleDownload}
             title="Download as .txt"
+            type="button"
             className="p-1.5 rounded hover:bg-white/10 transition-colors"
           >
             <DownloadSimpleIcon size={18} />
@@ -164,6 +166,7 @@ function WritingArea() {
           <button
             onClick={handleReset}
             title="Clear all"
+            type="button"
             className="p-1.5 rounded hover:bg-white/10 transition-colors"
           >
             <TrashSimpleIcon size={18} />
@@ -188,6 +191,7 @@ function WritingArea() {
           <div className="flex items-center gap-1">
             <button
               onClick={() => setFontSize(Math.max(8, fontSize - 2))}
+              type="button"
               className="px-2 py-1 text-lg font-bold hover:bg-white/10 rounded"
             >
               A-
@@ -197,6 +201,7 @@ function WritingArea() {
             </span>
             <button
               onClick={() => setFontSize(Math.min(80, fontSize + 2))}
+              type="button"
               className="px-2 py-1 text-lg font-bold hover:bg-white/10 rounded"
             >
               A+

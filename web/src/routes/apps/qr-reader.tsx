@@ -1,9 +1,9 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { btn } from "#/common/atoms/btn"
-import { useState } from "react"
-import { Scanner } from "@yudiel/react-qr-scanner"
 import { ClipboardIcon } from "@phosphor-icons/react"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import { Scanner } from "@yudiel/react-qr-scanner"
+import { useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "QR Reader"
 
@@ -26,6 +26,7 @@ function RouteComponent() {
         <button
           className={btn({ isIcon: true })}
           onClick={copyResult}
+          type="button"
           disabled={!result}
           aria-label="Copy result"
         >
@@ -53,6 +54,7 @@ function RouteComponent() {
               {result}
             </div>
             <button
+              type="button"
               className={btn()}
               onClick={() => {
                 setResult("")

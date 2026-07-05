@@ -1,6 +1,6 @@
-import { TimeLog, type Session } from "#/features/TimeLog"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
+import { type Session, TimeLog } from "#/features/TimeLog"
 
 const LS_KEY = "time-log:sessions"
 

@@ -1,12 +1,14 @@
 // bottomsheet.tsx
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-} from "react"
+
 import { XIcon } from "@phosphor-icons/react"
+import type React from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { cn } from "tailwind-variants"
 
 // ---------- Context ----------
@@ -129,24 +131,22 @@ function Container({ children, className, height = "h-1/2" }: ContainerProps) {
   const { isOpen } = useBottomSheet()
 
   return (
-    <>
-      <div
-        className={cn(
-          "fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-mist-900 text-mist-100 shadow-2xl transition-transform duration-300 ease-out",
-          height,
-          isOpen ? "translate-y-0" : "translate-y-full",
-          className,
-        )}
-        role="dialog"
-        aria-modal="true"
-      >
-        {/* Drag handle (subtle indicator) */}
-        <div className="flex justify-center pt-3 pb-1">
-          <div className="h-1 w-10 rounded-full bg-mist-600" />
-        </div>
-        {children}
+    <div
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-mist-900 text-mist-100 shadow-2xl transition-transform duration-300 ease-out",
+        height,
+        isOpen ? "translate-y-0" : "translate-y-full",
+        className,
+      )}
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Drag handle (subtle indicator) */}
+      <div className="flex justify-center pt-3 pb-1">
+        <div className="h-1 w-10 rounded-full bg-mist-600" />
       </div>
-    </>
+      {children}
+    </div>
   )
 }
 
@@ -178,6 +178,7 @@ function Header({
       {showCloseButton && (
         <button
           onClick={close}
+          type="button"
           className="ml-auto rounded-full p-1 hover:bg-mist-800 transition-colors"
           aria-label="Close"
         >

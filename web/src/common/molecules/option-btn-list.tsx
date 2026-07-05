@@ -12,6 +12,7 @@ export function OptionBtnList(p: OptionBtnListProps) {
     <div className="flex flex-col divide-mist-800 divide-y">
       {p.optionItems.map((i, index) => (
         <OptionBtnListItem
+          // biome-ignore lint/suspicious/noArrayIndexKey: 大丈夫
           key={index}
           Icon={i.Icon}
           helpText={i.helpText}

@@ -1,8 +1,8 @@
+import { HouseIcon } from "@phosphor-icons/react"
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
 import { AppBar } from "#/common/molecules/page-header"
 import { HondanaCategoryNav } from "#/features/hondana/HondanaCategoryNav"
 import { ListsCarousel } from "./-ListsCarousel"
-import { HouseIcon } from "@phosphor-icons/react"
 
 const TITLE = "本棚"
 

@@ -1,10 +1,10 @@
-import { useFieldContext } from "."
+import { ImageBrokenIcon, ImageIcon } from "@phosphor-icons/react"
+import { type ChangeEvent, useState } from "react"
+import { tv } from "tailwind-variants"
 import { fieldContainer } from "../atoms/field-container"
 import { styleInput } from "../atoms/input"
+import { useFieldContext } from "."
 import { FieldMeta } from "./field-meta"
-import { useState, type ChangeEvent } from "react"
-import { ImageBrokenIcon, ImageIcon } from "@phosphor-icons/react"
-import { tv } from "tailwind-variants"
 
 type PreviewState = "empty" | "preview" | "error"
 
@@ -17,7 +17,7 @@ export function ImgUrlWithPreviewInput(p: ImgUrlWithPreviewInputProps) {
   const [imgError, setImgError] = useState(false)
 
   const url = field.state.value || ""
-  const previewState: PreviewState = !!url
+  const previewState: PreviewState = url
     ? imgError
       ? "error"
       : "preview"

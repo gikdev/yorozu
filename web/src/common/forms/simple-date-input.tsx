@@ -1,13 +1,13 @@
-import { useFieldContext } from "."
-import { fieldContainer } from "../atoms/field-container"
-import { FieldMeta } from "./field-meta"
-import DatePicker, { DateObject } from "react-multi-date-picker"
+import { TrashIcon } from "@phosphor-icons/react"
+import gregorian from "react-date-object/calendars/gregorian"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
-import gregorian from "react-date-object/calendars/gregorian"
-import { TrashIcon } from "@phosphor-icons/react"
+import DatePicker, { DateObject } from "react-multi-date-picker"
 import { btn } from "../atoms/btn"
+import { fieldContainer } from "../atoms/field-container"
 import { styleInput } from "../atoms/input"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 interface PersianUtcDateInputProps {
   title: string

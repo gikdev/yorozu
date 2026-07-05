@@ -1,7 +1,7 @@
-import { useFieldContext } from "."
-import { fieldContainer } from "../atoms/field-container"
-import { FieldMeta } from "./field-meta"
 import { btn } from "../atoms/btn"
+import { fieldContainer } from "../atoms/field-container"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 export type TagOption = {
   title: string
@@ -28,6 +28,7 @@ export function TagOptionsInput(p: TagOptionsInputProps) {
 
           return (
             <button
+              // biome-ignore lint/suspicious/noArrayIndexKey: いいんだよ！
               key={i}
               type="button"
               onBlur={field.handleBlur}

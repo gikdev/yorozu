@@ -1,9 +1,9 @@
 import { MinusIcon, PlusIcon } from "@phosphor-icons/react"
-import { useFieldContext } from "."
 import { btn } from "../atoms/btn"
 import { fieldContainer } from "../atoms/field-container"
-import { FieldMeta } from "./field-meta"
 import { styleInput } from "../atoms/input"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 interface CounterNumberInputProps {
   title: string

@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { useCallback, useEffect, useState } from "react"
 
 export const Route = createFileRoute("/apps/choice")({
   component: FocusChoiceApp,
@@ -170,6 +170,7 @@ export default function FocusChoiceApp() {
                 className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-400"
               />
               <button
+                type="button"
                 onClick={addItem}
                 className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg transition"
               >
@@ -182,11 +183,13 @@ export default function FocusChoiceApp() {
               <ul className="space-y-1 max-h-40 overflow-y-auto">
                 {items.map((item, i) => (
                   <li
+                    // biome-ignore lint/suspicious/noArrayIndexKey: いいんだよ！
                     key={i}
                     className="flex justify-between items-center bg-gray-800 px-3 py-2 rounded"
                   >
                     <span>{item}</span>
                     <button
+                      type="button"
                       onClick={() => removeItem(i)}
                       className="text-gray-400 hover:text-red-400 ml-2"
                     >
@@ -203,12 +206,14 @@ export default function FocusChoiceApp() {
                 <p className="text-sm text-gray-400">Choose mode:</p>
                 <div className="flex gap-3">
                   <button
+                    type="button"
                     onClick={startTournament}
                     className="flex-1 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
                   >
                     🏆 Winner
                   </button>
                   <button
+                    type="button"
                     onClick={startRanking}
                     className="flex-1 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
                   >
@@ -234,13 +239,17 @@ export default function FocusChoiceApp() {
                 <p className="text-gray-300">Which one is better?</p>
                 <div className="flex gap-4 justify-center">
                   <button
+                    type="button"
+                    // biome-ignore lint/style/noNonNullAssertion: いいんだよ！
                     onClick={() => handleTournamentPick(tournamentPair[0]!)}
                     className="w-1/2 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-lg transition"
                   >
                     {tournamentPair[0]}
                   </button>
                   <button
+                    // biome-ignore lint/style/noNonNullAssertion: いいんだよ！
                     onClick={() => handleTournamentPick(tournamentPair[1]!)}
+                    type="button"
                     className="w-1/2 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-lg transition"
                   >
                     {tournamentPair[1]}
@@ -251,8 +260,10 @@ export default function FocusChoiceApp() {
               <>
                 <p className="text-gray-300">Bye — automatically advances:</p>
                 <button
+                  // biome-ignore lint/style/noNonNullAssertion: いいんだよ！
                   onClick={() => handleTournamentPick(tournamentPair[0]!)}
                   className="w-full py-4 bg-gray-700 text-white font-bold rounded-lg text-lg"
+                  type="button"
                 >
                   {tournamentPair[0]} (auto‑advance)
                 </button>
@@ -270,6 +281,7 @@ export default function FocusChoiceApp() {
             </h2>
             <button
               onClick={reset}
+              type="button"
               className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
             >
               Start Over
@@ -284,12 +296,14 @@ export default function FocusChoiceApp() {
             <div className="flex gap-4 justify-center">
               <button
                 onClick={() => handleRankingChoice(true)}
+                type="button"
                 className="w-1/2 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-lg transition"
               >
                 {rankA}
               </button>
               <button
                 onClick={() => handleRankingChoice(false)}
+                type="button"
                 className="w-1/2 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-lg transition"
               >
                 {rankB}
@@ -307,6 +321,7 @@ export default function FocusChoiceApp() {
             <ol className="space-y-1">
               {rankingList.map((item, i) => (
                 <li
+                  // biome-ignore lint/suspicious/noArrayIndexKey: いいんだよ！
                   key={i}
                   className="flex items-center gap-3 bg-gray-800 px-4 py-2 rounded"
                 >
@@ -317,6 +332,7 @@ export default function FocusChoiceApp() {
             </ol>
             <button
               onClick={reset}
+              type="button"
               className="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition"
             >
               Start Over

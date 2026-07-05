@@ -1,18 +1,18 @@
-import { btn } from "#/common/atoms/btn"
-import { useAppForm } from "#/common/forms"
 import { PlusIcon } from "@phosphor-icons/react"
+import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 import { v4 as uuidv4 } from "uuid"
+import { btn } from "#/common/atoms/btn"
+import { styleInput } from "#/common/atoms/input"
+import { useAppForm } from "#/common/forms"
+import { extractErrorMessage } from "#/common/helpers/errors"
 import {
   emptyLyricLine,
   emptyLyricLinesFormValues,
-  lyricLinesFormSchema,
   type LyricLinesFormValues,
+  lyricLinesFormSchema,
 } from "./LyricLinesFormSchema"
 import { saveLyricLines } from "./useLyricLinesFormStorage"
-import { useEffect, useState } from "react"
-import { styleInput } from "#/common/atoms/input"
-import toast from "react-hot-toast"
-import { extractErrorMessage } from "#/common/helpers/errors"
 
 const sortByTimestamp = (lines: LyricLinesFormValues["lines"]) =>
   [...lines].sort((a, b) => {

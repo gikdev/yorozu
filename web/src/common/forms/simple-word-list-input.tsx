@@ -1,8 +1,8 @@
 import type { ChangeEvent } from "react"
-import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
-import { FieldMeta } from "./field-meta"
 import { styleInput } from "../atoms/input"
+import { useFieldContext } from "."
+import { FieldMeta } from "./field-meta"
 
 interface SimpleWordListInputProps {
   title: string

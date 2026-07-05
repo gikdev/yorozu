@@ -1,8 +1,8 @@
+import { ArrowCounterClockwiseIcon, ClipboardIcon } from "@phosphor-icons/react"
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { btn } from "#/common/atoms/btn"
 import { useState } from "react"
-import { ClipboardIcon, ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "Password Generator"
 
@@ -65,6 +65,7 @@ function RouteComponent() {
         <button
           className={btn({ isIcon: true })}
           onClick={copyPassword}
+          type="button"
           disabled={!password}
           aria-label="Copy password"
         >
@@ -73,6 +74,7 @@ function RouteComponent() {
         <button
           className={btn({ isIcon: true })}
           onClick={generate}
+          type="button"
           aria-label="Generate new password"
         >
           <ArrowCounterClockwiseIcon size={24} />
@@ -89,13 +91,18 @@ function RouteComponent() {
 
         {/* Generate button (if no password yet) */}
         {!password && (
-          <button className={btn({ theme: "primary" })} onClick={generate}>
+          <button
+            type="button"
+            className={btn({ theme: "primary" })}
+            onClick={generate}
+          >
             Generate password
           </button>
         )}
 
         {/* Length slider */}
         <div>
+          {/** biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫！ */}
           <label className="block text-sm text-mist-500 mb-1">
             Length: {length}
           </label>
@@ -104,7 +111,7 @@ function RouteComponent() {
             min="4"
             max="64"
             value={length}
-            onChange={e => setLength(parseInt(e.target.value))}
+            onChange={e => setLength(parseInt(e.target.value, 10))}
             className="w-full accent-deep-sky-500"
           />
         </div>
@@ -151,7 +158,11 @@ function RouteComponent() {
 
         {/* Regenerate button (if password exists) */}
         {password && (
-          <button className={btn({ theme: "glass" })} onClick={generate}>
+          <button
+            type="button"
+            className={btn({ theme: "glass" })}
+            onClick={generate}
+          >
             <ArrowCounterClockwiseIcon size={20} /> Regenerate
           </button>
         )}

@@ -23,7 +23,11 @@ export function IntentTab({ intent, isActive, onClick }: IntentTabProps) {
   const label = useIntentLabel(intent)
 
   return (
-    <button onClick={onClick} className={styleIntentBtn({ isActive })}>
+    <button
+      onClick={onClick}
+      className={styleIntentBtn({ isActive })}
+      type="button"
+    >
       {label}
     </button>
   )

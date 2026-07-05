@@ -1,9 +1,9 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { btn } from "#/common/atoms/btn"
-import { useState } from "react"
-import { QRCodeSVG } from "qrcode.react"
 import { ClipboardIcon, DownloadSimpleIcon } from "@phosphor-icons/react"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import { QRCodeSVG } from "qrcode.react"
+import { useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "QR Generator"
 
@@ -54,6 +54,7 @@ function RouteComponent() {
           onClick={downloadPng}
           disabled={!text}
           aria-label="Download as PNG"
+          type="button"
         >
           <DownloadSimpleIcon size={24} />
         </button>
@@ -70,6 +71,7 @@ function RouteComponent() {
           />
           <button
             className={btn({ isIcon: true })}
+            type="button"
             onClick={copyText}
             disabled={!text}
             aria-label="Copy text"

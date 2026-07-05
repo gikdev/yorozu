@@ -1,17 +1,17 @@
-import { btn } from "#/common/atoms/btn"
-import { styleInput } from "#/common/atoms/input"
-import { fieldContainer } from "#/common/atoms/field-container"
 import {
-  TrashIcon,
-  ClockIcon,
   ArrowCounterClockwiseIcon,
   CaretDownIcon,
   CaretUpIcon,
+  ClockIcon,
+  TrashIcon,
 } from "@phosphor-icons/react"
-import { useFieldContext } from "#/common/forms"
-import { type LyricLine, type TextFieldKey } from "./LyricLinesFormSchema"
-import { useSongPlayerStore } from "#/features/song/useSongPlayerStore"
 import { useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { fieldContainer } from "#/common/atoms/field-container"
+import { styleInput } from "#/common/atoms/input"
+import { useFieldContext } from "#/common/forms"
+import { useSongPlayerStore } from "#/features/song/useSongPlayerStore"
+import type { LyricLine, TextFieldKey } from "./LyricLinesFormSchema"
 
 const textFields: { key: TextFieldKey; label: string }[] = [
   { key: "persian", label: "Persian" },

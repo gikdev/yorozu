@@ -1,7 +1,7 @@
-import { Spotlight } from "#/features/Spotlight"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { Spotlight } from "#/features/Spotlight"
 
 export const Route = createFileRoute("/apps/spotlight")({
   component: RouteComponent,

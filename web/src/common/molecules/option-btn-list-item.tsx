@@ -26,6 +26,7 @@ export function OptionBtnListItem(p: OptionBtnListItemProps) {
       className={className}
       title={p.helpText}
       onClick={p.onClick}
+      // biome-ignore lint/correctness/noChildrenProp: 大丈夫
       children={children}
     />
   ) : (
@@ -34,6 +35,7 @@ export function OptionBtnListItem(p: OptionBtnListItemProps) {
       className={className}
       title={p.helpText}
       onClick={p.onClick}
+      // biome-ignore lint/correctness/noChildrenProp: 大丈夫
       children={children}
     />
   )

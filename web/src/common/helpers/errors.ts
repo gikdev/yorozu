@@ -8,6 +8,7 @@ type ValidationProblem = {
   errors?: Record<string, string[]>
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: 大丈夫
 export function extractErrorMessage(error: any): string {
   // Axios-style server response
   const data: ValidationProblem | undefined = error?.response?.data

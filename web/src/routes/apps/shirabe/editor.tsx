@@ -1,19 +1,19 @@
+import { FilePlusIcon, PlusIcon } from "@phosphor-icons/react"
 import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { PageHeaderBackButton } from "#/common/molecules/page-header"
-import { stylePageHeader } from "#/common/molecules/page-header/stylePageHeader"
-import { TimestampSongPlayer } from "#/features/song/TimestampSongPlayer"
-import { LyricLinesForm } from "#/features/lyric-lines/LyricLinesForm"
-import { useState, type ChangeEvent } from "react"
+import { type ChangeEvent, useState } from "react"
+import toast from "react-hot-toast"
 import { btn } from "#/common/atoms/btn"
 import { styleInput } from "#/common/atoms/input"
-import { FilePlusIcon, PlusIcon } from "@phosphor-icons/react"
+import { extractErrorMessage } from "#/common/helpers/errors"
+import { PageHeaderBackButton } from "#/common/molecules/page-header"
+import { stylePageHeader } from "#/common/molecules/page-header/stylePageHeader"
+import { LyricLinesForm } from "#/features/lyric-lines/LyricLinesForm"
 import type { LyricLinesFormValues } from "#/features/lyric-lines/LyricLinesForm/LyricLinesFormSchema"
 import {
   clearLyricLines,
   loadLyricLines,
 } from "#/features/lyric-lines/LyricLinesForm/useLyricLinesFormStorage"
-import toast from "react-hot-toast"
-import { extractErrorMessage } from "#/common/helpers/errors"
+import { TimestampSongPlayer } from "#/features/song/TimestampSongPlayer"
 
 export const Route = createFileRoute("/apps/shirabe/editor")({
   component: RouteComponent,

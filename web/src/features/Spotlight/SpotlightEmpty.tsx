@@ -21,7 +21,6 @@ export function SpotlightEmpty({ onStart, onBack }: SpotlightEmptyProps) {
       <div className="flex-1 h-3/4 flex">
         <input
           ref={inputRef}
-          autoFocus
           autoComplete="off"
           placeholder="What are you focusing on?"
           className="w-full h-full text-center bg-transparent text-3xl font-bold text-white placeholder:text-mist-400 outline-none focus:bg-mist-900 px-2 py-4 resize-none"

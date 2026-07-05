@@ -1,13 +1,13 @@
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { AppBar } from "#/common/molecules/page-header"
-import { btn } from "#/common/atoms/btn"
-import { useRef, useState } from "react"
 import {
   FloppyDiskIcon,
   MicrophoneIcon,
   StopIcon,
   TrashIcon,
 } from "@phosphor-icons/react"
+import { createFileRoute, linkOptions } from "@tanstack/react-router"
+import { useRef, useState } from "react"
+import { btn } from "#/common/atoms/btn"
+import { AppBar } from "#/common/molecules/page-header"
 
 const TITLE = "Voice Notes"
 
@@ -49,6 +49,7 @@ function RouteComponent() {
       }
 
       recorder.onstop = () => {
+        // biome-ignore lint/suspicious/useIterableCallbackReturn: 大丈夫!
         stream.getTracks().forEach(t => t.stop())
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType })
         setAudioBlob(blob)
@@ -121,6 +122,7 @@ function RouteComponent() {
         />
 
         <button
+          type="button"
           className={btn({ theme: isRecording ? "primary" : "glass" })}
           onClick={isRecording ? stopRecording : startRecording}
         >
@@ -137,9 +139,11 @@ function RouteComponent() {
 
         {audioUrl && (
           <div className="flex flex-col gap-3">
+            {/** biome-ignore lint/a11y/useMediaCaption: 大丈夫 */}
             <audio controls src={audioUrl} className="w-full" />
             <div className="flex gap-2">
               <button
+                type="button"
                 className={btn({ theme: "primary" })}
                 onClick={saveRecording}
                 disabled={isSaving}
@@ -147,6 +151,7 @@ function RouteComponent() {
                 <FloppyDiskIcon size={24} /> {isSaving ? "Saving..." : "Save"}
               </button>
               <button
+                type="button"
                 className={btn({ isIcon: true })}
                 onClick={discardRecording}
                 aria-label="Discard recording"

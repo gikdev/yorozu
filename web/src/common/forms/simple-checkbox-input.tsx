@@ -1,5 +1,5 @@
-import { useFieldContext } from "."
 import { fieldContainer } from "../atoms/field-container"
+import { useFieldContext } from "."
 import { FieldMeta } from "./field-meta"
 
 interface SimpleCheckboxInputProps {
