@@ -3,13 +3,13 @@ import {
   PauseIcon,
   PlayIcon,
   TrashIcon,
-} from "@phosphor-icons/react"
-import { type ChangeEvent, type SyntheticEvent, useEffect, useRef } from "react"
-import toast from "react-hot-toast"
-import { btn } from "#/common/atoms/btn"
-import { styleInput } from "#/common/atoms/input"
-import { useSongPlayerStore } from "../useSongPlayerStore"
-import { TimestampCards } from "./TimestampCards"
+} from '@phosphor-icons/react'
+import { type ChangeEvent, type SyntheticEvent, useEffect, useRef } from 'react'
+import toast from 'react-hot-toast'
+import { btn } from '#/common/atoms/btn'
+import { styleInput } from '#/common/atoms/input'
+import { useSongPlayerStore } from '../useSongPlayerStore'
+import { TimestampCards } from './TimestampCards'
 
 export function TimestampSongPlayer() {
   const blobRef = useRef<string>(null)
@@ -56,9 +56,9 @@ export function TimestampSongPlayer() {
     blobRef.current = URL.createObjectURL(file)
     setSongUrl(blobRef.current)
     audioRef.current.src = blobRef.current
-    e.target.value = ""
+    e.target.value = ''
 
-    toast.success("Successfully set.")
+    toast.success('Successfully set.')
   }
 
   const handleDelete = () => {
@@ -67,7 +67,7 @@ export function TimestampSongPlayer() {
     pause()
     setTotalTime(null)
     audioRef.current.pause()
-    audioRef.current.src = ""
+    audioRef.current.src = ''
     if (blobRef.current) {
       URL.revokeObjectURL(blobRef.current)
     }
@@ -96,20 +96,20 @@ export function TimestampSongPlayer() {
   }, [])
 
   return (
-    <div className="flex flex-col gap-4 w-full bg-mist-900 p-8 rounded-lg">
-      <div className="flex items-center justify-center gap-2">
+    <div className='flex flex-col gap-4 w-full bg-mist-900 p-8 rounded-lg'>
+      <div className='flex items-center justify-center gap-2'>
         <input
           disabled={songUrl == null}
-          type="range"
+          type='range'
           step={0.1}
           value={currentTime}
           max={totalTime || 0}
           onChange={e => handleSetCurrentTime(e.target.valueAsNumber)}
-          className="cursor-pointer disabled:cursor-not-allowed accent-sky-500 flex-1"
+          className='cursor-pointer disabled:cursor-not-allowed accent-sky-500 flex-1'
         />
 
         <input
-          type="number"
+          type='number'
           disabled={isPlaying || songUrl == null}
           value={isPlaying ? currentTime : undefined}
           min={0}
@@ -120,15 +120,15 @@ export function TimestampSongPlayer() {
         />
       </div>
 
-      <div className="flex items-center justify-center gap-1 *:flex-1">
-        <label className={btn({ theme: "outline" })}>
+      <div className='flex items-center justify-center gap-1 *:flex-1'>
+        <label className={btn({ theme: 'outline' })}>
           <FilePlusIcon size={24} />
 
-          <input className="hidden" type="file" onChange={handleFileUpload} />
+          <input className='hidden' type='file' onChange={handleFileUpload} />
         </label>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(5)}
@@ -137,7 +137,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(1)}
@@ -146,7 +146,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(0.5)}
@@ -155,7 +155,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleRewind(0.1)}
@@ -164,20 +164,20 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
-          className={btn({ size: "lg", theme: "primary" })}
+          className={btn({ size: 'lg', theme: 'primary' })}
           onClick={handlePlayPause}
         >
           {isPlaying ? (
-            <PauseIcon size={36} weight="fill" />
+            <PauseIcon size={36} weight='fill' />
           ) : (
-            <PlayIcon size={36} weight="fill" />
+            <PlayIcon size={36} weight='fill' />
           )}
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(0.1)}
@@ -186,7 +186,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(0.5)}
@@ -195,7 +195,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(1)}
@@ -204,7 +204,7 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          type="button"
+          type='button'
           disabled={songUrl == null}
           className={btn()}
           onClick={() => handleFastForward(5)}
@@ -213,9 +213,9 @@ export function TimestampSongPlayer() {
         </button>
 
         <button
-          title="Remove audio"
-          className={btn({ theme: "danger" })}
-          type="button"
+          title='Remove audio'
+          className={btn({ theme: 'danger' })}
+          type='button'
           onClick={handleDelete}
         >
           <TrashIcon size={24} />
@@ -228,15 +228,15 @@ export function TimestampSongPlayer() {
       <audio
         controls
         ref={audioRef}
-        className="w-full hidden"
+        className='w-full hidden'
         // biome-ignore lint/correctness/noChildrenProp: いいんだよ！
-        children="Audio not supported."
+        children='Audio not supported.'
         onLoadedMetadata={e => setTotalTime(e.currentTarget.duration)}
         onPause={() => pause()}
         onPlay={() => play()}
         onTimeUpdate={handleTimeUpdate}
         onError={e => {
-          toast.error("An error related to audio has occured.")
+          toast.error('An error related to audio has occured.')
           console.log(e)
         }}
       />

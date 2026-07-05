@@ -1,11 +1,11 @@
-import { ArrowsDownUpIcon, PlusIcon, XIcon } from "@phosphor-icons/react"
-import { type ChangeEvent, type KeyboardEvent, useState } from "react"
-import { btn } from "../atoms/btn"
-import { fieldContainer } from "../atoms/field-container"
-import { styleInput } from "../atoms/input"
-import { BottomSheet } from "../organisms/BottomSheet"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import { ArrowsDownUpIcon, PlusIcon, XIcon } from '@phosphor-icons/react'
+import { type ChangeEvent, type KeyboardEvent, useState } from 'react'
+import { btn } from '../atoms/btn'
+import { fieldContainer } from '../atoms/field-container'
+import { styleInput } from '../atoms/input'
+import { BottomSheet } from '../organisms/BottomSheet'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 interface SmartTagsInputProps {
   title: string
@@ -35,7 +35,7 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
 
   const handleRawInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const tags = e.target.value
-      .split(",")
+      .split(',')
       .map(t => t.trim().toLowerCase())
       .filter(Boolean)
     field.handleChange([...new Set(tags)])
@@ -55,22 +55,22 @@ export function SmartTagsInput({ title, allTags }: SmartTagsInputProps) {
       <BottomSheet.Root>
         <BottomSheet.Trigger
           className={btn({
-            theme: hasError ? "danger" : undefined,
-            className: "w-full justify-between gap-2",
+            theme: hasError ? 'danger' : undefined,
+            className: 'w-full justify-between gap-2',
           })}
         >
-          <span className="truncate">{title}</span>
-          <span className="text-xs tabular-nums">({selected.length})</span>
+          <span className='truncate'>{title}</span>
+          <span className='text-xs tabular-nums'>({selected.length})</span>
         </BottomSheet.Trigger>
 
         {/* Backdrop (optional, closable) */}
         <BottomSheet.Backdrop closable />
 
         {/* The tag‑editing UI inside the bottom sheet */}
-        <BottomSheet.Container height="h-[90vh]">
+        <BottomSheet.Container height='h-[90vh]'>
           <BottomSheet.Header title={`Edit ${title}`} />
 
-          <BottomSheet.Content className="flex flex-col gap-3">
+          <BottomSheet.Content className='flex flex-col gap-3'>
             {/* Selected chips */}
             <TagChipList tags={selected} onRemove={removeTag} />
 
@@ -108,13 +108,13 @@ function TagChipList({
   onRemove: (tag: string) => void
 }) {
   return (
-    <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start">
+    <div className='flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start'>
       {tags.map(tag => (
         <button
           key={tag}
-          type="button"
+          type='button'
           onClick={() => onRemove(tag)}
-          className={btn({ theme: "glass", size: "sm" })}
+          className={btn({ theme: 'glass', size: 'sm' })}
         >
           <span>{tag}</span>
           <XIcon size={12} />
@@ -134,7 +134,7 @@ function TagSearchAndSuggest({
   selected: string[]
   onAdd: (tag: string) => void
 }) {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState('')
 
   const suggestions = allTags
     .filter(
@@ -146,46 +146,46 @@ function TagSearchAndSuggest({
 
   const handleAdd = () => {
     onAdd(query)
-    setQuery("")
+    setQuery('')
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault()
       handleAdd()
     }
   }
 
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex gap-2">
+    <div className='flex flex-col gap-1'>
+      <div className='flex gap-2'>
         <input
-          type="text"
+          type='text'
           value={query}
           onChange={e => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type or search a tag..."
-          className={styleInput({ className: "flex-1" })}
+          placeholder='Type or search a tag...'
+          className={styleInput({ className: 'flex-1' })}
         />
         <button
-          type="button"
+          type='button'
           onClick={handleAdd}
-          className={btn({ isIcon: true, theme: "outline" })}
+          className={btn({ isIcon: true, theme: 'outline' })}
         >
           <PlusIcon size={24} />
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start">
+      <div className='flex flex-wrap gap-2 border border-mist-800 rounded-lg p-2 min-h-16 max-h-40 overflow-y-auto content-start'>
         {suggestions.map(tag => (
           <button
             key={tag}
-            type="button"
+            type='button'
             onClick={() => {
               onAdd(tag)
-              setQuery("")
+              setQuery('')
             }}
-            className={btn({ size: "sm" })}
+            className={btn({ size: 'sm' })}
           >
             {tag}
           </button>
@@ -206,17 +206,17 @@ function RawTagsEditor({
   onSort: () => void
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className='flex flex-col gap-1'>
       <textarea
         className={styleInput({ isMultiline: true })}
-        value={selected.join(",")}
+        value={selected.join(',')}
         onChange={onChange}
         rows={3}
       />
       <button
-        type="button"
+        type='button'
         onClick={onSort}
-        className={btn({ theme: "outline", size: "sm", className: "self-end" })}
+        className={btn({ theme: 'outline', size: 'sm', className: 'self-end' })}
       >
         <ArrowsDownUpIcon size={14} />
         <span>Sort</span>

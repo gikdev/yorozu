@@ -1,20 +1,20 @@
-import { PlusIcon } from "@phosphor-icons/react"
-import { useEffect, useState } from "react"
-import toast from "react-hot-toast"
-import { v4 as uuidv4 } from "uuid"
-import { btn } from "#/common/atoms/btn"
-import { styleInput } from "#/common/atoms/input"
-import { useAppForm } from "#/common/forms"
-import { extractErrorMessage } from "#/common/helpers/errors"
+import { PlusIcon } from '@phosphor-icons/react'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { v4 as uuidv4 } from 'uuid'
+import { btn } from '#/common/atoms/btn'
+import { styleInput } from '#/common/atoms/input'
+import { useAppForm } from '#/common/forms'
+import { extractErrorMessage } from '#/common/helpers/errors'
 import {
   emptyLyricLine,
   emptyLyricLinesFormValues,
   type LyricLinesFormValues,
   lyricLinesFormSchema,
-} from "./LyricLinesFormSchema"
-import { saveLyricLines } from "./useLyricLinesFormStorage"
+} from './LyricLinesFormSchema'
+import { saveLyricLines } from './useLyricLinesFormStorage'
 
-const sortByTimestamp = (lines: LyricLinesFormValues["lines"]) =>
+const sortByTimestamp = (lines: LyricLinesFormValues['lines']) =>
   [...lines].sort((a, b) => {
     if (a.timestamp === null) return 1
     if (b.timestamp === null) return -1
@@ -23,11 +23,11 @@ const sortByTimestamp = (lines: LyricLinesFormValues["lines"]) =>
 
 type LyricLinesFormProps =
   | {
-      mode: "CREATE"
+      mode: 'CREATE'
       onSubmit: (values: LyricLinesFormValues) => Promise<void>
     }
   | {
-      mode: "EDIT"
+      mode: 'EDIT'
       initialValues: LyricLinesFormValues
       onSubmit: (values: LyricLinesFormValues) => Promise<void>
     }
@@ -37,7 +37,7 @@ export function LyricLinesForm(p: LyricLinesFormProps) {
 
   const form = useAppForm({
     defaultValues:
-      p.mode === "EDIT" ? p.initialValues : emptyLyricLinesFormValues,
+      p.mode === 'EDIT' ? p.initialValues : emptyLyricLinesFormValues,
     validators: {
       onSubmit: lyricLinesFormSchema,
     },
@@ -50,23 +50,23 @@ export function LyricLinesForm(p: LyricLinesFormProps) {
   })
 
   const handleAddLine = () => {
-    const current = form.getFieldValue("lines")
+    const current = form.getFieldValue('lines')
     const newLine = { ...emptyLyricLine(), tempId: uuidv4() }
     setExpandedNewId(newLine.tempId)
-    form.setFieldValue("lines", sortByTimestamp([...current, newLine]))
+    form.setFieldValue('lines', sortByTimestamp([...current, newLine]))
   }
 
   const handleRemoveLine = (index: number) => {
-    const current = form.getFieldValue("lines")
+    const current = form.getFieldValue('lines')
     form.setFieldValue(
-      "lines",
+      'lines',
       current.filter((_, i) => i !== index),
     )
   }
 
   return (
     <form.AppForm>
-      <div className="flex flex-col gap-4">
+      <div className='flex flex-col gap-4'>
         <form.Subscribe selector={state => state.values.lines}>
           {lines =>
             lines.map((line, index) => (
@@ -83,8 +83,8 @@ export function LyricLinesForm(p: LyricLinesFormProps) {
         </form.Subscribe>
 
         <button
-          type="button"
-          className={btn({ theme: "outline" })}
+          type='button'
+          className={btn({ theme: 'outline' })}
           onClick={handleAddLine}
         >
           <PlusIcon size={20} />
@@ -95,14 +95,14 @@ export function LyricLinesForm(p: LyricLinesFormProps) {
           {values => (
             <RawJsonEditor
               values={values}
-              onApply={parsed => form.setFieldValue("lines", parsed.lines)}
+              onApply={parsed => form.setFieldValue('lines', parsed.lines)}
             />
           )}
         </form.Subscribe>
 
         <form.SimpleSubmitBtn
-          className={btn({ theme: "primary" })}
-          title="Export JSON"
+          className={btn({ theme: 'primary' })}
+          title='Export JSON'
         />
       </div>
     </form.AppForm>
@@ -120,16 +120,16 @@ function RawJsonEditor(p: {
   }, [p.values])
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className='flex flex-col gap-2'>
       <textarea
-        className={styleInput({ isMultiline: true, class: "font-mono" })}
+        className={styleInput({ isMultiline: true, class: 'font-mono' })}
         value={raw}
         rows={10}
         onChange={e => setRaw(e.target.value)}
       />
       <button
-        type="button"
-        className={btn({ theme: "outline", size: "sm", className: "self-end" })}
+        type='button'
+        className={btn({ theme: 'outline', size: 'sm', className: 'self-end' })}
         onClick={() => {
           try {
             const parsed = JSON.parse(raw)

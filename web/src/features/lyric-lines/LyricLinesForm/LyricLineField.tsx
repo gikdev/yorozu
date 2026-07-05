@@ -4,23 +4,23 @@ import {
   CaretUpIcon,
   ClockIcon,
   TrashIcon,
-} from "@phosphor-icons/react"
-import { useState } from "react"
-import { btn } from "#/common/atoms/btn"
-import { fieldContainer } from "#/common/atoms/field-container"
-import { styleInput } from "#/common/atoms/input"
-import { useFieldContext } from "#/common/forms"
-import { useSongPlayerStore } from "#/features/song/useSongPlayerStore"
-import type { LyricLine, TextFieldKey } from "./LyricLinesFormSchema"
+} from '@phosphor-icons/react'
+import { useState } from 'react'
+import { btn } from '#/common/atoms/btn'
+import { fieldContainer } from '#/common/atoms/field-container'
+import { styleInput } from '#/common/atoms/input'
+import { useFieldContext } from '#/common/forms'
+import { useSongPlayerStore } from '#/features/song/useSongPlayerStore'
+import type { LyricLine, TextFieldKey } from './LyricLinesFormSchema'
 
 const textFields: { key: TextFieldKey; label: string }[] = [
-  { key: "persian", label: "Persian" },
-  { key: "english", label: "English" },
-  { key: "arabic", label: "Arabic" },
-  { key: "spanish", label: "Spanish" },
-  { key: "japanese", label: "Japanese" },
-  { key: "romaji", label: "Romaji" },
-  { key: "annotation", label: "Annotation" },
+  { key: 'persian', label: 'Persian' },
+  { key: 'english', label: 'English' },
+  { key: 'arabic', label: 'Arabic' },
+  { key: 'spanish', label: 'Spanish' },
+  { key: 'japanese', label: 'Japanese' },
+  { key: 'romaji', label: 'Romaji' },
+  { key: 'annotation', label: 'Annotation' },
 ]
 
 interface LyricLineFieldProps {
@@ -39,29 +39,29 @@ export function LyricLineField(p: LyricLineFieldProps) {
   const previewText = mainLanguage ? (line[mainLanguage] ?? null) : null
 
   return (
-    <div className="flex flex-col bg-mist-900 rounded-lg overflow-hidden">
+    <div className='flex flex-col bg-mist-900 rounded-lg overflow-hidden'>
       {/* Header / collapsed view */}
-      <div className="flex items-center gap-2 p-3">
+      <div className='flex items-center gap-2 p-3'>
         <button
-          type="button"
-          className={btn({ isIcon: true, theme: "outline", size: "sm" })}
+          type='button'
+          className={btn({ isIcon: true, theme: 'outline', size: 'sm' })}
           onClick={() => setIsExpanded(v => !v)}
         >
           {isExpanded ? <CaretUpIcon size={16} /> : <CaretDownIcon size={16} />}
         </button>
 
-        <span className="text-sm tabular-nums text-sky-400 w-16 shrink-0">
-          {line.timestamp != null ? `${line.timestamp.toFixed(1)}s` : "—"}
+        <span className='text-sm tabular-nums text-sky-400 w-16 shrink-0'>
+          {line.timestamp != null ? `${line.timestamp.toFixed(1)}s` : '—'}
         </span>
 
-        <span className="text-xs truncate flex-1">
-          {previewText ?? <span className="italic">empty</span>}
+        <span className='text-xs truncate flex-1'>
+          {previewText ?? <span className='italic'>empty</span>}
         </span>
 
         <button
-          type="button"
-          title="Copy current time"
-          className={btn({ isIcon: true, theme: "outline", size: "sm" })}
+          type='button'
+          title='Copy current time'
+          className={btn({ isIcon: true, theme: 'outline', size: 'sm' })}
           onClick={() =>
             field.setValue(v => ({ ...v, timestamp: currentTime }))
           }
@@ -70,17 +70,17 @@ export function LyricLineField(p: LyricLineFieldProps) {
         </button>
 
         <button
-          type="button"
-          title="Reset timestamp"
-          className={btn({ isIcon: true, theme: "outline", size: "sm" })}
+          type='button'
+          title='Reset timestamp'
+          className={btn({ isIcon: true, theme: 'outline', size: 'sm' })}
           onClick={() => field.setValue(v => ({ ...v, timestamp: null }))}
         >
           <ArrowCounterClockwiseIcon size={24} />
         </button>
 
         <button
-          type="button"
-          className={btn({ isIcon: true, theme: "danger", size: "sm" })}
+          type='button'
+          className={btn({ isIcon: true, theme: 'danger', size: 'sm' })}
           onClick={p.onRemove}
         >
           <TrashIcon size={16} />
@@ -89,29 +89,29 @@ export function LyricLineField(p: LyricLineFieldProps) {
 
       {/* Expanded content */}
       {isExpanded && (
-        <div className="flex flex-col gap-3 px-4 pb-4 border-t border-mist-700 pt-3">
+        <div className='flex flex-col gap-3 px-4 pb-4 border-t border-mist-700 pt-3'>
           {/* Timestamp */}
           <div className={fieldContainer()}>
             <p>Timestamp</p>
-            <div className="flex gap-2 items-center">
+            <div className='flex gap-2 items-center'>
               <input
-                type="number"
+                type='number'
                 step={0.1}
                 min={0}
-                value={line.timestamp ?? ""}
+                value={line.timestamp ?? ''}
                 onChange={e =>
                   field.setValue(v => ({
                     ...v,
-                    timestamp: e.target.value === "" ? null : +e.target.value,
+                    timestamp: e.target.value === '' ? null : +e.target.value,
                   }))
                 }
-                className={styleInput({ className: "flex-1" })}
+                className={styleInput({ className: 'flex-1' })}
               />
 
               <button
-                type="button"
-                title="Copy current time"
-                className={btn({ isIcon: true, theme: "outline" })}
+                type='button'
+                title='Copy current time'
+                className={btn({ isIcon: true, theme: 'outline' })}
                 onClick={() =>
                   field.setValue(v => ({ ...v, timestamp: currentTime }))
                 }
@@ -120,9 +120,9 @@ export function LyricLineField(p: LyricLineFieldProps) {
               </button>
 
               <button
-                type="button"
-                title="Reset timestamp"
-                className={btn({ isIcon: true, theme: "outline" })}
+                type='button'
+                title='Reset timestamp'
+                className={btn({ isIcon: true, theme: 'outline' })}
                 onClick={() => field.setValue(v => ({ ...v, timestamp: null }))}
               >
                 <ArrowCounterClockwiseIcon size={24} />
@@ -133,30 +133,30 @@ export function LyricLineField(p: LyricLineFieldProps) {
           {/* Text fields */}
           {textFields.map(({ key, label }) => (
             <div key={key} className={fieldContainer()}>
-              <div className="flex items-center justify-between">
+              <div className='flex items-center justify-between'>
                 <p>{label}</p>
-                <label className="flex items-center gap-1 text-sm cursor-pointer">
+                <label className='flex items-center gap-1 text-sm cursor-pointer'>
                   <input
-                    type="radio"
+                    type='radio'
                     name={field.name}
                     value={key}
                     checked={mainLanguage === key}
                     onChange={() =>
                       field.setValue(v => ({ ...v, mainLanguage: key }))
                     }
-                    className="accent-sky-500"
+                    className='accent-sky-500'
                   />
                   <span>Primary</span>
                 </label>
               </div>
 
               <input
-                type="text"
-                value={line[key] ?? ""}
+                type='text'
+                value={line[key] ?? ''}
                 onChange={e =>
                   field.setValue(v => ({
                     ...v,
-                    [key]: e.target.value === "" ? null : e.target.value,
+                    [key]: e.target.value === '' ? null : e.target.value,
                   }))
                 }
                 placeholder={label}

@@ -1,5 +1,5 @@
-import { SpotlightActive } from "./SpotlightActive"
-import { SpotlightEmpty } from "./SpotlightEmpty"
+import { SpotlightActive } from './SpotlightActive'
+import { SpotlightEmpty } from './SpotlightEmpty'
 
 interface SpotlightProps {
   activeItem: string | null

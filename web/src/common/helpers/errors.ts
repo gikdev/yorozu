@@ -1,4 +1,4 @@
-import toast from "react-hot-toast"
+import toast from 'react-hot-toast'
 
 export const onError = (err: unknown) => toast.error(extractErrorMessage(err))
 
@@ -15,7 +15,7 @@ export function extractErrorMessage(error: any): string {
 
   if (data) {
     // 1) If there is an "errors" dictionary, format it nicely
-    if (data.errors && typeof data.errors === "object") {
+    if (data.errors && typeof data.errors === 'object') {
       const messages: string[] = []
 
       for (const key of Object.keys(data.errors)) {
@@ -28,7 +28,7 @@ export function extractErrorMessage(error: any): string {
       }
 
       if (messages.length > 0) {
-        return messages.join("\n") // or join(" | ") if you prefer a single line
+        return messages.join('\n') // or join(" | ") if you prefer a single line
       }
     }
 
@@ -40,5 +40,5 @@ export function extractErrorMessage(error: any): string {
   if (error?.message) return error.message
 
   // 4) Final fallback
-  return "An unexpected error occurred."
+  return 'An unexpected error occurred.'
 }

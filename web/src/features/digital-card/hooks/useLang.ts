@@ -1,4 +1,4 @@
-import { useDigitalCardStore } from "./useDigitalCardStore"
+import { useDigitalCardStore } from './useDigitalCardStore'
 
 export function useLang() {
   return useDigitalCardStore(s => s.lang)

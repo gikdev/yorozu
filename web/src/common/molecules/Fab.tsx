@@ -1,6 +1,6 @@
-import { PlusIcon } from "@phosphor-icons/react"
-import { Link } from "@tanstack/react-router"
-import { tv } from "tailwind-variants"
+import { PlusIcon } from '@phosphor-icons/react'
+import { Link } from '@tanstack/react-router'
+import { tv } from 'tailwind-variants'
 
 export const styleFab = tv({
   base: `
@@ -21,17 +21,17 @@ type FabProps = {
   bottom: number
 } & (
   | {
-      type: "link"
+      type: 'link'
       to: string
     }
   | {
-      type: "button"
+      type: 'button'
       onClick: () => void
     }
 )
 
 export function Fab(p: FabProps) {
-  if (p.type === "link")
+  if (p.type === 'link')
     return (
       <Link
         to={p.to}
@@ -39,20 +39,20 @@ export function Fab(p: FabProps) {
         style={{ right: p.right, bottom: p.bottom }}
         className={p.className ?? styleFab()}
       >
-        <PlusIcon size={24} weight="bold" />
+        <PlusIcon size={24} weight='bold' />
       </Link>
     )
 
-  if (p.type === "button")
+  if (p.type === 'button')
     return (
       <button
         onClick={p.onClick}
-        type="button"
+        type='button'
         title={p.title}
         style={{ right: p.right, bottom: p.bottom }}
         className={p.className ?? styleFab()}
       >
-        <PlusIcon size={24} weight="bold" />
+        <PlusIcon size={24} weight='bold' />
       </button>
     )
 

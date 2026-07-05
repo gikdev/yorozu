@@ -1,19 +1,19 @@
-import { FilePlusIcon, PauseIcon, PlayIcon } from "@phosphor-icons/react"
-import { type ChangeEvent, useEffect, useRef, useState } from "react"
-import toast from "react-hot-toast"
-import { btn } from "#/common/atoms/btn"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import type { TextFieldKey } from "../lyric-lines/LyricLinesForm/LyricLinesFormSchema"
-import type { LyricLine } from "../lyric-lines/lyricLineSchema"
+import { FilePlusIcon, PauseIcon, PlayIcon } from '@phosphor-icons/react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import { btn } from '#/common/atoms/btn'
+import { extractErrorMessage } from '#/common/helpers/errors'
+import type { TextFieldKey } from '../lyric-lines/LyricLinesForm/LyricLinesFormSchema'
+import type { LyricLine } from '../lyric-lines/lyricLineSchema'
 
 const displayFields: { key: TextFieldKey; label: string }[] = [
-  { key: "persian", label: "Persian" },
-  { key: "english", label: "English" },
-  { key: "arabic", label: "Arabic" },
-  { key: "spanish", label: "Spanish" },
-  { key: "japanese", label: "Japanese" },
-  { key: "romaji", label: "Romaji" },
-  { key: "annotation", label: "Annotation" },
+  { key: 'persian', label: 'Persian' },
+  { key: 'english', label: 'English' },
+  { key: 'arabic', label: 'Arabic' },
+  { key: 'spanish', label: 'Spanish' },
+  { key: 'japanese', label: 'Japanese' },
+  { key: 'romaji', label: 'Romaji' },
+  { key: 'annotation', label: 'Annotation' },
 ]
 
 interface SongLyricsPlayerProps {
@@ -43,7 +43,7 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
     audioBlobRef.current = URL.createObjectURL(file)
     setAudioUrl(audioBlobRef.current)
     audioRef.current.src = audioBlobRef.current
-    e.target.value = ""
+    e.target.value = ''
   }
 
   const handleJsonUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
       }
     }
     reader.readAsText(file)
-    e.target.value = ""
+    e.target.value = ''
   }
 
   const handlePlayPause = () => {
@@ -86,18 +86,18 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
   }, [])
 
   return (
-    <div className="flex flex-col gap-6 w-full mx-auto">
+    <div className='flex flex-col gap-6 w-full mx-auto'>
       {/* Cover image */}
       {imageUrl && (
         <img
           src={imageUrl}
-          alt="Song cover"
-          className="w-full aspect-square object-cover rounded-xl"
+          alt='Song cover'
+          className='w-full aspect-square object-cover rounded-xl'
         />
       )}
 
       {/* Current lyric */}
-      <div className="flex flex-col gap-2 min-h-32 items-center justify-center text-center px-4">
+      <div className='flex flex-col gap-2 min-h-32 items-center justify-center text-center px-4'>
         {activeLine ? (
           displayFields.map(({ key }) => {
             const text = activeLine[key]
@@ -107,8 +107,8 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
                 key={key}
                 className={
                   key === activeLine.mainLanguage
-                    ? "text-xl font-semibold text-white"
-                    : "text-sm text-mist-400"
+                    ? 'text-xl font-semibold text-white'
+                    : 'text-sm text-mist-400'
                 }
               >
                 {text}
@@ -116,13 +116,13 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
             )
           })
         ) : (
-          <p className="text-mist-500 italic">—</p>
+          <p className='text-mist-500 italic'>—</p>
         )}
       </div>
 
       {/* Seek bar */}
       <input
-        type="range"
+        type='range'
         step={0.1}
         value={currentTime}
         max={totalTime}
@@ -131,42 +131,42 @@ export function SongLyricsPlayer({ imageUrl }: SongLyricsPlayerProps) {
           if (!audioRef.current) return
           audioRef.current.currentTime = +e.target.value
         }}
-        className="cursor-pointer disabled:cursor-not-allowed accent-sky-500 w-full"
+        className='cursor-pointer disabled:cursor-not-allowed accent-sky-500 w-full'
       />
 
       {/* Controls */}
-      <div className="flex items-center justify-center gap-3">
-        <label className={btn({ theme: "outline" })}>
+      <div className='flex items-center justify-center gap-3'>
+        <label className={btn({ theme: 'outline' })}>
           <FilePlusIcon size={20} />
           <span>Audio</span>
           <input
-            className="hidden"
-            type="file"
-            accept="audio/*"
+            className='hidden'
+            type='file'
+            accept='audio/*'
             onChange={handleAudioUpload}
           />
         </label>
 
         <button
           disabled={!audioUrl}
-          className={btn({ theme: "primary", size: "lg" })}
+          className={btn({ theme: 'primary', size: 'lg' })}
           onClick={handlePlayPause}
-          type="button"
+          type='button'
         >
           {isPlaying ? (
-            <PauseIcon size={32} weight="fill" />
+            <PauseIcon size={32} weight='fill' />
           ) : (
-            <PlayIcon size={32} weight="fill" />
+            <PlayIcon size={32} weight='fill' />
           )}
         </button>
 
-        <label className={btn({ theme: "outline" })}>
+        <label className={btn({ theme: 'outline' })}>
           <FilePlusIcon size={20} />
           <span>Lyrics</span>
           <input
-            className="hidden"
-            type="file"
-            accept=".json"
+            className='hidden'
+            type='file'
+            accept='.json'
             onChange={handleJsonUpload}
           />
         </label>

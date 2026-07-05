@@ -1,23 +1,23 @@
-import { SpinnerGapIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import toast from "react-hot-toast"
+import { SpinnerGapIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import toast from 'react-hot-toast'
 import {
   getConsumptionTrackListOptions,
   listConsumptionTrackListsOptions,
   updateConsumptionTrackListMutation,
-} from "#/common/api/client"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import { RenderQuery } from "#/common/helpers/render-query"
-import { StateMessage } from "#/common/molecules/StateMessage"
+} from '#/common/api/client'
+import { extractErrorMessage } from '#/common/helpers/errors'
+import { RenderQuery } from '#/common/helpers/render-query'
+import { StateMessage } from '#/common/molecules/StateMessage'
 import {
   ConsumptionTrackListForm,
   type ConsumptionTrackListFormSubmitHandler,
-} from "#/features/consumption-track-lists/ConsumptionTrackListForm"
-import { consumptionTrackListMapper } from "#/features/consumption-track-lists/consumptionTrackListMapper"
+} from '#/features/consumption-track-lists/ConsumptionTrackListForm'
+import { consumptionTrackListMapper } from '#/features/consumption-track-lists/consumptionTrackListMapper'
 
 export const Route = createFileRoute(
-  "/apps/hondana/(lists)/lists/$listId/edit",
+  '/apps/hondana/(lists)/lists/$listId/edit',
 )({
   component: RouteComponent,
 })
@@ -32,12 +32,12 @@ function RouteComponent() {
   const updateM = useMutation(updateConsumptionTrackListMutation())
 
   const goBack = () => {
-    navigate({ to: "/apps/hondana/lists" })
+    navigate({ to: '/apps/hondana/lists' })
   }
 
   const goToDetail = () => {
     navigate({
-      to: "/apps/hondana/lists/$listId",
+      to: '/apps/hondana/lists/$listId',
       params: { listId },
     })
   }
@@ -69,25 +69,25 @@ function RouteComponent() {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className='flex flex-col h-full'>
       <RenderQuery
         isList={false}
         status={listQ.status}
         errorView={
           <StateMessage
-            mode="ERROR"
-            title="Failed to load list"
+            mode='ERROR'
+            title='Failed to load list'
             description={extractErrorMessage(listQ.error)}
-            className="h-full"
+            className='h-full'
             icon={WarningCircleIcon}
           />
         }
         loadingView={
           <StateMessage
-            mode="LOADING"
+            mode='LOADING'
             icon={SpinnerGapIcon}
-            title="Loading list..."
-            className="h-full"
+            title='Loading list...'
+            className='h-full'
           />
         }
         successView={() => {
@@ -97,10 +97,10 @@ function RouteComponent() {
 
           return (
             <ConsumptionTrackListForm
-              mode="EDIT"
+              mode='EDIT'
               initialValues={initialFormValues}
               onCancel={goBack}
-              submitLabel="Update List"
+              submitLabel='Update List'
               onSubmit={handleSubmit}
             />
           )

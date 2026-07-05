@@ -1,1 +1,1 @@
-export { TimestampSongPlayer } from "./TimestampSongPlayer"
+export { TimestampSongPlayer } from './TimestampSongPlayer'

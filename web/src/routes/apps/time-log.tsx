@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useState } from "react"
-import { type Session, TimeLog } from "#/features/TimeLog"
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
+import { type Session, TimeLog } from '#/features/TimeLog'
 
-const LS_KEY = "time-log:sessions"
+const LS_KEY = 'time-log:sessions'
 
-export const Route = createFileRoute("/apps/time-log")({
+export const Route = createFileRoute('/apps/time-log')({
   component: RouteComponent,
 })
 
@@ -16,7 +16,7 @@ function RouteComponent() {
   const isRunning = !!activeSession
 
   const startNewSession = () => {
-    const isConfirmed = window.confirm("Sure?")
+    const isConfirmed = window.confirm('Sure?')
     if (!isConfirmed) return
 
     const newSession: Session = { startedAt: Date.now(), endedAt: null }
@@ -27,7 +27,7 @@ function RouteComponent() {
   }
 
   const endCurrentSession = () => {
-    const isConfirmed = window.confirm("Sure?")
+    const isConfirmed = window.confirm('Sure?')
     if (!isConfirmed) return
 
     const updated = sessions.map(s =>
@@ -40,7 +40,7 @@ function RouteComponent() {
   const toggle = () => (isRunning ? endCurrentSession() : startNewSession())
 
   const deleteAll = () => {
-    const isConfirmed = window.confirm("Clear all sessions?")
+    const isConfirmed = window.confirm('Clear all sessions?')
     if (!isConfirmed) return
 
     setSessions([])
@@ -54,7 +54,7 @@ function RouteComponent() {
         isRunning={isRunning}
         sessions={sessions}
         onToggle={toggle}
-        onBack={() => navigate({ to: "/apps" })}
+        onBack={() => navigate({ to: '/apps' })}
         onDelete={deleteAll}
       />
     </>

@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants"
+import { tv } from 'tailwind-variants'
 
 export const styleTextTabItem = tv({
   base: `
@@ -10,8 +10,8 @@ export const styleTextTabItem = tv({
   `,
   variants: {
     isActive: {
-      false: "text-mist-400 border-mist-900 font-normal",
-      true: "text-sky-500 border-sky-500 font-bold",
+      false: 'text-mist-400 border-mist-900 font-normal',
+      true: 'text-sky-500 border-sky-500 font-bold',
     },
   },
   defaultVariants: {

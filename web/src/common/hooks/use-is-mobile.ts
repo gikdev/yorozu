@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export function useIsMobile(breakpoint: number = 768): boolean {
   const getMatch = () => {
-    if (typeof window === "undefined") return false
+    if (typeof window === 'undefined') return false
     return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches
   }
 
   const [isMobile, setIsMobile] = useState<boolean>(getMatch)
 
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (typeof window === 'undefined') return
 
     const media = window.matchMedia(`(max-width: ${breakpoint - 1}px)`)
 
@@ -18,10 +18,10 @@ export function useIsMobile(breakpoint: number = 768): boolean {
     }
 
     setIsMobile(media.matches)
-    media.addEventListener("change", listener)
+    media.addEventListener('change', listener)
 
     return () => {
-      media.removeEventListener("change", listener)
+      media.removeEventListener('change', listener)
     }
   }, [breakpoint])
 

@@ -1,6 +1,6 @@
-import { intentGroups } from "../data/intentGroups"
-import type { Intent } from "../types/Intent"
-import { LinkItem } from "./LinkItem"
+import { intentGroups } from '../data/intentGroups'
+import type { Intent } from '../types/Intent'
+import { LinkItem } from './LinkItem'
 
 interface LinkListProps {
   intent: Intent
@@ -11,7 +11,7 @@ export function LinkList(p: LinkListProps) {
   if (!group) return null
 
   return (
-    <div className="flex flex-col divide-y divide-mist-800">
+    <div className='flex flex-col divide-y divide-mist-800'>
       {group.links.map(link => (
         <LinkItem key={link.id} link={link} />
       ))}

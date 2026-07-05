@@ -1,8 +1,8 @@
-import { btn } from "../atoms/btn"
-import { fieldContainer } from "../atoms/field-container"
-import { styleInput } from "../atoms/input"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import { btn } from '../atoms/btn'
+import { fieldContainer } from '../atoms/field-container'
+import { styleInput } from '../atoms/input'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 interface SimpleTextInputProps {
   title: string
@@ -16,7 +16,7 @@ export function SimpleTextInput({
   suggestions,
 }: SimpleTextInputProps) {
   const field = useFieldContext<string>()
-  const Tag = isMultiline ? "textarea" : "input"
+  const Tag = isMultiline ? 'textarea' : 'input'
 
   return (
     <div className={fieldContainer()}>
@@ -25,20 +25,20 @@ export function SimpleTextInput({
       <Tag
         id={field.name}
         name={field.name}
-        value={field.state.value || ""}
+        value={field.state.value || ''}
         onBlur={field.handleBlur}
         onChange={e => field.handleChange(e.target.value)}
         className={styleInput({ isMultiline })}
       />
 
       {suggestions && suggestions.length > 0 ? (
-        <div className="flex flex-wrap items-center gap-1">
+        <div className='flex flex-wrap items-center gap-1'>
           {suggestions.map((s, i) => (
             <button
-              type="button"
+              type='button'
               // biome-ignore lint/suspicious/noArrayIndexKey: 大丈夫
               key={i}
-              className={btn({ size: "sm" })}
+              className={btn({ size: 'sm' })}
               onClick={() => field.handleChange(s)}
             >
               {s}

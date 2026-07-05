@@ -1,4 +1,4 @@
-import type { MultilingualString } from "./MultilingualString"
+import type { MultilingualString } from './MultilingualString'
 
 export type ILinkItem = {
   id: string

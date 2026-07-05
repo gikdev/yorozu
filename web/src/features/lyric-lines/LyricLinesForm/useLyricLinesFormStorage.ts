@@ -1,6 +1,6 @@
-import type { LyricLinesFormValues } from "./LyricLinesFormSchema"
+import type { LyricLinesFormValues } from './LyricLinesFormSchema'
 
-const STORAGE_KEY = "shirabe:wip"
+const STORAGE_KEY = 'shirabe:wip'
 
 export function saveLyricLines(values: LyricLinesFormValues) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(values))

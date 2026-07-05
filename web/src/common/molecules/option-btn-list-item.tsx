@@ -1,5 +1,5 @@
-import type { Icon } from "@phosphor-icons/react"
-import { Link } from "@tanstack/react-router"
+import type { Icon } from '@phosphor-icons/react'
+import { Link } from '@tanstack/react-router'
 
 export interface OptionBtnListItemProps {
   title: string
@@ -11,11 +11,11 @@ export interface OptionBtnListItemProps {
 
 export function OptionBtnListItem(p: OptionBtnListItemProps) {
   const className =
-    "flex items-center p-4 gap-2 cursor-pointer hover:bg-white/5 active:bg-white/10"
+    'flex items-center p-4 gap-2 cursor-pointer hover:bg-white/5 active:bg-white/10'
 
   const children = (
     <>
-      {p.Icon ? <p.Icon size={20} /> : <span className="size-5" />}
+      {p.Icon ? <p.Icon size={20} /> : <span className='size-5' />}
       <span>{p.title}</span>
     </>
   )
@@ -31,7 +31,7 @@ export function OptionBtnListItem(p: OptionBtnListItemProps) {
     />
   ) : (
     <button
-      type="button"
+      type='button'
       className={className}
       title={p.helpText}
       onClick={p.onClick}

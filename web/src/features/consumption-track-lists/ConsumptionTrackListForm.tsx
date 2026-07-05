@@ -1,9 +1,9 @@
-import { z } from "zod"
-import { btn } from "#/common/atoms/btn"
-import { useAppForm } from "#/common/forms"
+import { z } from 'zod'
+import { btn } from '#/common/atoms/btn'
+import { useAppForm } from '#/common/forms'
 
 const zConsumptionTrackListFormValues = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, 'Title is required'),
   description: z.string(),
 })
 
@@ -12,8 +12,8 @@ export type ConsumptionTrackListFormValues = z.infer<
 >
 
 const emptyValues: ConsumptionTrackListFormValues = {
-  title: "",
-  description: "",
+  title: '',
+  description: '',
 }
 
 export type ConsumptionTrackListFormSubmitHandler = (
@@ -26,12 +26,12 @@ type ConsumptionTrackListFormProps = {
   onCancel: () => void
   onSubmit: ConsumptionTrackListFormSubmitHandler
 } & (
-  | { mode: "CREATE" }
-  | { mode: "EDIT"; initialValues: ConsumptionTrackListFormValues }
+  | { mode: 'CREATE' }
+  | { mode: 'EDIT'; initialValues: ConsumptionTrackListFormValues }
 )
 
 export function ConsumptionTrackListForm(p: ConsumptionTrackListFormProps) {
-  const defaultValues = p.mode === "CREATE" ? emptyValues : p.initialValues
+  const defaultValues = p.mode === 'CREATE' ? emptyValues : p.initialValues
   const form = useAppForm({
     defaultValues,
     validators: {
@@ -45,30 +45,30 @@ export function ConsumptionTrackListForm(p: ConsumptionTrackListFormProps) {
 
   return (
     <form.AppForm>
-      <div className="flex flex-col gap-4">
-        <form.AppField name="title">
-          {field => <field.SimpleTextInput title="Title" />}
+      <div className='flex flex-col gap-4'>
+        <form.AppField name='title'>
+          {field => <field.SimpleTextInput title='Title' />}
         </form.AppField>
 
-        <form.AppField name="description">
-          {field => <field.SimpleTextInput title="Description" isMultiline />}
+        <form.AppField name='description'>
+          {field => <field.SimpleTextInput title='Description' isMultiline />}
         </form.AppField>
 
-        <div className="flex gap-2">
+        <div className='flex gap-2'>
           <form.SimpleSubmitBtn
-            className={btn({ theme: "primary" })}
+            className={btn({ theme: 'primary' })}
             title={p.submitLabel}
           />
 
           <button
-            type="button"
+            type='button'
             onClick={() => form.reset(defaultValues)}
             className={btn()}
           >
             Reset
           </button>
 
-          <button type="button" onClick={p.onCancel} className={btn()}>
+          <button type='button' onClick={p.onCancel} className={btn()}>
             Cancel
           </button>
         </div>

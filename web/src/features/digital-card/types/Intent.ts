@@ -1,1 +1,1 @@
-export type Intent = "message" | "learn" | "follow" | "work"
+export type Intent = 'message' | 'learn' | 'follow' | 'work'

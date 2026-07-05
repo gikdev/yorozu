@@ -1,5 +1,5 @@
-import { styleTextTabItem } from "./styleTextTabItem"
-import type { TextTabItemShape } from "./TextTabItemShape"
+import { styleTextTabItem } from './styleTextTabItem'
+import type { TextTabItemShape } from './TextTabItemShape'
 
 interface TextTabItemProps extends TextTabItemShape {
   isActive: boolean
@@ -10,7 +10,7 @@ export function TextTabItem(p: TextTabItemProps) {
   const styles = styleTextTabItem({ isActive: p.isActive })
 
   return (
-    <button className={styles} onClick={p.onClick} type="button">
+    <button className={styles} onClick={p.onClick} type='button'>
       {p.label}
     </button>
   )

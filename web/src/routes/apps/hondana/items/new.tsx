@@ -1,26 +1,26 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   createFileRoute,
   linkOptions,
   useNavigate,
-} from "@tanstack/react-router"
-import toast from "react-hot-toast"
+} from '@tanstack/react-router'
+import toast from 'react-hot-toast'
 import {
   createContentItemMutation,
   listAllContentItemTagsOptions,
   // listContentItemsOptions,
-} from "#/common/api/client"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import { AppBar } from "#/common/molecules/page-header"
+} from '#/common/api/client'
+import { extractErrorMessage } from '#/common/helpers/errors'
+import { AppBar } from '#/common/molecules/page-header'
 import {
   ContentItemForm,
   type ContentItemFormSubmitHandler,
-} from "#/features/content-items/ContentItemForm"
-import { contentItemMapper } from "#/features/content-items/contentItemMapper"
+} from '#/features/content-items/ContentItemForm'
+import { contentItemMapper } from '#/features/content-items/contentItemMapper'
 
-const TITLE = "New Item"
+const TITLE = 'New Item'
 
-export const Route = createFileRoute("/apps/hondana/items/new")({
+export const Route = createFileRoute('/apps/hondana/items/new')({
   component: RouteComponent,
 })
 
@@ -30,7 +30,7 @@ function RouteComponent() {
   const createM = useMutation(createContentItemMutation())
 
   const goUp = () => {
-    navigate({ to: "/apps/hondana/items" })
+    navigate({ to: '/apps/hondana/items' })
   }
 
   const handleSubmit: ContentItemFormSubmitHandler = async (values, empty) => {
@@ -52,19 +52,19 @@ function RouteComponent() {
   }
 
   return (
-    <div className="h-dvh flex flex-col bg-mist-950 text-mist-400 max-w-120 mx-auto w-full border-x border-mist-900">
+    <div className='h-dvh flex flex-col bg-mist-950 text-mist-400 max-w-120 mx-auto w-full border-x border-mist-900'>
       <title>{TITLE}</title>
 
       <AppBar
         title={TITLE}
-        parentPath={linkOptions({ to: "/apps/hondana/items" })}
+        parentPath={linkOptions({ to: '/apps/hondana/items' })}
       />
 
-      <main className="flex-1 flex flex-col p-4">
+      <main className='flex-1 flex flex-col p-4'>
         <ContentItemForm
-          mode="CREATE"
+          mode='CREATE'
           onCancel={goUp}
-          submitLabel="Create New Item"
+          submitLabel='Create New Item'
           onSubmit={handleSubmit}
           allTags={tagsQ.data?.items || []}
         />

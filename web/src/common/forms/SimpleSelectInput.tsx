@@ -1,7 +1,7 @@
-import { fieldContainer } from "../atoms/field-container"
-import { styleInput } from "../atoms/input"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import { fieldContainer } from '../atoms/field-container'
+import { styleInput } from '../atoms/input'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 export type SelectOption = {
   label: string
@@ -19,7 +19,7 @@ export function SimpleSelectInput(p: SimpleSelectInputProps) {
 
   // Normalize options to { label, value } format
   const normalizedOptions = p.options.map(option => {
-    if (typeof option === "string") {
+    if (typeof option === 'string') {
       return { label: option, value: option }
     }
     return option
@@ -27,22 +27,22 @@ export function SimpleSelectInput(p: SimpleSelectInputProps) {
 
   return (
     <div className={fieldContainer()}>
-      <label htmlFor={field.name} className="text-sm font-medium">
+      <label htmlFor={field.name} className='text-sm font-medium'>
         {p.title}
       </label>
 
       <select
         id={field.name}
         name={field.name}
-        value={field.state.value ?? ""}
+        value={field.state.value ?? ''}
         onBlur={field.handleBlur}
         onChange={e => field.handleChange(e.target.value)}
         className={styleInput({
-          class: "w-full *:bg-mist-900 *:text-mist-100",
+          class: 'w-full *:bg-mist-900 *:text-mist-100',
         })}
       >
         {p.placeholder && (
-          <option value="" disabled>
+          <option value='' disabled>
             {p.placeholder}
           </option>
         )}

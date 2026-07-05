@@ -1,8 +1,8 @@
-import type { ChangeEvent } from "react"
-import { fieldContainer } from "../atoms/field-container"
-import { styleInput } from "../atoms/input"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import type { ChangeEvent } from 'react'
+import { fieldContainer } from '../atoms/field-container'
+import { styleInput } from '../atoms/input'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 interface SimpleWordListInputProps {
   title: string
@@ -11,13 +11,13 @@ interface SimpleWordListInputProps {
 export function SimpleWordListInput(p: SimpleWordListInputProps) {
   const field = useFieldContext<string[]>()
 
-  const value = field.state.value.join(",")
+  const value = field.state.value.join(',')
 
   const handleChange = (
     e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>,
   ) => {
     const raw = e.target.value
-    const tokens = raw.split(",")
+    const tokens = raw.split(',')
     field.handleChange(tokens)
   }
 

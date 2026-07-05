@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from 'react'
 
 type SuccessProps =
   | {
@@ -18,14 +18,14 @@ function renderSuccess(p: SuccessProps) {
 }
 
 type RenderQueryProps = {
-  status: "error" | "success" | "pending"
+  status: 'error' | 'success' | 'pending'
   errorView: ReactNode
   loadingView: ReactNode
 } & SuccessProps
 
 export function RenderQuery(p: RenderQueryProps) {
-  if (p.status === "pending") return p.loadingView
-  if (p.status === "error") return p.errorView
-  if (p.status === "success") return renderSuccess(p)
+  if (p.status === 'pending') return p.loadingView
+  if (p.status === 'error') return p.errorView
+  if (p.status === 'success') return renderSuccess(p)
   return null
 }

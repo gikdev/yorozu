@@ -1,5 +1,5 @@
-import { SpinnerGapIcon } from "@phosphor-icons/react"
-import { useFormContext } from "."
+import { SpinnerGapIcon } from '@phosphor-icons/react'
+import { useFormContext } from '.'
 
 interface SimpleSubmitBtnProps {
   title: string
@@ -13,13 +13,13 @@ export function SimpleSubmitBtn(p: SimpleSubmitBtnProps) {
     <form.Subscribe selector={s => [s.canSubmit, s.isSubmitting]}>
       {([canSubmit, isSubmitting]) => (
         <button
-          type="button"
+          type='button'
           className={p.className}
           onClick={() => form.handleSubmit()}
           disabled={!canSubmit || isSubmitting}
         >
           {isSubmitting ? (
-            <SpinnerGapIcon size={24} className="animate-spin" />
+            <SpinnerGapIcon size={24} className='animate-spin' />
           ) : (
             <span>{p.title}</span>
           )}

@@ -1,1 +1,1 @@
-export { DigitalCard } from "./components/DigitalCard"
+export { DigitalCard } from './components/DigitalCard'

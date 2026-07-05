@@ -1,15 +1,15 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const languageKeys = [
-  "persian",
-  "english",
-  "arabic",
-  "spanish",
-  "japanese",
-  "romaji",
+  'persian',
+  'english',
+  'arabic',
+  'spanish',
+  'japanese',
+  'romaji',
 ] as const
 export type LanguageKey = (typeof languageKeys)[number]
-export type TextFieldKey = LanguageKey | "annotation"
+export type TextFieldKey = LanguageKey | 'annotation'
 
 const nullableText = z.string().min(1).nullable()
 
@@ -24,7 +24,7 @@ export const lyricLineSchema = z
     spanish: nullableText,
     japanese: nullableText,
     romaji: nullableText,
-    mainLanguage: z.enum([...languageKeys, "annotation"]).nullable(),
+    mainLanguage: z.enum([...languageKeys, 'annotation']).nullable(),
   })
   .superRefine((data, ctx) => {
     const annotationFilled = !!data.annotation
@@ -34,38 +34,38 @@ export const lyricLineSchema = z
     if (annotationFilled && languagesFilled.length > 0) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Annotation and language fields cannot coexist.",
-        path: ["annotation"],
+        message: 'Annotation and language fields cannot coexist.',
+        path: ['annotation'],
       })
     }
 
     if (!anyFilled) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "At least one text field must be filled.",
-        path: ["annotation"],
+        message: 'At least one text field must be filled.',
+        path: ['annotation'],
       })
     }
 
     if (anyFilled && data.mainLanguage === null) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "mainLanguage is required when any text field is filled.",
-        path: ["mainLanguage"],
+        message: 'mainLanguage is required when any text field is filled.',
+        path: ['mainLanguage'],
       })
     }
 
     if (data.mainLanguage !== null) {
       const targetFilled =
-        data.mainLanguage === "annotation"
+        data.mainLanguage === 'annotation'
           ? annotationFilled
           : !!data[data.mainLanguage]
 
       if (!targetFilled) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "mainLanguage must point to a filled field.",
-          path: ["mainLanguage"],
+          message: 'mainLanguage must point to a filled field.',
+          path: ['mainLanguage'],
         })
       }
     }
@@ -80,8 +80,8 @@ export const lyricLineSubmitSchema = lyricLineSchema.superRefine(
     if (data.timestamp === null) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Timestamp is required before submitting.",
-        path: ["timestamp"],
+        message: 'Timestamp is required before submitting.',
+        path: ['timestamp'],
       })
     }
   },
@@ -91,7 +91,7 @@ export type LyricLine = z.infer<typeof lyricLineSchema>
 export type LyricLinesFormValues = z.infer<typeof lyricLinesFormSchema>
 
 export const emptyLyricLine = (): LyricLine => ({
-  tempId: "", // filled with uuid at creation
+  tempId: '', // filled with uuid at creation
   timestamp: null,
   annotation: null,
   persian: null,

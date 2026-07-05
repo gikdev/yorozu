@@ -1,5 +1,5 @@
-import { TextTabItem } from "./TextTabItem"
-import type { TextTabItemShape } from "./TextTabItemShape"
+import { TextTabItem } from './TextTabItem'
+import type { TextTabItemShape } from './TextTabItemShape'
 
 interface TextTabsProps {
   items: TextTabItemShape[]
@@ -8,7 +8,7 @@ interface TextTabsProps {
 }
 
 export const TextTabs = (p: TextTabsProps) => (
-  <div className="flex">
+  <div className='flex'>
     {p.items.map(item => (
       <TextTabItem
         key={item.id}

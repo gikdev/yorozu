@@ -1,2 +1,2 @@
-export { BottomNav } from "./BottomNav"
-export type { BottomNavItemShape } from "./BottomNavItemShape"
+export { BottomNav } from './BottomNav'
+export type { BottomNavItemShape } from './BottomNavItemShape'

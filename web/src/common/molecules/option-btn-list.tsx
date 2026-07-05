@@ -1,7 +1,7 @@
 import {
   OptionBtnListItem,
   type OptionBtnListItemProps,
-} from "./option-btn-list-item"
+} from './option-btn-list-item'
 
 export interface OptionBtnListProps {
   optionItems: OptionBtnListItemProps[]
@@ -9,7 +9,7 @@ export interface OptionBtnListProps {
 
 export function OptionBtnList(p: OptionBtnListProps) {
   return (
-    <div className="flex flex-col divide-mist-800 divide-y">
+    <div className='flex flex-col divide-mist-800 divide-y'>
       {p.optionItems.map((i, index) => (
         <OptionBtnListItem
           // biome-ignore lint/suspicious/noArrayIndexKey: 大丈夫

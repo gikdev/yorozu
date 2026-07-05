@@ -1,17 +1,17 @@
-import type { Icon } from "@phosphor-icons/react"
+import type { Icon } from '@phosphor-icons/react'
 
 type IAppShortcutTypeIdea = {
-  type: "IDEA"
+  type: 'IDEA'
   description: string
 }
 
 type IAppShortcutTypeMvp = {
-  type: "MVP"
+  type: 'MVP'
   url: string
 }
 
 type IAppShortcutTypeApp = {
-  type: "APP"
+  type: 'APP'
   url: string
 }
 

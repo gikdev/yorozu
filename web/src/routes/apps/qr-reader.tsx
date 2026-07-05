@@ -1,19 +1,19 @@
-import { ClipboardIcon } from "@phosphor-icons/react"
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import { Scanner } from "@yudiel/react-qr-scanner"
-import { useState } from "react"
-import { btn } from "#/common/atoms/btn"
-import { AppBar } from "#/common/molecules/page-header"
+import { ClipboardIcon } from '@phosphor-icons/react'
+import { createFileRoute, linkOptions } from '@tanstack/react-router'
+import { Scanner } from '@yudiel/react-qr-scanner'
+import { useState } from 'react'
+import { btn } from '#/common/atoms/btn'
+import { AppBar } from '#/common/molecules/page-header'
 
-const TITLE = "QR Reader"
+const TITLE = 'QR Reader'
 
-export const Route = createFileRoute("/apps/qr-reader")({
+export const Route = createFileRoute('/apps/qr-reader')({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const [result, setResult] = useState("")
+  const [result, setResult] = useState('')
   const [isPaused, setIsPaused] = useState(false)
 
   function copyResult() {
@@ -21,21 +21,21 @@ function RouteComponent() {
   }
 
   return (
-    <div className="h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-240 mx-auto w-full">
-      <AppBar title={TITLE} parentPath={linkOptions({ to: "/apps" })}>
+    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-240 mx-auto w-full'>
+      <AppBar title={TITLE} parentPath={linkOptions({ to: '/apps' })}>
         <button
           className={btn({ isIcon: true })}
           onClick={copyResult}
-          type="button"
+          type='button'
           disabled={!result}
-          aria-label="Copy result"
+          aria-label='Copy result'
         >
           <ClipboardIcon size={24} />
         </button>
       </AppBar>
 
-      <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">
-        <div className="rounded overflow-hidden">
+      <main className='flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0'>
+        <div className='rounded overflow-hidden'>
           <Scanner
             paused={isPaused}
             onScan={codes => {
@@ -49,15 +49,15 @@ function RouteComponent() {
         </div>
 
         {result && (
-          <div className="flex flex-col gap-2">
-            <div className="rounded bg-mist-900 px-3 py-2 text-sm break-all">
+          <div className='flex flex-col gap-2'>
+            <div className='rounded bg-mist-900 px-3 py-2 text-sm break-all'>
               {result}
             </div>
             <button
-              type="button"
+              type='button'
               className={btn()}
               onClick={() => {
-                setResult("")
+                setResult('')
                 setIsPaused(false)
               }}
             >

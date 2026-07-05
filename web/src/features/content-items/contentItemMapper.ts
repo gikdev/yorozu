@@ -1,5 +1,5 @@
-import type { CreateContentItemRequest } from "#/common/api/client"
-import type { ContentItemFormValues } from "./ContentItemForm"
+import type { CreateContentItemRequest } from '#/common/api/client'
+import type { ContentItemFormValues } from './ContentItemForm'
 
 export const contentItemMapper = {
   fromFormValues: {

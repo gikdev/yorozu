@@ -1,26 +1,26 @@
-import { defineConfig } from "@hey-api/openapi-ts"
+import { defineConfig } from '@hey-api/openapi-ts'
 
 export default defineConfig({
-  input: "./src/common/api/openapi.yaml",
-  output: "./src/common/api/generated/client",
+  input: './src/common/api/openapi.yaml',
+  output: './src/common/api/generated/client',
   plugins: [
     {
-      name: "@hey-api/client-axios",
-      baseUrl: "/",
+      name: '@hey-api/client-axios',
+      baseUrl: '/',
       includeInEntry: true,
     },
     {
-      name: "@hey-api/typescript",
-      enums: "javascript",
+      name: '@hey-api/typescript',
+      enums: 'javascript',
       includeInEntry: true,
     },
-    { name: "zod", includeInEntry: true },
+    { name: 'zod', includeInEntry: true },
     {
-      name: "@hey-api/sdk",
-      operations: { strategy: "byTags" },
+      name: '@hey-api/sdk',
+      operations: { strategy: 'byTags' },
       transformer: false,
       includeInEntry: true,
     },
-    { name: "@tanstack/react-query", includeInEntry: true },
+    { name: '@tanstack/react-query', includeInEntry: true },
   ],
 })

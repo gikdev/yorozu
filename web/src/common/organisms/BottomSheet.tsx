@@ -1,15 +1,15 @@
 // bottomsheet.tsx
 
-import { XIcon } from "@phosphor-icons/react"
-import type React from "react"
+import { XIcon } from '@phosphor-icons/react'
+import type React from 'react'
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from "react"
-import { cn } from "tailwind-variants"
+} from 'react'
+import { cn } from 'tailwind-variants'
 
 // ---------- Context ----------
 interface BottomSheetContextType {
@@ -24,7 +24,7 @@ function useBottomSheet() {
   const ctx = useContext(BottomSheetContext)
   if (!ctx)
     throw new Error(
-      "BottomSheet components must be used inside <BottomSheet.Root>",
+      'BottomSheet components must be used inside <BottomSheet.Root>',
     )
   return ctx
 }
@@ -53,21 +53,21 @@ function Root({ children, defaultOpen = false, onOpenChange }: RootProps) {
   useEffect(() => {
     if (!isOpen) return
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close()
+      if (e.key === 'Escape') close()
     }
-    document.addEventListener("keydown", handleKeyDown)
-    return () => document.removeEventListener("keydown", handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, close])
 
   // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = ""
+      document.body.style.overflow = ''
     }
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.overflow = ''
     }
   }, [isOpen])
 
@@ -87,7 +87,7 @@ interface TriggerProps {
 function Trigger({ children, className }: TriggerProps) {
   const { open } = useBottomSheet()
   return (
-    <button type="button" onClick={open} className={className}>
+    <button type='button' onClick={open} className={className}>
       {children}
     </button>
   )
@@ -106,12 +106,12 @@ function Backdrop({ closable = false, className }: BackdropProps) {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-40 bg-black/60 transition-opacity duration-300",
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+        'fixed inset-0 z-40 bg-black/60 transition-opacity duration-300',
+        isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
         className,
       )}
       onClick={closable ? close : undefined}
-      aria-hidden="true"
+      aria-hidden='true'
     />
   )
 }
@@ -127,23 +127,23 @@ interface ContainerProps {
   height?: string
 }
 
-function Container({ children, className, height = "h-1/2" }: ContainerProps) {
+function Container({ children, className, height = 'h-1/2' }: ContainerProps) {
   const { isOpen } = useBottomSheet()
 
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-mist-900 text-mist-100 shadow-2xl transition-transform duration-300 ease-out",
+        'fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-mist-900 text-mist-100 shadow-2xl transition-transform duration-300 ease-out',
         height,
-        isOpen ? "translate-y-0" : "translate-y-full",
+        isOpen ? 'translate-y-0' : 'translate-y-full',
         className,
       )}
-      role="dialog"
-      aria-modal="true"
+      role='dialog'
+      aria-modal='true'
     >
       {/* Drag handle (subtle indicator) */}
-      <div className="flex justify-center pt-3 pb-1">
-        <div className="h-1 w-10 rounded-full bg-mist-600" />
+      <div className='flex justify-center pt-3 pb-1'>
+        <div className='h-1 w-10 rounded-full bg-mist-600' />
       </div>
       {children}
     </div>
@@ -169,18 +169,18 @@ function Header({
   return (
     <div
       className={cn(
-        "flex items-center justify-between px-4 py-3 border-b border-mist-800",
+        'flex items-center justify-between px-4 py-3 border-b border-mist-800',
         className,
       )}
     >
-      {title && <h2 className="text-lg font-semibold">{title}</h2>}
+      {title && <h2 className='text-lg font-semibold'>{title}</h2>}
       {children}
       {showCloseButton && (
         <button
           onClick={close}
-          type="button"
-          className="ml-auto rounded-full p-1 hover:bg-mist-800 transition-colors"
-          aria-label="Close"
+          type='button'
+          className='ml-auto rounded-full p-1 hover:bg-mist-800 transition-colors'
+          aria-label='Close'
         >
           <XIcon size={20} />
         </button>
@@ -198,7 +198,7 @@ function Content({
   className?: string
 }) {
   return (
-    <div className={cn("flex-1 overflow-y-auto p-4", className)}>
+    <div className={cn('flex-1 overflow-y-auto p-4', className)}>
       {children}
     </div>
   )

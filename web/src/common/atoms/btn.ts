@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants"
+import { tv } from 'tailwind-variants'
 
 export const btn = tv({
   base: `
@@ -20,9 +20,9 @@ export const btn = tv({
   `,
   variants: {
     size: {
-      sm: "",
-      md: "",
-      lg: "",
+      sm: '',
+      md: '',
+      lg: '',
     },
     theme: {
       glass: `
@@ -66,48 +66,48 @@ export const btn = tv({
       `,
     },
     isIcon: {
-      false: "",
-      true: "",
+      false: '',
+      true: '',
     },
   },
   compoundVariants: [
     // --- Text + icon buttons (isIcon: false) sizing ---
     {
       isIcon: false,
-      size: "sm",
-      class: "gap-1.5 px-3 py-2 text-sm min-h-9",
+      size: 'sm',
+      class: 'gap-1.5 px-3 py-2 text-sm min-h-9',
     },
     {
       isIcon: false,
-      size: "md",
-      class: "gap-2 px-4 py-3 text-base min-h-12",
+      size: 'md',
+      class: 'gap-2 px-4 py-3 text-base min-h-12',
     },
     {
       isIcon: false,
-      size: "lg",
-      class: "gap-3 px-6 py-4 text-lg min-h-14",
+      size: 'lg',
+      class: 'gap-3 px-6 py-4 text-lg min-h-14',
     },
 
     // --- Icon-only buttons (isIcon: true) sizing ---
     {
       isIcon: true,
-      size: "sm",
-      class: "p-1.5 h-8 w-8",
+      size: 'sm',
+      class: 'p-1.5 h-8 w-8',
     },
     {
       isIcon: true,
-      size: "md",
-      class: "p-2 h-12 w-12",
+      size: 'md',
+      class: 'p-2 h-12 w-12',
     },
     {
       isIcon: true,
-      size: "lg",
-      class: "p-3 h-14 w-14",
+      size: 'lg',
+      class: 'p-3 h-14 w-14',
     },
   ],
   defaultVariants: {
-    size: "md",
-    theme: "glass",
+    size: 'md',
+    theme: 'glass',
     isIcon: false,
   },
 })

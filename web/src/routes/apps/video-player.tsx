@@ -1,15 +1,15 @@
-import { LinkIcon, UploadSimpleIcon } from "@phosphor-icons/react"
-import { createFileRoute, linkOptions } from "@tanstack/react-router"
-import Artplayer from "artplayer"
-import artplayerPluginAmbilight from "artplayer-plugin-ambilight"
-import artplayerPluginAutoThumbnail from "artplayer-plugin-auto-thumbnail"
-import { useEffect, useRef, useState } from "react"
-import { btn } from "#/common/atoms/btn"
-import { AppBar } from "#/common/molecules/page-header"
+import { LinkIcon, UploadSimpleIcon } from '@phosphor-icons/react'
+import { createFileRoute, linkOptions } from '@tanstack/react-router'
+import Artplayer from 'artplayer'
+import artplayerPluginAmbilight from 'artplayer-plugin-ambilight'
+import artplayerPluginAutoThumbnail from 'artplayer-plugin-auto-thumbnail'
+import { useEffect, useRef, useState } from 'react'
+import { btn } from '#/common/atoms/btn'
+import { AppBar } from '#/common/molecules/page-header'
 
-const TITLE = "Video Player"
+const TITLE = 'Video Player'
 
-export const Route = createFileRoute("/apps/video-player")({
+export const Route = createFileRoute('/apps/video-player')({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: RouteComponent,
 })
@@ -19,7 +19,7 @@ function RouteComponent() {
   const artRef = useRef<Artplayer | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState('')
   const [isDragging, setIsDragging] = useState(false)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function RouteComponent() {
       container: containerRef.current,
       url,
       id: url, // lets autoPlayback resume the right video
-      theme: "#00bfff",
+      theme: '#00bfff',
 
       // playback
       volume: 1,
@@ -82,7 +82,7 @@ function RouteComponent() {
   }
 
   function promptForUrl() {
-    const value = window.prompt("Paste video URL")?.trim()
+    const value = window.prompt('Paste video URL')?.trim()
     if (value) setUrl(value)
   }
 
@@ -93,35 +93,35 @@ function RouteComponent() {
   }
 
   return (
-    <div className="h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-240 mx-auto w-full">
-      <AppBar title={TITLE} parentPath={linkOptions({ to: "/apps" })}>
+    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-240 mx-auto w-full'>
+      <AppBar title={TITLE} parentPath={linkOptions({ to: '/apps' })}>
         <button
           className={btn({ isIcon: true })}
-          type="button"
+          type='button'
           onClick={() => fileInputRef.current?.click()}
-          aria-label="Upload video"
+          aria-label='Upload video'
         >
           <UploadSimpleIcon size={24} />
         </button>
         <input
           ref={fileInputRef}
-          type="file"
-          accept="video/*,audio/*"
-          className="hidden"
+          type='file'
+          accept='video/*,audio/*'
+          className='hidden'
           onChange={e => loadFile(e.target.files?.[0])}
         />
 
         <button
           className={btn({ isIcon: true })}
-          type="button"
+          type='button'
           onClick={promptForUrl}
-          aria-label="Load video from URL"
+          aria-label='Load video from URL'
         >
           <LinkIcon size={24} />
         </button>
       </AppBar>
 
-      <main className="flex-1 flex flex-col gap-4 overflow-y-auto min-h-0">
+      <main className='flex-1 flex flex-col gap-4 overflow-y-auto min-h-0'>
         <div
           ref={containerRef}
           onDragOver={e => {
@@ -130,8 +130,8 @@ function RouteComponent() {
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          className="flex-1 min-h-0 rounded overflow-hidden"
-          style={{ outline: isDragging ? "2px dashed #00bfff" : "none" }}
+          className='flex-1 min-h-0 rounded overflow-hidden'
+          style={{ outline: isDragging ? '2px dashed #00bfff' : 'none' }}
         />
       </main>
     </div>

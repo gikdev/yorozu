@@ -1,11 +1,11 @@
-import "./styles.css"
-import { RouterProvider } from "@tanstack/react-router"
-import { StrictMode } from "react"
-import { createRoot } from "react-dom/client"
-import { Providers } from "./providers"
-import { router } from "./routing/router"
+import './styles.css'
+import { RouterProvider } from '@tanstack/react-router'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { Providers } from './providers'
+import { router } from './routing/router'
 
-const TARGET = "#root"
+const TARGET = '#root'
 
 const targetElement = document.querySelector(TARGET)
 if (targetElement == null)

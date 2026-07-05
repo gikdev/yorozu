@@ -1,10 +1,10 @@
-import { CaretDownIcon } from "@phosphor-icons/react"
-import { useState } from "react"
-import { tv } from "tailwind-variants"
-import { btn } from "../atoms/btn"
-import { fieldContainer } from "../atoms/field-container"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import { CaretDownIcon } from '@phosphor-icons/react'
+import { useState } from 'react'
+import { tv } from 'tailwind-variants'
+import { btn } from '../atoms/btn'
+import { fieldContainer } from '../atoms/field-container'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 export type TagOption = {
   title: string
@@ -17,10 +17,10 @@ interface TagsPickerInputProps {
 }
 
 const styleCaret = tv({
-  base: "transition-transform duration-200",
+  base: 'transition-transform duration-200',
   variants: {
     open: {
-      true: "rotate-180",
+      true: 'rotate-180',
     },
   },
 })
@@ -44,13 +44,13 @@ export function TagsPickerInput({ title, options }: TagsPickerInputProps) {
   return (
     <div className={fieldContainer()}>
       <button
-        type="button"
-        className={btn({ className: "" })}
+        type='button'
+        className={btn({ className: '' })}
         onClick={() => setOpen(!open)}
       >
-        <span className="me-auto">{title}</span>
+        <span className='me-auto'>{title}</span>
 
-        <span className="text-xs">
+        <span className='text-xs'>
           ({count}/{options.length})
         </span>
 
@@ -58,15 +58,15 @@ export function TagsPickerInput({ title, options }: TagsPickerInputProps) {
       </button>
 
       {open && (
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className='flex flex-wrap gap-2 mt-2'>
           {options.map(option => (
             <button
               key={option.value}
-              type="button"
+              type='button'
               onClick={() => toggleOption(option.value)}
               onBlur={field.handleBlur}
               className={btn({
-                theme: selected.includes(option.value) ? "primary" : "glass",
+                theme: selected.includes(option.value) ? 'primary' : 'glass',
               })}
             >
               {option.title}

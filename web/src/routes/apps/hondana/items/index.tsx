@@ -3,28 +3,28 @@ import {
   PlusIcon,
   SpinnerGapIcon,
   WarningCircleIcon,
-} from "@phosphor-icons/react"
-import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link, linkOptions } from "@tanstack/react-router"
-import { useMemo, useState } from "react"
-import { listContentItemsOptions } from "#/common/api/client"
-import { btn } from "#/common/atoms/btn"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import { RenderQuery } from "#/common/helpers/render-query"
-import { AppBar } from "#/common/molecules/page-header"
-import { StateMessage } from "#/common/molecules/StateMessage"
-import { ContentItemCard } from "#/features/content-items/ContentItemCard"
-import { contentItemFilters } from "#/features/content-items/filters"
+} from '@phosphor-icons/react'
+import { useQuery } from '@tanstack/react-query'
+import { createFileRoute, Link, linkOptions } from '@tanstack/react-router'
+import { useMemo, useState } from 'react'
+import { listContentItemsOptions } from '#/common/api/client'
+import { btn } from '#/common/atoms/btn'
+import { extractErrorMessage } from '#/common/helpers/errors'
+import { RenderQuery } from '#/common/helpers/render-query'
+import { AppBar } from '#/common/molecules/page-header'
+import { StateMessage } from '#/common/molecules/StateMessage'
+import { ContentItemCard } from '#/features/content-items/ContentItemCard'
+import { contentItemFilters } from '#/features/content-items/filters'
 
-const TITLE = "Items"
+const TITLE = 'Items'
 
-export const Route = createFileRoute("/apps/hondana/items/")({
+export const Route = createFileRoute('/apps/hondana/items/')({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: LayoutComponent,
 })
 
 function LayoutComponent() {
-  const [selectedFilterId, setSelectedFilterId] = useState<string>("none")
+  const [selectedFilterId, setSelectedFilterId] = useState<string>('none')
   const itemsQ = useQuery(listContentItemsOptions())
 
   // ── Find the selected filter ──────────────────────────
@@ -46,16 +46,16 @@ function LayoutComponent() {
   }
 
   return (
-    <div className="h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 mx-auto w-full border-x border-mist-900">
+    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 mx-auto w-full border-x border-mist-900'>
       <title>{TITLE}</title>
 
-      <AppBar title={TITLE} parentPath={linkOptions({ to: "/apps/hondana" })}>
+      <AppBar title={TITLE} parentPath={linkOptions({ to: '/apps/hondana' })}>
         <select
           value={selectedFilterId}
           onChange={handleFilterChange}
           className={btn({
             class:
-              "rounded-none min-w-40 outline-0 ring-0 *:bg-mist-900 *:text-mist-100",
+              'rounded-none min-w-40 outline-0 ring-0 *:bg-mist-900 *:text-mist-100',
           })}
         >
           {contentItemFilters.map(filter => (
@@ -66,15 +66,15 @@ function LayoutComponent() {
         </select>
 
         <Link
-          type="button"
-          to="/apps/hondana/items/new"
-          className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+          type='button'
+          to='/apps/hondana/items/new'
+          className={btn({ class: 'rounded-none shrink-0', isIcon: true })}
         >
           <PlusIcon size={20} />
         </Link>
       </AppBar>
 
-      <main className="flex-1 flex min-h-0 overflow-y-auto scrollbar-none hover:scrollbar-thin">
+      <main className='flex-1 flex min-h-0 overflow-y-auto scrollbar-none hover:scrollbar-thin'>
         <RenderQuery
           isList={true}
           status={itemsQ.status}
@@ -82,41 +82,41 @@ function LayoutComponent() {
           errorView={
             <StateMessage
               icon={WarningCircleIcon}
-              title="Failed to load content items"
-              className="h-full"
+              title='Failed to load content items'
+              className='h-full'
               description={extractErrorMessage(itemsQ.error)}
-              mode="ERROR"
+              mode='ERROR'
               retry={itemsQ.refetch}
             />
           }
           loadingView={
             <StateMessage
-              mode="LOADING"
-              className="h-full"
+              mode='LOADING'
+              className='h-full'
               icon={SpinnerGapIcon}
-              title="Please wait."
-              description="Loading content items..."
+              title='Please wait.'
+              description='Loading content items...'
             />
           }
           emptyView={
             <StateMessage
-              mode="NORMAL"
-              className="h-full"
+              mode='NORMAL'
+              className='h-full'
               icon={ListPlusIcon}
               title={
-                selectedFilterId === "none"
-                  ? "No content items yet"
+                selectedFilterId === 'none'
+                  ? 'No content items yet'
                   : `No items match the "${selectedFilter.title}" filter`
               }
               description={
-                selectedFilterId === "none"
-                  ? "Create your first content item!"
+                selectedFilterId === 'none'
+                  ? 'Create your first content item!'
                   : `Try changing the filter or create a new item.`
               }
             />
           }
           fullView={() => (
-            <div className="flex flex-wrap content-start gap-2 p-4">
+            <div className='flex flex-wrap content-start gap-2 p-4'>
               {filteredItems.map(item => (
                 <ContentItemCard
                   key={item.id}

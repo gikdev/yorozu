@@ -1,6 +1,6 @@
-import { fieldContainer } from "../atoms/field-container"
-import { useFieldContext } from "."
-import { FieldMeta } from "./field-meta"
+import { fieldContainer } from '../atoms/field-container'
+import { useFieldContext } from '.'
+import { FieldMeta } from './field-meta'
 
 interface SimpleCheckboxInputProps {
   title: string
@@ -11,9 +11,9 @@ export function SimpleCheckboxInput(p: SimpleCheckboxInputProps) {
 
   return (
     <div className={fieldContainer()}>
-      <label className="flex gap-1 items-center">
+      <label className='flex gap-1 items-center'>
         <input
-          type="checkbox"
+          type='checkbox'
           id={field.name}
           name={field.name}
           checked={field.state.value}

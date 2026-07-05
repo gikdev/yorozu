@@ -1,12 +1,12 @@
-import { useNavigate } from "@tanstack/react-router"
-import { useRef } from "react"
-import { useContentT } from "../hooks/useContentT"
+import { useNavigate } from '@tanstack/react-router'
+import { useRef } from 'react'
+import { useContentT } from '../hooks/useContentT'
 
 export function CardHeader() {
   const navigate = useNavigate()
-  const fullName = useContentT("fullName")
-  const nickname = useContentT("nickname")
-  const tagline = useContentT("tagline")
+  const fullName = useContentT('fullName')
+  const nickname = useContentT('nickname')
+  const tagline = useContentT('tagline')
 
   const clickCountRef = useRef(0)
   const timeoutRef = useRef<number | null>(null)
@@ -24,25 +24,25 @@ export function CardHeader() {
 
     if (clickCountRef.current === 5) {
       clickCountRef.current = 0
-      navigate({ to: "/apps" })
+      navigate({ to: '/apps' })
     }
   }
 
   return (
-    <div className="flex flex-col items-center p-4 text-center gap-2">
+    <div className='flex flex-col items-center p-4 text-center gap-2'>
       <img
-        src="/digital-card/me.png"
+        src='/digital-card/me.png'
         alt={fullName}
-        className="w-24 h-24 rounded-full border-2 border-sky-500 object-cover cursor-pointer"
+        className='w-24 h-24 rounded-full border-2 border-sky-500 object-cover cursor-pointer'
         onClick={handleImageClick}
       />
 
       <div>
-        <h1 className="text-xl font-medium text-mist-100">{fullName}</h1>
-        <p className="text-sky-400">{nickname}</p>
+        <h1 className='text-xl font-medium text-mist-100'>{fullName}</h1>
+        <p className='text-sky-400'>{nickname}</p>
       </div>
 
-      <p className="text-mist-400 leading-relaxed">{tagline}</p>
+      <p className='text-mist-400 leading-relaxed'>{tagline}</p>
     </div>
   )
 }

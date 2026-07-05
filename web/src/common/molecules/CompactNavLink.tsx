@@ -1,6 +1,6 @@
-import { ArrowRightIcon } from "@phosphor-icons/react"
-import { Link, type LinkOptions } from "@tanstack/react-router"
-import type { ComponentType } from "react"
+import { ArrowRightIcon } from '@phosphor-icons/react'
+import { Link, type LinkOptions } from '@tanstack/react-router'
+import type { ComponentType } from 'react'
 
 interface IconProps {
   size?: number
@@ -30,7 +30,7 @@ export function CompactNavLink({
         size={20}
         className={`text-mist-500 transition-colors ${iconClassName}`}
       />
-      <span className="text-mist-100 flex-1">{label}</span>
+      <span className='text-mist-100 flex-1'>{label}</span>
       <ArrowRightIcon
         size={20}
         className={`text-mist-500 transition-colors ${iconClassName}`}

@@ -10,19 +10,19 @@ import {
   PuzzlePieceIcon,
   SquaresFourIcon,
   VideoIcon,
-} from "@phosphor-icons/react"
-import { useMutation } from "@tanstack/react-query"
-import { Link } from "@tanstack/react-router"
-import type { SyntheticEvent } from "react"
-import toast from "react-hot-toast"
+} from '@phosphor-icons/react'
+import { useMutation } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
+import type { SyntheticEvent } from 'react'
+import toast from 'react-hot-toast'
 import {
   type ContentItemFormat,
   changeContentItemMutation,
   type LocationType,
   listContentItemsOptions,
-} from "#/common/api/client"
-import { btn } from "#/common/atoms/btn"
-import { extractErrorMessage } from "#/common/helpers/errors"
+} from '#/common/api/client'
+import { btn } from '#/common/atoms/btn'
+import { extractErrorMessage } from '#/common/helpers/errors'
 
 // ── Types ──────────────────────────────────────────────
 interface ContentItemCardProps {
@@ -53,18 +53,18 @@ function getFormatIcon(format: ContentItemFormat) {
 
 function getFormatColor(format: ContentItemFormat): string {
   const map: Record<ContentItemFormat, string> = {
-    Readable: "text-blue-400",
-    Watchable: "text-red-400",
-    Listenable: "text-green-400",
-    Interactive: "text-purple-400",
-    Mixed: "text-yellow-400",
+    Readable: 'text-blue-400',
+    Watchable: 'text-red-400',
+    Listenable: 'text-green-400',
+    Interactive: 'text-purple-400',
+    Mixed: 'text-yellow-400',
   }
-  return map[format] ?? ""
+  return map[format] ?? ''
 }
 
 const iconBtnStyles = btn({
   isIcon: true,
-  size: "sm",
+  size: 'sm',
 })
 
 // ── Component ──────────────────────────────────────────
@@ -81,17 +81,17 @@ export function ContentItemCard(p: ContentItemCardProps) {
 
   const handleImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget
-    target.style.display = "none"
+    target.style.display = 'none'
 
     const parent = target.parentElement
     if (!parent) return
 
     const placeholder = parent.querySelector<HTMLDivElement>(
-      ".placeholder-fallback",
+      '.placeholder-fallback',
     )
     if (!placeholder) return
 
-    placeholder.style.display = "flex"
+    placeholder.style.display = 'flex'
   }
 
   const handleToggleFavorite = () => {
@@ -99,7 +99,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
       path: { id: p.id },
       body: {
         isBookmarked: null,
-        isFavorited: "Toggle",
+        isFavorited: 'Toggle',
         isSecret: null,
       },
     })
@@ -109,7 +109,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
     changeM.mutate({
       path: { id: p.id },
       body: {
-        isBookmarked: "Toggle",
+        isBookmarked: 'Toggle',
         isFavorited: null,
         isSecret: null,
       },
@@ -122,127 +122,127 @@ export function ContentItemCard(p: ContentItemCardProps) {
       body: {
         isBookmarked: null,
         isFavorited: null,
-        isSecret: "Toggle",
+        isSecret: 'Toggle',
       },
     })
   }
 
   const handleLocation = () => {
     if (!p.locationValue) {
-      toast.error("No location set.")
+      toast.error('No location set.')
       return
     }
 
     navigator.clipboard
       .writeText(p.locationValue)
-      .then(() => toast.success("Location copied!"))
+      .then(() => toast.success('Location copied!'))
       .catch(err => toast.error(extractErrorMessage(err)))
   }
 
   const hasLocation = p.locationType !== null
-  const hasLink = p.locationType === "Url"
+  const hasLink = p.locationType === 'Url'
 
   // ── Render ────────────────────────────────────────────
   return (
-    <div className="group flex h-24 min-w-60 flex-1 overflow-hidden rounded-lg border border-mist-800/50 bg-mist-950/50 transition-all hover:border-mist-600 hover:bg-mist-900/70">
+    <div className='group flex h-24 min-w-60 flex-1 overflow-hidden rounded-lg border border-mist-800/50 bg-mist-950/50 transition-all hover:border-mist-600 hover:bg-mist-900/70'>
       {/* ── Cover ── */}
       <Link
-        to="/"
-        className="relative aspect-square h-full shrink-0 overflow-hidden"
+        to='/'
+        className='relative aspect-square h-full shrink-0 overflow-hidden'
       >
         <img
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
           src={p.coverImageUrl ?? undefined}
           alt={p.title}
           onError={handleImageError}
         />
 
         <div
-          className="placeholder-fallback absolute inset-0 flex items-center justify-center bg-linear-to-br from-mist-800 to-mist-900 text-3xl font-bold text-mist-200"
-          style={{ display: p.coverImageUrl ? "none" : "flex" }}
+          className='placeholder-fallback absolute inset-0 flex items-center justify-center bg-linear-to-br from-mist-800 to-mist-900 text-3xl font-bold text-mist-200'
+          style={{ display: p.coverImageUrl ? 'none' : 'flex' }}
         >
           {p.placeholderLetter}
         </div>
       </Link>
 
       {/* ── Content ── */}
-      <div className="flex flex-1 flex-col min-w-0 p-2">
+      <div className='flex flex-1 flex-col min-w-0 p-2'>
         {/* Title */}
-        <Link to="/" className="truncate text-mist-100 wrap-anywhere">
+        <Link to='/' className='truncate text-mist-100 wrap-anywhere'>
           {p.title}
         </Link>
 
         {/* Metadata Row */}
-        <div className="flex items-center gap-1 text-xs text-mist-500">
-          <FormatIcon size={16} weight="duotone" className={formatColor} />
+        <div className='flex items-center gap-1 text-xs text-mist-500'>
+          <FormatIcon size={16} weight='duotone' className={formatColor} />
 
           {p.isOngoing && <AirplayIcon size={16} />}
         </div>
 
         {/* Actions */}
-        <div className="mt-auto flex items-center justify-between">
+        <div className='mt-auto flex items-center justify-between'>
           {/* Toggle Buttons */}
-          <div className="flex items-center">
+          <div className='flex items-center'>
             <button
-              type="button"
+              type='button'
               onClick={handleToggleFavorite}
               disabled={changeM.isPending}
               className={iconBtnStyles}
               title={
-                p.isFavorited ? "Remove from favorites" : "Add to favorites"
+                p.isFavorited ? 'Remove from favorites' : 'Add to favorites'
               }
             >
               <HeartIcon
                 size={20}
-                weight={p.isFavorited ? "fill" : "regular"}
-                className={p.isFavorited ? "text-red-400" : ""}
+                weight={p.isFavorited ? 'fill' : 'regular'}
+                className={p.isFavorited ? 'text-red-400' : ''}
               />
             </button>
 
             <button
-              type="button"
+              type='button'
               onClick={handleToggleBookmark}
               disabled={changeM.isPending}
               className={iconBtnStyles}
-              title={p.isBookmarked ? "Remove bookmark" : "Add bookmark"}
+              title={p.isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
             >
               <BookmarkSimpleIcon
                 size={20}
-                weight={p.isBookmarked ? "fill" : "regular"}
-                className={p.isBookmarked ? "text-yellow-400" : ""}
+                weight={p.isBookmarked ? 'fill' : 'regular'}
+                className={p.isBookmarked ? 'text-yellow-400' : ''}
               />
             </button>
 
             <button
-              type="button"
+              type='button'
               disabled={changeM.isPending}
               onClick={handleToggleSecret}
               className={iconBtnStyles}
-              title={p.isSecret ? "Make public" : "Make secret"}
+              title={p.isSecret ? 'Make public' : 'Make secret'}
             >
               <LockKeyIcon
                 size={20}
-                weight={p.isSecret ? "fill" : "regular"}
-                className={p.isSecret ? "text-violet-400" : ""}
+                weight={p.isSecret ? 'fill' : 'regular'}
+                className={p.isSecret ? 'text-violet-400' : ''}
               />
             </button>
           </div>
 
           {/* Location / Link */}
           {hasLocation && (
-            <div className="flex items-center">
+            <div className='flex items-center'>
               {hasLink ? (
                 <a
-                  href={p.locationValue ?? "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={p.locationValue ?? '#'}
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className={iconBtnStyles}
                 >
                   <LinkIcon size={20} />
                 </a>
               ) : (
                 <button
-                  type="button"
+                  type='button'
                   onClick={handleLocation}
                   className={iconBtnStyles}
                 >

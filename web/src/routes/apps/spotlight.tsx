@@ -1,13 +1,13 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { Spotlight } from "#/features/Spotlight"
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { Spotlight } from '#/features/Spotlight'
 
-export const Route = createFileRoute("/apps/spotlight")({
+export const Route = createFileRoute('/apps/spotlight')({
   component: RouteComponent,
 })
 
-const LS_KEY = "spotlight:active-item"
+const LS_KEY = 'spotlight:active-item'
 
 function RouteComponent() {
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ function RouteComponent() {
     localStorage.getItem(LS_KEY),
   )
 
-  const handleBack = () => navigate({ to: "/apps" })
+  const handleBack = () => navigate({ to: '/apps' })
   const handleCancel = () => {
     localStorage.removeItem(LS_KEY)
     setActiveItem(null)
@@ -25,7 +25,7 @@ function RouteComponent() {
     setActiveItem(item)
   }
   const handleDone = () => {
-    toast.success("お疲れ様！")
+    toast.success('お疲れ様！')
     localStorage.removeItem(LS_KEY)
     setActiveItem(null)
   }

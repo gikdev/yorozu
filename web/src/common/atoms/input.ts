@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants"
+import { tv } from 'tailwind-variants'
 
 export const styleInput = tv({
   base: `
@@ -17,9 +17,9 @@ export const styleInput = tv({
   `,
   variants: {
     size: {
-      sm: "",
-      md: "",
-      lg: "",
+      sm: '',
+      md: '',
+      lg: '',
     },
     variant: {
       glass: `
@@ -50,8 +50,8 @@ export const styleInput = tv({
       `,
     },
     isMultiline: {
-      false: "",
-      true: "resize-y",
+      false: '',
+      true: 'resize-y',
     },
     invalid: {
       true: `
@@ -59,47 +59,47 @@ export const styleInput = tv({
         focus:ring-red-500
         text-red-600 dark:text-red-400
       `,
-      false: "",
+      false: '',
     },
   },
   compoundVariants: [
     // --- Size combinations for single-line (isMultiline: false) ---
     {
       isMultiline: false,
-      size: "sm",
-      class: "py-1.5 px-2.5 text-sm min-h-[2.25rem]",
+      size: 'sm',
+      class: 'py-1.5 px-2.5 text-sm min-h-[2.25rem]',
     },
     {
       isMultiline: false,
-      size: "md",
-      class: "py-2 px-3 text-base min-h-[3rem]",
+      size: 'md',
+      class: 'py-2 px-3 text-base min-h-[3rem]',
     },
     {
       isMultiline: false,
-      size: "lg",
-      class: "py-3 px-4 text-lg min-h-[3.5rem]",
+      size: 'lg',
+      class: 'py-3 px-4 text-lg min-h-[3.5rem]',
     },
 
     // --- Size combinations for multiline (isMultiline: true) ---
     {
       isMultiline: true,
-      size: "sm",
-      class: "py-1.5 px-2.5 text-sm min-h-[4rem]",
+      size: 'sm',
+      class: 'py-1.5 px-2.5 text-sm min-h-[4rem]',
     },
     {
       isMultiline: true,
-      size: "md",
-      class: "py-2 px-3 text-base min-h-[5rem]",
+      size: 'md',
+      class: 'py-2 px-3 text-base min-h-[5rem]',
     },
     {
       isMultiline: true,
-      size: "lg",
-      class: "py-3 px-4 text-lg min-h-[6rem]",
+      size: 'lg',
+      class: 'py-3 px-4 text-lg min-h-[6rem]',
     },
   ],
   defaultVariants: {
-    size: "md",
-    variant: "glass",
+    size: 'md',
+    variant: 'glass',
     isMultiline: false,
     invalid: false,
   },

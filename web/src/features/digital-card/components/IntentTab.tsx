@@ -1,13 +1,13 @@
-import { tv } from "tailwind-variants"
-import { useIntentLabel } from "../hooks/useIntentLabel"
-import type { Intent } from "../types/Intent"
+import { tv } from 'tailwind-variants'
+import { useIntentLabel } from '../hooks/useIntentLabel'
+import type { Intent } from '../types/Intent'
 
 const styleIntentBtn = tv({
-  base: "flex-1 py-2.5 text-xs transition-colors",
+  base: 'flex-1 py-2.5 text-xs transition-colors',
   variants: {
     isActive: {
-      false: "text-mist-500 hover:text-mist-300",
-      true: "text-sky-400 border-b-2 border-sky-500",
+      false: 'text-mist-500 hover:text-mist-300',
+      true: 'text-sky-400 border-b-2 border-sky-500',
     },
   },
   defaultVariants: { isActive: false },
@@ -26,7 +26,7 @@ export function IntentTab({ intent, isActive, onClick }: IntentTabProps) {
     <button
       onClick={onClick}
       className={styleIntentBtn({ isActive })}
-      type="button"
+      type='button'
     >
       {label}
     </button>

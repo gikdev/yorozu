@@ -1,21 +1,21 @@
-import type { IContent } from "../types/IContent"
+import type { IContent } from '../types/IContent'
 
 export const content: IContent = {
   fullName: {
-    en: "Mohammad Mahdi Bahrami",
-    fa: "محمدمهدی بهرامی",
+    en: 'Mohammad Mahdi Bahrami',
+    fa: 'محمدمهدی بهرامی',
   },
-  nickname: { en: "Spec", fa: "اسپک" },
+  nickname: { en: 'Spec', fa: 'اسپک' },
   tagline: {
-    en: "Fullstack web app developer · programming educator",
-    fa: "توسعه‌دهنده فول‌استک · مدرس برنامه‌نویسی",
+    en: 'Fullstack web app developer · programming educator',
+    fa: 'توسعه‌دهنده فول‌استک · مدرس برنامه‌نویسی',
   },
   contactMe: {
-    en: "Contact Me",
-    fa: "ارتباط با من",
+    en: 'Contact Me',
+    fa: 'ارتباط با من',
   },
   close: {
-    en: "Close",
-    fa: "بستن",
+    en: 'Close',
+    fa: 'بستن',
   },
 }

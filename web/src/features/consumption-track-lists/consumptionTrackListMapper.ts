@@ -2,8 +2,8 @@ import type {
   ConsumptionTrackListMiniResponse,
   CreateConsumptionTrackListRequest,
   UpdateConsumptionTrackListRequest,
-} from "#/common/api/client"
-import type { ConsumptionTrackListFormValues } from "./ConsumptionTrackListForm"
+} from '#/common/api/client'
+import type { ConsumptionTrackListFormValues } from './ConsumptionTrackListForm'
 
 export const consumptionTrackListMapper = {
   fromFormValues: {
@@ -25,7 +25,7 @@ export const consumptionTrackListMapper = {
     toFormValues: (
       input: ConsumptionTrackListMiniResponse,
     ): ConsumptionTrackListFormValues => ({
-      description: input.description || "",
+      description: input.description || '',
       title: input.title,
     }),
   },

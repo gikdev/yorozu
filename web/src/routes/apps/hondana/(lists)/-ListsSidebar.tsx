@@ -5,22 +5,22 @@ import {
   SpinnerGapIcon,
   TrashSimpleIcon,
   WarningCircleIcon,
-} from "@phosphor-icons/react"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useNavigate } from "@tanstack/react-router"
-import toast from "react-hot-toast"
+} from '@phosphor-icons/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import toast from 'react-hot-toast'
 import {
   type ConsumptionTrackListMiniResponse,
   ConsumptionTrackLists,
   listConsumptionTrackListsOptions,
-} from "#/common/api/client"
-import { btn } from "#/common/atoms/btn"
-import { extractErrorMessage } from "#/common/helpers/errors"
-import { RenderQuery } from "#/common/helpers/render-query"
-import { StateMessage } from "#/common/molecules/StateMessage"
+} from '#/common/api/client'
+import { btn } from '#/common/atoms/btn'
+import { extractErrorMessage } from '#/common/helpers/errors'
+import { RenderQuery } from '#/common/helpers/render-query'
+import { StateMessage } from '#/common/molecules/StateMessage'
 
 export function ListsSidebar() {
-  const navigate = useNavigate({ from: "/apps/hondana/lists" })
+  const navigate = useNavigate({ from: '/apps/hondana/lists' })
   const listsQ = useQuery(listConsumptionTrackListsOptions())
   const queryClient = useQueryClient()
 
@@ -52,29 +52,29 @@ export function ListsSidebar() {
       errorView={
         <StateMessage
           icon={WarningCircleIcon}
-          title="Failed to load lists"
-          className="h-full"
+          title='Failed to load lists'
+          className='h-full'
           description={extractErrorMessage(listsQ.error)}
-          mode="ERROR"
+          mode='ERROR'
           retry={listsQ.refetch}
         />
       }
       loadingView={
         <StateMessage
-          mode="LOADING"
-          className="h-full"
+          mode='LOADING'
+          className='h-full'
           icon={SpinnerGapIcon}
-          title="Please wait."
-          description="Loading lists..."
+          title='Please wait.'
+          description='Loading lists...'
         />
       }
       emptyView={
         <StateMessage
-          mode="NORMAL"
-          className="h-full"
+          mode='NORMAL'
+          className='h-full'
           icon={ListPlusIcon}
-          title="No lists yet"
-          description="Create your first list!"
+          title='No lists yet'
+          description='Create your first list!'
         />
       }
       fullView={() =>
@@ -85,13 +85,13 @@ export function ListsSidebar() {
             title={list.title}
             onDetails={() =>
               navigate({
-                to: "/apps/hondana/lists/$listId",
+                to: '/apps/hondana/lists/$listId',
                 params: { listId: list.id },
               })
             }
             onEdit={() =>
               navigate({
-                to: "/apps/hondana/lists/$listId/edit",
+                to: '/apps/hondana/lists/$listId/edit',
                 params: { listId: list.id },
               })
             }
@@ -110,38 +110,38 @@ const ListItemCard = (p: {
   onDelete: () => void
   disabled: boolean
 }) => (
-  <div className="flex items-center">
+  <div className='flex items-center'>
     <button
       disabled={p.disabled}
-      type="button"
-      className={btn({ class: "rounded-none w-full justify-start" })}
+      type='button'
+      className={btn({ class: 'rounded-none w-full justify-start' })}
     >
-      <span className="truncate">{p.title}</span>
+      <span className='truncate'>{p.title}</span>
     </button>
 
     <button
-      type="button"
+      type='button'
       disabled={p.disabled}
       onClick={p.onDetails}
-      className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+      className={btn({ class: 'rounded-none shrink-0', isIcon: true })}
     >
       <InfoIcon size={20} />
     </button>
 
     <button
-      type="button"
+      type='button'
       disabled={p.disabled}
       onClick={p.onEdit}
-      className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+      className={btn({ class: 'rounded-none shrink-0', isIcon: true })}
     >
       <PencilSimpleIcon size={20} />
     </button>
 
     <button
-      type="button"
+      type='button'
       disabled={p.disabled}
       onClick={p.onDelete}
-      className={btn({ class: "rounded-none shrink-0", isIcon: true })}
+      className={btn({ class: 'rounded-none shrink-0', isIcon: true })}
     >
       <TrashSimpleIcon size={20} />
     </button>

@@ -5,22 +5,22 @@ import {
   HeartIcon,
   LockKeyIcon,
   XIcon,
-} from "@phosphor-icons/react"
-import { z } from "zod"
+} from '@phosphor-icons/react'
+import { z } from 'zod'
 import {
   type ContentItemFormat,
   type LocationType,
   zContentItemFormat,
   zLocationType,
-} from "#/common/api/client"
-import { btn } from "#/common/atoms/btn"
-import { useAppForm } from "#/common/forms"
+} from '#/common/api/client'
+import { btn } from '#/common/atoms/btn'
+import { useAppForm } from '#/common/forms'
 
 const zContentItemFormValues = z.object({
-  fullTitle: z.string().min(1, "Required"),
+  fullTitle: z.string().min(1, 'Required'),
   nickName: z.string(),
   format: zContentItemFormat,
-  unitType: z.string().min(1, "Required"),
+  unitType: z.string().min(1, 'Required'),
   totalUnits: z.number().int().nonnegative().nullable(),
   coverImageUrl: z.string(),
   locationType: zLocationType.nullable(),
@@ -35,19 +35,19 @@ const zContentItemFormValues = z.object({
 export type ContentItemFormValues = z.infer<typeof zContentItemFormValues>
 
 const emptyValues: ContentItemFormValues = {
-  fullTitle: "",
-  format: "Mixed",
-  unitType: "Unit",
+  fullTitle: '',
+  format: 'Mixed',
+  unitType: 'Unit',
   totalUnits: null,
-  coverImageUrl: "",
-  locationValue: "",
+  coverImageUrl: '',
+  locationValue: '',
   tags: [],
   isSecret: false,
   isFavorited: false,
   isBookmarked: false,
   isOngoing: false,
   locationType: null,
-  nickName: "",
+  nickName: '',
 }
 
 export type ContentItemFormSubmitHandler = (
@@ -61,12 +61,12 @@ type ContentItemFormProps = {
   onCancel: () => void
   onSubmit: ContentItemFormSubmitHandler
 } & (
-  | { mode: "CREATE" }
-  | { mode: "EDIT"; initialValues: ContentItemFormValues }
+  | { mode: 'CREATE' }
+  | { mode: 'EDIT'; initialValues: ContentItemFormValues }
 )
 
 export function ContentItemForm(p: ContentItemFormProps) {
-  const defaultValues = p.mode === "CREATE" ? emptyValues : p.initialValues
+  const defaultValues = p.mode === 'CREATE' ? emptyValues : p.initialValues
   const form = useAppForm({
     defaultValues,
     validators: {
@@ -80,30 +80,30 @@ export function ContentItemForm(p: ContentItemFormProps) {
 
   return (
     <form.AppForm>
-      <div className="flex flex-col gap-4">
-        <form.AppField name="fullTitle">
-          {field => <field.SimpleTextInput title="Full Title" />}
+      <div className='flex flex-col gap-4'>
+        <form.AppField name='fullTitle'>
+          {field => <field.SimpleTextInput title='Full Title' />}
         </form.AppField>
 
-        <form.AppField name="nickName">
-          {field => <field.SimpleTextInput title="Nick Name" />}
+        <form.AppField name='nickName'>
+          {field => <field.SimpleTextInput title='Nick Name' />}
         </form.AppField>
 
-        <form.AppField name="coverImageUrl">
-          {field => <field.ImgUrlWithPreviewInput title="Cover Image" />}
+        <form.AppField name='coverImageUrl'>
+          {field => <field.ImgUrlWithPreviewInput title='Cover Image' />}
         </form.AppField>
 
-        <form.AppField name="format">
+        <form.AppField name='format'>
           {field => (
             <field.SimpleSelectInput
-              title="Format"
+              title='Format'
               options={
                 [
-                  "Interactive",
-                  "Listenable",
-                  "Mixed",
-                  "Readable",
-                  "Watchable",
+                  'Interactive',
+                  'Listenable',
+                  'Mixed',
+                  'Readable',
+                  'Watchable',
                 ] satisfies ContentItemFormat[]
               }
             />
@@ -111,83 +111,83 @@ export function ContentItemForm(p: ContentItemFormProps) {
         </form.AppField>
 
         <p>Options</p>
-        <div className="flex flex-wrap *:flex-1 *:min-w-24">
-          <form.AppField name="isBookmarked">
+        <div className='flex flex-wrap *:flex-1 *:min-w-24'>
+          <form.AppField name='isBookmarked'>
             {field => (
               <field.SvgToggleInput
-                title="Bookmarked"
+                title='Bookmarked'
                 Icon={BookmarkSimpleIcon}
-                iconSelectedClass="text-amber-400"
+                iconSelectedClass='text-amber-400'
               />
             )}
           </form.AppField>
 
-          <form.AppField name="isFavorited">
+          <form.AppField name='isFavorited'>
             {field => (
               <field.SvgToggleInput
-                title="Favorite"
+                title='Favorite'
                 Icon={HeartIcon}
-                iconSelectedClass="text-rose-400"
+                iconSelectedClass='text-rose-400'
               />
             )}
           </form.AppField>
 
-          <form.AppField name="isOngoing">
+          <form.AppField name='isOngoing'>
             {field => (
               <field.SvgToggleInput
-                title="Ongoing"
+                title='Ongoing'
                 Icon={AirplayIcon}
-                iconSelectedClass="text-emerald-400"
+                iconSelectedClass='text-emerald-400'
               />
             )}
           </form.AppField>
 
-          <form.AppField name="isSecret">
+          <form.AppField name='isSecret'>
             {field => (
               <field.SvgToggleInput
-                title="Secret"
+                title='Secret'
                 Icon={LockKeyIcon}
-                iconSelectedClass="text-violet-400"
+                iconSelectedClass='text-violet-400'
               />
             )}
           </form.AppField>
         </div>
 
-        <form.AppField name="unitType">
+        <form.AppField name='unitType'>
           {field => (
             <field.SimpleTextInput
-              title="Unit Type"
-              suggestions={["Unit", "Page", "Lesson", "Episode"]}
+              title='Unit Type'
+              suggestions={['Unit', 'Page', 'Lesson', 'Episode']}
             />
           )}
         </form.AppField>
 
-        <form.AppField name="totalUnits">
-          {field => <field.CounterNumberInput title="Total Units" />}
+        <form.AppField name='totalUnits'>
+          {field => <field.CounterNumberInput title='Total Units' />}
         </form.AppField>
 
-        <form.AppField name="locationType">
+        <form.AppField name='locationType'>
           {field => (
             <field.SimpleSelectInput
-              title="Location Type"
-              options={["FilePath", "Physical", "Url"] satisfies LocationType[]}
+              title='Location Type'
+              options={['FilePath', 'Physical', 'Url'] satisfies LocationType[]}
             />
           )}
         </form.AppField>
 
-        <form.AppField name="locationValue">
+        <form.AppField name='locationValue'>
           {field => (
-            <field.SimpleTextInput title="Location Value" isMultiline />
+            <field.SimpleTextInput title='Location Value' isMultiline />
           )}
         </form.AppField>
 
-        <form.AppField name="tags">
-          {field => <field.SmartTagsInput title="Tags" allTags={p.allTags} />}
+        <form.AppField name='tags'>
+          {field => <field.SmartTagsInput title='Tags' allTags={p.allTags} />}
         </form.AppField>
 
-        <div className="flex gap-2 flex-wrap *:min-w-max">
+        <div className='flex gap-2 flex-wrap *:min-w-max'>
           <button
-            type="button"
+            type='button'
             onClick={() => form.reset(defaultValues)}
             className={btn({ isIcon: true })}
           >
@@ -195,12 +195,12 @@ export function ContentItemForm(p: ContentItemFormProps) {
           </button>
 
           <form.SimpleSubmitBtn
-            className={btn({ theme: "primary", class: "flex-1" })}
+            className={btn({ theme: 'primary', class: 'flex-1' })}
             title={p.submitLabel}
           />
 
           <button
-            type="button"
+            type='button'
             onClick={p.onCancel}
             className={btn({ isIcon: true })}
           >

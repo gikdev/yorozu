@@ -1,5 +1,5 @@
-import { BottomNavItem } from "./BottomNavItem"
-import type { BottomNavItemShape } from "./BottomNavItemShape"
+import { BottomNavItem } from './BottomNavItem'
+import type { BottomNavItemShape } from './BottomNavItemShape'
 
 interface BottomNavProps {
   items: BottomNavItemShape[]
@@ -7,7 +7,7 @@ interface BottomNavProps {
 }
 
 export const BottomNav = (p: BottomNavProps) => (
-  <div className="flex border-t-2 border-mist-900 bg-mist-950">
+  <div className='flex border-t-2 border-mist-900 bg-mist-950'>
     {p.items.map(item => (
       <BottomNavItem
         key={item.id}

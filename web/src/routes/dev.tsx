@@ -1,56 +1,56 @@
-import { CheckIcon, EyeIcon } from "@phosphor-icons/react"
-import { createFileRoute } from "@tanstack/react-router"
-import { useMemo, useState } from "react"
-import { btn } from "#/common/atoms/btn"
+import { CheckIcon, EyeIcon } from '@phosphor-icons/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { useMemo, useState } from 'react'
+import { btn } from '#/common/atoms/btn'
 import {
   TitledOptionsBottomSheet,
   type TitledOptionsBottomSheetProps,
-} from "#/common/organisms/titled-options-bottom-sheet"
+} from '#/common/organisms/titled-options-bottom-sheet'
 
-export const Route = createFileRoute("/dev")({
+export const Route = createFileRoute('/dev')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   const [isOpen, setOpen] = useState(false)
 
-  const optionItems: TitledOptionsBottomSheetProps["optionItems"] = useMemo(
+  const optionItems: TitledOptionsBottomSheetProps['optionItems'] = useMemo(
     () => [
       {
-        title: "View Todo",
+        title: 'View Todo',
         Icon: EyeIcon,
-        helpText: "View the details of todo",
-        onClick: () => console.log("Viewing todo..."),
+        helpText: 'View the details of todo',
+        onClick: () => console.log('Viewing todo...'),
       },
       {
-        title: "Check/Uncheck Todo",
+        title: 'Check/Uncheck Todo',
         Icon: CheckIcon,
-        helpText: "Check/Uncheck the completion status of todo",
-        onClick: () => console.log("Check/Unchecking todo..."),
+        helpText: 'Check/Uncheck the completion status of todo',
+        onClick: () => console.log('Check/Unchecking todo...'),
       },
       {
-        title: "Edit Todo",
-        onClick: () => console.log("Editing todo..."),
+        title: 'Edit Todo',
+        onClick: () => console.log('Editing todo...'),
       },
       {
-        title: "Delete Todo",
-        onClick: () => console.log("Deleting todo..."),
+        title: 'Delete Todo',
+        onClick: () => console.log('Deleting todo...'),
       },
     ],
     [],
   )
 
   return (
-    <div className="bg-mist-900 min-h-dvh text-mist-300 flex flex-col">
+    <div className='bg-mist-900 min-h-dvh text-mist-300 flex flex-col'>
       <p>hello world!</p>
 
-      <button className={btn()} onClick={() => setOpen(true)} type="button">
+      <button className={btn()} onClick={() => setOpen(true)} type='button'>
         open!
       </button>
 
       {isOpen && (
         <TitledOptionsBottomSheet
-          title="More Options"
+          title='More Options'
           onClose={() => setOpen(false)}
           optionItems={optionItems}
         />

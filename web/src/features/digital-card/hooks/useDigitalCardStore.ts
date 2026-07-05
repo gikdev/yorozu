@@ -1,5 +1,5 @@
-import { create } from "zustand"
-import type { Lang } from "../types/lang"
+import { create } from 'zustand'
+import type { Lang } from '../types/lang'
 
 interface DigitalCardState {
   lang: Lang
@@ -9,7 +9,7 @@ interface DigitalCardState {
 }
 
 export const useDigitalCardStore = create<DigitalCardState>(set => ({
-  lang: "fa",
+  lang: 'fa',
   open: false,
   setLang: lang => set({ lang }),
   setOpen: open => set({ open }),

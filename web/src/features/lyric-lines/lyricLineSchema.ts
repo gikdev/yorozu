@@ -1,13 +1,13 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 const languageKeys = [
-  "persian",
-  "english",
-  "arabic",
-  "spanish",
-  "japanese",
-  "romaji",
-  "annotation",
+  'persian',
+  'english',
+  'arabic',
+  'spanish',
+  'japanese',
+  'romaji',
+  'annotation',
 ] as const
 
 const nullableText = z.string().min(1).nullable()
@@ -32,33 +32,33 @@ export const lyricLineSchema = z
     // annotation XOR languages
     if (annotationFilled && languagesFilled.length > 0) {
       ctx.addIssue({
-        code: "custom",
-        message: "Annotation and language fields cannot coexist.",
-        path: ["annotation"],
+        code: 'custom',
+        message: 'Annotation and language fields cannot coexist.',
+        path: ['annotation'],
       })
     }
 
     // at least one text field must be filled
     if (!annotationFilled && languagesFilled.length === 0) {
       ctx.addIssue({
-        code: "custom",
-        message: "At least one text field must be filled.",
-        path: ["annotation"],
+        code: 'custom',
+        message: 'At least one text field must be filled.',
+        path: ['annotation'],
       })
     }
 
     // mainLanguage must match a filled field
     if (data.mainLanguage !== null) {
       const targetFilled =
-        data.mainLanguage === "annotation"
+        data.mainLanguage === 'annotation'
           ? annotationFilled
           : !!data[data.mainLanguage]
 
       if (!targetFilled) {
         ctx.addIssue({
-          code: "custom",
-          message: "mainLanguage must point to a filled field.",
-          path: ["mainLanguage"],
+          code: 'custom',
+          message: 'mainLanguage must point to a filled field.',
+          path: ['mainLanguage'],
         })
       }
     }
@@ -66,9 +66,9 @@ export const lyricLineSchema = z
     const anyFilled = annotationFilled || languagesFilled.length > 0
     if (anyFilled && data.mainLanguage === null) {
       ctx.addIssue({
-        code: "custom",
-        message: "mainLanguage is required when any text field is filled.",
-        path: ["mainLanguage"],
+        code: 'custom',
+        message: 'mainLanguage is required when any text field is filled.',
+        path: ['mainLanguage'],
       })
     }
   })
@@ -77,9 +77,9 @@ export const lyricLineSubmitSchema = lyricLineSchema.superRefine(
   (data, ctx) => {
     if (data.timestamp === null) {
       ctx.addIssue({
-        code: "custom",
-        message: "Timestamp is required before submitting.",
-        path: ["timestamp"],
+        code: 'custom',
+        message: 'Timestamp is required before submitting.',
+        path: ['timestamp'],
       })
     }
   },

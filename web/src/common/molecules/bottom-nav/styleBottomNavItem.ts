@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants"
+import { tv } from 'tailwind-variants'
 
 export const styleBottomNavItem = tv({
   base: `
@@ -10,10 +10,10 @@ export const styleBottomNavItem = tv({
   `,
   variants: {
     active: {
-      true: "font-bold text-sky-500",
+      true: 'font-bold text-sky-500',
     },
     disabled: {
-      true: "opacity-50 cursor-not-allowed hover:bg-transparent",
+      true: 'opacity-50 cursor-not-allowed hover:bg-transparent',
     },
   },
   defaultVariants: {

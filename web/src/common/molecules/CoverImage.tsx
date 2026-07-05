@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { tv } from "tailwind-variants"
+import { useState } from 'react'
+import { tv } from 'tailwind-variants'
 
-const styleCoverImage = tv({ base: "w-48 h-72 object-cover rounded-none" })
+const styleCoverImage = tv({ base: 'w-48 h-72 object-cover rounded-none' })
 const styleCoverPlaceholder = tv({
-  base: "w-48 h-72 rounded-none flex items-center justify-center text-6xl font-bold",
+  base: 'w-48 h-72 rounded-none flex items-center justify-center text-6xl font-bold',
 })
 
 interface CoverImageProps {

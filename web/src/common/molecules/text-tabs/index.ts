@@ -1,2 +1,2 @@
-export type { TextTabItemShape } from "./TextTabItemShape"
-export { TextTabs } from "./TextTabs"
+export type { TextTabItemShape } from './TextTabItemShape'
+export { TextTabs } from './TextTabs'
