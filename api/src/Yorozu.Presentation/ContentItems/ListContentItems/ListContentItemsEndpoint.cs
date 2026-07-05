@@ -35,5 +35,5 @@ internal class ListContentItemsEndpoint : IEndpoint {
     }
 
     private static ContentItemsResponse MapToResponse(List<ContentItem> items)
-        => new() { Items = items.ConvertAll(i => i.ToResponse()) };
+        => new() { Items = items.ConvertAll(i => i.ToMiniResponse()) };
 }

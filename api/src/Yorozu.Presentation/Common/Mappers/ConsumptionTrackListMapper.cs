@@ -1,4 +1,5 @@
 using Yorozu.Contracts.ConsumptionTrackLists;
+using Yorozu.Contracts.ContentItems;
 using Yorozu.Domain.ConsumptionTrackLists;
 
 namespace Yorozu.Presentation.Common.Mappers;

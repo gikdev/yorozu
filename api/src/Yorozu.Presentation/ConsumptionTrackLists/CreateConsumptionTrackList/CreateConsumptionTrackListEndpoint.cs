@@ -7,6 +7,7 @@ using Yorozu.Application.ConsumptionTrackLists.CreateConsumptionTrackList;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
 using Yorozu.Contracts.ConsumptionTrackLists;
+using Yorozu.Contracts.ContentItems;
 using Yorozu.Presentation.Common.Mappers;
 
 namespace Yorozu.Presentation.ConsumptionTrackLists.CreateConsumptionTrackList;

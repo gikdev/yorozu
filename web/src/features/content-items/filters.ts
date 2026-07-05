@@ -1,9 +1,9 @@
-import type { ContentItemResponse } from '#/common/api/client'
+import type { ContentItemMiniResponse } from '#/common/api/client'
 
 export interface IContentItemFilter {
   id: string
   title: string
-  applyFilter: (items: ContentItemResponse[]) => ContentItemResponse[]
+  applyFilter: (items: ContentItemMiniResponse[]) => ContentItemMiniResponse[]
 }
 
 // ── All Filters ──────────────────────────────────────────

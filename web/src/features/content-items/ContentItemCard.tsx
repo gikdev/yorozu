@@ -53,11 +53,11 @@ function getFormatIcon(format: ContentItemFormat) {
 
 function getFormatColor(format: ContentItemFormat): string {
   const map: Record<ContentItemFormat, string> = {
-    Readable: 'text-blue-400',
-    Watchable: 'text-red-400',
-    Listenable: 'text-green-400',
+    Readable: 'text-orange-400',
+    Watchable: 'text-sky-400',
+    Listenable: 'text-emerald-400',
     Interactive: 'text-purple-400',
-    Mixed: 'text-yellow-400',
+    Mixed: 'text-mist-400',
   }
   return map[format] ?? ''
 }
@@ -147,7 +147,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
     <div className='group flex h-24 min-w-60 flex-1 overflow-hidden rounded-lg border border-mist-800/50 bg-mist-950/50 transition-all hover:border-mist-600 hover:bg-mist-900/70'>
       {/* ── Cover ── */}
       <Link
-        to='/'
+        to='/apps/hondana/items/$id' params={{ id: p.id }}
         className='relative aspect-square h-full shrink-0 overflow-hidden'
       >
         <img
@@ -168,7 +168,7 @@ export function ContentItemCard(p: ContentItemCardProps) {
       {/* ── Content ── */}
       <div className='flex flex-1 flex-col min-w-0 p-2'>
         {/* Title */}
-        <Link to='/' className='truncate text-mist-100 wrap-anywhere'>
+        <Link to='/apps/hondana/items/$id' params={{ id: p.id }} className='truncate text-mist-100 wrap-anywhere'>
           {p.title}
         </Link>
 

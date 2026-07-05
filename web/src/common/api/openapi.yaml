@@ -1,4 +1,4 @@
-openapi: "3.1.1"
+openapi: '3.1.1'
 info:
   title: Yorozu.Api | v1
   version: 1.0.0
@@ -12,12 +12,12 @@ paths:
       summary: List Content Items
       operationId: ListContentItems
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ContentItemsResponse"
+                $ref: '#/components/schemas/ContentItemsResponse'
     post:
       tags:
         - Content Items
@@ -27,10 +27,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateContentItemRequest"
+              $ref: '#/components/schemas/CreateContentItemRequest'
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
   /api/content-items/tags:
     get:
@@ -39,13 +39,32 @@ paths:
       summary: List unique tags of content items
       operationId: ListAllContentItemTags
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListAllContentItemTagsResponse"
-  "/api/content-items/{id}":
+                $ref: '#/components/schemas/ListAllContentItemTagsResponse'
+  '/api/content-items/{id}':
+    get:
+      tags:
+        - Content Items
+      summary: Get Content Item
+      operationId: GetContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentItemResponse'
     patch:
       tags:
         - Content Items
@@ -62,24 +81,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChangeContentItemRequest"
+              $ref: '#/components/schemas/ChangeContentItemRequest'
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
-        "404":
+        '404':
           description: Not Found
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
-        "400":
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
           description: Bad Request
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
-  "/api/consumption-track-lists/{id}":
+                $ref: '#/components/schemas/ProblemDetails'
+  '/api/consumption-track-lists/{id}':
     put:
       tags:
         - Consumption Track Lists
@@ -96,27 +115,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateConsumptionTrackListRequest"
+              $ref: '#/components/schemas/UpdateConsumptionTrackListRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
-        "404":
+                $ref: '#/components/schemas/ConsumptionTrackListMiniResponse'
+        '404':
           description: Not Found
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
-        "400":
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
           description: Bad Request
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
     get:
       tags:
         - Consumption Track Lists
@@ -130,18 +149,18 @@ paths:
             type: string
             format: uuid
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
-        "404":
+                $ref: '#/components/schemas/ConsumptionTrackListMiniResponse'
+        '404':
           description: Not Found
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
     delete:
       tags:
         - Consumption Track Lists
@@ -155,14 +174,14 @@ paths:
             type: string
             format: uuid
       responses:
-        "204":
+        '204':
           description: No Content
-        "404":
+        '404':
           description: Not Found
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
   /api/consumption-track-lists:
     get:
       tags:
@@ -170,12 +189,12 @@ paths:
       summary: Get Consumption Track Lists
       operationId: ListConsumptionTrackLists
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackListsResponse"
+                $ref: '#/components/schemas/ConsumptionTrackListsResponse'
     post:
       tags:
         - Consumption Track Lists
@@ -185,15 +204,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateConsumptionTrackListRequest"
+              $ref: '#/components/schemas/CreateConsumptionTrackListRequest'
         required: true
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+                $ref: '#/components/schemas/ConsumptionTrackListMiniResponse'
 components:
   schemas:
     ChangeContentItemRequest:
@@ -205,16 +224,16 @@ components:
       properties:
         isSecret:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/FlagAction"
+            - type: 'null'
+            - $ref: '#/components/schemas/FlagAction'
         isFavorited:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/FlagAction"
+            - type: 'null'
+            - $ref: '#/components/schemas/FlagAction'
         isBookmarked:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/FlagAction"
+            - type: 'null'
+            - $ref: '#/components/schemas/FlagAction'
     ConsumptionTrackListMiniResponse:
       required:
         - id
@@ -233,7 +252,7 @@ components:
           type: string
         description:
           type:
-            - "null"
+            - 'null'
             - string
     ConsumptionTrackListsResponse:
       required:
@@ -243,7 +262,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/ConsumptionTrackListMiniResponse"
+            $ref: '#/components/schemas/ConsumptionTrackListMiniResponse'
     ContentItemFormat:
       enum:
         - Readable
@@ -251,7 +270,7 @@ components:
         - Mixed
         - Watchable
         - Interactive
-    ContentItemResponse:
+    ContentItemMiniResponse:
       required:
         - id
         - title
@@ -283,18 +302,94 @@ components:
           type: boolean
         coverImageUrl:
           type:
-            - "null"
+            - 'null'
             - string
         format:
-          $ref: "#/components/schemas/ContentItemFormat"
+          $ref: '#/components/schemas/ContentItemFormat'
         locationType:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/LocationType"
+            - type: 'null'
+            - $ref: '#/components/schemas/LocationType'
         locationValue:
           type:
-            - "null"
+            - 'null'
             - string
+    ContentItemResponse:
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - tags
+        - title
+        - fullTitle
+        - nickName
+        - isSecret
+        - isBookmarked
+        - isFavorited
+        - isOngoing
+        - coverImageUrl
+        - placeholderLetter
+        - format
+        - locationType
+        - locationValue
+        - unitType
+        - totalUnits
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+            - 'null'
+            - string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        fullTitle:
+          type: string
+        nickName:
+          type:
+            - 'null'
+            - string
+        isSecret:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        isFavorited:
+          type: boolean
+        isOngoing:
+          type: boolean
+        coverImageUrl:
+          type:
+            - 'null'
+            - string
+        placeholderLetter:
+          type: string
+        format:
+          $ref: '#/components/schemas/ContentItemFormat'
+        locationType:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/LocationType'
+        locationValue:
+          type:
+            - 'null'
+            - string
+        unitType:
+          type: string
+        totalUnits:
+          type:
+            - 'null'
+            - integer
+          format: int32
     ContentItemsResponse:
       required:
         - items
@@ -303,7 +398,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/ContentItemResponse"
+            $ref: '#/components/schemas/ContentItemMiniResponse'
     CreateConsumptionTrackListRequest:
       required:
         - title
@@ -314,7 +409,7 @@ components:
           type: string
         description:
           type:
-            - "null"
+            - 'null'
             - string
     CreateContentItemRequest:
       required:
@@ -338,7 +433,7 @@ components:
           type: string
         nickName:
           type:
-            - "null"
+            - 'null'
             - string
         tags:
           type: array
@@ -354,27 +449,27 @@ components:
           type: boolean
         coverImageUrl:
           type:
-            - "null"
+            - 'null'
             - string
         placeholderColor:
           type:
-            - "null"
+            - 'null'
             - string
         format:
-          $ref: "#/components/schemas/ContentItemFormat"
+          $ref: '#/components/schemas/ContentItemFormat'
         locationType:
           oneOf:
-            - type: "null"
-            - $ref: "#/components/schemas/LocationType"
+            - type: 'null'
+            - $ref: '#/components/schemas/LocationType'
         locationValue:
           type:
-            - "null"
+            - 'null'
             - string
         unitType:
           type: string
         totalUnits:
           type:
-            - "null"
+            - 'null'
             - integer
           format: int32
     FlagAction:
@@ -382,7 +477,7 @@ components:
         - On
         - Off
         - Toggle
-        -
+        - 
     ListAllContentItemTagsResponse:
       required:
         - items
@@ -397,30 +492,30 @@ components:
         - Physical
         - FilePath
         - Url
-        -
+        - 
     ProblemDetails:
       type: object
       properties:
         type:
           type:
-            - "null"
+            - 'null'
             - string
         title:
           type:
-            - "null"
+            - 'null'
             - string
         status:
           type:
-            - "null"
+            - 'null'
             - integer
           format: int32
         detail:
           type:
-            - "null"
+            - 'null'
             - string
         instance:
           type:
-            - "null"
+            - 'null'
             - string
     UpdateConsumptionTrackListRequest:
       required:
@@ -432,7 +527,7 @@ components:
           type: string
         description:
           type:
-            - "null"
+            - 'null'
             - string
 tags:
   - name: Content Items

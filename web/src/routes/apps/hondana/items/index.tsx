@@ -5,8 +5,8 @@ import {
   WarningCircleIcon,
 } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, Link, linkOptions } from '@tanstack/react-router'
-import { useMemo, useState } from 'react'
+import { createFileRoute, Link, linkOptions, useNavigate } from '@tanstack/react-router'
+import { useMemo } from 'react'
 import { listContentItemsOptions } from '#/common/api/client'
 import { btn } from '#/common/atoms/btn'
 import { extractErrorMessage } from '#/common/helpers/errors'
@@ -15,17 +15,34 @@ import { AppBar } from '#/common/molecules/page-header'
 import { StateMessage } from '#/common/molecules/StateMessage'
 import { ContentItemCard } from '#/features/content-items/ContentItemCard'
 import { contentItemFilters } from '#/features/content-items/filters'
+import z from 'zod'
 
 const TITLE = 'Items'
+
+const zParams = z.object({
+  filter: z.string().optional(),
+})
 
 export const Route = createFileRoute('/apps/hondana/items/')({
   head: () => ({ meta: [{ title: TITLE }] }),
   component: LayoutComponent,
+  validateSearch: zParams,
 })
 
 function LayoutComponent() {
-  const [selectedFilterId, setSelectedFilterId] = useState<string>('none')
+  const search = Route.useSearch()
+  const selectedFilterId = search.filter || "none"
+  const navigate = useNavigate()
   const itemsQ = useQuery(listContentItemsOptions())
+
+  const setSelectedFilterId = (id: string | null | undefined) => {
+    navigate({
+      to: "/apps/hondana/items",
+      search: {
+        filter: id || undefined,
+      }
+    })
+  }
 
   // ── Find the selected filter ──────────────────────────
   const selectedFilter = useMemo(
