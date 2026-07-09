@@ -1,15 +1,39 @@
 # https://taskfile.dev
 version: "3"
 
+vars:
+  BACKEND_URL: http://localhost:5050
+  OPENAPI_SPEC_PATH: ./src/common/api/openapi.yaml
+
 tasks:
   # ---- meta ----
   meta:list:
-    aliases: [default]
+    aliases: [default, list, l]
     desc: List all tasks
     cmds:
       - task --list-all
 
   # ---- app ----
+  app:setup:
+    aliases: [setup]
+    desc: Setup the app
+    cmds:
+      - bun install
+      - task: api:generate
+
+  app:clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf dist
+      - rm -rf .vite
+
+  app:nuke:
+    desc: Nuke dependencies and build artifacts
+    cmds:
+      - rm -rf node_modules
+      - rm -rf dist
+      - rm -rf .vite
+
   app:dev:
     aliases: [dev, d]
     desc: Start Vite dev server
@@ -17,40 +41,43 @@ tasks:
       - bun run vite -- --host
 
   app:preview:
+    aliases: [preview]
     desc: Preview production build
     cmds:
       - bun run vite -- preview --host
 
-  app:build:only:
+  app:build:
+    aliases: [build]
     desc: Build project without type checking
     cmds:
       - bun run vite -- build
 
   app:build:full:
-    aliases: [publish]
+    aliases: [publish, pub]
     desc: Type-check then build project
     cmds:
       - task: quality:type-check
-      - task: app:build:only
+      - task: app:build
 
   # ---- api ----
-  api:def:
-    aliases: [acgd]
+  api:definition:
+    aliases: [def]
     desc: Download OpenAPI definition
     cmds:
-      - curl -o "./src/common/api/openapi.yaml" "http://localhost:5050/openapi.yaml"
+      - curl -o "{{.OPENAPI_SPEC_PATH}}" "{{.BACKEND_URL}}/openapi.yaml"
 
-  api:gen:
-    aliases: [acg]
+  api:generate:
+    aliases: [gen]
     desc: Generate API client
     cmds:
       - bun run openapi-ts
 
-  api:all:
+  api:refresh:
+    aliases: [api]
     desc: Refresh API client (definition + generate)
     cmds:
-      - task: api:def
-      - task: api:gen
+      - task: api:definition
+      - task: api:generate
 
   # ---- quality ----
   quality:type-check:
@@ -58,12 +85,6 @@ tasks:
     desc: Run TypeScript type checking
     cmds:
       - bun run tsc -- -b
-
-  quality:type-check:
-    aliases: [t]
-    desc: Run TypeScript type checking
-    cmds:
-      - npm run tsc -- -b
 
   quality:format:
     aliases: [f]
@@ -91,6 +112,7 @@ tasks:
 
   # ---- test ----
   test:unit:
+    aliases: [test]
     desc: Run unit tests with Vitest
     cmds:
       - bun run vitest

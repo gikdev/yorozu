@@ -1,90 +1,136 @@
 # https://taskfile.dev
-version: '3'
+version: "3"
 
 vars:
   ASPNETCORE_ENVIRONMENT: Development
-  PROJECT_PATH: "./src/Yorozu.Infrastructure"
   SOLUTION_FILE_PATH: "./Yorozu.slnx"
   STARTUP_PATH: "./src/Yorozu.Api"
+  PROJECT_PATH: "./src/Yorozu.Infrastructure"
   PUBLISH_OUTPUT_PATH: "./publish"
   NUGET_CONFIG_FILE: "./NuGet.config"
 
 tasks:
-  default:
-    desc: List all the tasks.
+  # ---- meta ----
+  meta:list:
+    aliases: [default, list, l]
+    desc: List all tasks
     cmds:
       - task --list-all
 
-  dotnet:dev:
-    aliases: [ d ]
-    desc: Run the project in dev mode
+  # ---- app ----
+  app:setup:
+    aliases: [setup]
+    desc: Restore dependencies and build the solution
     cmds:
-      - dotnet run --project {{.STARTUP_PATH}} --no-restore --no-build
-    requires:
-      vars: [ STARTUP_PATH ]
+      - task: app:restore
+      - task: app:build
+    silent: true
 
-  dotnet:restore:
-    aliases: [ r ]
-    desc: Restore the whole solution.
+  app:restore:
+    aliases: [restore, r]
+    desc: Restore NuGet packages for the whole solution
     cmds:
       - dotnet restore {{.SOLUTION_FILE_PATH}} --configfile {{.NUGET_CONFIG_FILE}}
     requires:
-      vars: [ SOLUTION_FILE_PATH ]
+      vars: [SOLUTION_FILE_PATH, NUGET_CONFIG_FILE]
 
-  dotnet:format:
-    aliases: [ f ]
-    desc: Format the project
+  app:clean:
+    aliases: [clean]
+    desc: Clean build artifacts (bin, obj, publish)
     cmds:
-      - dotnet format {{.SOLUTION_FILE_PATH}}
+      - rm -rf ./**/bin
+      - rm -rf ./**/obj
+      - rm -rf {{.PUBLISH_OUTPUT_PATH}}
     requires:
-      vars: [ SOLUTION_FILE_PATH ]
+      vars: [PUBLISH_OUTPUT_PATH]
 
-  dotnet:build:
-    aliases: [ b ]
-    desc: Build the project
+  app:nuke:
+    aliases: [nuke]
+    desc: Nuke all build artifacts (clean + restore cache)
+    cmds:
+      - task: app:clean
+      - dotnet nuget locals all --clear
+      - echo "✅ Nuked everything! Run 'task app:setup' to restore."
+
+  app:dev:
+    aliases: [dev, d]
+    desc: Run the API in development mode (no rebuild, assumes already built)
+    cmds:
+      - dotnet run --project {{.STARTUP_PATH}} --no-restore --no-build
+    requires:
+      vars: [STARTUP_PATH]
+
+  app:watch:
+    aliases: [watch, w]
+    desc: Run the API with hot reload (dotnet watch)
+    cmds:
+      - dotnet watch run --project {{.STARTUP_PATH}}
+    requires:
+      vars: [STARTUP_PATH]
+
+  app:build:
+    aliases: [build, b]
+    desc: Build the solution (Debug configuration)
     cmds:
       - dotnet build {{.SOLUTION_FILE_PATH}} --no-restore
     requires:
-      vars: [ SOLUTION_FILE_PATH ]
+      vars: [SOLUTION_FILE_PATH]
 
-  dotnet:publish:
-    aliases: [ p, publish ]
-    desc: Publish the project
+  app:build:full:
+    aliases: [publish, pub, p]
+    desc: Publish the project (Release configuration)
     cmds:
       - dotnet publish {{.STARTUP_PATH}} -c Release -o {{.PUBLISH_OUTPUT_PATH}} --no-restore --configfile {{.NUGET_CONFIG_FILE}}
     requires:
-      vars: [ STARTUP_PATH, PUBLISH_OUTPUT_PATH, NUGET_CONFIG_FILE ]
+      vars: [STARTUP_PATH, PUBLISH_OUTPUT_PATH, NUGET_CONFIG_FILE]
 
-  migration:all:
-    aliases: [ m ]
-    desc: Generate & run EF migrations.
+  # ---- quality ----
+  quality:format:
+    aliases: [format, f]
+    desc: Run dotnet format to fix code style
     cmds:
-      - task: migration:generate
-      - task: migration:apply
+      - dotnet format {{.SOLUTION_FILE_PATH}}
+    requires:
+      vars: [SOLUTION_FILE_PATH]
 
-  migration:generate:
-    aliases: [ mg ]
-    desc: Generate EF migrations.
+  quality:check:
+    aliases: [check, c]
+    desc: Verify formatting + run static analysis (build triggers analyzers)
+    cmds:
+      - dotnet format {{.SOLUTION_FILE_PATH}} --verify-no-changes
+      - dotnet build {{.SOLUTION_FILE_PATH}} --no-restore
+    requires:
+      vars: [SOLUTION_FILE_PATH]
+
+  # ---- test ----
+  test:unit:
+    aliases: [test, t]
+    desc: Run all unit tests (xUnit)
+    cmds:
+      - dotnet test {{.SOLUTION_FILE_PATH}} --no-build --verbosity normal
+    requires:
+      vars: [SOLUTION_FILE_PATH]
+
+  # ---- database (EF Core) ----
+  db:generate:
+    aliases: [generate, gen]
+    desc: Create a new EF Core migration (requires MIGRATION_NAME)
     cmds:
       - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} {{.CLI_ARGS}}
     requires:
-      vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH ]
+      vars: [MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH]
 
-  migration:apply:
-    aliases: [ ma ]
-    desc: Run EF migrations.
+  db:apply:
+    aliases: [apply, up]
+    desc: Apply pending migrations to the database
     cmds:
       - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} {{.CLI_ARGS}}
     requires:
-      vars: [ PROJECT_PATH, STARTUP_PATH ]
+      vars: [PROJECT_PATH, STARTUP_PATH]
 
-  docker:up:
-    desc: Start all services (detached)
+  db:migrate:
+    aliases: [migrate, m]
+    desc: Generate a migration, then apply it (pass MIGRATION_NAME)
     cmds:
-      - docker compose up -d
-
-  db:shell:
-    desc: Open psql shell inside container
-    interactive: true
-    cmds:
-      - docker exec -it yorozu.db psql -U postgres -d yorozu
+      - task: db:generate
+      - task: db:apply

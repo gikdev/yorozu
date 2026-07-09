@@ -1,0 +1,23 @@
+# https://taskfile.dev
+version: '3'
+
+tasks:
+  meta:list:
+    aliases: [default, list, l]
+    desc: List all tasks
+    cmds:
+      - task --list-all
+
+  repo:setup:
+    aliases: [setup]
+    desc: Setup
+    cmds:
+      - bun install
+      - cd web && task setup
+      - cd api && task setup
+
+  git:commit:
+    aliases: [commit, cm]
+    desc: Stage everything and launch interactive commit
+    cmds:
+      - bun run cz

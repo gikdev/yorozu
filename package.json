@@ -1,0 +1,21 @@
+{
+  "name": "yorozu",
+  "version": "0.0.0",
+  "description": "My awesome all-in-one tool.",
+  "scripts": {
+    "cz": "cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.chabokan.net/bahrami85/yorozu.git"
+  },
+  "devDependencies": {
+    "commitizen": "^4.3.2",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
