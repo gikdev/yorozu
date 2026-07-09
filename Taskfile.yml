@@ -18,6 +18,13 @@ tasks:
 
   git:commit:
     aliases: [commit, cm]
+    desc: Launch interactive commit
+    cmds:
+      - bun run cz
+
+  git:commit:all:
+    aliases: [commit:all, cma]
     desc: Stage everything and launch interactive commit
     cmds:
+      - git add -A
       - bun run cz
