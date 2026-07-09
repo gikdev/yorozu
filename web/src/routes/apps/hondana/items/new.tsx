@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import {
   createContentItemMutation,
   listAllContentItemTagsOptions,
-  // listContentItemsOptions,
+  listContentItemsOptions,
 } from '#/common/api/client'
 import { extractErrorMessage } from '#/common/helpers/errors'
 import { AppBar } from '#/common/molecules/page-header'
@@ -41,11 +41,10 @@ function RouteComponent() {
       { body },
       {
         onError,
-        onSuccess(_data, variables, _onMutateResult, _context) {
+        onSuccess(_d, variables, _o, ctx) {
           toast.success(`Created the "${variables.body.fullTitle}" item!`)
           empty()
-          // TODO:
-          // context.client.invalidateQueries(listContentItemsOptions())
+          ctx.client.invalidateQueries(listContentItemsOptions())
         },
       },
     )

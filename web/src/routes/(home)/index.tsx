@@ -6,7 +6,5 @@ export const Route = createFileRoute('/(home)/')({
 })
 
 function RouteComponent() {
-  // TODO: Re-build the homepage... properly this time...
-  // return <DigitalCard />
   return <TempWelcomeScreen />
 }
