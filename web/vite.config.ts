@@ -27,6 +27,7 @@ const vitePwaPlugin = VitePWA({
     globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2,ttf}'],
     cleanupOutdatedCaches: true,
     clientsClaim: true,
+    maximumFileSizeToCacheInBytes: 2097152 * 5,
   },
 
   devOptions: {
