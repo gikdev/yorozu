@@ -1,11 +1,11 @@
 using Yorozu.Contracts.ConsumptionTrackLists;
 using Yorozu.Contracts.ContentItems;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Presentation.Common.Mappers;
 
 internal static class ConsumptionTrackListMapper {
-    extension(ConsumptionTrackList list) {
+    extension(ConsumptionList list) {
         internal ConsumptionTrackListMiniResponse ToMiniResponse() => new() {
             Id = list.Id,
             CreatedAt = list.CreatedAt,

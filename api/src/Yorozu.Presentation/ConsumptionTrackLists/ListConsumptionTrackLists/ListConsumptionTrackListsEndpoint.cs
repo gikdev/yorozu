@@ -7,7 +7,7 @@ using Yorozu.Application.ConsumptionTrackLists.ListConsumptionTrackLists;
 using Yorozu.Common.Api;
 using Yorozu.Common.Endpoints;
 using Yorozu.Contracts.ConsumptionTrackLists;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 using Yorozu.Presentation.Common.Mappers;
 
 namespace Yorozu.Presentation.ConsumptionTrackLists.ListConsumptionTrackLists;
@@ -33,6 +33,6 @@ internal class ListConsumptionTrackListsEndpoint : IEndpoint {
         ));
     }
 
-    private static ConsumptionTrackListsResponse MapToResponse(List<ConsumptionTrackList> items)
+    private static ConsumptionTrackListsResponse MapToResponse(List<ConsumptionList> items)
         => new() { Items = items.ConvertAll(i => i.ToMiniResponse()) };
 }

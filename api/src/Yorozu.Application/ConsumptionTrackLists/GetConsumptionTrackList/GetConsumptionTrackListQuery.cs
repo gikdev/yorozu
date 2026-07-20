@@ -1,9 +1,9 @@
 using ErrorOr;
 using MediatR;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Application.ConsumptionTrackLists.GetConsumptionTrackList;
 
 public sealed record GetConsumptionTrackListQuery(
     Guid Id
-) : IRequest<ErrorOr<ConsumptionTrackList>>;
+) : IRequest<ErrorOr<ConsumptionList>>;

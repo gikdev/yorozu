@@ -1,16 +1,14 @@
 #pragma warning disable CA1056
 #pragma warning disable CA1030
-#pragma warning disable CS8618
 
 using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.ContentItems;
 
-public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
+public class ContentItem : IAggregateRoot, IHasCreationTimestamp, IHasDomainEvents {
     // Identity
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? UpdatedAt { get; private set; }
 
     // Tags
     private readonly List<string> _tags = [];
@@ -23,8 +21,8 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
     protected void RaiseDomainEvent(IDomainEvent e) => _domainEvents.Add(e);
 
     // Title
-    public string FullTitle { get; private set; }
-    public string? NickName { get; private set; }
+    public required string FullTitle { get; set; }
+    public string? NickName { get; set; }
     public string Title => NickName ?? FullTitle;
 
     // Flags
@@ -34,39 +32,15 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
     public bool IsOngoing => _tags.Contains(BuiltInTags.Ongoing);
 
     // Cover
-    public string? CoverImageUrl { get; private set; }
-    public string PlaceholderColor { get; private set; } = "#3A3A3A";
+    public string? CoverImageUrl { get; set; }
     public string PlaceholderLetter => Title[0].ToString();
 
     // Other
-    public ContentItemFormat Format { get; private set; }
-    public Location? Location { get; private set; }
-    public string UnitType { get; private set; } = "unit";
-    public int? TotalUnits { get; private set; }
+    public required ContentItemFormat Format { get; set; }
+    public string? Location { get; set; }
 
     // EF ctor
-    private ContentItem() { }
-
-    public static ContentItem Create(
-        NotEmptyString fullTitle,
-        ContentItemFormat format,
-        Guid? id = null
-    ) => new() {
-        FullTitle = fullTitle.Value,
-        Format = format,
-        Id = id ?? Guid.NewGuid(),
-    };
-
-    // ── Title ────────────────────────────────────────────
-    public void ChangeFullTitle(NotEmptyString fullTitle) {
-        FullTitle = fullTitle.Value;
-        MarkUpdated();
-    }
-
-    public void ChangeNickName(NotEmptyString? nickName) {
-        NickName = nickName?.Value;
-        MarkUpdated();
-    }
+    public ContentItem() { }
 
     // ── Flags ────────────────────────────────────────────
     public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
@@ -80,66 +54,29 @@ public class ContentItem : IAggregateRoot, IHasTimestamps, IHasDomainEvents {
     }
 
     private void ApplyFlag(FlagAction action, string tag) {
-        var nes = NotEmptyString.Create(tag).Value;
         switch (action) {
-            case FlagAction.On: EnsureTagAdded(nes); break;
-            case FlagAction.Off: EnsureTagRemoved(nes); break;
+            case FlagAction.On: EnsureTagAdded(tag); break;
+            case FlagAction.Off: EnsureTagRemoved(tag); break;
             case FlagAction.Toggle:
-                if (_tags.Contains(tag)) EnsureTagRemoved(nes);
-                else EnsureTagAdded(nes);
+                if (_tags.Contains(tag)) EnsureTagRemoved(tag);
+                else EnsureTagAdded(tag);
                 break;
         }
     }
 
     // ── Tags ─────────────────────────────────────────────
-    public void EnsureTagAdded(NotEmptyString tag) {
+    public void EnsureTagAdded(string tag) {
         if (_tags.Contains(tag)) return;
-        _tags.Add(tag.Value);
-        MarkUpdated();
+        _tags.Add(tag);
     }
 
-    public void EnsureTagRemoved(NotEmptyString tag) {
-        if (_tags.Remove(tag.Value))
-            MarkUpdated();
-    }
+    public void EnsureTagRemoved(string tag)
+        => _tags.Remove(tag);
 
-    public void ClearTags() {
-        _tags.Clear();
-        MarkUpdated();
-    }
+    public void ClearTags()
+        => _tags.Clear();
 
-    // ── Cover ────────────────────────────────────────────
-    public void ChangeCoverImageUrl(NotEmptyString? img) {
-        CoverImageUrl = img?.Value;
-        MarkUpdated();
-    }
-
-    public void SetPlaceholderColor(string? color) {
-        PlaceholderColor = color ?? "#3A3A3A";
-        MarkUpdated();
-    }
-
-    // ── Other ────────────────────────────────────────────
-    public void ChangeFormat(ContentItemFormat format) {
-        Format = format;
-        MarkUpdated();
-    }
-
-    public void ChangeLocation(Location? location) {
-        Location = location;
-        MarkUpdated();
-    }
-
-    public void ChangeUnitSpec(NotEmptyString unitType, int? totalUnits) {
-        UnitType = unitType.Value;
-        TotalUnits = totalUnits;
-        RaiseDomainEvent(new ContentItemUnitSpecChangedDomainEvent(Id, unitType.Value, totalUnits));
-        MarkUpdated();
-    }
-
-    // ── Private ──────────────────────────────────────────
-    private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
-
+    // ── Other ─────────────────────────────────────────────
     public override bool Equals(object? obj) => obj is ContentItem other && Id.Equals(other.Id);
     public override int GetHashCode() => Id.GetHashCode();
 }

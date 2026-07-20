@@ -1,12 +1,12 @@
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Application.Common;
 
 public interface IConsumptionTrackListRepository {
-    Task<ConsumptionTrackList?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<List<ConsumptionTrackList>> GetAllAsync(CancellationToken cancellationToken = default);
-    void Add(ConsumptionTrackList entity);
-    void Update(ConsumptionTrackList entity);
-    void Delete(ConsumptionTrackList entity);
+    Task<ConsumptionList?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<List<ConsumptionList>> GetAllAsync(CancellationToken cancellationToken = default);
+    void Add(ConsumptionList entity);
+    void Update(ConsumptionList entity);
+    void Delete(ConsumptionList entity);
     Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
 }

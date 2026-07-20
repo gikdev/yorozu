@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Application.ConsumptionTrackLists.ListConsumptionTrackLists;
 
-public sealed record ListConsumptionTrackListsQuery : IRequest<ErrorOr<List<ConsumptionTrackList>>>;
+public sealed record ListConsumptionTrackListsQuery : IRequest<ErrorOr<List<ConsumptionList>>>;

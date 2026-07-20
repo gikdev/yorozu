@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
 using Yorozu.Infrastructure.ConsumptionTrackLists;
@@ -17,7 +17,7 @@ public sealed class MainDbCtx(
 ) : DbContext(options), IUnitOfWork {
     internal DbSet<ContentItem> ContentItems => Set<ContentItem>();
     internal DbSet<ConsumptionTrack> ConsumptionTracks => Set<ConsumptionTrack>();
-    internal DbSet<ConsumptionTrackList> ConsumptionTrackLists => Set<ConsumptionTrackList>();
+    internal DbSet<ConsumptionList> ConsumptionTrackLists => Set<ConsumptionList>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         if (Database.ProviderName != "Microsoft.EntityFrameworkCore.Sqlite")

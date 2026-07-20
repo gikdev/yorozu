@@ -2,15 +2,15 @@ using ErrorOr;
 using MediatR;
 using Yorozu.Application.Common;
 using Yorozu.Common.Data;
-using Yorozu.Domain.ConsumptionTrackLists;
+using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Application.ConsumptionTrackLists.UpdateConsumptionTrackList;
 
 internal sealed class UpdateConsumptionTrackListCommandHandler(
     IConsumptionTrackListRepository consumptionTrackListRepository,
     IUnitOfWork unitOfWork
-) : IRequestHandler<UpdateConsumptionTrackListCommand, ErrorOr<ConsumptionTrackList>> {
-    public async Task<ErrorOr<ConsumptionTrackList>> Handle(UpdateConsumptionTrackListCommand request, CancellationToken cancellationToken) {
+) : IRequestHandler<UpdateConsumptionTrackListCommand, ErrorOr<ConsumptionList>> {
+    public async Task<ErrorOr<ConsumptionList>> Handle(UpdateConsumptionTrackListCommand request, CancellationToken cancellationToken) {
         var existingList = await consumptionTrackListRepository.GetByIdAsync(request.Id, cancellationToken);
         if (existingList is null)
             return Error.NotFound("ConsumptionTrackList.NotFound", $"List with ID {request.Id} was not found.");
