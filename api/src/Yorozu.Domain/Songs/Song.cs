@@ -1,21 +1,25 @@
-#pragma warning disable CS8618
+#pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable S1104 // Fields should not have public accessibility
 
 using Yorozu.Common.Domain;
 
 namespace Yorozu.Domain.Songs;
 
-public class Song : IAggregateRoot, IHasTimestamps {
+public class Song : IAggregateRoot, IHasCreationTimestamp {
     // Identity
     public Guid Id { get; private init; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; private init; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? UpdatedAt { get; private set; }
 
     // Tags
     private readonly List<string> _tags = [];
     public IReadOnlyCollection<string> Tags => _tags.ToList().AsReadOnly();
 
+    // Lyrics
+    public required List<LyricLine> LyricLines = [];
+    public required LyricTextKind PrimaryLyricTextKind { get; set; }
+
     // Title
-    public string Title { get; private set; }
+    public required string Title { get; set; }
     public string PlaceholderLetter => Title[0].ToString();
 
     // Flags
@@ -24,23 +28,6 @@ public class Song : IAggregateRoot, IHasTimestamps {
     public bool IsBookmarked => _tags.Contains(BuiltInTags.Bookmarked);
     public bool IsSpiritual => _tags.Contains(BuiltInTags.Spiritual);
 
-    // EF ctor
-    private Song() { }
-
-    public static Song Create(
-        NotEmptyString title,
-        Guid? id = null
-    ) => new() {
-        Title = title.Value,
-        Id = id ?? Guid.NewGuid(),
-    };
-
-    // ── Title ────────────────────────────────────────────
-    public void ChangeTitle(NotEmptyString title) {
-        Title = title.Value;
-        MarkUpdated();
-    }
-
     // ── Flags ────────────────────────────────────────────
     public void ApplySecret(FlagAction action) => ApplyFlag(action, BuiltInTags.Secret);
     public void ApplyBookmark(FlagAction action) => ApplyFlag(action, BuiltInTags.Bookmarked);
@@ -48,37 +35,31 @@ public class Song : IAggregateRoot, IHasTimestamps {
     public void ApplySpiritual(FlagAction action) => ApplyFlag(action, BuiltInTags.Spiritual);
 
     private void ApplyFlag(FlagAction action, string tag) {
-        var nes = NotEmptyString.Create(tag).Value;
         switch (action) {
-            case FlagAction.On: EnsureTagAdded(nes); break;
-            case FlagAction.Off: EnsureTagRemoved(nes); break;
+            case FlagAction.On: EnsureTagAdded(tag); break;
+            case FlagAction.Off: EnsureTagRemoved(tag); break;
             case FlagAction.Toggle:
-                if (_tags.Contains(tag)) EnsureTagRemoved(nes);
-                else EnsureTagAdded(nes);
+                if (_tags.Contains(tag)) EnsureTagRemoved(tag);
+                else EnsureTagAdded(tag);
                 break;
         }
     }
 
     // ── Tags ─────────────────────────────────────────────
-    public void EnsureTagAdded(NotEmptyString tag) {
+    public void EnsureTagAdded(string tag) {
         if (_tags.Contains(tag)) return;
-        _tags.Add(tag.Value);
-        MarkUpdated();
+        _tags.Add(tag);
     }
 
-    public void EnsureTagRemoved(NotEmptyString tag) {
-        if (_tags.Remove(tag.Value))
-            MarkUpdated();
+    public void EnsureTagRemoved(string tag) {
+        _tags.Remove(tag);
     }
 
     public void ClearTags() {
         _tags.Clear();
-        MarkUpdated();
     }
 
     // ── Private ──────────────────────────────────────────
-    private void MarkUpdated() => UpdatedAt = DateTimeOffset.UtcNow;
-
     public override bool Equals(object? obj) => obj is Song other && Id.Equals(other.Id);
     public override int GetHashCode() => Id.GetHashCode();
 }
