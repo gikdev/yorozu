@@ -116,3 +116,9 @@ tasks:
     desc: Run unit tests with Vitest
     cmds:
       - bun run vitest
+
+  deploy:
+    aliases: [dep]
+    desc: Deploy app with chabokan
+    cmds:
+      - cd dist/ && bun run chabok -- deploy

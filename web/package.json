@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "postinstall": "openapi-ts",
+    "build": "vite build",
     "biome": "biome",
     "openapi-ts": "openapi-ts",
     "tsc": "tsc",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.2",
+    "@chabokan.net/cli": "^0.8.15",
     "@tanstack/router-plugin": "^1.166.12",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
