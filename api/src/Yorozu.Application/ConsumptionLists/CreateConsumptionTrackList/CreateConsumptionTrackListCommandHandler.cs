@@ -7,7 +7,7 @@ using Yorozu.Domain.ConsumptionLists;
 namespace Yorozu.Application.ConsumptionTrackLists.CreateConsumptionTrackList;
 
 internal sealed class CreateConsumptionTrackListCommandHandler(
-    IConsumptionTrackListRepository consumptionTrackListRepository,
+    IConsumptionListRepository consumptionTrackListRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateConsumptionTrackListCommand, ErrorOr<ConsumptionList>> {
     public async Task<ErrorOr<ConsumptionList>> Handle(CreateConsumptionTrackListCommand request, CancellationToken cancellationToken) {

@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Yorozu.Domain.ConsumptionLists;
 
-namespace Yorozu.Infrastructure.ConsumptionTrackLists;
+namespace Yorozu.Infrastructure.ConsumptionLists;
 
-internal sealed class ConsumptionTrackListConfiguration : IEntityTypeConfiguration<ConsumptionList> {
+internal sealed class ConsumptionListConfiguration : IEntityTypeConfiguration<ConsumptionList> {
     public void Configure(EntityTypeBuilder<ConsumptionList> builder) { }
 }

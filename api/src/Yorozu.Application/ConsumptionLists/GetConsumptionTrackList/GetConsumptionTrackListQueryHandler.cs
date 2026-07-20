@@ -6,7 +6,7 @@ using Yorozu.Domain.ConsumptionLists;
 namespace Yorozu.Application.ConsumptionTrackLists.GetConsumptionTrackList;
 
 internal sealed class GetConsumptionTrackListQueryHandler(
-    IConsumptionTrackListRepository consumptionTrackListRepository
+    IConsumptionListRepository consumptionTrackListRepository
 ) : IRequestHandler<GetConsumptionTrackListQuery, ErrorOr<ConsumptionList>> {
     public async Task<ErrorOr<ConsumptionList>> Handle(GetConsumptionTrackListQuery request, CancellationToken cancellationToken) {
         var existingList = await consumptionTrackListRepository.GetByIdAsync(request.Id, cancellationToken);

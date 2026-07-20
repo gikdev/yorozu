@@ -14,8 +14,6 @@ internal sealed class ContentItemConfiguration : IEntityTypeConfiguration<Conten
         builder.Ignore(x => x.IsBookmarked);
         builder.Ignore(x => x.IsOngoing);
 
-        builder.OwnsOne(x => x.Location);
-
         builder.PrimitiveCollection<List<string>>("_tags")
             .HasField("_tags")
             .UsePropertyAccessMode(PropertyAccessMode.Field);

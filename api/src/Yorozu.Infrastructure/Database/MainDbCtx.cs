@@ -5,7 +5,7 @@ using Yorozu.Common.Domain;
 using Yorozu.Domain.ConsumptionLists;
 using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
-using Yorozu.Infrastructure.ConsumptionTrackLists;
+using Yorozu.Infrastructure.ConsumptionLists;
 using Yorozu.Infrastructure.ConsumptionTracks;
 using Yorozu.Infrastructure.ContentItems;
 
@@ -17,7 +17,7 @@ public sealed class MainDbCtx(
 ) : DbContext(options), IUnitOfWork {
     internal DbSet<ContentItem> ContentItems => Set<ContentItem>();
     internal DbSet<ConsumptionTrack> ConsumptionTracks => Set<ConsumptionTrack>();
-    internal DbSet<ConsumptionList> ConsumptionTrackLists => Set<ConsumptionList>();
+    internal DbSet<ConsumptionList> ConsumptionLists => Set<ConsumptionList>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         if (Database.ProviderName != "Microsoft.EntityFrameworkCore.Sqlite")
@@ -25,7 +25,7 @@ public sealed class MainDbCtx(
 
         modelBuilder.ApplyConfiguration(new ContentItemConfiguration());
         modelBuilder.ApplyConfiguration(new ConsumptionTrackConfiguration());
-        modelBuilder.ApplyConfiguration(new ConsumptionTrackListConfiguration());
+        modelBuilder.ApplyConfiguration(new ConsumptionListConfiguration());
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {

@@ -3,29 +3,29 @@ using Yorozu.Application.Common;
 using Yorozu.Domain.ConsumptionLists;
 using Yorozu.Infrastructure.Database;
 
-namespace Yorozu.Infrastructure.ConsumptionTrackLists;
+namespace Yorozu.Infrastructure.ConsumptionLists;
 
-internal sealed class ConsumptionTrackListRepository(
+internal sealed class ConsumptionListRepository(
     MainDbCtx db
-) : IConsumptionTrackListRepository {
+) : IConsumptionListRepository {
     public async Task<ConsumptionList?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        => await db.ConsumptionTrackLists.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        => await db.ConsumptionLists.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
     public async Task<List<ConsumptionList>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await db.ConsumptionTrackLists.ToListAsync(cancellationToken);
+        => await db.ConsumptionLists.ToListAsync(cancellationToken);
 
     public void Add(ConsumptionList entity) {
-        db.ConsumptionTrackLists.Add(entity);
+        db.ConsumptionLists.Add(entity);
     }
 
     public void Update(ConsumptionList entity) {
-        db.ConsumptionTrackLists.Update(entity);
+        db.ConsumptionLists.Update(entity);
     }
 
     public void Delete(ConsumptionList entity) {
-        db.ConsumptionTrackLists.Remove(entity);
+        db.ConsumptionLists.Remove(entity);
     }
 
     public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-        => await db.ConsumptionTrackLists.AnyAsync(e => e.Id == id, cancellationToken);
+        => await db.ConsumptionLists.AnyAsync(e => e.Id == id, cancellationToken);
 }

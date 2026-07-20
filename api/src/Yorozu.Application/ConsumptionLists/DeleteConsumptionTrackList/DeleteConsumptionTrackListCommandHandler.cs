@@ -6,7 +6,7 @@ using Yorozu.Common.Data;
 namespace Yorozu.Application.ConsumptionTrackLists.DeleteConsumptionTrackList;
 
 internal sealed class DeleteConsumptionTrackListCommandHandler(
-    IConsumptionTrackListRepository consumptionTrackListRepository,
+    IConsumptionListRepository consumptionTrackListRepository,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<DeleteConsumptionTrackListCommand, ErrorOr<Success>> {
     public async Task<ErrorOr<Success>> Handle(DeleteConsumptionTrackListCommand request, CancellationToken cancellationToken) {

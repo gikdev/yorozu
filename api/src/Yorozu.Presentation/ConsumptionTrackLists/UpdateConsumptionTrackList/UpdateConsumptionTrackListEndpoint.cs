@@ -39,7 +39,7 @@ internal class UpdateConsumptionTrackListEndpoint : IEndpoint {
         );
     }
 
-    private static UpdateConsumptionTrackListCommand MapToCommand(Guid id, UpdateConsumptionTrackListRequest request)
+    private static UpdateConsumptionListCommand MapToCommand(Guid id, UpdateConsumptionTrackListRequest request)
         => new() {
             Id = id,
             Description = request.Description,

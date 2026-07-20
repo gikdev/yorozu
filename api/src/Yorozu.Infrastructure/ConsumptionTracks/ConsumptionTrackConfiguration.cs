@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Yorozu.Domain.ConsumptionLists;
 using Yorozu.Domain.ConsumptionTracks;
 using Yorozu.Domain.ContentItems;
 
@@ -13,13 +14,6 @@ internal sealed class ConsumptionTrackConfiguration : IEntityTypeConfiguration<C
                 s => ConsumptionStatus.FromValue(s)
             );
 
-        builder.Ignore(x => x.CanStart);
-        builder.Ignore(x => x.CanPause);
-        builder.Ignore(x => x.CanResume);
-        builder.Ignore(x => x.CanComplete);
-        builder.Ignore(x => x.CanDrop);
-        builder.Ignore(x => x.CanProgress);
-        builder.Ignore(x => x.CanDecrement);
         builder.Ignore(x => x.IsSecret);
         builder.Ignore(x => x.IsBookmarked);
 
@@ -30,6 +24,11 @@ internal sealed class ConsumptionTrackConfiguration : IEntityTypeConfiguration<C
         builder.HasOne<ContentItem>()
             .WithMany()
             .HasForeignKey(x => x.ContentItemId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne<ConsumptionList>()
+            .WithMany()
+            .HasForeignKey(x => x.ConsumptionListId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

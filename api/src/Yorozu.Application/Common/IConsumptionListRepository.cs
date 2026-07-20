@@ -2,7 +2,7 @@ using Yorozu.Domain.ConsumptionLists;
 
 namespace Yorozu.Application.Common;
 
-public interface IConsumptionTrackListRepository {
+public interface IConsumptionListRepository {
     Task<ConsumptionList?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<List<ConsumptionList>> GetAllAsync(CancellationToken cancellationToken = default);
     void Add(ConsumptionList entity);
