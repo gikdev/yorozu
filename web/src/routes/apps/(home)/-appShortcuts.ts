@@ -36,6 +36,7 @@ export const appShortcuts: IAppShortcut[] = [
     url: linkOptions({ to: '/apps/hondana' }).to,
     type: 'APP',
   },
+
   {
     id: 'shirabe',
     name: '調べ',
@@ -49,16 +50,15 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Spotlight',
     icon: CubeFocusIcon,
     url: linkOptions({ to: '/apps/spotlight' }).to,
-    type: 'APP',
+    type: 'MVP',
   },
   {
     id: 'time-log',
     name: 'Time Log',
     icon: TimerIcon,
     url: linkOptions({ to: '/apps/time-log' }).to,
-    type: 'APP',
+    type: 'MVP',
   },
-
   {
     id: 'choice',
     name: 'Choice',
