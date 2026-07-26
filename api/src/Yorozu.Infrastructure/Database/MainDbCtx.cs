@@ -2,12 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Yorozu.Common.Data;
 using Yorozu.Common.Domain;
-using Yorozu.Domain.ConsumptionLists;
-using Yorozu.Domain.ConsumptionTracks;
-using Yorozu.Domain.ContentItems;
-using Yorozu.Infrastructure.ConsumptionLists;
-using Yorozu.Infrastructure.ConsumptionTracks;
-using Yorozu.Infrastructure.ContentItems;
 
 namespace Yorozu.Infrastructure.Database;
 
@@ -15,17 +9,9 @@ public sealed class MainDbCtx(
     DbContextOptions<MainDbCtx> options,
     IMediator mediator
 ) : DbContext(options), IUnitOfWork {
-    internal DbSet<ContentItem> ContentItems => Set<ContentItem>();
-    internal DbSet<ConsumptionTrack> ConsumptionTracks => Set<ConsumptionTrack>();
-    internal DbSet<ConsumptionList> ConsumptionLists => Set<ConsumptionList>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         if (Database.ProviderName != "Microsoft.EntityFrameworkCore.Sqlite")
             modelBuilder.HasDefaultSchema(Schemas.Main);
-
-        modelBuilder.ApplyConfiguration(new ContentItemConfiguration());
-        modelBuilder.ApplyConfiguration(new ConsumptionTrackConfiguration());
-        modelBuilder.ApplyConfiguration(new ConsumptionListConfiguration());
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {
