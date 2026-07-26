@@ -27,8 +27,8 @@
 - Bun as package manager and runtime
   - **Because**: Freakingly faster & better UX.
 
-- Entity Framework Core with PostgreSQL (prod) + SQLite (local)
-  - **Because**: Code-first migrations, LINQ support, works with both DBs.
+- Entity Framework Core with SQLite
+  - **Because**: Code-first migrations, LINQ support, lightweight DB.
 
 - Zustand for global state management
   - **Because**: Lightweight, simple API, no boilerplate like Redux. Works great for side projects.
