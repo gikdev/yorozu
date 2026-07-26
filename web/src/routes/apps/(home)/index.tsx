@@ -8,6 +8,8 @@ export const Route = createFileRoute('/apps/(home)/')({
 })
 
 function RouteComponent() {
+  const sortedShortcuts = appShortcuts.toSorted((a, b) => a.name.localeCompare(b.name))
+
   return (
     <div className='bg-mist-950 min-h-dvh text-mist-400 flex flex-col items-center justify-center gap-8 px-2 py-8 max-w-240 mx-auto'>
       <div className='flex flex-col items-center gap-1'>
@@ -16,7 +18,7 @@ function RouteComponent() {
       </div>
 
       <div className='gap-2 max-w-5xl w-full flex items-center justify-center flex-wrap'>
-        {appShortcuts.map(shortcut => (
+        {sortedShortcuts.map(shortcut => (
           <AppShortcut shortcut={shortcut} key={shortcut.id} />
         ))}
       </div>

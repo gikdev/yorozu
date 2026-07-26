@@ -1,6 +1,5 @@
 import {
   BookmarkIcon,
-  BooksIcon,
   CalendarCheckIcon,
   CardsIcon,
   ChalkboardTeacherIcon,
@@ -8,18 +7,15 @@ import {
   ClipboardIcon,
   CoinIcon,
   CubeFocusIcon,
-  FileAudioIcon,
   FolderIcon,
   GearIcon,
   KanbanIcon,
   ListChecksIcon,
   MicrophoneIcon,
-  MusicNotesIcon,
   NotebookIcon,
   PasswordIcon,
   PencilIcon,
   QrCodeIcon,
-  ScanIcon,
   SmileyIcon,
   TimerIcon,
   UserIcon,
@@ -30,34 +26,22 @@ import type { IAppShortcut } from './-IAppShortcut'
 
 export const appShortcuts: IAppShortcut[] = [
   {
-    id: 'hondana',
-    name: '本棚',
-    icon: BooksIcon,
-    url: linkOptions({ to: '/apps/hondana' }).to,
-    type: 'APP',
-  },
-
-  {
-    id: 'shirabe',
-    name: '調べ',
-    icon: MusicNotesIcon,
-    url: linkOptions({ to: '/apps/shirabe' }).to,
-    type: 'MVP',
-    // description: "A self-hosted music library that combines standard player features with a powerful lyrics engine: enter time-stamped, multilingual lyrics (with translations), mark favorite lines, skip instrumental sections, and export lyrics as printable PDFs.",
-  },
-  {
     id: 'spotlight',
     name: 'Spotlight',
     icon: CubeFocusIcon,
     url: linkOptions({ to: '/apps/spotlight' }).to,
-    type: 'MVP',
+    type: 'APP',
+    description:
+      'A minimal commitment device that asks what you want to do right now, then displays that single task in large text on screen with only three choices—cancel, edit, done—to kill multitasking and force singular focus.',
   },
   {
     id: 'time-log',
     name: 'Time Log',
     icon: TimerIcon,
     url: linkOptions({ to: '/apps/time-log' }).to,
-    type: 'MVP',
+    type: 'APP',
+    description:
+      'A dead-simple work focus timer with one big play/pause button; start a session, stop it, and at the end of the day see exactly how many focused sessions you had and total raw work time — nothing more.',
   },
   {
     id: 'choice',
@@ -65,6 +49,8 @@ export const appShortcuts: IAppShortcut[] = [
     icon: ListChecksIcon,
     url: linkOptions({ to: '/apps/choice' }).to,
     type: 'MVP',
+    description:
+      'A decision-making tool that uses pairwise comparisons to help you pick a single winner or rank an entire list, eliminating choice paralysis.',
   },
   {
     id: 'kanban',
@@ -72,48 +58,40 @@ export const appShortcuts: IAppShortcut[] = [
     icon: KanbanIcon,
     url: linkOptions({ to: '/apps/kanban' }).to,
     type: 'MVP',
+    description:
+      'A lightweight, no-frills kanban board for storing all tasks related to a specific project, with nothing more than a title and a status.',
   },
   {
     id: 'password-generator',
     name: 'Password Generator',
     icon: PasswordIcon,
-    type: 'MVP',
+    type: 'TOOL',
     url: linkOptions({ to: '/apps/password-generator' }).to,
+    description: 'Quickly generate passwords.',
   },
   {
     id: 'qr-generator',
     name: 'QR Generator',
     icon: QrCodeIcon,
-    type: 'MVP',
+    type: 'TOOL',
     url: linkOptions({ to: '/apps/qr-generator' }).to,
-  },
-  {
-    id: 'qr-reader',
-    name: 'QR Reader',
-    icon: ScanIcon,
-    type: 'MVP',
-    url: linkOptions({ to: '/apps/qr-reader' }).to,
-  },
-  {
-    id: 'tts',
-    name: 'Text to Speech',
-    icon: FileAudioIcon,
-    type: 'MVP',
-    url: linkOptions({ to: '/apps/tts' }).to,
+    description: 'Generate QR codes.',
   },
   {
     id: 'video-player',
     name: 'Video Player',
     icon: VideoIcon,
-    type: 'MVP',
+    type: 'TOOL',
     url: linkOptions({ to: '/apps/video-player' }).to,
+    description: 'Play videos from URLs or files with a great video player!',
   },
   {
     id: 'voice-notes',
     name: 'Voice Notes',
     icon: MicrophoneIcon,
-    type: 'MVP',
+    type: 'TOOL',
     url: linkOptions({ to: '/apps/voice-notes' }).to,
+    description: 'Take notes with your voice.',
   },
   {
     id: 'writing',
@@ -121,13 +99,15 @@ export const appShortcuts: IAppShortcut[] = [
     icon: PencilIcon,
     type: 'MVP',
     url: linkOptions({ to: '/apps/writing-area' }).to,
+    description:
+      'A full-screen, distraction-free text area that saves automatically to local storage, with selectable fonts, themes, font sizing, word wrap, and file open/save — so you can write comfortably in any language or mood.',
   },
-
   {
     id: 'bookmarks',
     name: 'Bookmarks',
     icon: BookmarkIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A fast, visual bookmark manager with quick access, color coding, and flexible organization via folders and/or tags.',
   },
@@ -136,6 +116,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Checklists',
     icon: ClipboardIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A reusable, stateful checklist tool for repeatable processes, with optional items, notes, cloning, sharing, and beautiful printable output.',
   },
@@ -144,6 +125,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Contacts',
     icon: UserIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A curated, rich contact manager designed for the people who matter—more detailed than a phone’s address book, with quick-access shortcuts, relationship reminders, and mixed-language name support.',
   },
@@ -152,6 +134,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Expense',
     icon: CoinIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A personal finance tool that uses a fictional internal currency to avoid real-world decimal headaches, tracks debt and assets, charts net wealth over time, and optionally captures emotional context around spending.',
   },
@@ -160,6 +143,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Files',
     icon: FolderIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A centralized file storage and metadata service that lets you upload files once, tag and describe them, then reference them by unique ID from any other app (Music Library, Notebooks, etc.) — eliminating duplicate uploads and scattered file handling.',
   },
@@ -168,6 +152,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Habit Tracker',
     icon: CalendarCheckIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A minimal habit tracker that distinguishes between done, intentionally skipped (couldn’t do it), simplified (did a lighter version), and forgotten — plus a dense printable report for reflection.',
   },
@@ -176,6 +161,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Mood Tracker',
     icon: SmileyIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A granular mood tracker that goes far beyond happy/sad, capturing over 40 specific feelings along with detailed context (where, with whom, time, food) to uncover hidden emotional patterns for therapy and self-understanding.',
   },
@@ -184,6 +170,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Note Cards',
     icon: CardsIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A digital collector for anything you’re learning (kanji, phrases, concepts, vocabulary), with a standout feature: select 16 cards and print a clean sheet of physical cards — front side only, each with a lookup ID, so you can study offline without worrying about double-sided alignment.',
   },
@@ -192,6 +179,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Notebooks',
     icon: NotebookIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A digital notebook system that mimics a physical bookshelf — stacked, colorful notebooks containing folders and infinite pages — supporting rich content (text, drawings, embeds, code, file uploads) with optional PDF export.',
   },
@@ -200,6 +188,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Prompt Manager',
     icon: ChatIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       'A prompt library where you save reusable prompt templates with placeholders, fill the form with specific values, and instantly get the completed prompt to copy and send to an AI — no manual edits or repeated clarifications.',
   },
@@ -208,12 +197,13 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Teaching Platform',
     icon: ChalkboardTeacherIcon,
     type: 'IDEA',
+    url: linkOptions({ to: '.' }).to,
     description:
       "A learning platform that combines courses, an exercise/project library, and a linear roadmap that sequences everything into a clear path — eliminating the 'what do I learn next?' confusion that plagues self-taught developers.",
   },
-
   {
     id: 'settings',
+    url: linkOptions({ to: '.' }).to,
     name: 'Settings',
     icon: GearIcon,
     type: 'IDEA',

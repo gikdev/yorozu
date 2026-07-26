@@ -10,41 +10,21 @@
 
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as OpenapiRouteImport } from "./../../routes/openapi"
-import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
 import { Route as AppsVoiceNotesRouteImport } from "./../../routes/apps/voice-notes"
 import { Route as AppsVideoPlayerRouteImport } from "./../../routes/apps/video-player"
-import { Route as AppsTtsRouteImport } from "./../../routes/apps/tts"
 import { Route as AppsTimeLogRouteImport } from "./../../routes/apps/time-log"
 import { Route as AppsSpotlightRouteImport } from "./../../routes/apps/spotlight"
-import { Route as AppsQrReaderRouteImport } from "./../../routes/apps/qr-reader"
 import { Route as AppsQrGeneratorRouteImport } from "./../../routes/apps/qr-generator"
 import { Route as AppsPasswordGeneratorRouteImport } from "./../../routes/apps/password-generator"
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
-import { Route as AppsShirabeIndexRouteImport } from "./../../routes/apps/shirabe/index"
 import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
-import { Route as AppsShirabeEditorRouteImport } from "./../../routes/apps/shirabe/editor"
-import { Route as AppsHondanaSettingsRouteImport } from "./../../routes/apps/hondana/settings"
-import { Route as AppsHondanaItemsIndexRouteImport } from "./../../routes/apps/hondana/items/index"
-import { Route as AppsHondanahomeIndexRouteImport } from "./../../routes/apps/hondana/(home)/index"
-import { Route as AppsHondanaItemsNewRouteImport } from "./../../routes/apps/hondana/items/new"
-import { Route as AppsHondanaItemsIdRouteImport } from "./../../routes/apps/hondana/items/$id"
-import { Route as AppsHondanalistsListsRouteImport } from "./../../routes/apps/hondana/(lists)/lists"
-import { Route as AppsHondanalistsListsIndexRouteImport } from "./../../routes/apps/hondana/(lists)/lists.index"
-import { Route as AppsHondanalistsListsNewRouteImport } from "./../../routes/apps/hondana/(lists)/lists.new"
-import { Route as AppsHondanalistsListsListIdIndexRouteImport } from "./../../routes/apps/hondana/(lists)/lists.$listId.index"
-import { Route as AppsHondanalistsListsListIdEditRouteImport } from "./../../routes/apps/hondana/(lists)/lists.$listId.edit"
 
 const OpenapiRoute = OpenapiRouteImport.update({
   id: "/openapi",
   path: "/openapi",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevRoute = DevRouteImport.update({
-  id: "/dev",
-  path: "/dev",
   getParentRoute: () => rootRouteImport,
 } as any)
 const homeIndexRoute = homeIndexRouteImport.update({
@@ -67,11 +47,6 @@ const AppsVideoPlayerRoute = AppsVideoPlayerRouteImport.update({
   path: "/apps/video-player",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsTtsRoute = AppsTtsRouteImport.update({
-  id: "/apps/tts",
-  path: "/apps/tts",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
   id: "/apps/time-log",
   path: "/apps/time-log",
@@ -80,11 +55,6 @@ const AppsTimeLogRoute = AppsTimeLogRouteImport.update({
 const AppsSpotlightRoute = AppsSpotlightRouteImport.update({
   id: "/apps/spotlight",
   path: "/apps/spotlight",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsQrReaderRoute = AppsQrReaderRouteImport.update({
-  id: "/apps/qr-reader",
-  path: "/apps/qr-reader",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsQrGeneratorRoute = AppsQrGeneratorRouteImport.update({
@@ -107,276 +77,113 @@ const AppsChoiceRoute = AppsChoiceRouteImport.update({
   path: "/apps/choice",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsShirabeIndexRoute = AppsShirabeIndexRouteImport.update({
-  id: "/apps/shirabe/",
-  path: "/apps/shirabe/",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppshomeIndexRoute = AppshomeIndexRouteImport.update({
   id: "/apps/(home)/",
   path: "/apps/",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppsShirabeEditorRoute = AppsShirabeEditorRouteImport.update({
-  id: "/apps/shirabe/editor",
-  path: "/apps/shirabe/editor",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanaSettingsRoute = AppsHondanaSettingsRouteImport.update({
-  id: "/apps/hondana/settings",
-  path: "/apps/hondana/settings",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanaItemsIndexRoute = AppsHondanaItemsIndexRouteImport.update({
-  id: "/apps/hondana/items/",
-  path: "/apps/hondana/items/",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanahomeIndexRoute = AppsHondanahomeIndexRouteImport.update({
-  id: "/apps/hondana/(home)/",
-  path: "/apps/hondana/",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanaItemsNewRoute = AppsHondanaItemsNewRouteImport.update({
-  id: "/apps/hondana/items/new",
-  path: "/apps/hondana/items/new",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanaItemsIdRoute = AppsHondanaItemsIdRouteImport.update({
-  id: "/apps/hondana/items/$id",
-  path: "/apps/hondana/items/$id",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanalistsListsRoute = AppsHondanalistsListsRouteImport.update({
-  id: "/apps/hondana/(lists)/lists",
-  path: "/apps/hondana/lists",
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppsHondanalistsListsIndexRoute =
-  AppsHondanalistsListsIndexRouteImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => AppsHondanalistsListsRoute,
-  } as any)
-const AppsHondanalistsListsNewRoute =
-  AppsHondanalistsListsNewRouteImport.update({
-    id: "/new",
-    path: "/new",
-    getParentRoute: () => AppsHondanalistsListsRoute,
-  } as any)
-const AppsHondanalistsListsListIdIndexRoute =
-  AppsHondanalistsListsListIdIndexRouteImport.update({
-    id: "/$listId/",
-    path: "/$listId/",
-    getParentRoute: () => AppsHondanalistsListsRoute,
-  } as any)
-const AppsHondanalistsListsListIdEditRoute =
-  AppsHondanalistsListsListIdEditRouteImport.update({
-    id: "/$listId/edit",
-    path: "/$listId/edit",
-    getParentRoute: () => AppsHondanalistsListsRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
-  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
-  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
-  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/": typeof AppshomeIndexRoute
-  "/apps/shirabe/": typeof AppsShirabeIndexRoute
-  "/apps/hondana/lists": typeof AppsHondanalistsListsRouteWithChildren
-  "/apps/hondana/items/$id": typeof AppsHondanaItemsIdRoute
-  "/apps/hondana/items/new": typeof AppsHondanaItemsNewRoute
-  "/apps/hondana/": typeof AppsHondanahomeIndexRoute
-  "/apps/hondana/items/": typeof AppsHondanaItemsIndexRoute
-  "/apps/hondana/lists/new": typeof AppsHondanalistsListsNewRoute
-  "/apps/hondana/lists/": typeof AppsHondanalistsListsIndexRoute
-  "/apps/hondana/lists/$listId/edit": typeof AppsHondanalistsListsListIdEditRoute
-  "/apps/hondana/lists/$listId/": typeof AppsHondanalistsListsListIdIndexRoute
 }
 export interface FileRoutesByTo {
-  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
-  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
-  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
-  "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps": typeof AppshomeIndexRoute
-  "/apps/shirabe": typeof AppsShirabeIndexRoute
-  "/apps/hondana/items/$id": typeof AppsHondanaItemsIdRoute
-  "/apps/hondana/items/new": typeof AppsHondanaItemsNewRoute
-  "/apps/hondana": typeof AppsHondanahomeIndexRoute
-  "/apps/hondana/items": typeof AppsHondanaItemsIndexRoute
-  "/apps/hondana/lists/new": typeof AppsHondanalistsListsNewRoute
-  "/apps/hondana/lists": typeof AppsHondanalistsListsIndexRoute
-  "/apps/hondana/lists/$listId/edit": typeof AppsHondanalistsListsListIdEditRoute
-  "/apps/hondana/lists/$listId": typeof AppsHondanalistsListsListIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
   "/apps/password-generator": typeof AppsPasswordGeneratorRoute
   "/apps/qr-generator": typeof AppsQrGeneratorRoute
-  "/apps/qr-reader": typeof AppsQrReaderRoute
   "/apps/spotlight": typeof AppsSpotlightRoute
   "/apps/time-log": typeof AppsTimeLogRoute
-  "/apps/tts": typeof AppsTtsRoute
   "/apps/video-player": typeof AppsVideoPlayerRoute
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
-  "/apps/hondana/settings": typeof AppsHondanaSettingsRoute
-  "/apps/shirabe/editor": typeof AppsShirabeEditorRoute
   "/apps/(home)/": typeof AppshomeIndexRoute
-  "/apps/shirabe/": typeof AppsShirabeIndexRoute
-  "/apps/hondana/(lists)/lists": typeof AppsHondanalistsListsRouteWithChildren
-  "/apps/hondana/items/$id": typeof AppsHondanaItemsIdRoute
-  "/apps/hondana/items/new": typeof AppsHondanaItemsNewRoute
-  "/apps/hondana/(home)/": typeof AppsHondanahomeIndexRoute
-  "/apps/hondana/items/": typeof AppsHondanaItemsIndexRoute
-  "/apps/hondana/(lists)/lists/new": typeof AppsHondanalistsListsNewRoute
-  "/apps/hondana/(lists)/lists/": typeof AppsHondanalistsListsIndexRoute
-  "/apps/hondana/(lists)/lists/$listId/edit": typeof AppsHondanalistsListsListIdEditRoute
-  "/apps/hondana/(lists)/lists/$listId/": typeof AppsHondanalistsListsListIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
     | "/apps/qr-generator"
-    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
-    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
-    | "/apps/hondana/settings"
-    | "/apps/shirabe/editor"
     | "/apps/"
-    | "/apps/shirabe/"
-    | "/apps/hondana/lists"
-    | "/apps/hondana/items/$id"
-    | "/apps/hondana/items/new"
-    | "/apps/hondana/"
-    | "/apps/hondana/items/"
-    | "/apps/hondana/lists/new"
-    | "/apps/hondana/lists/"
-    | "/apps/hondana/lists/$listId/edit"
-    | "/apps/hondana/lists/$listId/"
   fileRoutesByTo: FileRoutesByTo
   to:
-    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
     | "/apps/qr-generator"
-    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
-    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
-    | "/apps/hondana/settings"
-    | "/apps/shirabe/editor"
     | "/apps"
-    | "/apps/shirabe"
-    | "/apps/hondana/items/$id"
-    | "/apps/hondana/items/new"
-    | "/apps/hondana"
-    | "/apps/hondana/items"
-    | "/apps/hondana/lists/new"
-    | "/apps/hondana/lists"
-    | "/apps/hondana/lists/$listId/edit"
-    | "/apps/hondana/lists/$listId"
   id:
     | "__root__"
-    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
     | "/apps/password-generator"
     | "/apps/qr-generator"
-    | "/apps/qr-reader"
     | "/apps/spotlight"
     | "/apps/time-log"
-    | "/apps/tts"
     | "/apps/video-player"
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/(home)/"
-    | "/apps/hondana/settings"
-    | "/apps/shirabe/editor"
     | "/apps/(home)/"
-    | "/apps/shirabe/"
-    | "/apps/hondana/(lists)/lists"
-    | "/apps/hondana/items/$id"
-    | "/apps/hondana/items/new"
-    | "/apps/hondana/(home)/"
-    | "/apps/hondana/items/"
-    | "/apps/hondana/(lists)/lists/new"
-    | "/apps/hondana/(lists)/lists/"
-    | "/apps/hondana/(lists)/lists/$listId/edit"
-    | "/apps/hondana/(lists)/lists/$listId/"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  DevRoute: typeof DevRoute
   OpenapiRoute: typeof OpenapiRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
   AppsPasswordGeneratorRoute: typeof AppsPasswordGeneratorRoute
   AppsQrGeneratorRoute: typeof AppsQrGeneratorRoute
-  AppsQrReaderRoute: typeof AppsQrReaderRoute
   AppsSpotlightRoute: typeof AppsSpotlightRoute
   AppsTimeLogRoute: typeof AppsTimeLogRoute
-  AppsTtsRoute: typeof AppsTtsRoute
   AppsVideoPlayerRoute: typeof AppsVideoPlayerRoute
   AppsVoiceNotesRoute: typeof AppsVoiceNotesRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
-  AppsHondanaSettingsRoute: typeof AppsHondanaSettingsRoute
-  AppsShirabeEditorRoute: typeof AppsShirabeEditorRoute
   AppshomeIndexRoute: typeof AppshomeIndexRoute
-  AppsShirabeIndexRoute: typeof AppsShirabeIndexRoute
-  AppsHondanalistsListsRoute: typeof AppsHondanalistsListsRouteWithChildren
-  AppsHondanaItemsIdRoute: typeof AppsHondanaItemsIdRoute
-  AppsHondanaItemsNewRoute: typeof AppsHondanaItemsNewRoute
-  AppsHondanahomeIndexRoute: typeof AppsHondanahomeIndexRoute
-  AppsHondanaItemsIndexRoute: typeof AppsHondanaItemsIndexRoute
 }
 
 declare module "@tanstack/react-router" {
@@ -386,13 +193,6 @@ declare module "@tanstack/react-router" {
       path: "/openapi"
       fullPath: "/openapi"
       preLoaderRoute: typeof OpenapiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/dev": {
-      id: "/dev"
-      path: "/dev"
-      fullPath: "/dev"
-      preLoaderRoute: typeof DevRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/(home)/": {
@@ -423,13 +223,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsVideoPlayerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/tts": {
-      id: "/apps/tts"
-      path: "/apps/tts"
-      fullPath: "/apps/tts"
-      preLoaderRoute: typeof AppsTtsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/time-log": {
       id: "/apps/time-log"
       path: "/apps/time-log"
@@ -442,13 +235,6 @@ declare module "@tanstack/react-router" {
       path: "/apps/spotlight"
       fullPath: "/apps/spotlight"
       preLoaderRoute: typeof AppsSpotlightRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/qr-reader": {
-      id: "/apps/qr-reader"
-      path: "/apps/qr-reader"
-      fullPath: "/apps/qr-reader"
-      preLoaderRoute: typeof AppsQrReaderRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/qr-generator": {
@@ -479,13 +265,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsChoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/shirabe/": {
-      id: "/apps/shirabe/"
-      path: "/apps/shirabe"
-      fullPath: "/apps/shirabe/"
-      preLoaderRoute: typeof AppsShirabeIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/(home)/": {
       id: "/apps/(home)/"
       path: "/apps"
@@ -493,129 +272,22 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppshomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/shirabe/editor": {
-      id: "/apps/shirabe/editor"
-      path: "/apps/shirabe/editor"
-      fullPath: "/apps/shirabe/editor"
-      preLoaderRoute: typeof AppsShirabeEditorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/settings": {
-      id: "/apps/hondana/settings"
-      path: "/apps/hondana/settings"
-      fullPath: "/apps/hondana/settings"
-      preLoaderRoute: typeof AppsHondanaSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/items/": {
-      id: "/apps/hondana/items/"
-      path: "/apps/hondana/items"
-      fullPath: "/apps/hondana/items/"
-      preLoaderRoute: typeof AppsHondanaItemsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/(home)/": {
-      id: "/apps/hondana/(home)/"
-      path: "/apps/hondana"
-      fullPath: "/apps/hondana/"
-      preLoaderRoute: typeof AppsHondanahomeIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/items/new": {
-      id: "/apps/hondana/items/new"
-      path: "/apps/hondana/items/new"
-      fullPath: "/apps/hondana/items/new"
-      preLoaderRoute: typeof AppsHondanaItemsNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/items/$id": {
-      id: "/apps/hondana/items/$id"
-      path: "/apps/hondana/items/$id"
-      fullPath: "/apps/hondana/items/$id"
-      preLoaderRoute: typeof AppsHondanaItemsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/(lists)/lists": {
-      id: "/apps/hondana/(lists)/lists"
-      path: "/apps/hondana/lists"
-      fullPath: "/apps/hondana/lists"
-      preLoaderRoute: typeof AppsHondanalistsListsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/apps/hondana/(lists)/lists/": {
-      id: "/apps/hondana/(lists)/lists/"
-      path: "/"
-      fullPath: "/apps/hondana/lists/"
-      preLoaderRoute: typeof AppsHondanalistsListsIndexRouteImport
-      parentRoute: typeof AppsHondanalistsListsRoute
-    }
-    "/apps/hondana/(lists)/lists/new": {
-      id: "/apps/hondana/(lists)/lists/new"
-      path: "/new"
-      fullPath: "/apps/hondana/lists/new"
-      preLoaderRoute: typeof AppsHondanalistsListsNewRouteImport
-      parentRoute: typeof AppsHondanalistsListsRoute
-    }
-    "/apps/hondana/(lists)/lists/$listId/": {
-      id: "/apps/hondana/(lists)/lists/$listId/"
-      path: "/$listId"
-      fullPath: "/apps/hondana/lists/$listId/"
-      preLoaderRoute: typeof AppsHondanalistsListsListIdIndexRouteImport
-      parentRoute: typeof AppsHondanalistsListsRoute
-    }
-    "/apps/hondana/(lists)/lists/$listId/edit": {
-      id: "/apps/hondana/(lists)/lists/$listId/edit"
-      path: "/$listId/edit"
-      fullPath: "/apps/hondana/lists/$listId/edit"
-      preLoaderRoute: typeof AppsHondanalistsListsListIdEditRouteImport
-      parentRoute: typeof AppsHondanalistsListsRoute
-    }
   }
 }
 
-interface AppsHondanalistsListsRouteChildren {
-  AppsHondanalistsListsNewRoute: typeof AppsHondanalistsListsNewRoute
-  AppsHondanalistsListsIndexRoute: typeof AppsHondanalistsListsIndexRoute
-  AppsHondanalistsListsListIdEditRoute: typeof AppsHondanalistsListsListIdEditRoute
-  AppsHondanalistsListsListIdIndexRoute: typeof AppsHondanalistsListsListIdIndexRoute
-}
-
-const AppsHondanalistsListsRouteChildren: AppsHondanalistsListsRouteChildren = {
-  AppsHondanalistsListsNewRoute: AppsHondanalistsListsNewRoute,
-  AppsHondanalistsListsIndexRoute: AppsHondanalistsListsIndexRoute,
-  AppsHondanalistsListsListIdEditRoute: AppsHondanalistsListsListIdEditRoute,
-  AppsHondanalistsListsListIdIndexRoute: AppsHondanalistsListsListIdIndexRoute,
-}
-
-const AppsHondanalistsListsRouteWithChildren =
-  AppsHondanalistsListsRoute._addFileChildren(
-    AppsHondanalistsListsRouteChildren,
-  )
-
 const rootRouteChildren: RootRouteChildren = {
-  DevRoute: DevRoute,
   OpenapiRoute: OpenapiRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsKanbanRoute: AppsKanbanRoute,
   AppsPasswordGeneratorRoute: AppsPasswordGeneratorRoute,
   AppsQrGeneratorRoute: AppsQrGeneratorRoute,
-  AppsQrReaderRoute: AppsQrReaderRoute,
   AppsSpotlightRoute: AppsSpotlightRoute,
   AppsTimeLogRoute: AppsTimeLogRoute,
-  AppsTtsRoute: AppsTtsRoute,
   AppsVideoPlayerRoute: AppsVideoPlayerRoute,
   AppsVoiceNotesRoute: AppsVoiceNotesRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
-  AppsHondanaSettingsRoute: AppsHondanaSettingsRoute,
-  AppsShirabeEditorRoute: AppsShirabeEditorRoute,
   AppshomeIndexRoute: AppshomeIndexRoute,
-  AppsShirabeIndexRoute: AppsShirabeIndexRoute,
-  AppsHondanalistsListsRoute: AppsHondanalistsListsRouteWithChildren,
-  AppsHondanaItemsIdRoute: AppsHondanaItemsIdRoute,
-  AppsHondanaItemsNewRoute: AppsHondanaItemsNewRoute,
-  AppsHondanahomeIndexRoute: AppsHondanahomeIndexRoute,
-  AppsHondanaItemsIndexRoute: AppsHondanaItemsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

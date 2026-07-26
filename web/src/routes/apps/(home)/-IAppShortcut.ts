@@ -1,29 +1,12 @@
 import type { Icon } from '@phosphor-icons/react'
 
-type IAppShortcutTypeIdea = {
-  type: 'IDEA'
-  description: string
-}
+type AppType = 'IDEA' | 'APP' | 'MVP' | 'TOOL'
 
-type IAppShortcutTypeMvp = {
-  type: 'MVP'
-  url: string
-}
-
-type IAppShortcutTypeApp = {
-  type: 'APP'
-  url: string
-}
-
-type IAppShortcutTypes =
-  | IAppShortcutTypeApp
-  | IAppShortcutTypeIdea
-  | IAppShortcutTypeMvp
-
-type IAppShortcutBase = {
+export type IAppShortcut = {
   id: string
   icon: Icon
+  url: string
   name: string
+  description: string
+  type: AppType
 }
-
-export type IAppShortcut = IAppShortcutBase & IAppShortcutTypes
