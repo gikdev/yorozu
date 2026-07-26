@@ -1,5 +1,4 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form'
-import { LyricLineField } from '#/features/lyric-lines/LyricLinesForm'
 import { CounterNumberInput } from './counter-number-input'
 import { ImgUrlWithPreviewInput } from './ImgUrlWithPreviewInput'
 import { SimpleSelectInput } from './SimpleSelectInput'
@@ -30,7 +29,6 @@ const { useAppForm } = createFormHook({
     SimpleWordListInput,
     TagOptionsInput,
     SimpleCheckboxInput,
-    LyricLineField,
   },
   formComponents: {
     SimpleSubmitBtn,
