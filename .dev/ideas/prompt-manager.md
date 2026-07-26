@@ -16,8 +16,8 @@ A prompt library where you save reusable prompt templates with placeholders, fil
 1. You create a template:
    `“Explain {concept} to a {age}-year-old, using simple analogies and no jargon.”`
 2. Later, you select this template. The app shows:
-   - Concept: [________]
-   - Age: [________]
+   - Concept: ________
+   - Age: ________
 3. You type “black holes” and “12”.
 4. The app generates:
    `“Explain black holes to a 12-year-old, using simple analogies and no jargon.”`
