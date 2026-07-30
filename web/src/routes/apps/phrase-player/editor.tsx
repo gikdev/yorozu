@@ -1,12 +1,20 @@
-import { ArrowDownIcon, ArrowUpIcon, DownloadSimpleIcon, UploadSimpleIcon } from '@phosphor-icons/react'
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DownloadSimpleIcon,
+  UploadSimpleIcon,
+} from '@phosphor-icons/react'
 import { createFileRoute, linkOptions } from '@tanstack/react-router'
-import { useRef, useState, useMemo, useEffect } from 'react'
+import { useSelector } from '@tanstack/react-store'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { btn } from '#/common/atoms/btn'
 import { styleInput } from '#/common/atoms/input'
 import { AppBar } from '#/common/molecules/page-header'
 import { Piece, Pieces } from '#/features/phrase-player/pieces'
-import { TimestampSongPlayer, songPlayerStore } from '#/features/phrase-player/timestamp-song-player'
-import { useSelector } from '@tanstack/react-store'
+import {
+  songPlayerStore,
+  TimestampSongPlayer,
+} from '#/features/phrase-player/timestamp-song-player'
 
 const TITLE = 'Phrase Player - Editor'
 
@@ -24,11 +32,14 @@ function RouteComponent() {
 
   const piecesWithoutTimestamp = useMemo(
     () => pieces.filter(p => p.timestamp === null),
-    [pieces]
+    [pieces],
   )
   const piecesWithTimestamp = useMemo(
-    () => pieces.filter(p => p.timestamp !== null),
-    [pieces]
+    () =>
+      pieces
+        .filter(p => p.timestamp !== null)
+        .toSorted((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
+    [pieces],
   )
 
   const handleToPieces = () => {
@@ -39,8 +50,10 @@ function RouteComponent() {
     let finalText = ''
 
     for (const piece of pieces) {
-      finalText = finalText += piece.isFirstWord ? `
-${piece.text}` : piece.text
+      finalText = finalText += piece.isFirstWord
+        ? `
+${piece.text}`
+        : piece.text
       finalText = finalText += ';'
     }
 
@@ -87,14 +100,11 @@ ${piece.text}` : piece.text
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = (event) => {
+    reader.onload = event => {
       try {
         const json = JSON.parse(event.target?.result as string)
         // Validate structure
-        if (
-          typeof json.songName !== 'string' ||
-          !Array.isArray(json.pieces)
-        ) {
+        if (typeof json.songName !== 'string' || !Array.isArray(json.pieces)) {
           alert('Invalid file format.')
           return
         }
@@ -107,7 +117,7 @@ ${piece.text}` : piece.text
               text: p.text,
               isFirstWord: p.isFirstWord ?? false,
               timestamp: p.timestamp ?? null,
-            })
+            }),
         )
 
         setPieces(loadedPieces)
@@ -134,82 +144,56 @@ ${piece.text}` : piece.text
   }, [])
 
   return (
-    <div className="h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400">
+    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400'>
       <AppBar
         title={TITLE}
         parentPath={linkOptions({ to: '/apps/phrase-player' })}
       >
         <input
-          type="text"
-          className={styleInput({ class: 'w-60 rounded-none', size: "sm", variant: "glass" })}
-          placeholder="Song name"
+          type='text'
+          className={styleInput({
+            class: 'w-60 rounded-none',
+            size: 'sm',
+            variant: 'glass',
+          })}
+          placeholder='Song name'
           value={songName}
           onChange={e => setSongName(e.target.value)} // Fixed: was e.target.name
         />
 
         <button
-          type="button"
+          type='button'
           className={btn({ isIcon: true, class: 'rounded-none' })}
           onClick={handleDownload}
-          title="Download JSON"
+          title='Download JSON'
         >
           <DownloadSimpleIcon size={24} />
         </button>
 
         <button
-          type="button"
+          type='button'
           className={btn({ isIcon: true, class: 'rounded-none' })}
           onClick={() => fileInputRef.current?.click()}
-          title="Upload JSON"
+          title='Upload JSON'
         >
           <UploadSimpleIcon size={24} />
         </button>
 
         <input
           ref={fileInputRef}
-          type="file"
-          accept=".json"
-          className="hidden"
+          type='file'
+          accept='.json'
+          className='hidden'
           onChange={handleFileSelect}
         />
       </AppBar>
 
-      <main className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0">
+      <main className='flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0'>
         <TimestampSongPlayer />
 
-        <textarea
-          dir="auto"
-          value={rawText}
-          onChange={e => setRawText(e.target.value)}
-          className={styleInput({
-            isMultiline: true,
-            class: 'min-h-80 font-mono',
-          })}
-        />
-
-        <div className="flex *:flex-1 gap-2">
-          <button
-            type="button"
-            className={btn({ theme: 'primary' })}
-            onClick={handleToPieces}
-          >
-            <ArrowDownIcon size={20} />
-            <span>To Pieces</span>
-          </button>
-
-          <button
-            type="button"
-            className={btn({ theme: 'secondary' })}
-            onClick={handleToRawText}
-          >
-            <ArrowUpIcon size={20} />
-            <span>To Raw Text</span>
-          </button>
-        </div>
-
-        <div className="flex gap-2 min-h-80 h-max">
+        <div className='flex gap-2 min-h-min h-max'>
           {/* Left: pieces without timestamp */}
-          <div className="flex-1 border-2 border-mist-900 rounded-md p-2 flex flex-wrap gap-1 items-start h-max self-stretch">
+          <div className='flex-1 border-2 border-mist-900 rounded-md p-2 flex flex-wrap gap-1 items-start h-max self-stretch'>
             {piecesWithoutTimestamp.map(piece => (
               <PieceButton
                 key={piece.id}
@@ -220,10 +204,10 @@ ${piece.text}` : piece.text
             ))}
           </div>
 
-          <hr className="w-0.5 bg-mist-900 border-none rounded-md self-stretch" />
+          <hr className='w-0.5 bg-mist-900 border-none rounded-md self-stretch' />
 
           {/* Right: pieces with timestamp */}
-          <div className="flex-1 border-2 border-mist-900 rounded-md p-2 flex flex-wrap gap-1 items-start h-max self-stretch">
+          <div className='flex-1 border-2 border-mist-900 rounded-md p-2 flex flex-wrap gap-1 items-start h-max self-stretch'>
             {piecesWithTimestamp.map(piece => (
               <PieceButton
                 key={piece.id}
@@ -234,6 +218,36 @@ ${piece.text}` : piece.text
             ))}
           </div>
         </div>
+
+        <div className='flex *:flex-1 gap-2'>
+          <button
+            type='button'
+            className={btn({ theme: 'primary' })}
+            onClick={handleToPieces}
+          >
+            <ArrowUpIcon size={20} />
+            <span>To Pieces</span>
+          </button>
+
+          <button
+            type='button'
+            className={btn({ theme: 'secondary' })}
+            onClick={handleToRawText}
+          >
+            <ArrowDownIcon size={20} />
+            <span>To Raw Text</span>
+          </button>
+        </div>
+
+        <textarea
+          dir='auto'
+          value={rawText}
+          onChange={e => setRawText(e.target.value)}
+          className={styleInput({
+            isMultiline: true,
+            class: 'min-h-80 font-mono',
+          })}
+        />
       </main>
     </div>
   )
@@ -246,7 +260,7 @@ const PieceButton = (p: {
   showTimestamp: boolean
 }) => (
   <button
-    type="button"
+    type='button'
     onClick={p.onClick}
     className={btn({
       theme: p.piece.isFirstWord ? 'primary' : 'secondary',
@@ -256,7 +270,7 @@ const PieceButton = (p: {
     <span>{p.piece.text}</span>
 
     {p.showTimestamp && (
-      <code className="opacity-50 text-xs">({p.piece.timestamp})</code>
+      <code className='opacity-50 text-xs'>({p.piece.timestamp})</code>
     )}
   </button>
 )

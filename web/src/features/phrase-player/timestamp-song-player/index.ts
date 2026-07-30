@@ -1,2 +1,2 @@
+export { songPlayerStore } from './store'
 export { TimestampSongPlayer } from './TimestampSongPlayer'
-export { songPlayerStore } from "./store"
