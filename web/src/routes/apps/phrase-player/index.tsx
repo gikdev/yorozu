@@ -10,7 +10,10 @@ export const Route = createFileRoute('/apps/phrase-player/')({
 })
 
 function RouteComponent() {
-  const LINK_CLN = btn({ class: 'flex-1 flex flex-col rounded-none items-center text-center justify-center' })
+  const LINK_CLN = btn({
+    class:
+      'flex-1 flex flex-col rounded-none items-center text-center justify-center',
+  })
   const SECTION_TITLE_CLN = 'text-2xl font-bold text-mist-100'
 
   return (

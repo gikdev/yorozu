@@ -44,7 +44,7 @@ function RouteComponent() {
   )
 
   const changeSongName = () => {
-    const answer = window.prompt("Enter song name:", songName)
+    const answer = window.prompt('Enter song name:', songName)
     setSongName(answer || TITLE)
   }
 

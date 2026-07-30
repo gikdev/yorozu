@@ -21,12 +21,12 @@ function RouteComponent() {
   return (
     <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400'>
       <AppBar
-        title="Developer Page"
+        title='Developer Page'
         parentPath={linkOptions({ to: '/' })}
         showBack={false}
       />
 
-      <main className='flex-1 flex flex-col gap-4 p-4 overflow-y-auto min-h-0'>
+      <main className='flex-1 flex flex-col gap-4 overflow-y-auto min-h-0'>
         <TimestampSongPlayer />
       </main>
     </div>

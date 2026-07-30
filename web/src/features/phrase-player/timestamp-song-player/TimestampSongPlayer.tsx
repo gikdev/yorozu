@@ -1,16 +1,45 @@
 import {
+  ArrowArcRightIcon, DotsThreeVerticalIcon,
+  FastForwardIcon,
   FilePlusIcon,
   PauseIcon,
   PlayIcon,
-  TrashIcon,
+  RewindIcon,
+  TrashIcon
 } from '@phosphor-icons/react'
 import { useSelector } from '@tanstack/react-store'
-import { type ChangeEvent, type SyntheticEvent, useEffect, useRef } from 'react'
+import {
+  type ChangeEvent,
+  type SyntheticEvent,
+  useEffect,
+  useRef
+} from 'react'
 import toast from 'react-hot-toast'
 import { btn } from '#/common/atoms/btn'
-import { styleInput } from '#/common/atoms/input'
-import { songPlayerStore } from './store'
-import { TimestampCards } from './TimestampCards'
+import {
+  playbackSpeedValues,
+  skipRangeValues,
+  songPlayerStore,
+  volumeLevelValues,
+  type PlaybackSpeed,
+  type SkipRange,
+  type VolumeLevel,
+} from './store'
+import { TimeFormatter } from './TimeFormatter'
+import { AdaptiveDialog } from '#/common/molecules/AdaptiveDialog'
+
+const {
+  pause,
+  play,
+  setPlaybackSpeed,
+  setSkipRange,
+  setCurrentTime,
+  setSongUrl,
+  setTotalTime,
+  setVolumeLevel,
+  setSecondTimestampType,
+  changeShowMoreControls,
+} = songPlayerStore.actions
 
 export function TimestampSongPlayer() {
   const blobRef = useRef<string>(null)
@@ -19,6 +48,27 @@ export function TimestampSongPlayer() {
   const isPlaying = useSelector(songPlayerStore, s => s.isPlaying)
   const songUrl = useSelector(songPlayerStore, s => s.songUrl)
   const totalTime = useSelector(songPlayerStore, s => s.totalTime)
+  const playbackSpeed = useSelector(songPlayerStore, s => s.playbackSpeed)
+  const skipRange = useSelector(songPlayerStore, s => s.skipRange)
+  const volumeLevel = useSelector(songPlayerStore, s => s.volumeLevel)
+  const secondTimestampType = useSelector(
+    songPlayerStore,
+    s => s.secondTimestampType,
+  )
+  const showMoreControls = useSelector(songPlayerStore, s => s.showMoreControls)
+
+  const remainingTime = totalTime == null ? null : totalTime - currentTime
+  const secondTimestamp: string = (() => {
+    if (secondTimestampType === 'remaining' && remainingTime != null) {
+      return '-' + TimeFormatter.formatSeconds(remainingTime)
+    }
+
+    if (secondTimestampType === 'total' && totalTime != null) {
+      return TimeFormatter.formatSeconds(totalTime)
+    }
+
+    return 'N/A'
+  })()
 
   const handlePlayPause = () => {
     if (!audioRef.current) return
@@ -36,7 +86,7 @@ export function TimestampSongPlayer() {
 
     if (currentCurrentTime === nextCurrentTime) return
 
-    songPlayerStore.actions.setCurrentTime(nextCurrentTime)
+    setCurrentTime(nextCurrentTime)
   }
 
   const handleFileUpload = (
@@ -48,7 +98,7 @@ export function TimestampSongPlayer() {
     if (!file) return
 
     blobRef.current = URL.createObjectURL(file)
-    songPlayerStore.actions.setSongUrl(blobRef.current)
+    setSongUrl(blobRef.current)
     audioRef.current.src = blobRef.current
     e.target.value = ''
 
@@ -57,9 +107,9 @@ export function TimestampSongPlayer() {
 
   const handleDelete = () => {
     if (!audioRef.current) return
-    songPlayerStore.actions.setSongUrl(null)
-    songPlayerStore.actions.pause()
-    songPlayerStore.actions.setTotalTime(null)
+    pause()
+    setSongUrl(null)
+    setTotalTime(null)
     audioRef.current.pause()
     audioRef.current.src = ''
     if (blobRef.current) {
@@ -72,15 +122,70 @@ export function TimestampSongPlayer() {
     audioRef.current.currentTime = currentTime
   }
 
-  const handleRewind = (seconds: number) => {
+  const handleRewind = () => {
     if (!audioRef.current) return
-    handleSetCurrentTime(audioRef.current.currentTime - seconds)
+    handleSetCurrentTime(audioRef.current.currentTime - skipRange)
   }
 
-  const handleFastForward = (seconds: number) => {
+  const handleFastForward = () => {
     if (!audioRef.current) return
-    handleSetCurrentTime(audioRef.current.currentTime + seconds)
+    handleSetCurrentTime(audioRef.current.currentTime + skipRange)
   }
+
+  const handleVolumeLevelChange = (volumeLevel: VolumeLevel) => {
+    if (!audioRef.current) return
+    setVolumeLevel(volumeLevel)
+  }
+  const handlePlaybackSpeedChange = (playbackSpeed: PlaybackSpeed) => {
+    if (!audioRef.current) return
+    setPlaybackSpeed(playbackSpeed)
+  }
+  const handleSkipRangeChange = (skipRange: SkipRange) => {
+    if (!audioRef.current) return
+    setSkipRange(skipRange)
+  }
+
+  const handleJumpToTime = () => {
+    if (!audioRef.current) return
+    const answer = window.prompt('Jump To:', currentTime.toString())
+    if (!answer) return
+    const converted = Number.parseFloat(answer)
+    const isNan = Number.isNaN(converted)
+    if (isNan) return
+    handleSetCurrentTime(converted)
+  }
+
+  const handleTimestampTypeToggle = () =>
+    setSecondTimestampType(
+      secondTimestampType === 'remaining' ? 'total' : 'remaining',
+    )
+
+  useEffect(() => {
+    if (!audioRef.current) return
+    audioRef.current.playbackRate = playbackSpeed
+  }, [audioRef, playbackSpeed])
+
+  useEffect(() => {
+    if (!audioRef.current) return
+
+    switch (volumeLevel) {
+      case 'muted':
+        audioRef.current.volume = 0
+        break
+
+      case 'low':
+        audioRef.current.volume = 0.2
+        break
+
+      case 'medium':
+        audioRef.current.volume = 0.5
+        break
+
+      case 'high':
+        audioRef.current.volume = 1
+        break
+    }
+  }, [audioRef, volumeLevel])
 
   useEffect(() => {
     return () => {
@@ -90,8 +195,15 @@ export function TimestampSongPlayer() {
   }, [])
 
   return (
-    <div className='flex flex-col gap-4 w-full bg-mist-900 p-8 rounded-lg'>
+    <div className='flex flex-col gap-2 w-full p-4'>
       <div className='flex items-center justify-center gap-2'>
+        <button
+          type='button'
+          className={btn({ size: 'sm', class: 'font-mono' })}
+        >
+          {TimeFormatter.formatSeconds(currentTime)}
+        </button>
+
         <input
           disabled={songUrl == null}
           type='range'
@@ -102,65 +214,51 @@ export function TimestampSongPlayer() {
           className='cursor-pointer disabled:cursor-not-allowed accent-sky-500 flex-1'
         />
 
-        <input
-          type='number'
-          disabled={isPlaying || songUrl == null}
-          value={isPlaying ? currentTime : undefined}
-          min={0}
-          max={totalTime || 0}
-          step={0.1}
-          onBlur={e => handleSetCurrentTime(e.target.valueAsNumber)}
-          className={styleInput()}
-        />
+        <button
+          onClick={handleTimestampTypeToggle}
+          type='button'
+          className={btn({ size: 'sm', class: 'font-mono' })}
+        >
+          {secondTimestamp}
+        </button>
       </div>
 
-      <div className='flex items-center justify-center gap-1 *:flex-1'>
-        <label className={btn({ theme: 'outline' })}>
-          <FilePlusIcon size={24} />
+      <div className='flex items-center justify-center gap-1'>
+        {songUrl ? (
+          <button
+            title='Remove audio'
+            className={btn({ theme: 'danger', isIcon: true })}
+            type='button'
+            onClick={handleDelete}
+          >
+            <TrashIcon size={24} />
+          </button>
+        ) : (
+          <label className={btn({ isIcon: true })}>
+            <FilePlusIcon size={24} />
 
-          <input className='hidden' type='file' onChange={handleFileUpload} />
-        </label>
+            <input className='hidden' type='file' onChange={handleFileUpload} />
+          </label>
+        )}
 
         <button
           type='button'
           disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleRewind(5)}
+          className={btn({ isIcon: true })}
+          onClick={handleRewind}
         >
-          <span>-5s</span>
+          <RewindIcon size={24} />
         </button>
 
         <button
           type='button'
           disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleRewind(1)}
-        >
-          <span>-1s</span>
-        </button>
-
-        <button
-          type='button'
-          disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleRewind(0.5)}
-        >
-          <span>-0.5s</span>
-        </button>
-
-        <button
-          type='button'
-          disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleRewind(0.1)}
-        >
-          <span>-0.1s</span>
-        </button>
-
-        <button
-          type='button'
-          disabled={songUrl == null}
-          className={btn({ size: 'lg', theme: 'primary' })}
+          className={btn({
+            size: 'lg',
+            theme: 'primary',
+            isIcon: true,
+            class: 'rounded-full',
+          })}
           onClick={handlePlayPause}
         >
           {isPlaying ? (
@@ -173,50 +271,92 @@ export function TimestampSongPlayer() {
         <button
           type='button'
           disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleFastForward(0.1)}
+          className={btn({ isIcon: true })}
+          onClick={handleFastForward}
         >
-          <span>+0.1s</span>
+          <FastForwardIcon size={24} />
         </button>
 
         <button
           type='button'
           disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleFastForward(0.5)}
+          className={btn({ isIcon: true })}
+          onClick={() => changeShowMoreControls()}
         >
-          <span>+0.5s</span>
-        </button>
-
-        <button
-          type='button'
-          disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleFastForward(1)}
-        >
-          <span>+1s</span>
-        </button>
-
-        <button
-          type='button'
-          disabled={songUrl == null}
-          className={btn({ class: 'font-mono' })}
-          onClick={() => handleFastForward(5)}
-        >
-          <span>+5s</span>
-        </button>
-
-        <button
-          title='Remove audio'
-          className={btn({ theme: 'danger' })}
-          type='button'
-          onClick={handleDelete}
-        >
-          <TrashIcon size={24} />
+          <DotsThreeVerticalIcon size={24} />
         </button>
       </div>
 
-      <TimestampCards />
+      <AdaptiveDialog title="More Options" isOpen={showMoreControls} onClose={() => changeShowMoreControls(false)}>
+        <div className='grid grid-cols-2 gap-2'>
+          <button
+            type='button'
+            disabled={songUrl == null}
+            className={btn()}
+            onClick={handleJumpToTime}
+          >
+            <ArrowArcRightIcon size={20} />
+            <span>Jump To</span>
+          </button>
+
+          <select
+            disabled={songUrl == null}
+            className={btn({ class: 'capitalize' })}
+            value={volumeLevel}
+            onChange={e =>
+              handleVolumeLevelChange(e.target.value as VolumeLevel)
+            }
+          >
+            {volumeLevelValues.map(vlv => (
+              <option
+                key={vlv}
+                value={vlv}
+                className='capitalize bg-mist-900 text-mist-400'
+              >
+                🔊 {vlv}
+              </option>
+            ))}
+          </select>
+
+          <select
+            disabled={songUrl == null}
+            className={btn({ class: 'capitalize' })}
+            value={skipRange}
+            onChange={e =>
+              handleSkipRangeChange(Number(e.target.value) as SkipRange)
+            }
+          >
+            {skipRangeValues.map(srv => (
+              <option
+                key={srv}
+                value={srv}
+                className='capitalize bg-mist-900 text-mist-400'
+              >
+                ⌛ {srv}s
+              </option>
+            ))}
+          </select>
+
+          <select
+            disabled={songUrl == null}
+            className={btn({ class: 'capitalize' })}
+            value={playbackSpeed}
+            onChange={e =>
+              handlePlaybackSpeedChange(Number(e.target.value) as PlaybackSpeed)
+            }
+          >
+            {playbackSpeedValues.map(psv => (
+              <option
+                key={psv}
+                value={psv}
+                className='capitalize bg-mist-900 text-mist-400'
+              >
+                🐢 {psv}x
+              </option>
+            ))}
+          </select>
+        </div>
+      </AdaptiveDialog>
 
       {/** biome-ignore lint/a11y/useMediaCaption: いいんだよ！ */}
       <audio
@@ -225,11 +365,9 @@ export function TimestampSongPlayer() {
         className='w-full hidden'
         // biome-ignore lint/correctness/noChildrenProp: いいんだよ！
         children='Audio not supported.'
-        onLoadedMetadata={e =>
-          songPlayerStore.actions.setTotalTime(e.currentTarget.duration)
-        }
-        onPause={() => songPlayerStore.actions.pause()}
-        onPlay={() => songPlayerStore.actions.play()}
+        onLoadedMetadata={e => setTotalTime(e.currentTarget.duration)}
+        onPause={() => pause()}
+        onPlay={() => play()}
         onTimeUpdate={handleTimeUpdate}
         onError={e => {
           toast.error('An error related to audio has occured.')

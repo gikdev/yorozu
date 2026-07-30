@@ -100,8 +100,6 @@ function PlayerPage() {
       </AppBar>
 
       <main className='flex-1 flex flex-col overflow-hidden min-h-0'>
-        <TimestampSongPlayer />
-
         {pieces.length === 0 ? (
           <div className='flex-1 flex items-center justify-center text-mist-600'>
             Load a song JSON to start
@@ -122,7 +120,7 @@ function PlayerPage() {
                       transition-all duration-200
                       ${isActive ? 'text-white font-bold' : 'text-mist-300'}
                     `}
-                      // dangerouslySetInnerHTML={{ __html: piece.text }}
+                    // dangerouslySetInnerHTML={{ __html: piece.text }}
                     >
                       {piece.text}
                     </span>
@@ -134,6 +132,8 @@ function PlayerPage() {
             </div>
           </div>
         )}
+
+        <TimestampSongPlayer />
       </main>
     </div>
   )
