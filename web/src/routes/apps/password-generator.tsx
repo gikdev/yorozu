@@ -11,25 +11,23 @@ export const Route = createFileRoute('/apps/password-generator')({
   component: RouteComponent,
 })
 
-function generatePassword(
-  length: number,
-  options: {
-    uppercase: boolean
-    lowercase: boolean
-    numbers: boolean
-    symbols: boolean
-  },
-): string {
+function generatePassword(p: {
+  length: number
+  uppercase: boolean
+  lowercase: boolean
+  numbers: boolean
+  symbols: boolean
+}): string {
   const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   const lower = 'abcdefghijklmnopqrstuvwxyz'
   const num = '0123456789'
   const sym = '!@#$%^&*()_+-=[]{}|;:,.<>?'
 
   let pool = ''
-  if (options.uppercase) pool += upper
-  if (options.lowercase) pool += lower
-  if (options.numbers) pool += num
-  if (options.symbols) pool += sym
+  if (p.uppercase) pool += upper
+  if (p.lowercase) pool += lower
+  if (p.numbers) pool += num
+  if (p.symbols) pool += sym
 
   if (pool === '') pool = lower // fallback
 
@@ -50,9 +48,8 @@ function RouteComponent() {
   const [password, setPassword] = useState('')
 
   function generate() {
-    setPassword(
-      generatePassword(length, { uppercase, lowercase, numbers, symbols }),
-    )
+    const newPassword = generatePassword({ length, uppercase, lowercase, numbers, symbols })
+    setPassword(newPassword)
   }
 
   function copyPassword() {

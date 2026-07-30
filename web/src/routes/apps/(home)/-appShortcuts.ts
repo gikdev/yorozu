@@ -12,6 +12,7 @@ import {
   KanbanIcon,
   ListChecksIcon,
   MicrophoneIcon,
+  MusicNoteIcon,
   NotebookIcon,
   PasswordIcon,
   PencilIcon,
@@ -25,6 +26,14 @@ import { linkOptions } from '@tanstack/react-router'
 import type { IAppShortcut } from './-IAppShortcut'
 
 export const appShortcuts: IAppShortcut[] = [
+  {
+    id: 'phrase-player',
+    name: 'Phrase Player',
+    icon: MusicNoteIcon,
+    url: linkOptions({ to: '/apps/phrase-player' }).to,
+    type: 'MVP',
+    description: 'A music with phrases player',
+  },
   {
     id: 'spotlight',
     name: 'Spotlight',
