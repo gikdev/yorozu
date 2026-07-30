@@ -23,7 +23,7 @@ export const styleInput = tv({
     },
     variant: {
       glass: `
-        border-mist-600
+        border-transparent
         hover:bg-black/10 dark:hover:bg-white/10
         focus:border-sky-500
       `,

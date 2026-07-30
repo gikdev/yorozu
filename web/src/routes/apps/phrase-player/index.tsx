@@ -1,7 +1,7 @@
+import { MusicNotesPlusIcon, PlayCircleIcon } from '@phosphor-icons/react'
 import { createFileRoute, Link, linkOptions } from '@tanstack/react-router'
 import { btn } from '#/common/atoms/btn'
 import { AppBar } from '#/common/molecules/page-header'
-import { MusicNotesPlusIcon, PlayCircleIcon } from '@phosphor-icons/react'
 
 const TITLE = 'Phrase Player'
 
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/apps/phrase-player/')({
 })
 
 function RouteComponent() {
-  const LINK_CLN = btn({ class:  'flex-1 flex flex-col rounded-none' })
+  const LINK_CLN = btn({ class: 'flex-1 flex flex-col rounded-none' })
   const SECTION_TITLE_CLN = 'text-2xl font-bold text-mist-100'
 
   return (

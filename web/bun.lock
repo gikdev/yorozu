@@ -12,6 +12,7 @@
         "@tanstack/react-form": "^1.28.5",
         "@tanstack/react-query": "^5.95.2",
         "@tanstack/react-router": "^1.167.3",
+        "@tanstack/react-store": "^0.11.0",
         "artplayer": "^5.4.0",
         "artplayer-plugin-ambilight": "^1.1.0",
         "artplayer-plugin-auto-thumbnail": "^1.1.0",
