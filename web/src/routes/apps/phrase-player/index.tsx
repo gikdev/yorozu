@@ -13,7 +13,7 @@ function RouteComponent() {
   const LINK_CLN = "flex-1 flex flex-col rounded-none"
 
   return (
-    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400 max-w-240 mx-auto w-full'>
+    <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400'>
       <AppBar title={TITLE} parentPath={linkOptions({ to: '/apps' })} />
 
       <main className='flex-1 flex'>
