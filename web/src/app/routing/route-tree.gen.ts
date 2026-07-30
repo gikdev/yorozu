@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as OpenapiRouteImport } from "./../../routes/openapi"
+import { Route as AppsIndexRouteImport } from "./../../routes/apps/index"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
 import { Route as AppsVoiceNotesRouteImport } from "./../../routes/apps/voice-notes"
@@ -21,13 +22,17 @@ import { Route as AppsPasswordGeneratorRouteImport } from "./../../routes/apps/p
 import { Route as AppsKanbanRouteImport } from "./../../routes/apps/kanban"
 import { Route as AppsChoiceRouteImport } from "./../../routes/apps/choice"
 import { Route as AppsPhrasePlayerIndexRouteImport } from "./../../routes/apps/phrase-player/index"
-import { Route as AppshomeIndexRouteImport } from "./../../routes/apps/(home)/index"
 import { Route as AppsPhrasePlayerPlayerRouteImport } from "./../../routes/apps/phrase-player/player"
 import { Route as AppsPhrasePlayerEditorRouteImport } from "./../../routes/apps/phrase-player/editor"
 
 const OpenapiRoute = OpenapiRouteImport.update({
   id: "/openapi",
   path: "/openapi",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsIndexRoute = AppsIndexRouteImport.update({
+  id: "/apps/",
+  path: "/apps/",
   getParentRoute: () => rootRouteImport,
 } as any)
 const homeIndexRoute = homeIndexRouteImport.update({
@@ -85,11 +90,6 @@ const AppsPhrasePlayerIndexRoute = AppsPhrasePlayerIndexRouteImport.update({
   path: "/apps/phrase-player/",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppshomeIndexRoute = AppshomeIndexRouteImport.update({
-  id: "/apps/(home)/",
-  path: "/apps/",
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppsPhrasePlayerPlayerRoute = AppsPhrasePlayerPlayerRouteImport.update({
   id: "/apps/phrase-player/player",
   path: "/apps/phrase-player/player",
@@ -113,9 +113,9 @@ export interface FileRoutesByFullPath {
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
+  "/apps/": typeof AppsIndexRoute
   "/apps/phrase-player/editor": typeof AppsPhrasePlayerEditorRoute
   "/apps/phrase-player/player": typeof AppsPhrasePlayerPlayerRoute
-  "/apps/": typeof AppshomeIndexRoute
   "/apps/phrase-player/": typeof AppsPhrasePlayerIndexRoute
 }
 export interface FileRoutesByTo {
@@ -130,9 +130,9 @@ export interface FileRoutesByTo {
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/": typeof homeIndexRoute
+  "/apps": typeof AppsIndexRoute
   "/apps/phrase-player/editor": typeof AppsPhrasePlayerEditorRoute
   "/apps/phrase-player/player": typeof AppsPhrasePlayerPlayerRoute
-  "/apps": typeof AppshomeIndexRoute
   "/apps/phrase-player": typeof AppsPhrasePlayerIndexRoute
 }
 export interface FileRoutesById {
@@ -148,9 +148,9 @@ export interface FileRoutesById {
   "/apps/voice-notes": typeof AppsVoiceNotesRoute
   "/apps/writing-area": typeof AppsWritingAreaRoute
   "/(home)/": typeof homeIndexRoute
+  "/apps/": typeof AppsIndexRoute
   "/apps/phrase-player/editor": typeof AppsPhrasePlayerEditorRoute
   "/apps/phrase-player/player": typeof AppsPhrasePlayerPlayerRoute
-  "/apps/(home)/": typeof AppshomeIndexRoute
   "/apps/phrase-player/": typeof AppsPhrasePlayerIndexRoute
 }
 export interface FileRouteTypes {
@@ -167,9 +167,9 @@ export interface FileRouteTypes {
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
+    | "/apps/"
     | "/apps/phrase-player/editor"
     | "/apps/phrase-player/player"
-    | "/apps/"
     | "/apps/phrase-player/"
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -184,9 +184,9 @@ export interface FileRouteTypes {
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/"
+    | "/apps"
     | "/apps/phrase-player/editor"
     | "/apps/phrase-player/player"
-    | "/apps"
     | "/apps/phrase-player"
   id:
     | "__root__"
@@ -201,9 +201,9 @@ export interface FileRouteTypes {
     | "/apps/voice-notes"
     | "/apps/writing-area"
     | "/(home)/"
+    | "/apps/"
     | "/apps/phrase-player/editor"
     | "/apps/phrase-player/player"
-    | "/apps/(home)/"
     | "/apps/phrase-player/"
   fileRoutesById: FileRoutesById
 }
@@ -219,9 +219,9 @@ export interface RootRouteChildren {
   AppsVoiceNotesRoute: typeof AppsVoiceNotesRoute
   AppsWritingAreaRoute: typeof AppsWritingAreaRoute
   homeIndexRoute: typeof homeIndexRoute
+  AppsIndexRoute: typeof AppsIndexRoute
   AppsPhrasePlayerEditorRoute: typeof AppsPhrasePlayerEditorRoute
   AppsPhrasePlayerPlayerRoute: typeof AppsPhrasePlayerPlayerRoute
-  AppshomeIndexRoute: typeof AppshomeIndexRoute
   AppsPhrasePlayerIndexRoute: typeof AppsPhrasePlayerIndexRoute
 }
 
@@ -232,6 +232,13 @@ declare module "@tanstack/react-router" {
       path: "/openapi"
       fullPath: "/openapi"
       preLoaderRoute: typeof OpenapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/apps/": {
+      id: "/apps/"
+      path: "/apps"
+      fullPath: "/apps/"
+      preLoaderRoute: typeof AppsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/(home)/": {
@@ -311,13 +318,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppsPhrasePlayerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/apps/(home)/": {
-      id: "/apps/(home)/"
-      path: "/apps"
-      fullPath: "/apps/"
-      preLoaderRoute: typeof AppshomeIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     "/apps/phrase-player/player": {
       id: "/apps/phrase-player/player"
       path: "/apps/phrase-player/player"
@@ -347,9 +347,9 @@ const rootRouteChildren: RootRouteChildren = {
   AppsVoiceNotesRoute: AppsVoiceNotesRoute,
   AppsWritingAreaRoute: AppsWritingAreaRoute,
   homeIndexRoute: homeIndexRoute,
+  AppsIndexRoute: AppsIndexRoute,
   AppsPhrasePlayerEditorRoute: AppsPhrasePlayerEditorRoute,
   AppsPhrasePlayerPlayerRoute: AppsPhrasePlayerPlayerRoute,
-  AppshomeIndexRoute: AppshomeIndexRoute,
   AppsPhrasePlayerIndexRoute: AppsPhrasePlayerIndexRoute,
 }
 export const routeTree = rootRouteImport

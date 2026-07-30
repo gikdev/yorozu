@@ -39,7 +39,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Spotlight',
     icon: CubeFocusIcon,
     url: linkOptions({ to: '/apps/spotlight' }).to,
-    type: 'APP',
+    type: 'MVP',
     description:
       'A minimal commitment device that asks what you want to do right now, then displays that single task in large text on screen with only three choices—cancel, edit, done—to kill multitasking and force singular focus.',
   },
@@ -48,7 +48,7 @@ export const appShortcuts: IAppShortcut[] = [
     name: 'Time Log',
     icon: TimerIcon,
     url: linkOptions({ to: '/apps/time-log' }).to,
-    type: 'APP',
+    type: 'MVP',
     description:
       'A dead-simple work focus timer with one big play/pause button; start a session, stop it, and at the end of the day see exactly how many focused sessions you had and total raw work time — nothing more.',
   },

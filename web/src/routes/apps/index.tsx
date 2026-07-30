@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { version } from '#/app/data/version.json'
-import { AppShortcut } from './-AppShortcut'
-import { appShortcuts } from './-appShortcuts'
+import { AppShortcut, appShortcuts } from '#/features/app-shortcuts'
 
-export const Route = createFileRoute('/apps/(home)/')({
+export const Route = createFileRoute('/apps/')({
   component: RouteComponent,
 })
 
