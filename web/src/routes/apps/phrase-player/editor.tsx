@@ -2,6 +2,7 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   DownloadSimpleIcon,
+  TextboxIcon,
   UploadSimpleIcon,
 } from '@phosphor-icons/react'
 import { createFileRoute, linkOptions } from '@tanstack/react-router'
@@ -25,7 +26,7 @@ export const Route = createFileRoute('/apps/phrase-player/editor')({
 function RouteComponent() {
   const [rawText, setRawText] = useState('')
   const [pieces, setPieces] = useState<Piece[]>([])
-  const [songName, setSongName] = useState('')
+  const [songName, setSongName] = useState('Phrase Player - Editor')
   const currentTime = useSelector(songPlayerStore, s => s.currentTime)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -41,6 +42,11 @@ function RouteComponent() {
         .toSorted((a, b) => (a.timestamp ?? 0) - (b.timestamp ?? 0)),
     [pieces],
   )
+
+  const changeSongName = () => {
+    const answer = window.prompt("Enter song name:", songName)
+    setSongName(answer || TITLE)
+  }
 
   const handleToPieces = () => {
     setPieces(Pieces.fromRawText(rawText))
@@ -146,20 +152,17 @@ ${piece.text}`
   return (
     <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400'>
       <AppBar
-        title={TITLE}
+        title={songName}
         parentPath={linkOptions({ to: '/apps/phrase-player' })}
       >
-        <input
-          type='text'
-          className={styleInput({
-            class: 'w-60 rounded-none',
-            size: 'sm',
-            variant: 'glass',
-          })}
-          placeholder='Song name'
-          value={songName}
-          onChange={e => setSongName(e.target.value)} // Fixed: was e.target.name
-        />
+        <button
+          type='button'
+          className={btn({ isIcon: true, class: 'rounded-none' })}
+          onClick={changeSongName}
+          title='Change Song Name'
+        >
+          <TextboxIcon size={24} />
+        </button>
 
         <button
           type='button'

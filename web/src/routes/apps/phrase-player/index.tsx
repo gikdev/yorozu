@@ -10,14 +10,14 @@ export const Route = createFileRoute('/apps/phrase-player/')({
 })
 
 function RouteComponent() {
-  const LINK_CLN = btn({ class: 'flex-1 flex flex-col rounded-none' })
+  const LINK_CLN = btn({ class: 'flex-1 flex flex-col rounded-none items-center text-center justify-center' })
   const SECTION_TITLE_CLN = 'text-2xl font-bold text-mist-100'
 
   return (
     <div className='h-dvh flex flex-col overflow-hidden bg-mist-950 text-mist-400'>
       <AppBar title={TITLE} parentPath={linkOptions({ to: '/apps' })} />
 
-      <main className='flex-1 flex'>
+      <main className='flex-1 flex flex-col sm:flex-row'>
         <Link to='/apps/phrase-player/player' className={LINK_CLN}>
           <PlayCircleIcon size={48} weight='duotone' />
           <p className={SECTION_TITLE_CLN}>Player</p>

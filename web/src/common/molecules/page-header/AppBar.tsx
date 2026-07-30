@@ -48,6 +48,7 @@ export function AppBar(p: AppBarProps) {
       <div className='text-mist-100 px-2 font-bold text-xl text-start truncate'>
         {p.title}
       </div>
+      <title>{p.title}</title>
 
       <div className='flex flex-1 justify-end'>{p.children}</div>
     </header>

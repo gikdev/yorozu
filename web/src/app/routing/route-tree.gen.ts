@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from "./../../routes/__root"
 import { Route as OpenapiRouteImport } from "./../../routes/openapi"
+import { Route as DevRouteImport } from "./../../routes/dev"
 import { Route as AppsIndexRouteImport } from "./../../routes/apps/index"
 import { Route as homeIndexRouteImport } from "./../../routes/(home)/index"
 import { Route as AppsWritingAreaRouteImport } from "./../../routes/apps/writing-area"
@@ -28,6 +29,11 @@ import { Route as AppsPhrasePlayerEditorRouteImport } from "./../../routes/apps/
 const OpenapiRoute = OpenapiRouteImport.update({
   id: "/openapi",
   path: "/openapi",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevRoute = DevRouteImport.update({
+  id: "/dev",
+  path: "/dev",
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppsIndexRoute = AppsIndexRouteImport.update({
@@ -102,6 +108,7 @@ const AppsPhrasePlayerEditorRoute = AppsPhrasePlayerEditorRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
   "/apps/phrase-player/": typeof AppsPhrasePlayerIndexRoute
 }
 export interface FileRoutesByTo {
+  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
@@ -137,6 +145,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  "/dev": typeof DevRoute
   "/openapi": typeof OpenapiRoute
   "/apps/choice": typeof AppsChoiceRoute
   "/apps/kanban": typeof AppsKanbanRoute
@@ -156,6 +165,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | "/apps/phrase-player/"
   fileRoutesByTo: FileRoutesByTo
   to:
+    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | "/apps/phrase-player"
   id:
     | "__root__"
+    | "/dev"
     | "/openapi"
     | "/apps/choice"
     | "/apps/kanban"
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  DevRoute: typeof DevRoute
   OpenapiRoute: typeof OpenapiRoute
   AppsChoiceRoute: typeof AppsChoiceRoute
   AppsKanbanRoute: typeof AppsKanbanRoute
@@ -232,6 +245,13 @@ declare module "@tanstack/react-router" {
       path: "/openapi"
       fullPath: "/openapi"
       preLoaderRoute: typeof OpenapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/dev": {
+      id: "/dev"
+      path: "/dev"
+      fullPath: "/dev"
+      preLoaderRoute: typeof DevRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/apps/": {
@@ -336,6 +356,7 @@ declare module "@tanstack/react-router" {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  DevRoute: DevRoute,
   OpenapiRoute: OpenapiRoute,
   AppsChoiceRoute: AppsChoiceRoute,
   AppsKanbanRoute: AppsKanbanRoute,
