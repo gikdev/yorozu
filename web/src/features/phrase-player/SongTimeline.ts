@@ -33,7 +33,7 @@ export class SongTimeline {
       if (piece.isFirstWord && currentLinePieces.length > 0) {
         lines.push({
           pieces: currentLinePieces,
-          startTime: currentLinePieces[0].timestamp!,
+          startTime: currentLinePieces[0].timestamp as number,
         })
         currentLinePieces = []
       }
@@ -43,7 +43,7 @@ export class SongTimeline {
     if (currentLinePieces.length > 0) {
       lines.push({
         pieces: currentLinePieces,
-        startTime: currentLinePieces[0].timestamp!,
+        startTime: currentLinePieces[0].timestamp as number,
       })
     }
 
@@ -85,7 +85,7 @@ export class SongTimeline {
     const words = activeLine.pieces
     let wordIdx = -1
     for (let j = 0; j < words.length; j++) {
-      if (words[j].timestamp! <= currentTime) {
+      if ((words[j].timestamp as number) <= currentTime) {
         wordIdx = j
       } else {
         break

@@ -1,32 +1,28 @@
 import {
-  ArrowArcRightIcon, DotsThreeVerticalIcon,
+  ArrowArcRightIcon,
+  DotsThreeVerticalIcon,
   FastForwardIcon,
   FilePlusIcon,
   PauseIcon,
   PlayIcon,
   RewindIcon,
-  TrashIcon
+  TrashIcon,
 } from '@phosphor-icons/react'
 import { useSelector } from '@tanstack/react-store'
-import {
-  type ChangeEvent,
-  type SyntheticEvent,
-  useEffect,
-  useRef
-} from 'react'
+import { type ChangeEvent, type SyntheticEvent, useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { btn } from '#/common/atoms/btn'
+import { AdaptiveDialog } from '#/common/molecules/AdaptiveDialog'
 import {
+  type PlaybackSpeed,
   playbackSpeedValues,
+  type SkipRange,
   skipRangeValues,
   songPlayerStore,
-  volumeLevelValues,
-  type PlaybackSpeed,
-  type SkipRange,
   type VolumeLevel,
+  volumeLevelValues,
 } from './store'
 import { TimeFormatter } from './TimeFormatter'
-import { AdaptiveDialog } from '#/common/molecules/AdaptiveDialog'
 
 const {
   pause,
@@ -60,7 +56,7 @@ export function TimestampSongPlayer() {
   const remainingTime = totalTime == null ? null : totalTime - currentTime
   const secondTimestamp: string = (() => {
     if (secondTimestampType === 'remaining' && remainingTime != null) {
-      return '-' + TimeFormatter.formatSeconds(remainingTime)
+      return `-${TimeFormatter.formatSeconds(remainingTime)}`
     }
 
     if (secondTimestampType === 'total' && totalTime != null) {
@@ -163,7 +159,7 @@ export function TimestampSongPlayer() {
   useEffect(() => {
     if (!audioRef.current) return
     audioRef.current.playbackRate = playbackSpeed
-  }, [audioRef, playbackSpeed])
+  }, [playbackSpeed])
 
   useEffect(() => {
     if (!audioRef.current) return
@@ -185,7 +181,7 @@ export function TimestampSongPlayer() {
         audioRef.current.volume = 1
         break
     }
-  }, [audioRef, volumeLevel])
+  }, [volumeLevel])
 
   useEffect(() => {
     return () => {
@@ -287,7 +283,11 @@ export function TimestampSongPlayer() {
         </button>
       </div>
 
-      <AdaptiveDialog title="More Options" isOpen={showMoreControls} onClose={() => changeShowMoreControls(false)}>
+      <AdaptiveDialog
+        title='More Options'
+        isOpen={showMoreControls}
+        onClose={() => changeShowMoreControls(false)}
+      >
         <div className='grid grid-cols-2 gap-2'>
           <button
             type='button'

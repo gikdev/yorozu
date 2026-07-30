@@ -18,7 +18,8 @@ const styleAdaptiveDialog = tv({
       max-w-full sm:max-w-120
       min-w-full sm:min-w-80
     `,
-    header: 'flex items-center justify-between border-b border-mist-700 px-4 py-2',
+    header:
+      'flex items-center justify-between border-b border-mist-700 px-4 py-2',
     title: 'font-bold text-mist-100',
     content: 'p-4',
   },

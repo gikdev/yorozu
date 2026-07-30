@@ -1,7 +1,7 @@
 import { UploadSimpleIcon } from '@phosphor-icons/react'
 import { createFileRoute, linkOptions } from '@tanstack/react-router'
 import { useSelector } from '@tanstack/react-store'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { btn } from '#/common/atoms/btn'
 import { AppBar } from '#/common/molecules/page-header'
 import { Piece } from '#/features/phrase-player/pieces'
@@ -32,16 +32,6 @@ function PlayerPage() {
     [lines, currentTime],
   )
 
-  // Auto-scroll to the active word
-  useEffect(() => {
-    if (activeWordRef.current) {
-      activeWordRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-    }
-  }, [currentLine, currentWordIndex])
-
   // Load JSON file and create Piece instances
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -56,8 +46,8 @@ function PlayerPage() {
           return
         }
 
-        const loadedPieces = json.pieces.map(
-          (p: any) =>
+        const loadedPieces: Piece[] = json.pieces.map(
+          (p: Piece) =>
             new Piece({
               id: p.id,
               text: p.text,
@@ -120,7 +110,7 @@ function PlayerPage() {
                       transition-all duration-200
                       ${isActive ? 'text-white font-bold' : 'text-mist-300'}
                     `}
-                    // dangerouslySetInnerHTML={{ __html: piece.text }}
+                      // dangerouslySetInnerHTML={{ __html: piece.text }}
                     >
                       {piece.text}
                     </span>
