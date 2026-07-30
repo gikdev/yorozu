@@ -48,7 +48,13 @@ function RouteComponent() {
   const [password, setPassword] = useState('')
 
   function generate() {
-    const newPassword = generatePassword({ length, uppercase, lowercase, numbers, symbols })
+    const newPassword = generatePassword({
+      length,
+      uppercase,
+      lowercase,
+      numbers,
+      symbols,
+    })
     setPassword(newPassword)
   }
 

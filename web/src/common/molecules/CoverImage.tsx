@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { tv, cn } from 'tailwind-variants'
 import { SpinnerGapIcon } from '@phosphor-icons/react'
+import { useState } from 'react'
+import { cn, tv } from 'tailwind-variants'
 
 const coverContainer = tv({
   base: 'relative overflow-hidden flex items-center justify-center',
