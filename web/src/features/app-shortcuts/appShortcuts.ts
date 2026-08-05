@@ -23,7 +23,7 @@ import {
   VideoIcon,
 } from '@phosphor-icons/react'
 import { linkOptions } from '@tanstack/react-router'
-import type { IAppShortcut } from './-IAppShortcut'
+import type { IAppShortcut } from './IAppShortcut'
 
 export const appShortcuts: IAppShortcut[] = [
   {
